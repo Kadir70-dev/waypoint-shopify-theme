@@ -1,0 +1,100 @@
+/* AERA — hero slider + carousel motion (Milestone 2). Token-driven timing;
+   .reduced-motion zeroes --dur-* at the root (tokens.css), which is enough
+   to flatten every transition below without a separate override here. */
+
+.hero-slider {
+  position: relative;
+  min-height: 70vh;
+  overflow: hidden;
+}
+
+.hero-slider__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-slow) var(--ease-out-slow), transform calc(var(--dur-slow) * 2) var(--ease-out-slow);
+  transform: scale(1.04);
+}
+.hero-slider__slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, .1) 55%);
+  z-index: 0;
+}
+.hero-slider__slide[data-active="true"] {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+/* Stack every slide in the same grid cell so the crossfade has something
+   to fade between, without JS having to manage layout. */
+.hero-slider { display: grid; }
+.hero-slider__slide { grid-area: 1 / 1; }
+
+.hero-slider__content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  padding: 40px;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.hero-slider__slide { display: flex; align-items: flex-end; }
+
+.hero-slider__dots {
+  position: absolute;
+  left: 40px;
+  bottom: 20px;
+  z-index: 2;
+  display: flex;
+  gap: 14px;
+}
+.hero-slider__dots button {
+  background: none;
+  border: 0;
+  color: rgba(255, 255, 255, .55);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: .08em;
+  cursor: pointer;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+}
+.hero-slider__dots button[aria-current="true"] {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+@media (min-width: 750px) {
+  .hero-slider__content { padding: 60px; }
+}
+
+/* ---------- carousel (testimonials, later cross-sell rows) ---------- */
+.carousel__track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.carousel__track::-webkit-scrollbar { display: none; }
+.carousel__track > * { scroll-snap-align: start; flex: 0 0 auto; }
+
+.carousel__nav { display: flex; gap: 10px; }
+.carousel__nav button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel__nav button svg { width: 16px; height: 16px; }

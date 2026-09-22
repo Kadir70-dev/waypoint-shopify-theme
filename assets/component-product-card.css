@@ -1,0 +1,127 @@
+/* AERA — product & category card component. Used by the homepage now
+   (Milestone 2) and reused unmodified by collection/search grids, cart
+   upsell, and cross-sell rows in later milestones. */
+
+.pcard {
+  position: relative;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+.pcard__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.pcard__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-base) var(--ease-out-slow);
+}
+.pcard:hover .pcard__media img { transform: scale(1.03); }
+
+.pcard__badge { position: absolute; top: 10px; left: 10px; z-index: 1; }
+
+.pcard__quickadd-form { display: contents; }
+
+.pcard__quickadd {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.pcard__quickadd svg { width: 16px; height: 16px; }
+
+.pcard__body { padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+.pcard__name { font-family: var(--font-display); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+.pcard__price { font-size: 13px; color: var(--muted); display: flex; gap: 8px; }
+.pcard__price .compare-at { text-decoration: line-through; opacity: .7; }
+
+.pcard__swatches { display: flex; gap: 6px; margin-top: 4px; }
+.pcard__swatches .swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  display: inline-block;
+}
+
+/* Plain-photography variant — the visual system's resilience validation:
+   the inset white surface carries the premium feel, not the photo itself. */
+.pcard--plain .pcard__media { background: #fff; border-bottom: 1px solid var(--border); }
+
+.ccard { position: relative; display: block; min-height: 220px; overflow: hidden; }
+.ccard img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-base) var(--ease-out-slow);
+}
+.ccard:hover img { transform: scale(1.02); }
+.ccard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, .65), rgba(0, 0, 0, .05));
+}
+.ccard__label {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 100%;
+  padding: 16px;
+  color: #fff;
+}
+.ccard__label svg { width: 18px; height: 18px; transition: transform var(--dur-fast) var(--ease-out-slow); }
+.ccard:hover .ccard__label svg { transform: translateX(4px); }
+
+.tile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+.tile-grid > * { background: var(--bg); }
+@media (min-width: 750px) {
+  .tile-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ---------- shared product grid ----------
+   Used by featured-collection (Milestone 2) and, unmodified, by the
+   collection/search grids in Milestone 3. Desktop column count follows
+   settings.grid_density via [data-density]. */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.product-grid > * { background: var(--bg); }
+
+@media (min-width: 750px) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 990px) {
+  .product-grid[data-density="3"] { grid-template-columns: repeat(3, 1fr); }
+  .product-grid[data-density="4"] { grid-template-columns: repeat(4, 1fr); }
+}
+/* featured-collection shows a wider row on desktop than a density-3/4
+   collection grid, since it's a homepage highlight strip, not the grid */
+.product-grid[data-context="featured"] {
+  gap: 1px;
+}
+@media (min-width: 990px) {
+  .product-grid[data-context="featured"] { grid-template-columns: repeat(6, 1fr); }
+}

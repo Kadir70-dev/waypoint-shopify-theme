@@ -31,7 +31,25 @@
   "footer": {
     "rights": "All rights reserved."
   },
+  "products": {
+    "badge_bestseller": "Bestseller",
+    "badge_new": "New",
+    "quick_add": "Quick add"
+  },
+  "sections": {
+    "hero": {
+      "slide": "Slide"
+    },
+    "carousel": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "journal": {
+      "min_read": "min read"
+    }
+  },
   "general": {
+    "view_all": "View all",
     "password_page": {
       "login_form_heading": "Enter store using password",
       "login_password_button": "Enter using password",

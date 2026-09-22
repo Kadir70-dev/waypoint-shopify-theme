@@ -1,0 +1,16 @@
+{%- comment -%}
+  Renders a product's (or a specific variant's) price with compare-at
+  strike-through. Usage: {% render 'price', product: product %}
+  or: {% render 'price', product: product, variant: current_variant %}
+{%- endcomment -%}
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+-%}
+<span class="pcard__price">
+  {%- if target.compare_at_price > target.price -%}
+    <span class="compare-at">{{ target.compare_at_price | money }}</span>
+    <span>{{ target.price | money }}</span>
+  {%- else -%}
+    <span>{{ target.price | money }}</span>
+  {%- endif -%}
+</span>

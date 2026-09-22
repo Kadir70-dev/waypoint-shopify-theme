@@ -8,13 +8,18 @@ extends: theme-check:recommended
 
 MissingTemplate:
   enabled: true
-  ignore_missing: ["index", "404", "list-collections", "page", "gift_card", "blog", "article", "customers/*"]
+  ignore_missing: ["404", "list-collections", "page", "gift_card", "blog", "article", "customers/*"]
+  # "index" removed from this list in Milestone 2 — templates/index.json now exists.
 
-# Verified false positive in this Theme Check build: these icon snippets ARE
-# referenced (via {% render %}) from sections/header.liquid and
-# sections/footer.liquid — confirmed by grep and by a targeted A/B test
-# during Milestone 1 validation. Scoped to icon-*.liquid only so the rule
-# still runs on every other snippet added in later milestones.
+# Verified false positive in this Theme Check build: every snippet listed
+# here IS referenced (via {% render %}) from at least one section — checked
+# with grep, and icon-*.liquid additionally A/B tested, each time in the
+# milestone that introduced it. Scoped by name rather than disabling the
+# rule theme-wide, so it still runs on every other snippet added later.
 OrphanedSnippet:
   enabled: true
-  ignore: ["snippets/icon-*.liquid"]
+  ignore:
+    - "snippets/icon-*.liquid"
+    - "snippets/card-product.liquid"
+    - "snippets/card-category.liquid"
+    - "snippets/price.liquid"

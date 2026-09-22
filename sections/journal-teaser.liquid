@@ -1,0 +1,60 @@
+{%- comment -%}
+  Article cards are inlined here rather than pulled into a shared
+  snippets/card-article.liquid — that snippet is scoped to Milestone 6
+  (Editorial/Pages), which is also where the single-article template that
+  actually needs a reusable version lands. Revisit then: extract this into
+  the shared snippet so the Journal index and this teaser stay in sync.
+{%- endcomment -%}
+
+{%- liquid
+  assign blog = section.settings.blog
+-%}
+{%- if blog != blank -%}
+  <div class="section page-width" data-reveal-group>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+      <div>
+        <h2 style="font-size:22px">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}
+          <p style="color:var(--muted);font-size:13px;margin-top:6px">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+      <a href="{{ blog.url }}" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">
+        {{ 'general.view_all' | t }} &rarr;
+      </a>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px" class="journal-teaser__grid">
+      {%- for article in blog.articles limit: section.settings.articles_to_show -%}
+        <a href="{{ article.url }}" data-reveal>
+          <div class="photo brand" style="height:150px;{% if article.image %}background-image:url({{ article.image | image_url: width: 400 }}){% endif %}"></div>
+          <div style="padding-top:10px">
+            <span class="eyebrow">
+              {%- if article.tags.size > 0 -%}{{ article.tags.first }} &middot; {% endif -%}
+              {{ article.content | strip_html | split: ' ' | size | divided_by: 200 | plus: 1 }} {{ 'sections.journal.min_read' | t }}
+            </span>
+            <div style="font-family:var(--font-display);font-size:14px;text-transform:uppercase;margin-top:6px">{{ article.title }}</div>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <style>
+    @media (min-width: 750px) {
+      #shopify-section-{{ section.id }} .journal-teaser__grid { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Journal teaser",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Latest Stories" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Insights, field notes and real experiences from our community." },
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "range", "id": "articles_to_show", "label": "Articles to show", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "Journal teaser" }]
+}
+{% endschema %}

@@ -1,0 +1,57 @@
+<div class="section page-width">
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px" class="trust-bar">
+    {%- for block in section.blocks -%}
+      <div style="display:flex;align-items:center;gap:10px" {{ block.shopify_attributes }}>
+        <span style="width:22px;height:22px;flex-shrink:0;color:var(--muted)">
+          {%- case block.settings.icon -%}
+            {%- when 'mountain' -%}{%- render 'icon-mountain' -%}
+            {%- when 'leaf' -%}{%- render 'icon-leaf' -%}
+            {%- when 'shield' -%}{%- render 'icon-shield' -%}
+            {%- when 'globe' -%}{%- render 'icon-globe' -%}
+          {%- endcase -%}
+        </span>
+        <span style="font-family:var(--font-display);font-size:11px;letter-spacing:.06em;text-transform:uppercase">
+          {{ block.settings.label }}
+        </span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  @media (min-width: 750px) {
+    #shopify-section-{{ section.id }} .trust-bar { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "blocks": [
+    {
+      "type": "trust-item",
+      "name": "Trust item",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+            { "value": "mountain", "label": "Mountain" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "globe", "label": "Globe" }
+          ], "default": "mountain" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Field Tested" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust bar",
+      "blocks": [
+        { "type": "trust-item", "settings": { "icon": "mountain", "label": "Field Tested" } },
+        { "type": "trust-item", "settings": { "icon": "leaf", "label": "Sustainable Practices" } },
+        { "type": "trust-item", "settings": { "icon": "shield", "label": "Built to Last" } },
+        { "type": "trust-item", "settings": { "icon": "globe", "label": "Global Community" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

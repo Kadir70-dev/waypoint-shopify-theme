@@ -1,0 +1,59 @@
+{%- comment -%}
+  Usage: {% render 'card-product', product: product %}
+  or: {% render 'card-product', product: product, plain: true %}
+  (plain = the plain-photography validation frame, not tied to any
+  merchant setting — used where the theme wants to demonstrate/force it)
+
+  Quick-add here is a plain form POST to /cart/add (works today, no JS
+  required). The AJAX version that opens the cart drawer and plays the
+  confirm-morph motion lands in Milestone 5 once cart-drawer.liquid exists
+  — this markup does not need to change when that happens, only the JS
+  progressively enhances the same form.
+{%- endcomment -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign badge_text = blank
+  if settings.show_badges and product.tags contains 'bestseller'
+    assign badge_text = 'products.badge_bestseller' | t
+  elsif settings.show_badges and product.tags contains 'new'
+    assign badge_text = 'products.badge_new' | t
+  endif
+  assign color_option = product.options_with_values | where: 'name', 'Color' | first
+-%}
+
+<div class="pcard{% if plain %} pcard--plain{% endif %}" data-reveal>
+  <a href="{{ product.url }}" class="pcard__media">
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.featured_image.alt | default: product.title, widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, 50vw' }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'pcard__placeholder' }}
+    {%- endif -%}
+    {%- if badge_text != blank -%}
+      <span class="badge pcard__badge">{{ badge_text }}</span>
+    {%- endif -%}
+  </a>
+
+  {%- if settings.show_quick_add and variant.available -%}
+    <form method="post" action="{{ routes.cart_add_url }}" class="pcard__quickadd-form">
+      <input type="hidden" name="id" value="{{ variant.id }}">
+      <button type="submit" class="pcard__quickadd" aria-label="{{ 'products.quick_add' | t }}: {{ product.title }}">
+        {%- render 'icon-plus' -%}
+      </button>
+    </form>
+  {%- endif -%}
+
+  <div class="pcard__body">
+    <a href="{{ product.url }}" class="pcard__name">{{ product.title }}</a>
+    {%- render 'price', product: product -%}
+    {%- if color_option -%}
+      <div class="pcard__swatches">
+        {%- for value in color_option.values -%}
+          {%- if value.swatch.color -%}
+            <span class="swatch" style="background:{{ value.swatch.color }}" title="{{ value }}"></span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>

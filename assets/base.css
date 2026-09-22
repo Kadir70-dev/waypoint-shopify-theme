@@ -61,6 +61,11 @@ p { margin: 0; }
   .page-width { padding-inline: 28px; }
 }
 
+.section { padding-block: 36px; }
+@media (min-width: 750px) {
+  .section { padding-block: 48px; }
+}
+
 /* --- global focus state ---
    One rule covers default elements; components that need a custom
    treatment (swatches, chips) extend rather than remove it. Never
@@ -108,3 +113,64 @@ p { margin: 0; }
    the page body itself must never scroll horizontally; only a component
    that explicitly needs it (a wide table, a filter-chip row) opts in. */
 html, body { overflow-x: hidden; }
+
+/* --- buttons ---
+   Cross-cutting primitive (hero CTAs, promo CTAs, forms, and later
+   PDP/cart) added in Milestone 2 since it's the first milestone that
+   needs shared CTA styling beyond the header/footer's own scoped buttons. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 14px 22px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background var(--dur-fast) var(--ease-out-slow), border-color var(--dur-fast) var(--ease-out-slow), opacity var(--dur-fast) var(--ease-out-slow);
+}
+.btn-primary { background: var(--cta-bg); color: var(--cta-text); border-color: var(--cta-bg); }
+.btn-primary:hover { opacity: .85; }
+.btn-outline:hover { border-color: var(--text); background: rgba(127, 127, 127, .08); }
+.btn-block { width: 100%; justify-content: center; }
+
+/* --- photography treatment ---
+   .photo = cover/position primitive for any background-image div.
+   .brand = the approved cinematic grade (graded gradients stand in for
+   real photography until a campaign shoot is dropped in — see the
+   Photography Resilience Strategy; layout/crop/scrim logic is final). */
+.photo { background-size: cover; background-position: center; background-color: var(--surface-2); }
+.photo.brand { filter: grayscale(.25) sepia(.12) contrast(1.08) brightness(.62); }
+.photo.brand.light { filter: grayscale(.2) sepia(.08) contrast(1.05) brightness(.85); }
+
+/* --- badge --- */
+.badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  padding: 4px 9px;
+  border-radius: var(--radius);
+}
+
+/* --- scroll reveal (motion.js adds .is-revealed on intersect) ---
+   Gated on the .js class (set synchronously in layout/theme.liquid,
+   alongside the reduced-motion detector) so content is never hidden when
+   JavaScript is unavailable — [data-reveal] elements are visible by
+   default and only animate-in when .js is actually present. */
+[data-reveal] { opacity: 1; transform: none; }
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--dur-slow) var(--ease-out-slow), transform var(--dur-slow) var(--ease-out-slow);
+}
+.js [data-reveal].is-revealed { opacity: 1; transform: translateY(0); }
+

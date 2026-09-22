@@ -1,0 +1,43 @@
+{%- liquid
+  assign product = section.settings.product
+-%}
+{%- if product != blank -%}
+  <div class="section page-width" data-reveal-group>
+    <div style="display:grid;gap:1px;background:var(--border)" class="featured-product">
+      <div class="photo brand featured-product__image" data-reveal {% if section.settings.image_override %}style="background-image:url({{ section.settings.image_override | image_url: width: 900 }})"{% elsif product.featured_image %}style="background-image:url({{ product.featured_image | image_url: width: 900 }})"{% endif %}></div>
+      <div style="background:var(--bg);padding:36px;display:flex;flex-direction:column;gap:12px;justify-content:center" data-reveal>
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 style="font-size:24px">{{ product.title }}</h2>
+        {%- if section.settings.text != blank -%}
+          <p style="color:var(--muted);font-size:14px">{{ section.settings.text }}</p>
+        {%- endif -%}
+        {%- render 'price', product: product -%}
+        <a href="{{ product.url }}" class="btn btn-primary" style="align-self:flex-start;margin-top:8px">
+          {{ section.settings.cta_label }} &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #shopify-section-{{ section.id }} .featured-product__image { min-height: 260px; }
+    @media (min-width: 750px) {
+      #shopify-section-{{ section.id }} .featured-product { grid-template-columns: 1fr 1.1fr; }
+      #shopify-section-{{ section.id }} .featured-product__image { min-height: 100%; }
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Featured product",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "image_picker", "id": "image_override", "label": "Image override", "info": "Uses the product's featured image if left blank." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Featured Gear" },
+    { "type": "text", "id": "text", "label": "Text" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "View Product" }
+  ],
+  "presets": [{ "name": "Featured product" }]
+}
+{% endschema %}

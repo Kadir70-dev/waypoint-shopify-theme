@@ -1,0 +1,19 @@
+{%- comment -%}
+  Usage: {% render 'card-category', image: block.settings.image, label: block.settings.label, sublabel: block.settings.sublabel, link: block.settings.link %}
+{%- endcomment -%}
+<a href="{{ link | default: '#' }}" class="ccard" data-reveal>
+  {%- if image -%}
+    {{ image | image_url: width: 500 | image_tag: loading: 'lazy', alt: label, widths: '300, 500' }}
+  {%- else -%}
+    {{ 'collection-1' | placeholder_svg_tag: 'ccard__placeholder' }}
+  {%- endif -%}
+  <span class="ccard__label">
+    <span>
+      <span style="display:block;font-family:var(--font-display);font-size:16px;text-transform:uppercase">{{ label }}</span>
+      {%- if sublabel != blank -%}
+        <span style="display:block;font-size:12px;color:#ddd;margin-top:2px">{{ sublabel }}</span>
+      {%- endif -%}
+    </span>
+    {%- render 'icon-arrow-right' -%}
+  </span>
+</a>
