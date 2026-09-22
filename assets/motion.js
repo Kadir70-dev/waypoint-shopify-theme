@@ -10,6 +10,16 @@
 
   var reducedMotion = document.documentElement.classList.contains('reduced-motion');
 
+  // ---------- transparent overlay header (home hero) ----------
+  var transparentHeader = document.querySelector('.site-header--transparent');
+  if (transparentHeader) {
+    var setHeaderScrolled = function () {
+      transparentHeader.setAttribute('data-scrolled', window.scrollY > 10 ? 'true' : 'false');
+    };
+    setHeaderScrolled();
+    window.addEventListener('scroll', setHeaderScrolled, { passive: true });
+  }
+
   // ---------- scroll reveal ----------
   var revealEls = document.querySelectorAll('[data-reveal]');
   if (revealEls.length) {

@@ -1,0 +1,27 @@
+<div class="section page-width">
+  <div style="margin-bottom:20px">
+    <h1 style="font-size:22px">{{ 'list_collections.title' | t }}</h1>
+  </div>
+
+  <div class="tile-grid">
+    {%- for collection in collections -%}
+      {%- unless collection.handle == 'frontpage' -%}
+        <div data-reveal>
+          {%- render 'card-category',
+            image: collection.image,
+            label: collection.title,
+            sublabel: '',
+            link: collection.url
+          -%}
+        </div>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "List of collections",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+{%- comment -%}
+  Rendered ONLY via Shopify's Predictive Search API through the Section
+  Rendering API:
+    GET /search/suggest?q=<term>&resources[type]=product,collection,article
+        &section_id=predictive-search
+  This section is never added to a template's section order — assets/
+  predictive-search.js fetches it directly and injects the response into
+  #PredictiveSearchResults in the header's search overlay (see
+  sections/header.liquid). The `predictive_search` object below only
+  exists in that specific request context.
+{%- endcomment -%}
+{%- liquid
+  assign has_results = false
+  if predictive_search.resources.results.products.size > 0 or predictive_search.resources.results.collections.size > 0 or predictive_search.resources.results.articles.size > 0
+    assign has_results = true
+  endif
+-%}
+<div id="predictive-search-results">
+  {%- render 'predictive-search-results',
+    results: predictive_search.resources.results,
+    terms: predictive_search.terms,
+    has_results: has_results
+  -%}
+</div>
+
+{% schema %}
+{
+  "name": "Predictive search results",
+  "settings": []
+}
+{% endschema %}

@@ -1,4 +1,18 @@
-<header class="site-header" data-sticky="{{ section.settings.sticky_header }}">
+{%- liquid
+  assign header_transparent = false
+  if section.settings.transparent_on_home and request.page_type == 'index'
+    assign header_transparent = true
+  endif
+  assign is_sticky = section.settings.sticky_header
+  if header_transparent
+    assign is_sticky = false
+  endif
+-%}
+<header
+  class="site-header{% if header_transparent %} site-header--transparent{% endif %}"
+  data-sticky="{{ is_sticky }}"
+  {% if header_transparent %}data-scrolled="false"{% endif %}
+>
   <div class="page-width site-header__row">
     <button
       class="icon-btn hamburger-btn"
@@ -143,19 +157,23 @@
         {%- render 'icon-close' -%}
       </button>
     </div>
-    <form action="{{ routes.search_url }}" method="get" role="search">
+    <form action="{{ routes.search_url }}" method="get" role="search" autocomplete="off">
       <input
         class="search-overlay__field"
         type="search"
         name="q"
         placeholder="{{ 'search.placeholder' | t }}"
         autocomplete="off"
+        aria-controls="PredictiveSearchResults"
+        aria-expanded="false"
         data-overlay-autofocus
+        data-predictive-search-input
       >
       <input type="hidden" name="type" value="product,collection,article">
     </form>
+
     {%- if section.settings.popular_search_1 != blank or section.settings.popular_search_2 != blank or section.settings.popular_search_3 != blank -%}
-      <div>
+      <div data-predictive-search-prompt>
         <div class="eyebrow" style="margin-bottom:10px">{{ 'search.popular' | t }}</div>
         <div class="chip-row">
           {%- for i in (1..4) -%}
@@ -168,6 +186,15 @@
         </div>
       </div>
     {%- endif -%}
+
+    <div
+      id="PredictiveSearchResults"
+      class="predictive-search__target"
+      data-predictive-search-target
+      role="region"
+      aria-live="polite"
+      hidden
+    ></div>
   </div>
 </div>
 
@@ -200,6 +227,7 @@
     { "type": "text", "id": "tagline", "label": "Tagline (shown under text wordmark)", "default": "Built for a wilder tomorrow" },
     { "type": "link_list", "id": "main_menu", "label": "Main menu", "default": "main-menu" },
     { "type": "checkbox", "id": "sticky_header", "label": "Sticky header", "default": true },
+    { "type": "checkbox", "id": "transparent_on_home", "label": "Transparent over the hero image on the home page", "default": true },
     { "type": "checkbox", "id": "enable_mega_menu", "label": "Enable mega-menu", "default": true },
     {
       "type": "text",

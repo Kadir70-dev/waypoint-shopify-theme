@@ -1,0 +1,51 @@
+<div class="collection-banner photo brand" data-reveal {% if collection.image %}style="background-image:url({{ collection.image | image_url: width: 1600 }})"{% endif %}>
+  <div class="collection-banner__content">
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="collection-banner__description">{{ collection.description }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} .collection-banner {
+    position: relative;
+    min-height: 220px;
+    display: flex;
+    align-items: flex-end;
+  }
+  #shopify-section-{{ section.id }} .collection-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, .1) 55%);
+  }
+  #shopify-section-{{ section.id }} .collection-banner__content {
+    position: relative;
+    z-index: 1;
+    padding: 28px;
+    max-width: 640px;
+    color: #fff;
+  }
+  #shopify-section-{{ section.id }} .collection-banner__content h1 {
+    font-size: clamp(24px, 4vw, 34px);
+    color: #fff;
+  }
+  #shopify-section-{{ section.id }} .collection-banner__description {
+    color: #ddd;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+  @media (min-width: 750px) {
+    #shopify-section-{{ section.id }} .collection-banner { min-height: 300px; }
+    #shopify-section-{{ section.id }} .collection-banner__content { padding: 48px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection banner",
+  "settings": []
+}
+{% endschema %}

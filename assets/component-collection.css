@@ -1,0 +1,205 @@
+/* AERA — collection listing (Milestone 3). Banner styling lives inline in
+   main-collection-banner.liquid's own <style> block, per the theme's
+   per-section convention; this file covers what's shared across collection
+   AND (later) search results — grid meta, empty state, pagination. */
+
+.collection-grid__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 24px 0 20px;
+}
+
+.collection-grid__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+  padding: 60px 20px;
+}
+.collection-grid__empty .empty-icon {
+  width: 48px;
+  height: 48px;
+  opacity: .55;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 32px;
+}
+.pagination__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding-inline: 4px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 12px;
+}
+.pagination__link svg { width: 14px; height: 14px; }
+.pagination__link--current {
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  border-color: var(--cta-bg);
+}
+.pagination__link--disabled { opacity: .35; }
+.pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ---------- filters (sidebar + chips) ---------- */
+.collection-layout { display: block; }
+.collection-layout__sidebar { display: none; }
+@media (min-width: 990px) {
+  .collection-layout { display: grid; grid-template-columns: 220px 1fr; gap: 0; align-items: start; }
+  .collection-layout__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding-right: 20px;
+    border-right: 1px solid var(--border);
+  }
+  .collection-layout__main { padding-left: 20px; min-width: 0; }
+}
+
+.filter-group { display: flex; flex-direction: column; gap: 10px; }
+.filter-group__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+.filter-option__box {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  border: 1px solid var(--border-strong);
+  display: inline-block;
+}
+.filter-option--active .filter-option__box { background: var(--cta-bg); border-color: var(--cta-bg); }
+.filter-group__price { display: flex; align-items: center; gap: 8px; }
+.filter-group__price input {
+  width: 0;
+  flex: 1;
+  min-width: 56px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  padding: 8px 6px;
+  font-size: 12px;
+  -moz-appearance: textfield;
+}
+.filter-group__price input::-webkit-outer-spin-button,
+.filter-group__price input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.filter-chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
+.filter-chip span { color: var(--muted); font-size: 13px; margin-left: 2px; }
+.filter-chips__clear {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-left: 4px;
+}
+
+/* ---------- mobile filter trigger + drawer ---------- */
+.collection-grid__filter-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  padding: 8px 14px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.collection-grid__filter-trigger svg { width: 16px; height: 16px; }
+.collection-grid__filter-count {
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  font-size: 10px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 3px;
+}
+@media (min-width: 990px) {
+  .collection-grid__filter-trigger { display: none; }
+}
+
+.mobile-filter-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(0, 0, 0, .55);
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out-slow);
+}
+.mobile-filter-drawer[data-state="open"] { opacity: 1; }
+.mobile-filter-drawer__panel {
+  width: 100%;
+  max-height: 78vh;
+  background: var(--surface);
+  border-top: 1px solid var(--border-strong);
+  display: flex;
+  flex-direction: column;
+  transform: translateY(16px);
+  transition: transform var(--dur-base) var(--ease-out-slow);
+}
+.mobile-filter-drawer[data-state="open"] .mobile-filter-drawer__panel { transform: translateY(0); }
+.mobile-filter-drawer__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.mobile-filter-drawer__clear {
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: auto;
+}
+.mobile-filter-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.mobile-filter-drawer__footer {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+}
+@media (min-width: 990px) {
+  .mobile-filter-drawer { display: none; }
+}

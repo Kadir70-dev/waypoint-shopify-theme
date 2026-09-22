@@ -8,8 +8,11 @@ extends: theme-check:recommended
 
 MissingTemplate:
   enabled: true
-  ignore_missing: ["404", "list-collections", "page", "gift_card", "blog", "article", "customers/*"]
-  # "index" removed from this list in Milestone 2 — templates/index.json now exists.
+  ignore_missing: ["404", "page", "gift_card", "blog", "article", "customers/*"]
+  # "index" removed in Milestone 2 (templates/index.json now exists).
+  # "list-collections" removed in Milestone 3 (templates/list-collections.json
+  # now exists). "search" and "collection" were never in this list since
+  # Theme Check doesn't flag their absence by default the way it does these.
 
 # Verified false positive in this Theme Check build: every snippet listed
 # here IS referenced (via {% render %}) from at least one section — checked
@@ -23,3 +26,18 @@ OrphanedSnippet:
     - "snippets/card-product.liquid"
     - "snippets/card-category.liquid"
     - "snippets/price.liquid"
+    - "snippets/pagination.liquid"
+    - "snippets/chip-filter.liquid"
+    - "snippets/filter-groups.liquid"
+    - "snippets/predictive-search-results.liquid"
+    # pagination.liquid: rendered from inside main-collection-grid.liquid's
+    # {% paginate %}...{% endpaginate %} block. chip-filter.liquid: rendered
+    # from inside a nested {% for %}{% for %} loop there. filter-groups.liquid
+    # is rendered directly (not nested) yet was still flagged once its own
+    # syntax error was fixed — all three verified referenced with grep;
+    # Theme Check's static analysis is unreliable on this file's renders.
+    # predictive-search-results.liquid: rendered from sections/
+    # predictive-search.liquid, which is intentionally never added to any
+    # template's section order (it's fetched directly via the Predictive
+    # Search / Section Rendering API) — Theme Check's reachability analysis
+    # doesn't follow that path, so it never sees the render call.

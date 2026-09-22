@@ -1,0 +1,133 @@
+{%- liquid
+  assign has_active_filters = false
+  assign active_filter_count = 0
+  for filter in search.filters
+    assign active_filter_count = active_filter_count | plus: filter.active_values.size
+    if filter.active_values.size > 0 or filter.min_value.value != blank or filter.max_value.value != blank
+      assign has_active_filters = true
+    endif
+  endfor
+-%}
+
+<div class="section page-width">
+  {%- unless search.performed -%}
+    <div class="search-prompt">
+      <h1 style="font-size:22px">{{ 'search.title' | t }}</h1>
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-prompt__form">
+        <input
+          class="search-prompt__field"
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'search.placeholder' | t }}"
+          autocomplete="off"
+        >
+        <input type="hidden" name="type" value="product">
+        <button type="submit" class="icon-btn" aria-label="{{ 'accessibility.search' | t }}">{%- render 'icon-search' -%}</button>
+      </form>
+    </div>
+  {%- else -%}
+    <div class="collection-grid__meta" style="margin-bottom:8px">
+      <div>
+        <span class="eyebrow">{{ 'search.results_for' | t: terms: search.terms }}</span>
+        <h1 style="font-size:22px;margin-top:8px">
+          {%- if search.results_count == 1 -%}
+            {{ 'collection.products_count_one' | t: count: search.results_count }}
+          {%- else -%}
+            {{ 'collection.products_count_other' | t: count: search.results_count }}
+          {%- endif -%}
+        </h1>
+      </div>
+      {%- if search.filters.size > 0 -%}
+        <button type="button" class="collection-grid__filter-trigger" data-overlay-trigger="MobileSearchFilters" aria-controls="MobileSearchFilters">
+          {%- render 'icon-filter' -%} {{ 'collection.filters' | t }}
+          {%- if has_active_filters -%}<span class="collection-grid__filter-count">{{ active_filter_count }}</span>{%- endif -%}
+        </button>
+      {%- endif -%}
+    </div>
+
+    <div class="collection-layout">
+      {%- if search.filters.size > 0 -%}
+        <aside class="collection-layout__sidebar">
+          {%- render 'filter-groups', filters: search.filters -%}
+        </aside>
+      {%- endif -%}
+
+      <div class="collection-layout__main">
+        {%- if has_active_filters -%}
+          <div class="filter-chips">
+            {%- for filter in search.filters -%}
+              {%- for value in filter.active_values -%}
+                {%- render 'chip-filter', label: value.label, url: value.url_to_remove -%}
+              {%- endfor -%}
+            {%- endfor -%}
+            <a href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&amp;type=product" class="filter-chips__clear">{{ 'collection.clear_all' | t }}</a>
+          </div>
+        {%- endif -%}
+
+        {%- if search.results_count == 0 -%}
+          <div class="collection-grid__empty">
+            <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3">
+              <circle cx="27" cy="27" r="16"/><path d="M39 39 L54 54"/>
+            </svg>
+            <h2 style="font-size:18px">{{ 'search.no_results' | t: terms: search.terms }}</h2>
+            <p class="muted" style="font-size:13px">{{ 'search.no_results_text' | t }}</p>
+          </div>
+        {%- else -%}
+          {%- paginate search.results by section.settings.results_per_page -%}
+            <div class="product-grid" data-density="{{ settings.grid_density }}" data-context="collection">
+              {%- for result in search.results -%}
+                {%- if result.object_type == 'product' -%}
+                  {%- render 'card-product', product: result -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+            {%- render 'pagination', paginate: paginate -%}
+          {%- endpaginate -%}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endunless -%}
+</div>
+
+{%- if search.performed and search.filters.size > 0 -%}
+  <div id="MobileSearchFilters" class="mobile-filter-drawer" data-overlay data-overlay-backdrop hidden>
+    <div class="mobile-filter-drawer__panel">
+      <div class="mobile-filter-drawer__top">
+        <span class="eyebrow" style="font-size:13px;color:var(--text)">{{ 'collection.filters' | t }}</span>
+        {%- if has_active_filters -%}
+          <a href="{{ routes.search_url }}?q={{ search.terms | url_encode }}&amp;type=product" class="mobile-filter-drawer__clear">{{ 'collection.clear_all' | t }}</a>
+        {%- endif -%}
+        <button type="button" class="icon-btn" data-overlay-close aria-label="{{ 'accessibility.close' | t }}">{%- render 'icon-close' -%}</button>
+      </div>
+      <div class="mobile-filter-drawer__body">
+        {%- render 'filter-groups', filters: search.filters -%}
+      </div>
+      <div class="mobile-filter-drawer__footer">
+        <button type="button" class="btn btn-primary btn-block" data-overlay-close>
+          {%- if search.results_count == 1 -%}
+            {{ 'collection.show_results_one' | t: count: search.results_count }}
+          {%- else -%}
+            {{ 'collection.show_results_other' | t: count: search.results_count }}
+          {%- endif -%}
+        </button>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+  .search-prompt { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; padding-block: 20px; }
+  .search-prompt__form { display: flex; align-items: center; gap: 10px; width: 100%; max-width: 480px; border-bottom: 1px solid var(--border-strong); }
+  .search-prompt__field { flex: 1; background: transparent; border: 0; color: var(--text); font-family: var(--font-display); font-size: 20px; text-transform: uppercase; padding: 10px 0; }
+  .search-prompt__field:focus { outline: none; }
+</style>
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    { "type": "range", "id": "results_per_page", "label": "Results per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

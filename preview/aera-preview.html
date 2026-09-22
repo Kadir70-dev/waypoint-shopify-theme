@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>AERA Theme Preview</title>
+<script>
+  (function (html) {
+    html.classList.add('js');
+    html.classList.add('motion-detected');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      html.classList.add('reduced-motion');
+    }
+    html.setAttribute('data-preset', 'dark');
+    html.setAttribute('data-corners', 'sharp');
+  })(document.documentElement);
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Everything between the START/END markers below is copied
+   verbatim from the committed theme files in /assets — this is
+   not a redesign, it's the actual production CSS.
+   ============================================================ */
+
+/* ---- tokens.css ---- */
+:root {
+  --bg: #0E0F0D;
+  --surface: #171814;
+  --surface-2: #1D1F19;
+  --surface-3: #232519;
+  --border: rgba(255, 255, 255, .09);
+  --border-strong: rgba(255, 255, 255, .18);
+  --text: #F5F4EF;
+  --muted: #A8A79E;
+  --accent: #5C6B4A;
+  --accent-light: #8CA073;
+  --accent-deep: #3F4A34;
+  --cta-bg: #F5F4EF;
+  --cta-text: #0E0F0D;
+  --status-processing-border: var(--border-strong);
+  --status-shipped-color: var(--accent-light);
+  --status-delivered-bg: var(--accent);
+  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-editorial: "Playfair Display", Georgia, serif;
+  --type-scale: 1;
+  --page-width: 1200px;
+  --space-unit: 8px;
+  --radius: 0px;
+  --ease-out-slow: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 500ms;
+  --focus-ring: 2px solid var(--accent-light);
+  --focus-ring-offset: 3px;
+  color-scheme: dark;
+}
+:root[data-preset="fieldbook"] {
+  --bg: #F4F1EA;
+  --surface: #FFFFFF;
+  --surface-2: #FBFAF6;
+  --surface-3: #EFEBE0;
+  --border: #DDD8CB;
+  --border-strong: #C9C3B2;
+  --text: #171712;
+  --muted: #6B6A5E;
+  --accent: #4A5A3C;
+  --accent-light: #4A5A3C;
+  --accent-deep: #33402A;
+  --cta-bg: #171712;
+  --cta-text: #F5F4EF;
+  color-scheme: light;
+}
+:root[data-corners="rounded"] { --radius: 6px; }
+.reduced-motion { --dur-fast: 1ms; --dur-base: 1ms; --dur-slow: 1ms; }
+@media (prefers-reduced-motion: reduce) {
+  :root:not(.motion-detected) { --dur-fast: 1ms; --dur-base: 1ms; --dur-slow: 1ms; }
+}
+
+/* ---- base.css ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); color-scheme: inherit; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: calc(16px * var(--type-scale)); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: .01em; margin: 0; text-wrap: balance; }
+.eyebrow { font-family: var(--font-display); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.editorial-quote { font-family: var(--font-editorial); font-style: italic; }
+p { margin: 0; }
+.page-width { width: 100%; max-width: var(--page-width); margin-inline: auto; padding-inline: 20px; }
+@media (min-width: 750px) { .page-width { padding-inline: 28px; } }
+.section { padding-block: 36px; }
+@media (min-width: 750px) { .section { padding-block: 48px; } }
+:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+.skip-link { position: absolute; top: -100%; left: 12px; z-index: 100; background: var(--cta-bg); color: var(--cta-text); padding: 12px 18px; font-family: var(--font-display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; transition: top var(--dur-fast) var(--ease-out-slow); }
+.skip-link:focus { top: 12px; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+html, body { overflow-x: hidden; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; padding: 14px 22px; border: 1px solid var(--border-strong); background: transparent; color: var(--text); cursor: pointer; border-radius: var(--radius); transition: background var(--dur-fast) var(--ease-out-slow), border-color var(--dur-fast) var(--ease-out-slow), opacity var(--dur-fast) var(--ease-out-slow); }
+.btn-primary { background: var(--cta-bg); color: var(--cta-text); border-color: var(--cta-bg); }
+.btn-primary:hover { opacity: .85; }
+.btn-outline:hover { border-color: var(--text); background: rgba(127, 127, 127, .08); }
+.btn-block { width: 100%; justify-content: center; }
+.photo { background-size: cover; background-position: center; background-color: var(--surface-2); }
+.photo.brand { filter: grayscale(.25) sepia(.12) contrast(1.08) brightness(.62); }
+.photo.brand.light { filter: grayscale(.2) sepia(.08) contrast(1.05) brightness(.85); }
+.badge { display: inline-block; font-family: var(--font-display); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; background: var(--cta-bg); color: var(--cta-text); padding: 4px 9px; border-radius: var(--radius); }
+[data-reveal] { opacity: 1; transform: none; }
+.js [data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity var(--dur-slow) var(--ease-out-slow), transform var(--dur-slow) var(--ease-out-slow); }
+.js [data-reveal].is-revealed { opacity: 1; transform: translateY(0); }
+
+/* ---- component-nav.css ---- */
+.announcement-bar { background: var(--surface); border-bottom: 1px solid var(--border); text-align: center; padding: 8px 16px; font-family: var(--font-display); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+.site-header { --header-fg: var(--text); --header-fg-muted: var(--muted); position: relative; background: var(--bg); border-bottom: 1px solid var(--border); color: var(--header-fg); }
+.site-header[data-sticky="true"] { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; }
+.site-header--transparent { position: fixed; inset-inline: 0; top: 0; z-index: 30; background: transparent; border-bottom-color: transparent; --header-fg: #fff; --header-fg-muted: rgba(255, 255, 255, .75); transition: background var(--dur-base) var(--ease-out-slow), border-color var(--dur-base) var(--ease-out-slow); }
+.site-header--transparent[data-scrolled="true"] { background: var(--bg); border-bottom-color: var(--border); --header-fg: var(--text); --header-fg-muted: var(--muted); }
+.site-header .icon-btn { color: var(--header-fg); }
+.site-header__row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding-block: 16px; }
+.site-header__nav { display: none; gap: 22px; font-family: var(--font-display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.site-header__nav a { padding-block: 4px; border-bottom: 1px solid transparent; }
+.site-header__nav a:hover, .site-header__nav [aria-expanded="true"] { border-bottom-color: var(--header-fg); }
+.site-header__logo { justify-self: center; font-family: var(--font-display); font-size: 16px; letter-spacing: .3em; text-transform: uppercase; text-align: center; }
+.site-header__logo small { display: block; font-family: var(--font-body); font-size: 8px; letter-spacing: .18em; color: var(--header-fg-muted); font-weight: 400; margin-top: 2px; }
+.site-header__icons { justify-self: end; display: flex; gap: 16px; align-items: center; }
+.icon-btn { position: relative; display: inline-flex; background: none; border: 0; color: var(--text); cursor: pointer; padding: 4px; }
+.icon-btn svg { width: 20px; height: 20px; }
+.icon-btn__count { position: absolute; top: -4px; right: -6px; background: var(--cta-bg); color: var(--cta-text); font-family: var(--font-display); font-size: 9px; min-width: 15px; height: 15px; border-radius: 999px; display: flex; align-items: center; justify-content: center; padding-inline: 2px; }
+.hamburger-btn { display: inline-flex; }
+@media (min-width: 990px) { .site-header__nav { display: flex; } .hamburger-btn { display: none; } }
+.mega-menu { position: absolute; left: 0; right: 0; top: 100%; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border-strong); box-shadow: 0 24px 30px rgba(0, 0, 0, .25); padding: 32px 28px; display: none; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) 1.2fr; gap: 30px; opacity: 0; transform: translateY(-6px); transition: opacity var(--dur-base) var(--ease-out-slow), transform var(--dur-base) var(--ease-out-slow); }
+.mega-menu[data-state="open"] { display: grid; opacity: 1; transform: translateY(0); }
+.mega-menu[hidden] { display: none !important; }
+.mega-menu__column h3 { font-size: 11px; letter-spacing: .14em; margin-bottom: 14px; }
+.mega-menu__column ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+.mega-menu__tile { position: relative; display: block; min-height: 150px; background-size: cover; background-position: center; }
+.mega-menu__tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0, 0, 0, .65), rgba(0, 0, 0, .05)); }
+.mega-menu__tile-label { position: absolute; left: 14px; bottom: 14px; color: #fff; z-index: 1; }
+[data-overlay] { transition: opacity var(--dur-base) var(--ease-out-slow); }
+[data-overlay][hidden] { display: none; }
+.mobile-nav { position: fixed; inset: 0; z-index: 60; background: var(--bg); color: var(--text); display: flex; flex-direction: column; padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); opacity: 0; transform: translateX(16px); transition: opacity var(--dur-slow) var(--ease-out-slow), transform var(--dur-slow) var(--ease-out-slow); }
+.mobile-nav[data-state="open"] { opacity: 1; transform: translateX(0); }
+.mobile-nav__top { display: flex; justify-content: space-between; align-items: center; padding: 20px; }
+.mobile-nav__top-icons { display: flex; gap: 14px; }
+.mobile-nav__panel { padding: 12px 20px 20px; overflow-y: auto; flex: 1; }
+.mobile-nav__panel[hidden] { display: none; }
+.mobile-nav__links { display: flex; flex-direction: column; gap: 22px; list-style: none; margin: 0; padding: 0; }
+.mobile-nav__links a, .mobile-nav__drill { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: 0; color: var(--text); font-family: var(--font-display); font-size: 26px; text-transform: uppercase; text-align: left; cursor: pointer; padding: 0; }
+.mobile-nav__back { display: flex; align-items: center; gap: 10px; background: none; border: 0; color: var(--text); cursor: pointer; padding: 0 0 20px; font-family: var(--font-display); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.mobile-nav__back svg { width: 16px; height: 16px; }
+.mobile-nav__sublinks { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-direction: column; gap: 16px; font-family: var(--font-display); font-size: 17px; text-transform: uppercase; }
+.mobile-nav__tile { position: relative; display: block; min-height: 150px; background-size: cover; background-position: center; margin-top: auto; }
+.mobile-nav__tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0, 0, 0, .65), rgba(0, 0, 0, .05)); }
+.mobile-nav__tile-label { position: absolute; left: 14px; bottom: 14px; color: #fff; z-index: 1; }
+@media (min-width: 990px) { .mobile-nav { display: none; } }
+.search-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, .55); display: flex; align-items: flex-start; justify-content: center; padding: 8vh 20px 20px; opacity: 0; transition: opacity var(--dur-base) var(--ease-out-slow); }
+.search-overlay[data-state="open"] { opacity: 1; }
+.search-overlay__panel { background: var(--bg); border: 1px solid var(--border-strong); width: 100%; max-width: 640px; padding: 40px; display: flex; flex-direction: column; gap: 22px; }
+.search-overlay__top { display: flex; justify-content: flex-end; }
+.search-overlay__field { width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--border-strong); color: var(--text); font-family: var(--font-display); font-size: 22px; text-transform: uppercase; padding: 10px 0; }
+.search-overlay__field:focus { border-bottom-color: var(--accent-light); outline: none; }
+.search-overlay__field::placeholder { color: var(--muted); text-transform: none; font-family: var(--font-body); letter-spacing: 0; }
+.chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { font-family: var(--font-display); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--border-strong); padding: 7px 10px; background: transparent; color: var(--text); cursor: pointer; }
+.mobile-tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; background: var(--surface); border-top: 1px solid var(--border); padding: 8px 4px calc(8px + env(safe-area-inset-bottom, 0px)); }
+.mobile-tabbar__item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--muted); font-size: 10px; font-family: var(--font-display); letter-spacing: .04em; text-transform: uppercase; }
+.mobile-tabbar__item svg { width: 20px; height: 20px; }
+.mobile-tabbar__item[aria-current="page"] { color: var(--text); }
+body[data-has-tabbar="true"] { padding-bottom: 62px; }
+@media (min-width: 990px) { .mobile-tabbar { display: none; } body[data-has-tabbar="true"] { padding-bottom: 0; } }
+.site-footer { background: var(--bg); border-top: 1px solid var(--border); padding-block: 40px; }
+.site-footer__grid { display: grid; gap: 32px; }
+.site-footer__cols { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.site-footer__cols h3 { font-size: 11px; letter-spacing: .12em; margin-bottom: 12px; }
+.site-footer__cols ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+.newsletter-block { display: flex; flex-direction: column; gap: 12px; max-width: 420px; }
+.newsletter-block__row { display: flex; gap: 0; border: 1px solid var(--border-strong); }
+.newsletter-block__row input { flex: 1; background: transparent; border: 0; color: var(--text); padding: 12px 14px; font-family: var(--font-body); font-size: 13px; }
+.newsletter-block__row button { font-family: var(--font-display); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; background: var(--cta-bg); color: var(--cta-text); border: 0; padding: 0 18px; cursor: pointer; }
+.newsletter-block__consent { display: flex; gap: 8px; align-items: flex-start; font-size: 11px; color: var(--muted); }
+.site-footer__bottom { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; padding-top: 26px; margin-top: 26px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); }
+.site-footer__social { display: flex; gap: 14px; }
+.site-footer__social svg { width: 16px; height: 16px; }
+.locale-form { display: flex; gap: 10px; }
+.locale-form select { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); font-size: 11px; padding: 6px 8px; }
+@media (min-width: 750px) { .site-footer__grid:has(.newsletter-block) { grid-template-columns: 1.4fr 1fr; align-items: start; } }
+
+/* ---- component-product-card.css ---- */
+.pcard { position: relative; background: var(--surface-2); border: 1px solid var(--border); display: flex; flex-direction: column; }
+.pcard__media { position: relative; aspect-ratio: 1 / 1; background: var(--surface-3); overflow: hidden; }
+.pcard__media img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-base) var(--ease-out-slow); }
+.pcard:hover .pcard__media img { transform: scale(1.03); }
+.pcard__badge { position: absolute; top: 10px; left: 10px; z-index: 1; }
+.pcard__quickadd-form { display: contents; }
+.pcard__quickadd { position: absolute; bottom: 10px; right: 10px; z-index: 1; width: 32px; height: 32px; border-radius: 50%; background: var(--cta-bg); color: var(--cta-text); border: 0; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.pcard__quickadd svg { width: 16px; height: 16px; }
+.pcard__body { padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+.pcard__name { font-family: var(--font-display); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+.pcard__price { font-size: 13px; color: var(--muted); display: flex; gap: 8px; }
+.pcard__price .compare-at { text-decoration: line-through; opacity: .7; }
+.pcard__swatches { display: flex; gap: 6px; margin-top: 4px; }
+.pcard__swatches .swatch { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--border-strong); display: inline-block; }
+.pcard--plain .pcard__media { background: #fff; border-bottom: 1px solid var(--border); }
+.ccard { position: relative; display: block; min-height: 220px; overflow: hidden; }
+.ccard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-base) var(--ease-out-slow); }
+.ccard:hover img { transform: scale(1.02); }
+.ccard::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0, 0, 0, .65), rgba(0, 0, 0, .05)); }
+.ccard__label { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; height: 100%; padding: 16px; color: #fff; }
+.ccard__label svg { width: 18px; height: 18px; transition: transform var(--dur-fast) var(--ease-out-slow); }
+.ccard:hover .ccard__label svg { transform: translateX(4px); }
+.tile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+.tile-grid > * { background: var(--bg); }
+@media (min-width: 750px) { .tile-grid { grid-template-columns: repeat(4, 1fr); } }
+.product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); }
+.product-grid > * { background: var(--bg); }
+@media (min-width: 750px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 990px) {
+  .product-grid[data-density="3"] { grid-template-columns: repeat(3, 1fr); }
+  .product-grid[data-density="4"] { grid-template-columns: repeat(4, 1fr); }
+}
+.product-grid[data-context="featured"] { gap: 1px; }
+@media (min-width: 990px) { .product-grid[data-context="featured"] { grid-template-columns: repeat(6, 1fr); } }
+
+/* ---- component-motion.css ---- */
+.hero-slider { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; }
+.hero-slider__slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity var(--dur-slow) var(--ease-out-slow), transform calc(var(--dur-slow) * 2) var(--ease-out-slow); transform: scale(1.04); }
+.hero-slider__slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, .1) 55%); z-index: 0; }
+.hero-slider__slide[data-active="true"] { position: relative; opacity: 1; visibility: visible; transform: scale(1); }
+.hero-slider { display: grid; }
+.hero-slider__slide { grid-area: 1 / 1; }
+.hero-slider__content { position: relative; z-index: 1; max-width: 480px; padding: 40px; align-self: flex-end; display: flex; flex-direction: column; gap: 12px; }
+.hero-slider__slide { display: flex; align-items: flex-end; }
+.hero-slider__dots { position: absolute; left: 40px; bottom: 20px; z-index: 2; display: flex; gap: 14px; }
+.hero-slider__dots button { background: none; border: 0; color: rgba(255, 255, 255, .55); font-family: var(--font-display); font-size: 11px; letter-spacing: .08em; cursor: pointer; padding: 4px 0; border-bottom: 1px solid transparent; }
+.hero-slider__dots button[aria-current="true"] { color: #fff; border-bottom-color: #fff; }
+.hero-slider__corner-tag { position: absolute; right: 24px; bottom: 24px; z-index: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; color: rgba(255, 255, 255, .85); font-family: var(--font-display); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; }
+.hero-slider__corner-rule { width: 26px; height: 1px; background: rgba(255, 255, 255, .5); margin-bottom: 4px; }
+@media (min-width: 750px) { .hero-slider__content { padding: 60px; } .hero-slider__corner-tag { right: 40px; bottom: 32px; font-size: 11px; } }
+.carousel__track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.carousel__track::-webkit-scrollbar { display: none; }
+.carousel__track > * { scroll-snap-align: start; flex: 0 0 auto; }
+.carousel__nav { display: flex; gap: 10px; }
+.carousel__nav button { width: 36px; height: 36px; border: 1px solid var(--border-strong); background: transparent; color: var(--text); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.carousel__nav button svg { width: 16px; height: 16px; }
+
+/* ---- split-promo.liquid (section-embedded <style>) ---- */
+.split-promo { position: relative; min-height: 340px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.split-promo--right { flex-direction: row-reverse; }
+.split-promo::before { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, .1) 55%); }
+.split-promo__content { position: relative; z-index: 1; max-width: 420px; padding: 36px; display: flex; flex-direction: column; gap: 14px; }
+.split-promo__quote { position: relative; z-index: 1; max-width: 320px; margin: 0; padding: 36px; text-align: right; color: #fff; }
+.split-promo--right .split-promo__quote { text-align: left; }
+.split-promo__quote p { font-size: 18px; }
+.split-promo__quote footer { margin-top: 12px; font-family: var(--font-display); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #ccc; }
+@media (min-width: 750px) { .split-promo { min-height: 520px; } .split-promo__content, .split-promo__quote { padding: 60px; } }
+
+/* ---- feature-spotlight.liquid (section-embedded <style>) ---- */
+.feature-spotlight { display: grid; grid-template-columns: 1fr; background: var(--bg); }
+.feature-spotlight__promo { position: relative; min-height: 300px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; padding: 32px; }
+.feature-spotlight__promo::before { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0, 0, 0, .75) 0%, rgba(0, 0, 0, .1) 60%); }
+.feature-spotlight__promo-content { position: relative; z-index: 1; max-width: 380px; display: flex; flex-direction: column; gap: 12px; }
+.feature-spotlight__list { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-family: var(--font-display); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #ddd; text-align: right; }
+.feature-spotlight__product { background: var(--surface); display: flex; flex-direction: column; gap: 24px; padding: 32px; }
+.feature-spotlight__product-body { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.feature-spotlight__product-media { align-self: center; max-width: 220px; }
+@media (min-width: 750px) {
+  .feature-spotlight { grid-template-columns: 1.9fr 1fr; }
+  .feature-spotlight__promo { min-height: 460px; padding: 48px; }
+  .feature-spotlight__product { flex-direction: row; align-items: center; justify-content: center; }
+  .feature-spotlight__product-body { flex: 1 1 140px; }
+  .feature-spotlight__product-media { flex: 1 1 140px; max-width: none; }
+}
+
+/* ---- social-proof.liquid (section-embedded <style>) ---- */
+.social-proof { display: flex; flex-direction: column; gap: 28px; }
+.social-proof__quote { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.social-proof__blockquote { margin: 0; max-width: 480px; min-width: 0; flex: 1 1 auto; text-align: center; }
+.social-proof__blockquote p { font-size: 17px; }
+.social-proof__blockquote footer { margin-top: 14px; font-size: 12px; color: var(--muted); }
+.social-proof__trust { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.social-proof__trust-item { display: flex; align-items: center; gap: 10px; }
+.social-proof__trust-icon { width: 22px; height: 22px; flex-shrink: 0; color: var(--muted); }
+.social-proof__trust-label { font-family: var(--font-display); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+@media (min-width: 990px) {
+  .social-proof { flex-direction: row; align-items: center; justify-content: space-between; gap: 32px; }
+  .social-proof__heading { flex: 0 0 200px; }
+  .social-proof__quote { flex: 1 1 240px; min-width: 0; }
+  .social-proof__track { flex: 1 1 auto; min-width: 0; }
+  .social-proof__trust { flex: 0 1 340px; min-width: 0; grid-template-columns: repeat(2, 1fr); gap: 14px 20px; }
+}
+@media (min-width: 1200px) {
+  .social-proof__trust { flex-basis: 400px; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+}
+
+/* ---- newsletter.liquid (section-embedded <style>) ---- */
+.newsletter-split { border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 20px; }
+.newsletter-split__text p { margin-top: 8px; }
+.newsletter-split__form { max-width: 420px; }
+@media (min-width: 750px) { .newsletter-split { flex-direction: row; align-items: center; justify-content: space-between; gap: 40px; } .newsletter-split__form { width: 380px; flex-shrink: 0; } }
+
+/* ============================================================
+   END verbatim theme CSS. Below: preview-harness-only styles,
+   clearly separated — not part of the shipped theme.
+   ============================================================ */
+.preview-bar { position: sticky; top: 0; z-index: 100; background: #1a1c16; color: #d8d6c8; font-family: Inter, sans-serif; font-size: 12px; padding: 10px 16px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid rgba(255,255,255,.12); }
+.preview-bar b { color: #fff; }
+.preview-bar .spacer { flex: 1; }
+.preview-bar button { font-family: Inter, sans-serif; font-size: 11px; background: transparent; border: 1px solid rgba(255,255,255,.3); color: #d8d6c8; padding: 6px 12px; cursor: pointer; border-radius: 3px; }
+.preview-bar button[aria-pressed="true"] { background: #5C6B4A; border-color: #5C6B4A; color: #fff; }
+/* placeholder photography — CSS-graded gradients standing in for real
+   AERA campaign photography, per the Photography Resilience Strategy */
+.pcard__media.photo, .ccard-ph, .promo-ph, .hero-slider__slide.photo { background-size: cover; background-position: center; }
+.pcard:hover .pcard__media.photo { transform: scale(1.03); transition: transform var(--dur-base) var(--ease-out-slow); }
+</style>
+
+<div class="preview-bar">
+  <span><b>AERA Theme Preview</b> — Milestones 0–2, assembled from the committed CSS/JS. Sample content stands in for live Shopify data.</span>
+  <span class="spacer"></span>
+  <button type="button" id="PresetDark" aria-pressed="true">Dark</button>
+  <button type="button" id="PresetFieldbook" aria-pressed="false">Fieldbook</button>
+</div>
+
+<a class="skip-link" href="#MainContent">Skip to content</a>
+
+<header class="site-header site-header--transparent" data-sticky="false" data-scrolled="false">
+  <div class="page-width site-header__row">
+    <button class="icon-btn hamburger-btn" type="button" id="MobileNavTrigger" data-overlay-trigger="MobileNav" aria-controls="MobileNav" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+
+    <nav class="site-header__nav" aria-label="Main">
+      <a href="#" aria-haspopup="true" aria-controls="MegaMenu" data-overlay-trigger="MegaMenu">Shop</a>
+      <a href="#">Gear</a>
+      <a href="#">About</a>
+      <a href="#">Journal</a>
+    </nav>
+
+    <a href="#" class="site-header__logo">
+      A E R A
+      <small>Built for a wilder tomorrow</small>
+    </a>
+
+    <div class="site-header__icons">
+      <button class="icon-btn" type="button" data-overlay-trigger="SearchOverlay" aria-controls="SearchOverlay" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>
+      </button>
+      <a href="#" class="icon-btn" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.5-4 4-6 7.5-6s6 2 7.5 6"/></svg>
+      </a>
+      <a href="#" class="icon-btn" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h2l1.5 10.5a2 2 0 002 1.5h7a2 2 0 002-1.5L20 9H7"/><circle cx="10" cy="21" r="1"/><circle cx="17" cy="21" r="1"/></svg>
+        <span class="icon-btn__count">2</span>
+      </a>
+    </div>
+  </div>
+
+  <div id="MegaMenu" class="mega-menu" data-overlay data-overlay-trap="false" hidden>
+    <div class="mega-menu__column">
+      <h3 class="eyebrow">Carry</h3>
+      <ul><li><a href="#">Backpacks</a></li><li><a href="#">Daypacks</a></li><li><a href="#">Expedition Packs</a></li></ul>
+    </div>
+    <div class="mega-menu__column">
+      <h3 class="eyebrow">Shelter &amp; Camp</h3>
+      <ul><li><a href="#">Tents</a></li><li><a href="#">Sleep Systems</a></li><li><a href="#">Cook Systems</a></li></ul>
+    </div>
+    <div class="mega-menu__column">
+      <h3 class="eyebrow">Apparel</h3>
+      <ul><li><a href="#">Shells</a></li><li><a href="#">Insulation</a></li><li><a href="#">Footwear</a></li></ul>
+    </div>
+    <a href="#" class="mega-menu__tile" style="background-image:linear-gradient(160deg,#2a2e20,#0d0e0b)">
+      <span class="mega-menu__tile-label">
+        <span class="eyebrow" style="color:#ddd">New Arrival</span>
+        <span style="display:block;font-family:var(--font-display);text-transform:uppercase;font-size:14px;margin-top:4px">Expedition 60</span>
+      </span>
+    </a>
+  </div>
+</header>
+
+<div id="MobileNav" class="mobile-nav" data-overlay hidden>
+  <div class="mobile-nav__top">
+    <div class="mobile-nav__top-icons">
+      <button class="icon-btn" type="button" data-overlay-trigger="SearchOverlay" aria-controls="SearchOverlay" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg></button>
+      <a href="#" class="icon-btn" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.5-4 4-6 7.5-6s6 2 7.5 6"/></svg></a>
+    </div>
+    <button class="icon-btn" type="button" data-overlay-close aria-label="Close" data-overlay-autofocus>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav__panel" data-nav-panel="root">
+    <ul class="mobile-nav__links">
+      <li><button type="button" class="mobile-nav__drill" data-nav-drill="drill-1">Shop <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button></li>
+      <li><a href="#">Gear</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Journal</a></li>
+    </ul>
+  </div>
+  <div class="mobile-nav__panel" data-nav-panel="drill-1" hidden>
+    <button type="button" class="mobile-nav__back" data-nav-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg> Shop</button>
+    <ul class="mobile-nav__sublinks">
+      <li><a href="#">Backpacks</a></li><li><a href="#">Camp &amp; Shelter</a></li><li><a href="#">Tools &amp; Equipment</a></li><li><a href="#">Apparel</a></li><li><a href="#">Footwear</a></li>
+    </ul>
+    <a href="#" class="mobile-nav__tile" style="background-image:linear-gradient(160deg,#2a2e20,#0d0e0b)">
+      <span class="mobile-nav__tile-label">
+        <span class="eyebrow" style="color:#ddd">New Arrival</span>
+        <span style="display:block;font-family:var(--font-display);text-transform:uppercase;font-size:14px;margin-top:4px">Expedition 60</span>
+      </span>
+    </a>
+  </div>
+</div>
+
+<div id="SearchOverlay" class="search-overlay" data-overlay data-overlay-backdrop hidden>
+  <div class="search-overlay__panel">
+    <div class="search-overlay__top">
+      <button class="icon-btn" type="button" data-overlay-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    </div>
+    <form onsubmit="event.preventDefault()" role="search">
+      <input class="search-overlay__field" type="search" placeholder="Search gear, journal, categories…" autocomplete="off" data-overlay-autofocus>
+    </form>
+    <div>
+      <div class="eyebrow" style="margin-bottom:10px">Popular Searches</div>
+      <div class="chip-row">
+        <span class="chip">Backpacks</span><span class="chip">Waterproof</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="mobile-tabbar" aria-label="Menu">
+  <a href="#" class="mobile-tabbar__item" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg>Home</a>
+  <a href="#" class="mobile-tabbar__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>Shop</a>
+  <a href="#" class="mobile-tabbar__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 5.5v15"/></svg>Journal</a>
+  <a href="#" class="mobile-tabbar__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.5-4 4-6 7.5-6s6 2 7.5 6"/></svg>Account</a>
+</nav>
+
+<main id="MainContent" tabindex="-1">
+
+  <div class="hero-slider" data-hero-slider data-autoplay="true" data-interval="6000">
+    <div class="hero-slider__slide photo brand" data-active="true" style="background-image:url(../assets/hero-slide-1.png)">
+      <div class="hero-slider__content">
+        <span class="eyebrow" style="color:#ddd">Gear for Real Life</span>
+        <h1 style="color:#fff;font-size:clamp(28px,5vw,44px)">Further by Nature</h1>
+        <p style="color:#eee">Technical gear for the unknown. Built to go further.</p>
+        <a href="#" class="btn btn-primary" style="align-self:flex-start;margin-top:6px">Explore Gear</a>
+      </div>
+    </div>
+    <div class="hero-slider__slide photo brand" data-hero-slide style="background-image:url(../assets/hero-slide-2.png)">
+      <div class="hero-slider__content">
+        <span class="eyebrow" style="color:#ddd">Engineered for Extremes</span>
+        <h1 style="color:#fff;font-size:clamp(28px,5vw,44px)">Details That Perform</h1>
+        <p style="color:#eee">Premium materials. Rigorously tested. No compromises.</p>
+        <a href="#" class="btn btn-primary" style="align-self:flex-start;margin-top:6px">Our Approach</a>
+      </div>
+    </div>
+    <div class="hero-slider__slide photo brand" data-hero-slide style="background-image:url(../assets/hero-slide-3.png)">
+      <div class="hero-slider__content">
+        <span class="eyebrow" style="color:#ddd">AERA Journal</span>
+        <h1 style="color:#fff;font-size:clamp(28px,5vw,44px)">A Life More Open</h1>
+        <p style="color:#eee">Stories, guides and perspectives from those who choose a wilder path.</p>
+        <a href="#" class="btn btn-primary" style="align-self:flex-start;margin-top:6px">Explore the Journal</a>
+      </div>
+    </div>
+    <div class="hero-slider__corner-tag">
+      <span class="hero-slider__corner-rule"></span>
+      <span>Explore</span>
+      <span>Adapt</span>
+      <span>Endure</span>
+    </div>
+    <div class="hero-slider__dots">
+      <button type="button" data-hero-dot aria-current="true" aria-label="Slide 1">01</button>
+      <button type="button" data-hero-dot aria-label="Slide 2">02</button>
+      <button type="button" data-hero-dot aria-label="Slide 3">03</button>
+    </div>
+  </div>
+
+  <div class="section page-width" data-reveal-group>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+      <div>
+        <h2 style="font-size:22px">Latest Releases</h2>
+        <p style="color:var(--muted);margin-top:6px">New gear for longer days.</p>
+      </div>
+      <a href="#" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">View all &rarr;</a>
+    </div>
+    <div class="product-grid" data-context="featured" id="ProductGrid"></div>
+  </div>
+
+  <div class="section page-width" data-reveal-group>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+      <h2 style="font-size:22px">Shop by Category</h2>
+      <a href="#" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">View all &rarr;</a>
+    </div>
+    <div class="tile-grid" id="CategoryGrid"></div>
+  </div>
+
+  <div class="feature-spotlight" data-reveal-group>
+    <div class="photo brand feature-spotlight__promo" data-reveal style="background-image:linear-gradient(135deg,#262a1c 0%,#14150f 55%,#3f4a34 100%)">
+      <div class="feature-spotlight__promo-content">
+        <span class="eyebrow" style="color:#ddd">Engineered for Extremes</span>
+        <h2 style="font-size:26px;color:#fff">Details That Perform</h2>
+        <div style="color:#ddd;font-size:14px;line-height:1.6">From alpine ridges to dense forests, every element is designed with purpose. Premium materials. Rigorously tested. No compromises.</div>
+        <a href="#" class="btn btn-outline" style="align-self:flex-start;margin-top:6px">Our Approach &rarr;</a>
+      </div>
+      <ul class="feature-spotlight__list">
+        <li>Waterproof</li><li>Breathable</li><li>Durable</li><li>Lightweight</li><li>Field Tested</li>
+      </ul>
+    </div>
+    <div class="feature-spotlight__product" data-reveal>
+      <div class="feature-spotlight__product-body">
+        <span class="eyebrow">Featured Gear</span>
+        <h3 style="font-size:22px">Summit 45</h3>
+        <p style="color:var(--muted);font-size:14px">All-terrain backpack for multi-day missions.</p>
+        <span class="pcard__price" style="font-size:16px;color:var(--text)">&euro;249,00</span>
+        <a href="#" class="btn btn-primary" style="align-self:flex-start;margin-top:4px">View Product &rarr;</a>
+      </div>
+      <div class="feature-spotlight__product-media">
+        <div class="photo" style="width:100%;aspect-ratio:1/1;background-image:linear-gradient(200deg,#202318 0%,#0e0f0d 55%,#4a5539 140%)"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="split-promo photo brand" data-reveal-group style="background-image:radial-gradient(circle at 70% 30%,#333828 0%,#101109 75%)">
+    <div class="split-promo__content" data-reveal>
+      <span class="eyebrow" style="color:#ddd">AERA Journal</span>
+      <h2 style="font-size:26px;color:#fff">A Life More Open</h2>
+      <div style="color:#ddd;font-size:14px;line-height:1.6">Stories, guides and perspectives from those who choose a wilder path.</div>
+      <a href="#" class="btn btn-outline" style="align-self:flex-start;margin-top:6px">Explore the Journal &rarr;</a>
+    </div>
+    <blockquote class="split-promo__quote" data-reveal>
+      <p class="editorial-quote">&ldquo;Not escape. Perspective.&rdquo;</p>
+      <footer>AERA Journal, Vol. 04</footer>
+    </blockquote>
+  </div>
+
+  <div class="section page-width">
+    <div class="social-proof" data-carousel>
+      <div class="social-proof__heading">
+        <h2 style="font-size:20px">Trusted by Explorers</h2>
+        <p style="color:var(--muted);font-size:13px;margin-top:6px">Real people. Real places.</p>
+      </div>
+      <div class="social-proof__quote">
+        <button type="button" class="carousel__nav-btn" data-carousel-prev aria-label="Previous" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--border-strong);background:transparent;color:var(--text);cursor:pointer;display:inline-flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:16px;height:16px"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="carousel__track social-proof__track" data-carousel-track>
+          <blockquote class="social-proof__blockquote" data-carousel-item>
+            <p class="editorial-quote">&ldquo;AERA gear has been with me through Icelandic storms, alpine crossings and everything in between. It simply works.&rdquo;</p>
+            <footer>&mdash; M. Eriksson, Mountain Guide</footer>
+          </blockquote>
+        </div>
+        <button type="button" class="carousel__nav-btn" data-carousel-next aria-label="Next" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--border-strong);background:transparent;color:var(--text);cursor:pointer;display:inline-flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:16px;height:16px"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="social-proof__trust">
+        <div class="social-proof__trust-item"><span class="social-proof__trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 19l6-11 4 6 2-3 6 8z"/></svg></span><span class="social-proof__trust-label">Field Tested</span></div>
+        <div class="social-proof__trust-item"><span class="social-proof__trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19c0-8 4-13 14-14 -1 10-6 14-14 14z"/><path d="M5 19c3-4 6-6.5 9.5-9.5"/></svg></span><span class="social-proof__trust-label">Sustainable Practices</span></div>
+        <div class="social-proof__trust-item"><span class="social-proof__trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="social-proof__trust-label">Built to Last</span></div>
+        <div class="social-proof__trust-item"><span class="social-proof__trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 6 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-6-3.5-9s1-6.5 3.5-9z"/></svg></span><span class="social-proof__trust-label">Global Community</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section page-width newsletter-split" data-reveal>
+    <div class="newsletter-split__text">
+      <h2 style="font-size:20px">Stay in the Wild</h2>
+      <p style="color:var(--muted);font-size:14px;max-width:40ch">Join for exclusive releases, field notes and 10% off your first order.</p>
+    </div>
+    <div class="newsletter-split__form">
+      <form onsubmit="event.preventDefault(); this.querySelector('[data-ok]').hidden=false; this.querySelector('.newsletter-block__row').hidden=true; this.querySelector('.newsletter-block__consent').hidden=true;">
+        <div class="newsletter-block__row">
+          <label for="NLSectionEmail" class="visually-hidden">Email address</label>
+          <input type="email" id="NLSectionEmail" placeholder="Your email address" required>
+          <button type="submit">Subscribe</button>
+        </div>
+        <label class="newsletter-block__consent"><input type="checkbox" required style="margin-top:2px">I agree to receive marketing emails from AERA.</label>
+        <p data-ok hidden role="status" style="font-size:13px">Thanks — you're on the list.</p>
+      </form>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="page-width site-footer__grid">
+    <div class="site-footer__cols">
+      <div><h3 class="eyebrow">Shop</h3><ul><li><a href="#">Backpacks</a></li><li><a href="#">Apparel</a></li><li><a href="#">Footwear</a></li></ul></div>
+      <div><h3 class="eyebrow">Company</h3><ul><li><a href="#">About</a></li><li><a href="#">Journal</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h3 class="eyebrow">Support</h3><ul><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">FAQ</a></li></ul></div>
+    </div>
+  </div>
+  <div class="page-width site-footer__bottom">
+    <div>
+      <span style="display:block;font-family:var(--font-display);font-size:13px;letter-spacing:.2em">A E R A</span>
+      <span>&copy; 2026 AERA. All rights reserved.</span>
+    </div>
+    <form class="locale-form" onsubmit="event.preventDefault()">
+      <select aria-label="Language"><option>English</option></select>
+      <select aria-label="Country/region"><option>Netherlands (EUR)</option></select>
+    </form>
+    <div class="site-footer__social">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="0.8" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="5.5" width="19" height="13" rx="3"/><path d="M10 9l6 3-6 3z" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#" aria-label="Spotify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M7 10c3.5-1 7-.6 10 1M7.5 13c2.8-.8 5.6-.5 8 .8M8 16c2-.6 4-.4 6 .6" stroke-linecap="round"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   overlay.js — verbatim
+   ============================================================ */
+(function () {
+  'use strict';
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  function AeraOverlay(el, options) {
+    options = options || {};
+    this.el = el;
+    this.trap = options.trap !== false;
+    this.trigger = null;
+    this._onKeydown = this._onKeydown.bind(this);
+    this._onBackdropClick = this._onBackdropClick.bind(this);
+  }
+  AeraOverlay.prototype.isOpen = function () { return this.el.getAttribute('data-state') === 'open'; };
+  AeraOverlay.prototype.open = function (trigger) {
+    if (this.isOpen()) return;
+    this.trigger = trigger || document.activeElement;
+    this.el.hidden = false;
+    this.el.getBoundingClientRect();
+    this.el.setAttribute('data-state', 'open');
+    if (trigger) trigger.setAttribute('aria-expanded', 'true');
+    document.addEventListener('keydown', this._onKeydown, true);
+    this.el.addEventListener('click', this._onBackdropClick);
+    var focusTarget = this.el.querySelector('[data-overlay-autofocus]') || this.el.querySelector(FOCUSABLE);
+    if (focusTarget) focusTarget.focus();
+    this.el.dispatchEvent(new CustomEvent('overlay:open'));
+  };
+  AeraOverlay.prototype.close = function () {
+    if (!this.isOpen()) return;
+    this.el.setAttribute('data-state', 'closing');
+    document.removeEventListener('keydown', this._onKeydown, true);
+    this.el.removeEventListener('click', this._onBackdropClick);
+    var reducedMotion = document.documentElement.classList.contains('reduced-motion');
+    var finish = function () {
+      this.el.setAttribute('data-state', 'closed');
+      this.el.hidden = true;
+      if (this.trigger) { this.trigger.setAttribute('aria-expanded', 'false'); this.trigger.focus(); }
+      this.el.dispatchEvent(new CustomEvent('overlay:close'));
+    }.bind(this);
+    if (reducedMotion) { finish(); return; }
+    var done = false;
+    var onEnd = function (e) { if (e.target !== this.el || done) return; done = true; this.el.removeEventListener('transitionend', onEnd); finish(); }.bind(this);
+    this.el.addEventListener('transitionend', onEnd);
+    setTimeout(function () { if (!done) { done = true; finish(); } }, 400);
+  };
+  AeraOverlay.prototype._onKeydown = function (e) {
+    if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); this.close(); return; }
+    if (e.key !== 'Tab' || !this.trap) return;
+    var focusable = Array.prototype.slice.call(this.el.querySelectorAll(FOCUSABLE)).filter(function (node) { return node.offsetParent !== null; });
+    if (!focusable.length) return;
+    var first = focusable[0]; var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  AeraOverlay.prototype._onBackdropClick = function (e) {
+    if (e.target.hasAttribute('data-overlay-backdrop') || e.target.closest('[data-overlay-close]')) { this.close(); }
+  };
+  window.AeraOverlay = AeraOverlay;
+  document.addEventListener('DOMContentLoaded', function () {
+    window.AeraOverlays = window.AeraOverlays || {};
+    document.querySelectorAll('[data-overlay]').forEach(function (el) {
+      var id = el.id;
+      if (!id) return;
+      var trap = el.getAttribute('data-overlay-trap') !== 'false';
+      var instance = new AeraOverlay(el, { trap: trap });
+      window.AeraOverlays[id] = instance;
+      document.querySelectorAll('[data-overlay-trigger="' + id + '"]').forEach(function (trigger) {
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.addEventListener('click', function () { if (instance.isOpen()) { instance.close(); } else { instance.open(trigger); } });
+      });
+    });
+  });
+})();
+
+/* ============================================================
+   mobile-nav.js — verbatim
+   ============================================================ */
+(function () {
+  'use strict';
+  var nav = document.getElementById('MobileNav');
+  if (!nav) return;
+  var panels = nav.querySelectorAll('[data-nav-panel]');
+  function showPanel(name) {
+    panels.forEach(function (panel) { panel.hidden = panel.getAttribute('data-nav-panel') !== name; });
+    var target = nav.querySelector('[data-nav-panel="' + name + '"]');
+    if (!target) return;
+    var focusEl = target.querySelector('[data-overlay-autofocus]') || target.querySelector('a, button');
+    if (focusEl) focusEl.focus();
+  }
+  nav.addEventListener('click', function (e) {
+    var drill = e.target.closest('[data-nav-drill]');
+    if (drill) { showPanel(drill.getAttribute('data-nav-drill')); return; }
+    if (e.target.closest('[data-nav-back]')) { showPanel('root'); }
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    var overlay = window.AeraOverlays && window.AeraOverlays.MobileNav;
+    if (!overlay) return;
+    var open = overlay.open.bind(overlay);
+    overlay.open = function (trigger) { showPanel('root'); open(trigger); };
+  });
+})();
+
+/* ============================================================
+   motion.js — verbatim
+   ============================================================ */
+(function () {
+  'use strict';
+  var reducedMotion = document.documentElement.classList.contains('reduced-motion');
+  var transparentHeader = document.querySelector('.site-header--transparent');
+  if (transparentHeader) {
+    var setHeaderScrolled = function () { transparentHeader.setAttribute('data-scrolled', window.scrollY > 10 ? 'true' : 'false'); };
+    setHeaderScrolled();
+    window.addEventListener('scroll', setHeaderScrolled, { passive: true });
+  }
+  var revealEls = document.querySelectorAll('[data-reveal]');
+  if (revealEls.length) {
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('is-revealed'); io.unobserve(entry.target); } });
+      }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+      revealEls.forEach(function (el) {
+        var group = el.closest('[data-reveal-group]');
+        var indexInGroup = 0;
+        if (group) { indexInGroup = Array.prototype.indexOf.call(group.querySelectorAll('[data-reveal]'), el); }
+        el.style.transitionDelay = Math.min(indexInGroup, 6) * 70 + 'ms';
+        io.observe(el);
+      });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('is-revealed'); });
+    }
+  }
+  document.querySelectorAll('[data-hero-slider]').forEach(function (slider) {
+    var slides = slider.querySelectorAll('[data-hero-slide], [data-active]');
+    slides = slider.querySelectorAll('.hero-slider__slide');
+    var dots = slider.querySelectorAll('[data-hero-dot]');
+    if (slides.length < 2) return;
+    var current = 0;
+    var autoplay = slider.getAttribute('data-autoplay') === 'true' && !reducedMotion;
+    var interval = parseInt(slider.getAttribute('data-interval'), 10) || 6000;
+    var timer = null;
+    function show(index) {
+      slides[current].removeAttribute('data-active');
+      if (dots[current]) dots[current].setAttribute('aria-current', 'false');
+      current = (index + slides.length) % slides.length;
+      slides[current].setAttribute('data-active', 'true');
+      if (dots[current]) dots[current].setAttribute('aria-current', 'true');
+    }
+    function restart() { if (!autoplay) return; clearInterval(timer); timer = setInterval(function () { show(current + 1); }, interval); }
+    dots.forEach(function (dot, i) { dot.addEventListener('click', function () { show(i); restart(); }); });
+    slider.addEventListener('mouseenter', function () { clearInterval(timer); });
+    slider.addEventListener('mouseleave', restart);
+    slider.addEventListener('focusin', function () { clearInterval(timer); });
+    slider.addEventListener('focusout', restart);
+    restart();
+  });
+  document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
+    var track = carousel.querySelector('[data-carousel-track]');
+    if (!track) return;
+    function scrollByCard(dir) {
+      var card = track.querySelector('[data-carousel-item]');
+      var amount = card ? card.getBoundingClientRect().width + 16 : track.clientWidth * 0.8;
+      track.scrollBy({ left: amount * dir, behavior: reducedMotion ? 'auto' : 'smooth' });
+    }
+    var prev = carousel.querySelector('[data-carousel-prev]');
+    var next = carousel.querySelector('[data-carousel-next]');
+    if (prev) prev.addEventListener('click', function () { scrollByCard(-1); });
+    if (next) next.addEventListener('click', function () { scrollByCard(1); });
+  });
+})();
+
+/* ============================================================
+   Preview-harness-only script: sample product/category cards
+   (card-product.liquid / card-category.liquid markup, hand-filled
+   with sample data instead of Liquid) + the preset toggle.
+   ============================================================ */
+(function () {
+  var products = [
+    { name: 'Summit 45', price: '€249,00', badge: 'Bestseller', swatches: ['#5C6B4A', '#2b2b2b', '#B99A6B'], grad: 'linear-gradient(160deg,#1b1d16,#3a3f2c 45%,#11120e)' },
+    { name: 'Altitude 35', price: '€229,00', swatches: ['#5C6B4A', '#B99A6B'], grad: 'radial-gradient(circle at 30% 20%,#2a2e20,#0d0e0b 72%)' },
+    { name: 'Ridgeline 25', price: '€179,00', swatches: ['#5C6B4A'], grad: 'linear-gradient(135deg,#262a1c,#14150f 55%,#3f4a34)' },
+    { name: 'Expedition 60', price: '€299,00', badge: 'New', swatches: ['#5C6B4A', '#2b2b2b', '#B99A6B'], grad: 'linear-gradient(200deg,#202318,#0e0f0d 55%,#4a5539 140%)' },
+    { name: 'Ridge Shell Jacket', price: '€249,00', swatches: ['#2b2b2b', '#5C6B4A'], grad: 'radial-gradient(circle at 70% 30%,#333828,#101109 75%)' },
+    { name: 'Terrain Mid Boot', price: '€179,00', swatches: ['#6b4a2f', '#2b2b2b'], grad: 'linear-gradient(120deg,#1a1c14,#3a4030 50%,#0c0d0a)' }
+  ];
+  var grid = document.getElementById('ProductGrid');
+  products.forEach(function (p) {
+    var el = document.createElement('div');
+    el.className = 'pcard';
+    el.setAttribute('data-reveal', '');
+    el.innerHTML =
+      '<a href="#" class="pcard__media photo" style="background-image:' + p.grad + '">' +
+      (p.badge ? '<span class="badge pcard__badge">' + p.badge + '</span>' : '') +
+      '</a>' +
+      '<form class="pcard__quickadd-form" onsubmit="event.preventDefault()"><button type="submit" class="pcard__quickadd" aria-label="Quick add ' + p.name + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg></button></form>' +
+      '<div class="pcard__body">' +
+      '<a href="#" class="pcard__name">' + p.name + '</a>' +
+      '<span class="pcard__price">' + p.price + '</span>' +
+      '<div class="pcard__swatches">' + p.swatches.map(function (c) { return '<span class="swatch" style="background:' + c + '"></span>'; }).join('') + '</div>' +
+      '</div>';
+    grid.appendChild(el);
+  });
+
+  var categories = [
+    { label: 'Backpacks', sub: 'Carry further.', grad: 'linear-gradient(160deg,#1b1d16,#3a4030 60%,#0c0d0a)' },
+    { label: 'Camp & Shelter', sub: 'Stay ready.', grad: 'radial-gradient(circle at 50% 80%,#2f3423,#0e0f0c 70%)' },
+    { label: 'Tools & Equipment', sub: 'Built for more.', grad: 'linear-gradient(170deg,#23261a,#4b5238 40%,#111208)' },
+    { label: 'Apparel', sub: 'All conditions.', grad: 'linear-gradient(135deg,#262a1c,#14150f 55%,#3f4a34)' }
+  ];
+  var cgrid = document.getElementById('CategoryGrid');
+  categories.forEach(function (c) {
+    var el = document.createElement('a');
+    el.href = '#';
+    el.className = 'ccard';
+    el.setAttribute('data-reveal', '');
+    el.innerHTML =
+      '<div class="photo" style="position:absolute;inset:0;background-image:' + c.grad + '"></div>' +
+      '<span class="ccard__label"><span><span style="display:block;font-family:var(--font-display);font-size:16px;text-transform:uppercase">' + c.label + '</span><span style="display:block;font-size:12px;color:#ddd;margin-top:2px">' + c.sub + '</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16M13 5l7 7-7 7"/></svg></span>';
+    cgrid.appendChild(el);
+  });
+
+  var darkBtn = document.getElementById('PresetDark');
+  var fieldbookBtn = document.getElementById('PresetFieldbook');
+  function setPreset(name) {
+    document.documentElement.setAttribute('data-preset', name);
+    darkBtn.setAttribute('aria-pressed', String(name === 'dark'));
+    fieldbookBtn.setAttribute('aria-pressed', String(name === 'fieldbook'));
+  }
+  darkBtn.addEventListener('click', function () { setPreset('dark'); });
+  fieldbookBtn.addEventListener('click', function () { setPreset('fieldbook'); });
+})();
+</script>

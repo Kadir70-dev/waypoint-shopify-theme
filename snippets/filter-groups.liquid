@@ -1,0 +1,60 @@
+{%- comment -%}
+  Renders the filter-group controls for collection.filters — shared between
+  the desktop sidebar and (Milestone 3, next slice) the mobile filter
+  drawer, so the two surfaces can't drift apart.
+  Usage: {% render 'filter-groups', filters: collection.filters %}
+{%- endcomment -%}
+{%- for filter in filters -%}
+  {%- if filter.values.size > 0 or filter.type == 'price_range' -%}
+    <div class="filter-group">
+      <h3 class="eyebrow">{{ filter.label }}</h3>
+      {%- case filter.type -%}
+        {%- when 'price_range' -%}
+          <form method="get" action="{{ collection.url }}" class="filter-group__price">
+            <label class="visually-hidden" for="FilterPriceMin-{{ filter.param_name }}">{{ 'collection.price_min' | t }}</label>
+            <input
+              type="number"
+              id="FilterPriceMin-{{ filter.param_name }}"
+              name="{{ filter.min_value.param_name }}"
+              value="{{ filter.min_value.value }}"
+              placeholder="{{ filter.range_min | money_without_currency }}"
+              min="0"
+            >
+            <span aria-hidden="true">&ndash;</span>
+            <label class="visually-hidden" for="FilterPriceMax-{{ filter.param_name }}">{{ 'collection.price_max' | t }}</label>
+            <input
+              type="number"
+              id="FilterPriceMax-{{ filter.param_name }}"
+              name="{{ filter.max_value.param_name }}"
+              value="{{ filter.max_value.value }}"
+              placeholder="{{ filter.range_max | money_without_currency }}"
+              min="0"
+            >
+            <button type="submit" class="btn btn-sm btn-outline">{{ 'collection.apply' | t }}</button>
+          </form>
+        {%- else -%}
+          <ul class="filter-group__list">
+            {%- for value in filter.values -%}
+              {%- if value.count > 0 or value.active -%}
+                {%- liquid
+                  assign option_url = value.url_to_add
+                  assign option_class = 'filter-option'
+                  if value.active
+                    assign option_url = value.url_to_remove
+                    assign option_class = 'filter-option filter-option--active'
+                  endif
+                -%}
+                <li>
+                  <a href="{{ option_url }}" class="{{ option_class }}" aria-pressed="{{ value.active }}">
+                    <span class="filter-option__box" aria-hidden="true"></span>
+                    {{ value.label }}
+                    <span class="muted">({{ value.count }})</span>
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+      {%- endcase -%}
+    </div>
+  {%- endif -%}
+{%- endfor -%}

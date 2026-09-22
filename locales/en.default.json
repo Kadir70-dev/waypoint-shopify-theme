@@ -15,7 +15,15 @@
   },
   "search": {
     "placeholder": "Search gear, journal, categories…",
-    "popular": "Popular Searches"
+    "popular": "Popular Searches",
+    "title": "Search",
+    "results_for": "Search results for “{{ terms }}”",
+    "no_results": "No results for “{{ terms }}”",
+    "no_results_text": "Check the spelling, or try a different term.",
+    "products": "Products",
+    "collections": "Collections",
+    "articles": "Journal",
+    "view_all_results": "View all results for “{{ terms }}”"
   },
   "newsletter": {
     "email_label": "Email address",
@@ -30,6 +38,30 @@
   },
   "footer": {
     "rights": "All rights reserved."
+  },
+  "list_collections": {
+    "title": "All Collections"
+  },
+  "collection": {
+    "products_count_one": "{{ count }} product",
+    "products_count_other": "{{ count }} products",
+    "empty": "No products in this collection yet.",
+    "browse_all": "Browse all gear",
+    "no_filter_matches": "No products match your filters",
+    "no_filter_matches_text": "Try removing a filter to see more gear.",
+    "clear_all_filters": "Clear All Filters",
+    "clear_all": "Clear all",
+    "price_min": "Minimum price",
+    "price_max": "Maximum price",
+    "apply": "Apply",
+    "filters": "Filters",
+    "show_results_one": "Show {{ count }} Result",
+    "show_results_other": "Show {{ count }} Results"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page"
   },
   "products": {
     "badge_bestseller": "Bestseller",

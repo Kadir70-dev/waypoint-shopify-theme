@@ -1,0 +1,116 @@
+{%- liquid
+  assign has_active_filters = false
+  assign active_filter_count = 0
+  for filter in collection.filters
+    assign active_filter_count = active_filter_count | plus: filter.active_values.size
+    if filter.active_values.size > 0 or filter.min_value.value != blank or filter.max_value.value != blank
+      assign has_active_filters = true
+    endif
+  endfor
+-%}
+
+<div class="section page-width">
+  <div class="collection-grid__meta">
+    <span class="eyebrow">
+      {%- if collection.products.size == 1 -%}
+        {{ 'collection.products_count_one' | t: count: collection.products.size }}
+      {%- else -%}
+        {{ 'collection.products_count_other' | t: count: collection.products.size }}
+      {%- endif -%}
+    </span>
+    {%- if collection.filters.size > 0 -%}
+      <button type="button" class="collection-grid__filter-trigger" data-overlay-trigger="MobileFilters" aria-controls="MobileFilters">
+        {%- render 'icon-filter' -%} {{ 'collection.filters' | t }}
+        {%- if has_active_filters -%}<span class="collection-grid__filter-count">{{ active_filter_count }}</span>{%- endif -%}
+      </button>
+    {%- endif -%}
+  </div>
+
+  <div class="collection-layout">
+    {%- if collection.filters.size > 0 -%}
+      <aside class="collection-layout__sidebar">
+        {%- render 'filter-groups', filters: collection.filters -%}
+      </aside>
+    {%- endif -%}
+
+    <div class="collection-layout__main">
+      {%- if has_active_filters -%}
+        <div class="filter-chips">
+          {%- for filter in collection.filters -%}
+            {%- for value in filter.active_values -%}
+              {%- render 'chip-filter', label: value.label, url: value.url_to_remove -%}
+            {%- endfor -%}
+          {%- endfor -%}
+          <a href="{{ collection.url }}" class="filter-chips__clear">{{ 'collection.clear_all' | t }}</a>
+        </div>
+      {%- endif -%}
+
+      {%- if collection.products.size == 0 and has_active_filters -%}
+        <div class="collection-grid__empty">
+          <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3">
+            <rect x="14" y="14" width="36" height="36"/><path d="M14 14 L50 50 M50 14 L14 50"/>
+          </svg>
+          <h2 style="font-size:18px">{{ 'collection.no_filter_matches' | t }}</h2>
+          <p class="muted" style="font-size:13px">{{ 'collection.no_filter_matches_text' | t }}</p>
+          <a href="{{ collection.url }}" class="btn btn-primary" style="margin-top:8px">
+            {{ 'collection.clear_all_filters' | t }}
+          </a>
+        </div>
+      {%- elsif collection.products.size == 0 -%}
+        <div class="collection-grid__empty">
+          <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3">
+            <rect x="14" y="14" width="36" height="36"/><path d="M14 14 L50 50 M50 14 L14 50"/>
+          </svg>
+          <h2 style="font-size:18px">{{ 'collection.empty' | t }}</h2>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary" style="margin-top:8px">
+            {{ 'collection.browse_all' | t }} &rarr;
+          </a>
+        </div>
+      {%- else -%}
+        {%- paginate collection.products by section.settings.products_per_page -%}
+          <div class="product-grid" data-density="{{ settings.grid_density }}" data-context="collection">
+            {%- for product in collection.products -%}
+              {%- render 'card-product', product: product -%}
+            {%- endfor -%}
+          </div>
+          {%- render 'pagination', paginate: paginate -%}
+        {%- endpaginate -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- if collection.filters.size > 0 -%}
+  <div id="MobileFilters" class="mobile-filter-drawer" data-overlay data-overlay-backdrop hidden>
+    <div class="mobile-filter-drawer__panel">
+      <div class="mobile-filter-drawer__top">
+        <span class="eyebrow" style="font-size:13px;color:var(--text)">{{ 'collection.filters' | t }}</span>
+        {%- if has_active_filters -%}
+          <a href="{{ collection.url }}" class="mobile-filter-drawer__clear">{{ 'collection.clear_all' | t }}</a>
+        {%- endif -%}
+        <button type="button" class="icon-btn" data-overlay-close aria-label="{{ 'accessibility.close' | t }}">{%- render 'icon-close' -%}</button>
+      </div>
+      <div class="mobile-filter-drawer__body">
+        {%- render 'filter-groups', filters: collection.filters -%}
+      </div>
+      <div class="mobile-filter-drawer__footer">
+        <button type="button" class="btn btn-primary btn-block" data-overlay-close>
+          {%- if collection.products.size == 1 -%}
+            {{ 'collection.show_results_one' | t: count: collection.products.size }}
+          {%- else -%}
+            {{ 'collection.show_results_other' | t: count: collection.products.size }}
+          {%- endif -%}
+        </button>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection grid",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

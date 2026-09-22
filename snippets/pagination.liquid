@@ -1,0 +1,29 @@
+{%- comment -%}
+  Usage: inside {% paginate collection.products by N %} ... {% endpaginate %},
+  call {% render 'pagination', paginate: paginate %}
+{%- endcomment -%}
+{%- if paginate.pages > 1 -%}
+  <nav class="pagination" aria-label="{{ 'pagination.label' | t }}">
+    {%- if paginate.previous -%}
+      <a href="{{ paginate.previous.url }}" class="pagination__link" aria-label="{{ 'pagination.previous' | t }}">{%- render 'icon-chevron-left' -%}</a>
+    {%- else -%}
+      <span class="pagination__link pagination__link--disabled" aria-disabled="true">{%- render 'icon-chevron-left' -%}</span>
+    {%- endif -%}
+
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+      {%- elsif part.title == paginate.current_page -%}
+        <span class="pagination__link pagination__link--current" aria-current="page">{{ part.title }}</span>
+      {%- else -%}
+        <span class="pagination__ellipsis">{{ part.title }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if paginate.next -%}
+      <a href="{{ paginate.next.url }}" class="pagination__link" aria-label="{{ 'pagination.next' | t }}">{%- render 'icon-chevron-right' -%}</a>
+    {%- else -%}
+      <span class="pagination__link pagination__link--disabled" aria-disabled="true">{%- render 'icon-chevron-right' -%}</span>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

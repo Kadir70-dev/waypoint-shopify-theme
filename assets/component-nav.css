@@ -16,9 +16,12 @@
 
 /* ---------- header ---------- */
 .site-header {
+  --header-fg: var(--text);
+  --header-fg-muted: var(--muted);
   position: relative;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
+  color: var(--header-fg);
 }
 
 .site-header[data-sticky="true"] {
@@ -26,6 +29,34 @@
   top: env(safe-area-inset-top, 0px);
   z-index: 30;
 }
+
+/* Overlay header (home page only): floats transparently over the hero
+   photo instead of reserving its own bar, then swaps to a solid bg once
+   scrolled (data-scrolled, set by motion.js) so it stays legible over
+   whatever section is underneath. Literal white here is intentional —
+   same "text guaranteed to sit on photography" exception hero-slider
+   already uses, not a token. */
+.site-header--transparent {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 30;
+  background: transparent;
+  border-bottom-color: transparent;
+  --header-fg: #fff;
+  --header-fg-muted: rgba(255, 255, 255, .75);
+  transition: background var(--dur-base) var(--ease-out-slow), border-color var(--dur-base) var(--ease-out-slow);
+}
+.site-header--transparent[data-scrolled="true"] {
+  background: var(--bg);
+  border-bottom-color: var(--border);
+  --header-fg: var(--text);
+  --header-fg-muted: var(--muted);
+}
+/* .icon-btn hardcodes var(--text) because it's shared with mobile-nav and
+   the search overlay, which never go transparent; scope the override to
+   the header only. */
+.site-header .icon-btn { color: var(--header-fg); }
 
 .site-header__row {
   display: grid;
@@ -50,7 +81,7 @@
 }
 .site-header__nav a:hover,
 .site-header__nav [aria-expanded="true"] {
-  border-bottom-color: var(--text);
+  border-bottom-color: var(--header-fg);
 }
 
 .site-header__logo {
@@ -66,7 +97,7 @@
   font-family: var(--font-body);
   font-size: 8px;
   letter-spacing: .18em;
-  color: var(--muted);
+  color: var(--header-fg-muted);
   font-weight: 400;
   margin-top: 2px;
 }
@@ -272,6 +303,8 @@
   border: 1px solid var(--border-strong);
   width: 100%;
   max-width: 640px;
+  max-height: 80vh;
+  overflow-y: auto;
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -304,6 +337,62 @@
   color: var(--text);
   cursor: pointer;
 }
+
+/* ---------- predictive search results ---------- */
+.predictive-search__target[hidden] { display: none; }
+.predictive-search__target {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.predictive-search__groups { display: flex; flex-direction: column; gap: 18px; }
+.predictive-search__group .eyebrow { margin-bottom: 10px; }
+.predictive-search__product-list,
+.predictive-search__link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.predictive-search__link-list { font-size: 13px; }
+.predictive-search__link-list a { display: block; padding: 4px 0; }
+.predictive-search__link-list a:hover,
+.predictive-search__link-list a:focus-visible { color: var(--accent-light); }
+.predictive-search__product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.predictive-search__product-media {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.predictive-search__product-media img { width: 100%; height: 100%; object-fit: cover; }
+.predictive-search__product-body { display: flex; flex-direction: column; gap: 2px; }
+.predictive-search__product-name { font-size: 12px; }
+.predictive-search__product:hover .predictive-search__product-name,
+.predictive-search__product:focus-visible .predictive-search__product-name { color: var(--accent-light); }
+.predictive-search__view-all {
+  display: block;
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+.predictive-search__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 20px 0;
+}
+.predictive-search__empty .empty-icon { width: 36px; height: 36px; opacity: .5; }
 
 /* ---------- mobile bottom tab bar ---------- */
 .mobile-tabbar {
@@ -395,5 +484,5 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
 }
 
 @media (min-width: 750px) {
-  .site-footer__grid { grid-template-columns: 1.4fr 1fr; align-items: start; }
+  .site-footer__grid:has(.newsletter-block) { grid-template-columns: 1.4fr 1fr; align-items: start; }
 }

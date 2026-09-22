@@ -1,0 +1,7 @@
+{%- comment -%}
+  Usage: {% render 'chip-filter', label: value.label, url: value.url_to_remove %}
+{%- endcomment -%}
+<a href="{{ url }}" class="chip filter-chip">
+  {{ label }}
+  <span aria-hidden="true">&times;</span>
+</a>

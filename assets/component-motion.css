@@ -4,7 +4,8 @@
 
 .hero-slider {
   position: relative;
-  min-height: 70vh;
+  min-height: 100vh;
+  min-height: 100svh;
   overflow: hidden;
 }
 
@@ -70,8 +71,31 @@
   border-bottom-color: #fff;
 }
 
+.hero-slider__corner-tag {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  color: rgba(255, 255, 255, .85);
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.hero-slider__corner-rule {
+  width: 26px;
+  height: 1px;
+  background: rgba(255, 255, 255, .5);
+  margin-bottom: 4px;
+}
+
 @media (min-width: 750px) {
   .hero-slider__content { padding: 60px; }
+  .hero-slider__corner-tag { right: 40px; bottom: 32px; font-size: 11px; }
 }
 
 /* ---------- carousel (testimonials, later cross-sell rows) ---------- */

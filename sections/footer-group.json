@@ -19,7 +19,7 @@
         }
       },
       "block_order": ["shop", "company", "support"],
-      "settings": {}
+      "settings": { "show_newsletter": false }
     }
   },
   "order": ["footer"]

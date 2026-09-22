@@ -1,31 +1,82 @@
-<div class="section page-width" data-reveal-group>
-  <div
-    style="display:grid;gap:1px;background:var(--border);grid-template-columns:1fr;{% if section.settings.image_position == 'right' %}direction:rtl{% endif %}"
-    class="split-promo"
-  >
-    <div class="photo brand split-promo__image" data-reveal {% if section.settings.image %}style="background-image:url({{ section.settings.image | image_url: width: 1000 }})"{% endif %}></div>
-    <div style="background:var(--bg);padding:36px;display:flex;flex-direction:column;justify-content:center;gap:14px;direction:ltr" data-reveal>
-      {%- if section.settings.eyebrow != blank -%}
-        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
-      {%- endif -%}
-      <h2 style="font-size:26px">{{ section.settings.heading }}</h2>
-      {%- if section.settings.text != blank -%}
-        <div style="color:var(--muted);font-size:14px;line-height:1.6">{{ section.settings.text }}</div>
-      {%- endif -%}
-      {%- if section.settings.cta_label != blank -%}
-        <a href="{{ section.settings.cta_link | default: '#' }}" class="btn btn-outline" style="align-self:flex-start;margin-top:6px">
-          {{ section.settings.cta_label }} &rarr;
-        </a>
-      {%- endif -%}
-    </div>
+<div
+  class="split-promo photo brand{% if section.settings.content_position == 'right' %} split-promo--right{% endif %}"
+  data-reveal-group
+  {% if section.settings.image %}style="background-image:url({{ section.settings.image | image_url: width: 1600 }})"{% endif %}
+>
+  <div class="split-promo__content" data-reveal>
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow" style="color:#ddd">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    <h2 style="font-size:26px;color:#fff">{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}
+      <div style="color:#ddd;font-size:14px;line-height:1.6">{{ section.settings.text }}</div>
+    {%- endif -%}
+    {%- if section.settings.cta_label != blank -%}
+      <a href="{{ section.settings.cta_link | default: '#' }}" class="btn btn-outline" style="align-self:flex-start;margin-top:6px">
+        {{ section.settings.cta_label }} &rarr;
+      </a>
+    {%- endif -%}
   </div>
+
+  {%- if section.settings.quote != blank -%}
+    <blockquote class="split-promo__quote" data-reveal>
+      <p class="editorial-quote">&ldquo;{{ section.settings.quote }}&rdquo;</p>
+      {%- if section.settings.quote_attribution != blank -%}
+        <footer>{{ section.settings.quote_attribution }}</footer>
+      {%- endif -%}
+    </blockquote>
+  {%- endif -%}
 </div>
 
 <style>
-  #shopify-section-{{ section.id }} .split-promo__image { min-height: 260px; }
+  #shopify-section-{{ section.id }} .split-promo {
+    position: relative;
+    min-height: 340px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  #shopify-section-{{ section.id }} .split-promo--right { flex-direction: row-reverse; }
+  #shopify-section-{{ section.id }} .split-promo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, .1) 55%);
+  }
+  #shopify-section-{{ section.id }} .split-promo__content {
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  #shopify-section-{{ section.id }} .split-promo__quote {
+    position: relative;
+    z-index: 1;
+    max-width: 320px;
+    margin: 0;
+    padding: 36px;
+    text-align: right;
+    color: #fff;
+  }
+  #shopify-section-{{ section.id }} .split-promo--right .split-promo__quote { text-align: left; }
+  #shopify-section-{{ section.id }} .split-promo__quote p { font-size: 18px; }
+  #shopify-section-{{ section.id }} .split-promo__quote footer {
+    margin-top: 12px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #ccc;
+  }
   @media (min-width: 750px) {
-    #shopify-section-{{ section.id }} .split-promo { grid-template-columns: 1.1fr 1fr; }
-    #shopify-section-{{ section.id }} .split-promo__image { min-height: 100%; }
+    #shopify-section-{{ section.id }} .split-promo { min-height: 520px; }
+    #shopify-section-{{ section.id }} .split-promo__content,
+    #shopify-section-{{ section.id }} .split-promo__quote { padding: 60px; }
   }
 </style>
 
@@ -34,12 +85,15 @@
   "name": "Split promo",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "select", "id": "image_position", "label": "Image position", "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }], "default": "left" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Engineered for Extremes" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Details That Perform" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>From alpine ridges to dense forests, every element is designed with purpose. Premium materials. Rigorously tested. No compromises.</p>" },
-    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Our Approach" },
-    { "type": "url", "id": "cta_link", "label": "Button link" }
+    { "type": "select", "id": "content_position", "label": "Text position", "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AERA Journal" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A Life More Open" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Stories, guides and perspectives from those who choose a wilder path.</p>" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Explore the Journal" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "header", "content": "Quote (optional, shown on the opposite side)" },
+    { "type": "textarea", "id": "quote", "label": "Quote" },
+    { "type": "text", "id": "quote_attribution", "label": "Attribution", "default": "AERA Journal, Vol. 04" }
   ],
   "presets": [{ "name": "Split promo" }]
 }

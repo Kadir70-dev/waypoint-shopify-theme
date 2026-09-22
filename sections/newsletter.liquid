@@ -1,41 +1,54 @@
-{%- comment -%}
-  Standalone, template-composable newsletter section — distinct from the
-  newsletter block built into sections/footer.liquid (Milestone 1). A
-  merchant can use either, both, or neither (footer's is toggleable via
-  its own show_newsletter setting) per the Merchant Customization Strategy.
-{%- endcomment -%}
-<div class="section page-width" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px" data-reveal>
-  <h2 style="font-size:22px">{{ section.settings.heading }}</h2>
-  {%- if section.settings.text != blank -%}
-    <p style="color:var(--muted);font-size:14px;max-width:48ch">{{ section.settings.text }}</p>
-  {%- endif -%}
-
-  {%- form 'customer', class: 'newsletter-form' -%}
-    <input type="hidden" name="contact[tags]" value="newsletter">
-    {%- if form.posted_successfully? -%}
-      <p role="status">{{ 'newsletter.success' | t }}</p>
-    {%- else -%}
-      <div class="newsletter-block__row" style="max-width:420px;margin:0 auto">
-        <label for="NewsletterSectionEmail-{{ section.id }}" class="visually-hidden">{{ 'newsletter.email_label' | t }}</label>
-        <input
-          type="email"
-          id="NewsletterSectionEmail-{{ section.id }}"
-          name="contact[email]"
-          placeholder="{{ 'newsletter.email_placeholder' | t }}"
-          required
-        >
-        <button type="submit">{{ 'newsletter.submit' | t }}</button>
-      </div>
-      <label class="newsletter-block__consent" style="justify-content:center;margin-top:10px">
-        <input type="checkbox" required style="margin-top:2px">
-        {{ 'newsletter.consent' | t }}
-      </label>
-      {%- if form.errors -%}
-        <p role="alert">{{ form.errors.messages['contact[email]'] }}</p>
-      {%- endif -%}
+<div class="section page-width newsletter-split" data-reveal>
+  <div class="newsletter-split__text">
+    <h2 style="font-size:20px">{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}
+      <p style="color:var(--muted);font-size:14px;max-width:40ch">{{ section.settings.text }}</p>
     {%- endif -%}
-  {%- endform -%}
+  </div>
+
+  <div class="newsletter-split__form">
+    {%- form 'customer', class: 'newsletter-form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      {%- if form.posted_successfully? -%}
+        <p role="status">{{ 'newsletter.success' | t }}</p>
+      {%- else -%}
+        <div class="newsletter-block__row">
+          <label for="NewsletterSectionEmail-{{ section.id }}" class="visually-hidden">{{ 'newsletter.email_label' | t }}</label>
+          <input
+            type="email"
+            id="NewsletterSectionEmail-{{ section.id }}"
+            name="contact[email]"
+            placeholder="{{ 'newsletter.email_placeholder' | t }}"
+            required
+          >
+          <button type="submit">{{ 'newsletter.submit' | t }}</button>
+        </div>
+        <label class="newsletter-block__consent">
+          <input type="checkbox" required style="margin-top:2px">
+          {{ 'newsletter.consent' | t }}
+        </label>
+        {%- if form.errors -%}
+          <p role="alert">{{ form.errors.messages['contact[email]'] }}</p>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endform -%}
+  </div>
 </div>
+
+<style>
+  #shopify-section-{{ section.id }} .newsletter-split {
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  #shopify-section-{{ section.id }} .newsletter-split__text p { margin-top: 8px; }
+  #shopify-section-{{ section.id }} .newsletter-split__form { max-width: 420px; }
+  @media (min-width: 750px) {
+    #shopify-section-{{ section.id }} .newsletter-split { flex-direction: row; align-items: center; justify-content: space-between; gap: 40px; }
+    #shopify-section-{{ section.id }} .newsletter-split__form { width: 380px; flex-shrink: 0; }
+  }
+</style>
 
 {% schema %}
 {

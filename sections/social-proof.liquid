@@ -1,0 +1,169 @@
+{%- comment -%}
+  Testimonial carousel (left/center) and trust badges (right) as one row —
+  the "Trusted by Explorers" homepage band. Two block types in one
+  section so a merchant can add/reorder either independently. Reuses the
+  existing [data-carousel] / .carousel__track wiring from motion.js.
+{%- endcomment -%}
+{%- assign testimonial_blocks = section.blocks | where: 'type', 'testimonial' -%}
+{%- assign trust_blocks = section.blocks | where: 'type', 'trust-item' -%}
+<div class="section page-width">
+  <div class="social-proof" data-carousel>
+    <div class="social-proof__heading">
+      <h2 style="font-size:20px">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p style="color:var(--muted);font-size:13px;margin-top:6px">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if testimonial_blocks.size > 0 -%}
+      <div class="social-proof__quote">
+        {%- if testimonial_blocks.size > 1 -%}
+          <button type="button" class="carousel__nav-btn" data-carousel-prev aria-label="{{ 'sections.carousel.previous' | t }}">
+            {%- render 'icon-chevron-left' -%}
+          </button>
+        {%- endif -%}
+        <div class="carousel__track social-proof__track" data-carousel-track>
+          {%- for block in testimonial_blocks -%}
+            <blockquote class="social-proof__blockquote" data-carousel-item {{ block.shopify_attributes }}>
+              <p class="editorial-quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+              <footer>&mdash; {{ block.settings.name }}{% if block.settings.location != blank %}, {{ block.settings.location }}{% endif %}</footer>
+            </blockquote>
+          {%- endfor -%}
+        </div>
+        {%- if testimonial_blocks.size > 1 -%}
+          <button type="button" class="carousel__nav-btn" data-carousel-next aria-label="{{ 'sections.carousel.next' | t }}">
+            {%- render 'icon-chevron-right' -%}
+          </button>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if trust_blocks.size > 0 -%}
+      <div class="social-proof__trust">
+        {%- for block in trust_blocks -%}
+          <div class="social-proof__trust-item" {{ block.shopify_attributes }}>
+            <span class="social-proof__trust-icon">
+              {%- case block.settings.icon -%}
+                {%- when 'mountain' -%}{%- render 'icon-mountain' -%}
+                {%- when 'leaf' -%}{%- render 'icon-leaf' -%}
+                {%- when 'shield' -%}{%- render 'icon-shield' -%}
+                {%- when 'globe' -%}{%- render 'icon-globe' -%}
+              {%- endcase -%}
+            </span>
+            <span class="social-proof__trust-label">{{ block.settings.label }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  #shopify-section-{{ section.id }} .social-proof {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  #shopify-section-{{ section.id }} .social-proof__quote {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  #shopify-section-{{ section.id }} .carousel__nav-btn {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #shopify-section-{{ section.id }} .carousel__nav-btn svg { width: 16px; height: 16px; }
+  #shopify-section-{{ section.id }} .social-proof__blockquote {
+    margin: 0;
+    max-width: 480px;
+    min-width: 0;
+    flex: 1 1 auto;
+    text-align: center;
+  }
+  #shopify-section-{{ section.id }} .social-proof__blockquote p { font-size: 17px; }
+  #shopify-section-{{ section.id }} .social-proof__blockquote footer {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  #shopify-section-{{ section.id }} .social-proof__trust {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  #shopify-section-{{ section.id }} .social-proof__trust-item { display: flex; align-items: center; gap: 10px; }
+  #shopify-section-{{ section.id }} .social-proof__trust-icon { width: 22px; height: 22px; flex-shrink: 0; color: var(--muted); }
+  #shopify-section-{{ section.id }} .social-proof__trust-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 990px) {
+    #shopify-section-{{ section.id }} .social-proof { flex-direction: row; align-items: center; justify-content: space-between; gap: 32px; }
+    #shopify-section-{{ section.id }} .social-proof__heading { flex: 0 0 200px; }
+    #shopify-section-{{ section.id }} .social-proof__quote { flex: 1 1 240px; min-width: 0; }
+    #shopify-section-{{ section.id }} .social-proof__track { flex: 1 1 auto; min-width: 0; }
+    #shopify-section-{{ section.id }} .social-proof__trust { flex: 0 1 340px; min-width: 0; grid-template-columns: repeat(2, 1fr); gap: 14px 20px; }
+  }
+  @media (min-width: 1200px) {
+    #shopify-section-{{ section.id }} .social-proof__trust { flex-basis: 400px; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Social proof",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Trusted by Explorers" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Real people. Real places." }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "AERA gear has been with me through Icelandic storms, alpine crossings and everything in between. It simply works." },
+        { "type": "text", "id": "name", "label": "Name", "default": "M. Eriksson" },
+        { "type": "text", "id": "location", "label": "Location / role", "default": "Mountain Guide" }
+      ]
+    },
+    {
+      "type": "trust-item",
+      "name": "Trust item",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+            { "value": "mountain", "label": "Mountain" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "globe", "label": "Globe" }
+          ], "default": "mountain" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Field Tested" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social proof",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "trust-item", "settings": { "icon": "mountain", "label": "Field Tested" } },
+        { "type": "trust-item", "settings": { "icon": "leaf", "label": "Sustainable Practices" } },
+        { "type": "trust-item", "settings": { "icon": "shield", "label": "Built to Last" } },
+        { "type": "trust-item", "settings": { "icon": "globe", "label": "Global Community" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
