@@ -1,0 +1,224 @@
+<header class="site-header" data-sticky="{{ section.settings.sticky_header }}">
+  <div class="page-width site-header__row">
+    <button
+      class="icon-btn hamburger-btn"
+      type="button"
+      id="MobileNavTrigger"
+      data-overlay-trigger="MobileNav"
+      aria-controls="MobileNav"
+      aria-label="{{ 'accessibility.menu' | t }}"
+    >
+      {%- render 'icon-menu' -%}
+    </button>
+
+    <nav class="site-header__nav" aria-label="Main">
+      {%- for link in section.settings.main_menu.links -%}
+        {%- if section.settings.enable_mega_menu and link.title == section.settings.mega_menu_trigger_label -%}
+          <a
+            href="{{ link.url }}"
+            aria-haspopup="true"
+            aria-controls="MegaMenu"
+            data-overlay-trigger="MegaMenu"
+          >
+            {{ link.title }}
+          </a>
+        {%- else -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <a href="{{ routes.root_url }}" class="site-header__logo">
+      {%- if section.settings.logo -%}
+        {%- assign logo_height = section.settings.logo_width | times: section.settings.logo.height | divided_by: section.settings.logo.width -%}
+        <img
+          src="{{ section.settings.logo | image_url: width: 280 }}"
+          alt="{{ shop.name }}"
+          width="{{ section.settings.logo_width }}"
+          height="{{ logo_height }}"
+          style="width:{{ section.settings.logo_width }}px;height:auto;"
+          loading="eager"
+        >
+      {%- else -%}
+        A E R A
+        <small>{{ section.settings.tagline }}</small>
+      {%- endif -%}
+    </a>
+
+    <div class="site-header__icons">
+      <button
+        class="icon-btn"
+        type="button"
+        data-overlay-trigger="SearchOverlay"
+        aria-controls="SearchOverlay"
+        aria-label="{{ 'accessibility.search' | t }}"
+      >
+        {%- render 'icon-search' -%}
+      </button>
+      <a href="{{ routes.account_url }}" class="icon-btn" aria-label="{{ 'accessibility.account' | t }}">
+        {%- render 'icon-account' -%}
+      </a>
+      <a href="{{ routes.cart_url }}" class="icon-btn" aria-label="{{ 'accessibility.cart' | t }}">
+        {%- render 'icon-cart' -%}
+        {%- if cart.item_count > 0 -%}
+          <span class="icon-btn__count">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+  </div>
+
+  {%- if section.settings.enable_mega_menu -%}
+    {%- section 'mega-menu' -%}
+  {%- endif -%}
+</header>
+
+{%- comment -%} ---------- mobile navigation (full-screen, drill-down) ---------- {%- endcomment -%}
+<div id="MobileNav" class="mobile-nav" data-overlay hidden>
+  <div class="mobile-nav__top">
+    <div class="mobile-nav__top-icons">
+      <button class="icon-btn" type="button" data-overlay-trigger="SearchOverlay" aria-controls="SearchOverlay" aria-label="{{ 'accessibility.search' | t }}">
+        {%- render 'icon-search' -%}
+      </button>
+      <a href="{{ routes.account_url }}" class="icon-btn" aria-label="{{ 'accessibility.account' | t }}">{%- render 'icon-account' -%}</a>
+    </div>
+    <button class="icon-btn" type="button" data-overlay-close aria-label="{{ 'accessibility.close' | t }}" data-overlay-autofocus>
+      {%- render 'icon-close' -%}
+    </button>
+  </div>
+
+  <div class="mobile-nav__panel" data-nav-panel="root">
+    <ul class="mobile-nav__links">
+      {%- for link in section.settings.main_menu.links -%}
+        <li>
+          {%- if link.links.size > 0 -%}
+            <button type="button" class="mobile-nav__drill" data-nav-drill="drill-{{ forloop.index }}">
+              {{ link.title }}
+              {%- render 'icon-chevron-right' -%}
+            </button>
+          {%- else -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+
+  {%- for link in section.settings.main_menu.links -%}
+    {%- if link.links.size > 0 -%}
+      <div class="mobile-nav__panel" data-nav-panel="drill-{{ forloop.index }}" hidden>
+        <button type="button" class="mobile-nav__back" data-nav-back>
+          {%- render 'icon-chevron-left' -%}
+          {{ link.title }}
+        </button>
+        <ul class="mobile-nav__sublinks">
+          {%- for child in link.links -%}
+            <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if section.settings.enable_mega_menu and link.title == section.settings.mega_menu_trigger_label and section.settings.mobile_tile_image -%}
+          <a
+            href="{{ section.settings.mobile_tile_link | default: link.url }}"
+            class="mobile-nav__tile"
+            style="background-image:url({{ section.settings.mobile_tile_image | image_url: width: 500 }})"
+          >
+            <span class="mobile-nav__tile-label">
+              <span class="eyebrow" style="color:#ddd">{{ section.settings.mobile_tile_eyebrow }}</span>
+              <span style="display:block;font-family:var(--font-display);text-transform:uppercase;font-size:14px;margin-top:4px">
+                {{ section.settings.mobile_tile_label }}
+              </span>
+            </span>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{%- comment -%} ---------- search overlay shell (Milestone 1: shell + open/close only) ---------- {%- endcomment -%}
+<div id="SearchOverlay" class="search-overlay" data-overlay data-overlay-backdrop hidden>
+  <div class="search-overlay__panel">
+    <div class="search-overlay__top">
+      <button class="icon-btn" type="button" data-overlay-close aria-label="{{ 'accessibility.close' | t }}">
+        {%- render 'icon-close' -%}
+      </button>
+    </div>
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <input
+        class="search-overlay__field"
+        type="search"
+        name="q"
+        placeholder="{{ 'search.placeholder' | t }}"
+        autocomplete="off"
+        data-overlay-autofocus
+      >
+      <input type="hidden" name="type" value="product,collection,article">
+    </form>
+    {%- if section.settings.popular_search_1 != blank or section.settings.popular_search_2 != blank or section.settings.popular_search_3 != blank -%}
+      <div>
+        <div class="eyebrow" style="margin-bottom:10px">{{ 'search.popular' | t }}</div>
+        <div class="chip-row">
+          {%- for i in (1..4) -%}
+            {%- assign term_key = 'popular_search_' | append: i -%}
+            {%- assign term = section.settings[term_key] -%}
+            {%- if term != blank -%}
+              <a href="{{ routes.search_url }}?q={{ term | url_encode }}" class="chip">{{ term }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- comment -%} ---------- mobile bottom tab bar ---------- {%- endcomment -%}
+<nav class="mobile-tabbar" aria-label="{{ 'accessibility.menu' | t }}">
+  <a href="{{ routes.root_url }}" class="mobile-tabbar__item" {% if request.path == routes.root_url %}aria-current="page"{% endif %}>
+    {%- render 'icon-home' -%}
+    {{ 'navigation.home' | t }}
+  </a>
+  <a href="{{ routes.all_products_collection_url }}" class="mobile-tabbar__item" {% if request.path == routes.all_products_collection_url %}aria-current="page"{% endif %}>
+    {%- render 'icon-bag' -%}
+    {{ 'navigation.shop' | t }}
+  </a>
+  <a href="{{ blogs[section.settings.journal_blog_handle].url | default: '#' }}" class="mobile-tabbar__item">
+    {%- render 'icon-book' -%}
+    {{ 'navigation.journal' | t }}
+  </a>
+  <a href="{{ routes.account_url }}" class="mobile-tabbar__item">
+    {%- render 'icon-account' -%}
+    {{ 'navigation.account' | t }}
+  </a>
+</nav>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 220, "step": 10, "unit": "px", "default": 140 },
+    { "type": "text", "id": "tagline", "label": "Tagline (shown under text wordmark)", "default": "Built for a wilder tomorrow" },
+    { "type": "link_list", "id": "main_menu", "label": "Main menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "sticky_header", "label": "Sticky header", "default": true },
+    { "type": "checkbox", "id": "enable_mega_menu", "label": "Enable mega-menu", "default": true },
+    {
+      "type": "text",
+      "id": "mega_menu_trigger_label",
+      "label": "Mega-menu trigger label",
+      "info": "Must exactly match one top-level link's text in the main menu, and must match the Mega-menu section's own trigger label setting.",
+      "default": "Shop"
+    },
+    { "type": "header", "content": "Mobile drill-down tile" },
+    { "type": "image_picker", "id": "mobile_tile_image", "label": "Image" },
+    { "type": "text", "id": "mobile_tile_eyebrow", "label": "Eyebrow", "default": "New Arrival" },
+    { "type": "text", "id": "mobile_tile_label", "label": "Label", "default": "Featured product" },
+    { "type": "url", "id": "mobile_tile_link", "label": "Link" },
+    { "type": "header", "content": "Search overlay" },
+    { "type": "text", "id": "popular_search_1", "label": "Popular search 1", "default": "Backpacks" },
+    { "type": "text", "id": "popular_search_2", "label": "Popular search 2", "default": "Waterproof" },
+    { "type": "text", "id": "popular_search_3", "label": "Popular search 3" },
+    { "type": "header", "content": "Mobile tab bar" },
+    { "type": "text", "id": "journal_blog_handle", "label": "Journal blog handle", "default": "journal" }
+  ]
+}
+{% endschema %}

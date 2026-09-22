@@ -40,6 +40,7 @@
 
   {{ 'tokens.css' | asset_url | stylesheet_tag }}
   {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'component-nav.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%}
     Typography / font-picker architecture. Self-hosted via Shopify's native
@@ -65,20 +66,20 @@
   {{ content_for_header }}
 </head>
 
-<body>
+<body data-has-tabbar="true">
   <a class="skip-link" href="#MainContent">
     {{ 'accessibility.skip_to_content' | t }}
   </a>
 
-  {%- comment -%}
-    Global chrome (header-group / footer-group section groups) lands in
-    Milestone 1 per the approved implementation roadmap — intentionally
-    absent here. Milestone 0 is the shell only.
-  {%- endcomment -%}
+  {%- sections 'header-group' -%}
 
   <main id="MainContent" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
+  {%- sections 'footer-group' -%}
+
+  <script src="{{ 'overlay.js' | asset_url }}" defer></script>
+  <script src="{{ 'mobile-nav.js' | asset_url }}" defer></script>
 </body>
 </html>

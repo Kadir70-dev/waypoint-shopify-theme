@@ -1,0 +1,102 @@
+{%- comment -%}
+  Rendered from within sections/header.liquid via {% section 'mega-menu' %}
+  when the top-level nav link matching section.settings.trigger_label is
+  hovered/clicked. v1 scope: one mega-menu panel, attached to a single
+  designated top-level link (matches the approved comp, which shows the
+  mega-menu on "Shop" only) — see Milestone 1 deviations note.
+{%- endcomment -%}
+
+<div
+  id="MegaMenu"
+  class="mega-menu"
+  data-mega-menu
+  data-trigger-label="{{ section.settings.trigger_label | escape }}"
+  data-overlay
+  data-overlay-trap="false"
+  hidden
+>
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'menu-column' -%}
+        <div class="mega-menu__column" {{ block.shopify_attributes }}>
+          <h3 class="eyebrow">{{ block.settings.heading }}</h3>
+          <ul>
+            {%- for i in (1..6) -%}
+              {%- assign link_key = 'link_' | append: i -%}
+              {%- assign link = block.settings[link_key] -%}
+              {%- if link != blank -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+
+      {%- when 'featured-tile' -%}
+        <a
+          href="{{ block.settings.link.url | default: '#' }}"
+          class="mega-menu__tile"
+          {% if block.settings.image %}style="background-image:url({{ block.settings.image | image_url: width: 600 }})"{% endif %}
+          {{ block.shopify_attributes }}
+        >
+          <span class="mega-menu__tile-label">
+            <span class="eyebrow" style="color:#ddd">{{ block.settings.eyebrow }}</span>
+            <span style="display:block;font-family:var(--font-display);text-transform:uppercase;font-size:14px;margin-top:4px">
+              {{ block.settings.label }}
+            </span>
+          </span>
+        </a>
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Mega-menu",
+  "settings": [
+    {
+      "type": "text",
+      "id": "trigger_label",
+      "label": "Top-level menu label this panel opens under",
+      "info": "Must exactly match one top-level link's text in the header's main menu (e.g. \"Shop\").",
+      "default": "Shop"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu-column",
+      "name": "Menu column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Column" },
+        { "type": "url", "id": "link_1", "label": "Link 1" },
+        { "type": "url", "id": "link_2", "label": "Link 2" },
+        { "type": "url", "id": "link_3", "label": "Link 3" },
+        { "type": "url", "id": "link_4", "label": "Link 4" },
+        { "type": "url", "id": "link_5", "label": "Link 5" },
+        { "type": "url", "id": "link_6", "label": "Link 6" }
+      ]
+    },
+    {
+      "type": "featured-tile",
+      "name": "Featured tile",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New Arrival" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Featured product" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mega-menu",
+      "blocks": [
+        { "type": "menu-column", "settings": { "heading": "Carry" } },
+        { "type": "menu-column", "settings": { "heading": "Shelter & Camp" } },
+        { "type": "menu-column", "settings": { "heading": "Apparel" } },
+        { "type": "featured-tile" }
+      ]
+    }
+  ]
+}
+{% endschema %}

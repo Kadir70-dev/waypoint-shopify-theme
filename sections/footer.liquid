@@ -1,0 +1,131 @@
+<footer class="site-footer">
+  <div class="page-width site-footer__grid">
+    <div class="site-footer__cols">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'link-column' -%}
+          <div {{ block.shopify_attributes }}>
+            <h3 class="eyebrow">{{ block.settings.heading }}</h3>
+            <ul>
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_newsletter -%}
+      <div class="newsletter-block">
+        <h3 class="eyebrow">{{ section.settings.newsletter_heading }}</h3>
+        <p style="font-size:13px;color:var(--muted)">{{ section.settings.newsletter_text }}</p>
+
+        {%- form 'customer', class: 'newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p role="status">{{ 'newsletter.success' | t }}</p>
+          {%- else -%}
+            <div class="newsletter-block__row">
+              <label for="NewsletterEmail" class="visually-hidden">{{ 'newsletter.email_label' | t }}</label>
+              <input
+                type="email"
+                id="NewsletterEmail"
+                name="contact[email]"
+                placeholder="{{ 'newsletter.email_placeholder' | t }}"
+                required
+              >
+              <button type="submit">{{ 'newsletter.submit' | t }}</button>
+            </div>
+            <label class="newsletter-block__consent">
+              <input type="checkbox" required style="margin-top:2px">
+              {{ 'newsletter.consent' | t }}
+            </label>
+            {%- if form.errors -%}
+              <p role="alert">{{ form.errors.messages['contact[email]'] }}</p>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="page-width site-footer__bottom">
+    <div>
+      <span style="display:block;font-family:var(--font-display);font-size:13px;letter-spacing:.2em">A E R A</span>
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'footer.rights' | t }}</span>
+    </div>
+
+    {%- assign show_locale = false -%}
+    {%- if section.settings.show_locale_selector and localization.available_countries.size > 1 -%}
+      {%- assign show_locale = true -%}
+    {%- elsif section.settings.show_locale_selector and localization.available_languages.size > 1 -%}
+      {%- assign show_locale = true -%}
+    {%- endif -%}
+    {%- if show_locale -%}
+      {%- form 'localization', class: 'locale-form' -%}
+        {%- if localization.available_languages.size > 1 -%}
+          <select name="locale_code" onchange="this.form.submit()" aria-label="{{ 'localization.language_label' | t }}">
+            {%- for language in localization.available_languages -%}
+              <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                {{ language.endonym_name | capitalize }}
+              </option>
+            {%- endfor -%}
+          </select>
+        {%- endif -%}
+        {%- if localization.available_countries.size > 1 -%}
+          <select name="country_code" onchange="this.form.submit()" aria-label="{{ 'localization.country_label' | t }}">
+            {%- for country in localization.available_countries -%}
+              <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                {{ country.name }} ({{ country.currency.iso_code }})
+              </option>
+            {%- endfor -%}
+          </select>
+        {%- endif -%}
+      {%- endform -%}
+    {%- endif -%}
+
+    <div class="site-footer__social">
+      {%- if settings.social_instagram_url != blank -%}
+        <a href="{{ settings.social_instagram_url }}" aria-label="Instagram">{%- render 'icon-instagram' -%}</a>
+      {%- endif -%}
+      {%- if settings.social_youtube_url != blank -%}
+        <a href="{{ settings.social_youtube_url }}" aria-label="YouTube">{%- render 'icon-youtube' -%}</a>
+      {%- endif -%}
+      {%- if settings.social_spotify_url != blank -%}
+        <a href="{{ settings.social_spotify_url }}" aria-label="Spotify">{%- render 'icon-spotify' -%}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter signup", "default": true },
+    { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Stay in the Wild" },
+    { "type": "textarea", "id": "newsletter_text", "label": "Newsletter text", "default": "Join for exclusive releases, field notes and 10% off your first order." },
+    { "type": "checkbox", "id": "show_locale_selector", "label": "Show language/country selector", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "link-column",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "link-column", "settings": { "heading": "Shop" } },
+        { "type": "link-column", "settings": { "heading": "Company" } },
+        { "type": "link-column", "settings": { "heading": "Support" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
