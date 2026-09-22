@@ -1,0 +1,88 @@
+{
+  "settings": {
+    "colors": {
+      "name": "Colors",
+      "preset": {
+        "label": "Preset",
+        "dark": "AERA — Dark (default)",
+        "fieldbook": "AERA — Fieldbook (light)"
+      },
+      "accent": {
+        "label": "Accent color",
+        "info": "Overrides the preset's accent color independently of light/dark."
+      }
+    },
+    "typography": {
+      "name": "Typography",
+      "font_display": {
+        "label": "Display font",
+        "info": "Used for headlines and tracked-out labels."
+      },
+      "font_body": { "label": "Body font" },
+      "font_editorial": {
+        "label": "Editorial font",
+        "info": "Used for pull-quotes and editorial accents. An italic serif is recommended."
+      },
+      "type_scale": { "label": "Type scale" }
+    },
+    "layout": {
+      "name": "Layout",
+      "corner_style": {
+        "label": "Corner style",
+        "sharp": "Sharp",
+        "rounded": "Rounded"
+      },
+      "page_width": { "label": "Page width" },
+      "spacing_scale": { "label": "Spacing scale" }
+    },
+    "cart": {
+      "name": "Cart",
+      "cart_type": {
+        "label": "Cart behavior",
+        "drawer": "Drawer",
+        "page": "Full page"
+      },
+      "show_free_shipping_bar": { "label": "Show free shipping progress bar" },
+      "free_shipping_threshold": { "label": "Free shipping threshold" }
+    },
+    "grid": {
+      "name": "Collection / Product Grid",
+      "grid_density": {
+        "label": "Products per row (desktop)",
+        "three": "3 columns",
+        "four": "4 columns"
+      },
+      "show_quick_add": { "label": "Show quick-add" },
+      "show_badges": { "label": "Show product badges" }
+    },
+    "product": {
+      "name": "Product Page",
+      "show_sticky_atc_mobile": { "label": "Show sticky add-to-cart bar on mobile" },
+      "enable_3d_ar": {
+        "label": "Enable 3D / AR media",
+        "info": "Uses Shopify's native 3D model viewer and AR quick-look. No effect on products without a 3D model uploaded."
+      }
+    },
+    "navigation": {
+      "name": "Navigation",
+      "nav_style": {
+        "label": "Menu style",
+        "mega_menu": "Mega-menu",
+        "simple_dropdown": "Simple dropdown"
+      }
+    },
+    "icons": {
+      "name": "Icons",
+      "empty_state_icon": {
+        "label": "Empty state icon",
+        "mountain": "Mountain",
+        "compass": "Compass",
+        "bag": "Bag",
+        "search": "Search"
+      }
+    },
+    "social": {
+      "name": "Social"
+    }
+  }
+}

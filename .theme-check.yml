@@ -1,0 +1,11 @@
+extends: theme-check:recommended
+
+# AERA — Milestone 0 (Foundation) scope note:
+# Sections, snippets and templates beyond the base layout are added in later
+# milestones per the approved implementation roadmap. Rules that flag their
+# absence (e.g. missing header/footer sections, no index template yet) are
+# expected to surface until Milestones 1–2 land, and are not Milestone 0 defects.
+
+MissingTemplate:
+  enabled: true
+  ignore_missing: ["index", "404", "list-collections", "page", "gift_card", "blog", "article", "customers/*"]

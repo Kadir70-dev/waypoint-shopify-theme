@@ -1,0 +1,106 @@
+/*
+  AERA — design tokens
+  Two presets share one token contract: Dark (default, on :root) and
+  Fieldbook (light, on [data-preset="fieldbook"]). No component may declare
+  a color literal outside this file — see Visual System Spec, Accessibility
+  Visual Corrections.
+*/
+
+:root {
+  /* --- surfaces & text (Dark / default) --- */
+  --bg: #0E0F0D;
+  --surface: #171814;
+  --surface-2: #1D1F19;
+  --surface-3: #232519;
+  --border: rgba(255, 255, 255, .09);
+  --border-strong: rgba(255, 255, 255, .18);
+  --text: #F5F4EF;
+  --muted: #A8A79E; /* >=4.5:1 on --bg — see accessibility spec */
+
+  /* --- accent --- */
+  --accent: #5C6B4A;
+  --accent-light: #8CA073; /* AA-safe accent for small text/links on --bg */
+  --accent-deep: #3F4A34;
+
+  /* --- call to action --- */
+  --cta-bg: #F5F4EF;
+  --cta-text: #0E0F0D;
+
+  /* --- status (no red/green; olive/outline only) --- */
+  --status-processing-border: var(--border-strong);
+  --status-shipped-color: var(--accent-light);
+  --status-delivered-bg: var(--accent);
+
+  /* --- typography ---
+     Families are completed by an inline override in layout/theme.liquid
+     from the merchant's font_picker settings (Milestone 0 architecture:
+     Typography / Font-Picker). Fallback stacks here keep the page legible
+     before that inline block, or if a setting is ever unset. */
+  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-editorial: "Playfair Display", Georgia, serif;
+  --type-scale: 1; /* multiplier, driven by settings.type_scale */
+
+  /* --- layout --- */
+  --page-width: 1200px;
+  --space-unit: 8px; /* multiplied by settings.spacing_scale at the component level */
+  --radius: 0px; /* "sharp" corner_style default */
+
+  /* --- motion --- */
+  --ease-out-slow: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-slow: 500ms;
+
+  /* --- accessibility --- */
+  --focus-ring: 2px solid var(--accent-light);
+  --focus-ring-offset: 3px;
+
+  color-scheme: dark;
+}
+
+/* Fieldbook (light) preset — same contract, different surface.
+   Driven by data-preset on <html>, set from settings.color_preset
+   in layout/theme.liquid. Never redefine a token anywhere else. */
+:root[data-preset="fieldbook"] {
+  --bg: #F4F1EA;
+  --surface: #FFFFFF;
+  --surface-2: #FBFAF6;
+  --surface-3: #EFEBE0;
+  --border: #DDD8CB;
+  --border-strong: #C9C3B2;
+  --text: #171712;
+  --muted: #6B6A5E;
+
+  --accent: #4A5A3C;
+  --accent-light: #4A5A3C; /* already AA on the light surface at this depth */
+  --accent-deep: #33402A;
+
+  --cta-bg: #171712;
+  --cta-text: #F5F4EF;
+
+  color-scheme: light;
+}
+
+/* corner_style: rounded (opt-in via settings.corner_style) */
+:root[data-corners="rounded"] {
+  --radius: 6px;
+}
+
+/* Reduced motion: zero out travel/duration at the token level so every
+   component that reads --dur-* / translate distances is corrected in one
+   place, per the Motion Implementation Plan. Body class is set in
+   layout/theme.liquid before first paint to avoid a flash of motion. */
+.reduced-motion {
+  --dur-fast: 1ms;
+  --dur-base: 1ms;
+  --dur-slow: 1ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not(.motion-detected) {
+    --dur-fast: 1ms;
+    --dur-base: 1ms;
+    --dur-slow: 1ms;
+  }
+}

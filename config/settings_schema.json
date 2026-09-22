@@ -1,0 +1,214 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "AERA",
+    "theme_version": "0.1.0-milestone0",
+    "theme_author": "AERA",
+    "theme_documentation_url": "https://github.com/aera/aera-theme",
+    "theme_support_email": "support@aera-gear.com"
+  },
+  {
+    "name": "t:settings.colors.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "color_preset",
+        "label": "t:settings.colors.preset.label",
+        "options": [
+          { "value": "dark", "label": "t:settings.colors.preset.dark" },
+          { "value": "fieldbook", "label": "t:settings.colors.preset.fieldbook" }
+        ],
+        "default": "dark"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "t:settings.colors.accent.label",
+        "default": "#5C6B4A",
+        "info": "t:settings.colors.accent.info"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.typography.name",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_display",
+        "label": "t:settings.typography.font_display.label",
+        "default": "oswald_n7",
+        "info": "t:settings.typography.font_display.info"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "t:settings.typography.font_body.label",
+        "default": "inter_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_editorial",
+        "label": "t:settings.typography.font_editorial.label",
+        "default": "playfair_display_n4i",
+        "info": "t:settings.typography.font_editorial.info"
+      },
+      {
+        "type": "range",
+        "id": "type_scale",
+        "label": "t:settings.typography.type_scale.label",
+        "min": 90,
+        "max": 110,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "t:settings.layout.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "corner_style",
+        "label": "t:settings.layout.corner_style.label",
+        "options": [
+          { "value": "sharp", "label": "t:settings.layout.corner_style.sharp" },
+          { "value": "rounded", "label": "t:settings.layout.corner_style.rounded" }
+        ],
+        "default": "sharp"
+      },
+      {
+        "type": "range",
+        "id": "page_width",
+        "label": "t:settings.layout.page_width.label",
+        "min": 1100,
+        "max": 1400,
+        "step": 20,
+        "unit": "px",
+        "default": 1200
+      },
+      {
+        "type": "range",
+        "id": "spacing_scale",
+        "label": "t:settings.layout.spacing_scale.label",
+        "min": 90,
+        "max": 110,
+        "step": 5,
+        "unit": "%",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "t:settings.cart.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "t:settings.cart.cart_type.label",
+        "options": [
+          { "value": "drawer", "label": "t:settings.cart.cart_type.drawer" },
+          { "value": "page", "label": "t:settings.cart.cart_type.page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_free_shipping_bar",
+        "label": "t:settings.cart.show_free_shipping_bar.label",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "t:settings.cart.free_shipping_threshold.label",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "t:settings.grid.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "grid_density",
+        "label": "t:settings.grid.grid_density.label",
+        "options": [
+          { "value": "3", "label": "t:settings.grid.grid_density.three" },
+          { "value": "4", "label": "t:settings.grid.grid_density.four" }
+        ],
+        "default": "4"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_quick_add",
+        "label": "t:settings.grid.show_quick_add.label",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_badges",
+        "label": "t:settings.grid.show_badges.label",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "t:settings.product.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_sticky_atc_mobile",
+        "label": "t:settings.product.show_sticky_atc_mobile.label",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_3d_ar",
+        "label": "t:settings.product.enable_3d_ar.label",
+        "default": true,
+        "info": "t:settings.product.enable_3d_ar.info"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.navigation.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "nav_style",
+        "label": "t:settings.navigation.nav_style.label",
+        "options": [
+          { "value": "mega-menu", "label": "t:settings.navigation.nav_style.mega_menu" },
+          { "value": "simple-dropdown", "label": "t:settings.navigation.nav_style.simple_dropdown" }
+        ],
+        "default": "mega-menu"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.icons.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "empty_state_icon",
+        "label": "t:settings.icons.empty_state_icon.label",
+        "options": [
+          { "value": "mountain", "label": "t:settings.icons.empty_state_icon.mountain" },
+          { "value": "compass", "label": "t:settings.icons.empty_state_icon.compass" },
+          { "value": "bag", "label": "t:settings.icons.empty_state_icon.bag" },
+          { "value": "search", "label": "t:settings.icons.empty_state_icon.search" }
+        ],
+        "default": "mountain"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.social.name",
+    "settings": [
+      { "type": "text", "id": "social_instagram_url", "label": "Instagram" },
+      { "type": "text", "id": "social_youtube_url", "label": "YouTube" },
+      { "type": "text", "id": "social_spotify_url", "label": "Spotify" }
+    ]
+  }
+]

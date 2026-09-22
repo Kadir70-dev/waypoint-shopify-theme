@@ -1,0 +1,53 @@
+{
+  "current": "AERA — Dark",
+  "presets": {
+    "AERA — Dark": {
+      "color_preset": "dark",
+      "accent_color": "#5C6B4A",
+      "font_display": "oswald_n7",
+      "font_body": "inter_n4",
+      "font_editorial": "playfair_display_n4i",
+      "type_scale": 100,
+      "corner_style": "sharp",
+      "page_width": 1200,
+      "spacing_scale": 100,
+      "cart_type": "drawer",
+      "show_free_shipping_bar": true,
+      "free_shipping_threshold": 100,
+      "grid_density": "4",
+      "show_quick_add": true,
+      "show_badges": true,
+      "show_sticky_atc_mobile": true,
+      "enable_3d_ar": true,
+      "nav_style": "mega-menu",
+      "empty_state_icon": "mountain",
+      "social_instagram_url": "",
+      "social_youtube_url": "",
+      "social_spotify_url": ""
+    },
+    "AERA — Fieldbook": {
+      "color_preset": "fieldbook",
+      "accent_color": "#4A5A3C",
+      "font_display": "oswald_n7",
+      "font_body": "inter_n4",
+      "font_editorial": "playfair_display_n4i",
+      "type_scale": 100,
+      "corner_style": "sharp",
+      "page_width": 1200,
+      "spacing_scale": 100,
+      "cart_type": "drawer",
+      "show_free_shipping_bar": true,
+      "free_shipping_threshold": 100,
+      "grid_density": "4",
+      "show_quick_add": true,
+      "show_badges": true,
+      "show_sticky_atc_mobile": true,
+      "enable_3d_ar": true,
+      "nav_style": "mega-menu",
+      "empty_state_icon": "mountain",
+      "social_instagram_url": "",
+      "social_youtube_url": "",
+      "social_spotify_url": ""
+    }
+  }
+}
