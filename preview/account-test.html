@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>AERA — account: local DOM/event-flow test</title>
+<style>
+  body { margin: 0; background: #0E0F0D; color: #F5F4EF; font-family: Arial, sans-serif; padding: 20px; }
+  #log { background: #000; color: #8f8; font-family: monospace; font-size: 12px; padding: 14px; white-space: pre-wrap; max-height: 220px; overflow-y: auto; }
+  #status span { display: inline-block; padding: 3px 8px; margin: 2px 4px 2px 0; border: 1px solid #444; }
+  .pass { color: #8f8; border-color: #4a4 !important; }
+  .fail { color: #f88; border-color: #a44 !important; }
+  [hidden] { display: none !important; }
+</style>
+
+<h1 style="font-size:16px">Account — local DOM/event-flow test</h1>
+<p style="font-size:13px;color:#999;max-width:640px">
+  Loads the real <code>account.js</code> unmodified against a static fixture.
+  <code>window.confirm</code> is mocked ONLY to avoid a real blocking dialog. Proves
+  client-side logic; does not prove live Shopify customer_login/customer_address
+  form submission.
+</p>
+
+<div id="status"></div>
+<div id="log"></div>
+
+<!-- ---------- auth panel fixture (mirrors main-login.liquid) ---------- -->
+<div data-auth-panel="login">
+  <p>Login panel</p>
+  <button type="button" data-auth-toggle="recover">Forgot your password?</button>
+</div>
+<div data-auth-panel="recover">
+  <p>Recover panel</p>
+  <div class="form-message">This panel has a live message (simulates a post-submit error/success state)</div>
+  <button type="button" data-auth-toggle="login">Cancel</button>
+</div>
+
+<!-- ---------- address form fixture (mirrors main-addresses.liquid) ---------- -->
+<button type="button" data-address-toggle="new">Add a New Address</button>
+<div class="address-form" data-address-form="new" hidden>
+  <input type="text" id="new-address-first-field" placeholder="First name">
+</div>
+
+<!-- ---------- address delete fixture ---------- -->
+<form data-address-delete data-confirm-message="Are you sure you want to delete this address?" id="delete-form">
+  <button type="submit">Delete</button>
+</form>
+
+<script src="../assets/account.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var logEl = document.getElementById('log');
+    function log(msg) { logEl.textContent += msg + '\n'; }
+    var results = [];
+    function assert(name, cond) { results.push({ name: name, pass: !!cond }); log((cond ? 'PASS' : 'FAIL') + ' — ' + name); }
+    function renderStatus() {
+      document.getElementById('status').innerHTML = results.map(function (r) {
+        return '<span class="' + (r.pass ? 'pass' : 'fail') + '">' + (r.pass ? 'PASS' : 'FAIL') + '</span> ' + r.name;
+      }).join('');
+    }
+
+    log('--- initial auth-panel state ---');
+    var loginPanel = document.querySelector('[data-auth-panel="login"]');
+    var recoverPanel = document.querySelector('[data-auth-panel="recover"]');
+    assert('recover panel starts visible (it has a live .form-message)', recoverPanel.hidden === false);
+    assert('login panel starts hidden (recover panel "won" the initial-state check)', loginPanel.hidden === true);
+
+    log('--- toggling back to login ---');
+    document.querySelector('[data-auth-panel="recover"] [data-auth-toggle="login"]').click();
+    assert('login panel now visible after toggle', loginPanel.hidden === false);
+    assert('recover panel now hidden after toggle', recoverPanel.hidden === true);
+
+    log('--- toggling to recover ---');
+    document.querySelector('[data-auth-panel="login"] [data-auth-toggle="recover"]').click();
+    assert('recover panel visible again', recoverPanel.hidden === false);
+    assert('login panel hidden again', loginPanel.hidden === true);
+
+    log('--- address form toggle ---');
+    var addressForm = document.querySelector('[data-address-form="new"]');
+    assert('address form starts hidden', addressForm.hidden === true);
+    document.querySelector('[data-address-toggle="new"]').click();
+    assert('address form visible after clicking "Add a New Address"', addressForm.hidden === false);
+    assert('first field in the revealed form received focus', document.activeElement.id === 'new-address-first-field');
+    document.querySelector('[data-address-toggle="new"]').click();
+    assert('address form hidden again after clicking the same toggle', addressForm.hidden === true);
+
+    log('--- delete confirmation ---');
+    var deleteForm = document.getElementById('delete-form');
+    var originalConfirm = window.confirm;
+    var confirmMessageSeen = null;
+
+    window.confirm = function (msg) { confirmMessageSeen = msg; return true; };
+    var evtConfirmed = new Event('submit', { cancelable: true, bubbles: true });
+    deleteForm.dispatchEvent(evtConfirmed);
+    assert('window.confirm was called with the configured message', confirmMessageSeen === 'Are you sure you want to delete this address?');
+    assert('submit NOT prevented when confirm() returns true', evtConfirmed.defaultPrevented === false);
+
+    window.confirm = function () { return false; };
+    var evtCancelled = new Event('submit', { cancelable: true, bubbles: true });
+    deleteForm.dispatchEvent(evtCancelled);
+    assert('submit IS prevented when confirm() returns false', evtCancelled.defaultPrevented === true);
+
+    window.confirm = originalConfirm;
+
+    renderStatus();
+    var failed = results.filter(function (r) { return !r.pass; });
+    log('--- done ---');
+    log(failed.length === 0 ? 'ALL ' + results.length + ' CHECKS PASSED' : failed.length + ' CHECK(S) FAILED');
+  });
+</script>

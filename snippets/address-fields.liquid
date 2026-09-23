@@ -1,0 +1,66 @@
+{%- comment -%}
+  Usage: {% render 'address-fields', form: form, address: address %}
+  Shared fieldset for both the "add new" and "edit" customer_address
+  forms in main-addresses.liquid. `address` may be customer.new_address
+  (blank) or an existing saved address.
+{%- endcomment -%}
+{%- assign field_id = address.id | default: 'New' -%}
+<div class="field-row">
+  <div class="field">
+    <label class="field__label" for="AddressFirstName{{ field_id }}">{{ 'customer.addresses.first_name' | t }}</label>
+    <input type="text" class="field__input" name="address[first_name]" id="AddressFirstName{{ field_id }}" value="{{ address.first_name }}" autocomplete="given-name">
+  </div>
+  <div class="field">
+    <label class="field__label" for="AddressLastName{{ field_id }}">{{ 'customer.addresses.last_name' | t }}</label>
+    <input type="text" class="field__input" name="address[last_name]" id="AddressLastName{{ field_id }}" value="{{ address.last_name }}" autocomplete="family-name">
+  </div>
+</div>
+
+<div class="field">
+  <label class="field__label" for="AddressCompany{{ field_id }}">{{ 'customer.addresses.company' | t }}</label>
+  <input type="text" class="field__input" name="address[company]" id="AddressCompany{{ field_id }}" value="{{ address.company }}" autocomplete="organization">
+</div>
+
+<div class="field">
+  <label class="field__label" for="AddressAddress1{{ field_id }}">{{ 'customer.addresses.address1' | t }}</label>
+  <input type="text" class="field__input" name="address[address1]" id="AddressAddress1{{ field_id }}" value="{{ address.address1 }}" autocomplete="address-line1">
+</div>
+
+<div class="field">
+  <label class="field__label" for="AddressAddress2{{ field_id }}">{{ 'customer.addresses.address2' | t }}</label>
+  <input type="text" class="field__input" name="address[address2]" id="AddressAddress2{{ field_id }}" value="{{ address.address2 }}" autocomplete="address-line2">
+</div>
+
+<div class="field-row">
+  <div class="field">
+    <label class="field__label" for="AddressCity{{ field_id }}">{{ 'customer.addresses.city' | t }}</label>
+    <input type="text" class="field__input" name="address[city]" id="AddressCity{{ field_id }}" value="{{ address.city }}" autocomplete="address-level2">
+  </div>
+  <div class="field">
+    <label class="field__label" for="AddressZip{{ field_id }}">{{ 'customer.addresses.zip' | t }}</label>
+    <input type="text" class="field__input" name="address[zip]" id="AddressZip{{ field_id }}" value="{{ address.zip }}" autocomplete="postal-code">
+  </div>
+</div>
+
+<div class="field-row">
+  <div class="field">
+    <label class="field__label" for="AddressCountry{{ field_id }}">{{ 'customer.addresses.country' | t }}</label>
+    <select class="field__input" name="address[country]" id="AddressCountry{{ field_id }}" autocomplete="country">
+      {{ form.country_option_tags }}
+    </select>
+  </div>
+  <div class="field">
+    <label class="field__label" for="AddressProvince{{ field_id }}">{{ 'customer.addresses.province' | t }}</label>
+    <input type="text" class="field__input" name="address[province]" id="AddressProvince{{ field_id }}" value="{{ address.province }}" autocomplete="address-level1">
+  </div>
+</div>
+
+<div class="field">
+  <label class="field__label" for="AddressPhone{{ field_id }}">{{ 'customer.addresses.phone' | t }}</label>
+  <input type="tel" class="field__input" name="address[phone]" id="AddressPhone{{ field_id }}" value="{{ address.phone }}" autocomplete="tel">
+</div>
+
+<label class="field__checkbox">
+  <input type="checkbox" name="address[default]" value="1" {% if address.id == customer.default_address.id %}checked{% endif %}>
+  {{ 'customer.addresses.set_default' | t }}
+</label>

@@ -1,0 +1,80 @@
+{%- comment -%}
+  Province is a plain text field rather than a country-dependent select —
+  Shopify's legacy country/province JS widget was skipped to keep this
+  simple and dependency-free; form.country_option_tags still drives the
+  real country list (no fabricated data). See Milestone 7 report,
+  KNOWN DIFFERENCES.
+{%- endcomment -%}
+<div class="section page-width">
+  <div class="account-layout">
+    {%- render 'account-nav', current: 'addresses' -%}
+
+    <div class="account-layout__main">
+      <div class="account-heading">
+        <h1>{{ 'customer.addresses.title' | t }}</h1>
+        <button type="button" class="btn btn-outline" data-address-toggle="new">
+          {{ 'customer.addresses.add_new' | t }}
+        </button>
+      </div>
+
+      <div class="address-form" data-address-form="new" hidden>
+        {%- form 'customer_address', customer.new_address, class: 'address-form' -%}
+          {%- if form.errors -%}
+            <div class="form-message">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+          {%- render 'address-fields', form: form, address: customer.new_address -%}
+          <div style="display:flex;gap:12px">
+            <button type="submit" class="btn btn-primary">{{ 'customer.addresses.save' | t }}</button>
+            <button type="button" class="btn btn-outline" data-address-toggle="new">{{ 'customer.addresses.cancel' | t }}</button>
+          </div>
+        {%- endform -%}
+      </div>
+
+      {%- if customer.addresses.size == 0 -%}
+        <p style="color:var(--muted);margin-top:24px">{{ 'customer.addresses.no_addresses' | t }}</p>
+      {%- else -%}
+        <div class="address-grid">
+          {%- for address in customer.addresses -%}
+            <div class="address-card">
+              {%- if address.id == customer.default_address.id -%}
+                <span class="badge" style="align-self:flex-start">{{ 'customer.addresses.default' | t }}</span>
+              {%- endif -%}
+              <address>{{ address | format_address }}</address>
+              <div class="address-card__actions">
+                <button type="button" data-address-toggle="edit-{{ address.id }}">{{ 'customer.addresses.edit' | t }}</button>
+                <form
+                  method="post"
+                  action="{{ routes.account_addresses_url }}/{{ address.id }}"
+                  data-address-delete
+                  data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}"
+                >
+                  <input type="hidden" name="_method" value="delete">
+                  <button type="submit">{{ 'customer.addresses.delete' | t }}</button>
+                </form>
+              </div>
+            </div>
+
+            <div class="address-form" data-address-form="edit-{{ address.id }}" hidden style="grid-column:1/-1">
+              {%- form 'customer_address', address, class: 'address-form' -%}
+                {%- if form.errors -%}
+                  <div class="form-message">{{ form.errors | default_errors }}</div>
+                {%- endif -%}
+                {%- render 'address-fields', form: form, address: address -%}
+                <div style="display:flex;gap:12px">
+                  <button type="submit" class="btn btn-primary">{{ 'customer.addresses.save' | t }}</button>
+                  <button type="button" class="btn btn-outline" data-address-toggle="edit-{{ address.id }}">{{ 'customer.addresses.cancel' | t }}</button>
+                </div>
+              {%- endform -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Addresses"
+}
+{% endschema %}

@@ -8,15 +8,17 @@ extends: theme-check:recommended
 
 MissingTemplate:
   enabled: true
-  ignore_missing: ["404", "gift_card", "customers/*"]
+  ignore_missing: ["404", "gift_card"]
   # "index" removed in Milestone 2 (templates/index.json now exists).
   # "list-collections" removed in Milestone 3 (templates/list-collections.json
   # now exists). "page", "blog" and "article" removed in Milestone 6
-  # (templates/page.json, blog.json and article.json now exist). "search"
-  # and "collection" were never in this list since Theme Check doesn't
-  # flag their absence by default the way it does these. "gift_card" and
-  # "customers/*" stay ignored — out of scope, Shopify's own defaults
-  # are used for those.
+  # (templates/page.json, blog.json and article.json now exist).
+  # "customers/*" removed in Milestone 7 (login, register, account, order,
+  # addresses, activate_account and reset_password templates now exist —
+  # the full classic-accounts set). "search" and "collection" were never
+  # in this list since Theme Check doesn't flag their absence by default
+  # the way it does these. "gift_card" stays ignored — out of scope,
+  # Shopify's own default is used for it.
 
 # Verified false positive in this Theme Check build: every snippet listed
 # here IS referenced (via {% render %}) from at least one section — checked
@@ -41,6 +43,8 @@ OrphanedSnippet:
     - "snippets/cart-line-item.liquid"
     - "snippets/free-shipping-bar.liquid"
     - "snippets/card-article.liquid"
+    - "snippets/account-nav.liquid"
+    - "snippets/address-fields.liquid"
     # pagination.liquid: rendered from inside main-collection-grid.liquid's
     # {% paginate %}...{% endpaginate %} block. chip-filter.liquid: rendered
     # from inside a nested {% for %}{% for %} loop there. filter-groups.liquid
@@ -70,3 +74,9 @@ OrphanedSnippet:
     # sections/journal-teaser.liquid and from inside a {% for %} loop in
     # sections/main-blog.liquid — same unreliable-analysis pattern as
     # above. Verified referenced with grep.
+    # account-nav.liquid and address-fields.liquid (Milestone 7): both
+    # rendered directly from sections/main-account.liquid,
+    # main-addresses.liquid and main-order.liquid — some of those calls
+    # sit inside a {% for %} loop (address-fields.liquid, twice per
+    # address), same unreliable-analysis pattern as above. Verified
+    # referenced with grep.

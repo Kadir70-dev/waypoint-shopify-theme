@@ -1,0 +1,105 @@
+/* AERA — customer accounts: form fields, account layout/nav, order
+   detail (Milestone 7). Tokens only — no literal colors; error states
+   use border/weight emphasis, never red, per the brand's "no red/green"
+   status rule already established in tokens.css. */
+
+/* ---------- form field ----------
+   No shared text-field class existed before this milestone — every
+   prior form (newsletter, filters, search) styled its one input ad hoc.
+   Login/register/address forms need many, so this is now the shared
+   primitive; nothing tracked so far had that need. */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field__label { font-family: var(--font-display); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.field__input {
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  width: 100%;
+}
+.field__input:focus { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); border-color: var(--accent-light); }
+.field--error .field__input { border-color: var(--text); border-width: 2px; }
+.field__error { font-size: 12px; color: var(--text); }
+.field-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.field-row .field { flex: 1 1 200px; }
+.field__checkbox { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+
+.form-card { max-width: 420px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.form-message { padding: 14px 16px; border: 1px solid var(--border-strong); font-size: 13px; line-height: 1.5; }
+.form-message--success { border-color: var(--accent-light); color: var(--accent-light); }
+.form-footer { font-size: 13px; color: var(--muted); text-align: center; }
+.form-footer a { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
+.form-toggle-link { font-size: 12px; color: var(--muted); text-decoration: underline; text-underline-offset: 2px; background: none; border: 0; cursor: pointer; padding: 0; font-family: inherit; }
+.form-toggle-link:hover { color: var(--text); }
+
+/* ---------- auth pages (login / register / activate / reset) ---------- */
+.auth-page { padding-block: 48px 60px; }
+.auth-page__heading { text-align: center; margin-bottom: 28px; }
+.auth-page__heading h1 { font-size: 26px; }
+.auth-page__heading p { color: var(--muted); font-size: 14px; margin-top: 8px; }
+[data-auth-panel][hidden] { display: none; }
+
+/* ---------- account layout (dashboard / addresses / order) ---------- */
+.account-layout { display: block; padding-block: 30px 60px; }
+.account-layout__sidebar { display: flex; flex-direction: column; gap: 4px; margin-bottom: 24px; }
+.account-nav__link {
+  display: block;
+  padding: 10px 0;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.account-nav__link:hover { color: var(--text); }
+.account-nav__link[aria-current="page"] { color: var(--text); border-bottom: 1px solid var(--text); }
+.account-nav__link--logout { color: var(--muted); }
+.account-layout__main { min-width: 0; }
+@media (min-width: 990px) {
+  .account-layout { display: grid; grid-template-columns: 220px 1fr; gap: 0; align-items: start; }
+  .account-layout__sidebar { padding-right: 20px; border-right: 1px solid var(--border); margin-bottom: 0; }
+  .account-layout__main { padding-left: 30px; }
+}
+
+.account-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.account-heading h1 { font-size: 24px; }
+
+/* ---------- order history / detail ---------- */
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.order-row__meta { display: flex; flex-direction: column; gap: 4px; }
+.order-row__number { font-family: var(--font-display); font-size: 13px; text-transform: uppercase; }
+.order-row__date { color: var(--muted); }
+.order-row__status { display: flex; gap: 8px; align-items: center; }
+
+.order-summary { background: var(--surface-2); border: 1px solid var(--border); padding: 24px; display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.order-summary-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); }
+.order-summary-row--total { color: var(--text); font-size: 16px; border-top: 1px solid var(--border); padding-top: 10px; margin-top: 2px; }
+.order-addresses { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px; }
+.order-addresses address { font-style: normal; font-size: 14px; color: var(--muted); line-height: 1.7; }
+@media (min-width: 750px) {
+  .order-addresses { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- addresses ---------- */
+.address-card { border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.address-card address { font-style: normal; font-size: 14px; color: var(--muted); line-height: 1.7; }
+.address-card__actions { display: flex; gap: 16px; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+.address-card__actions button { background: none; border: 0; color: var(--muted); cursor: pointer; padding: 0; font-family: var(--font-display); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+.address-card__actions button:hover, .address-card__actions a:hover { color: var(--text); }
+.address-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
+@media (min-width: 750px) {
+  .address-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.address-form { border: 1px solid var(--border); padding: 24px; margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
+[data-address-form][hidden] { display: none; }

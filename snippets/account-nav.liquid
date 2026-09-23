@@ -1,0 +1,17 @@
+{%- comment -%}
+  Usage: {% render 'account-nav', current: 'account' %}
+  current: 'account' | 'addresses' — highlights the active link.
+  Shared between main-account.liquid, main-addresses.liquid and
+  main-order.liquid.
+{%- endcomment -%}
+<nav class="account-layout__sidebar" aria-label="{{ 'customer.account.title' | t }}">
+  <a href="{{ routes.account_url }}" class="account-nav__link" {% if current == 'account' %}aria-current="page"{% endif %}>
+    {{ 'customer.account.order_history' | t }}
+  </a>
+  <a href="{{ routes.account_addresses_url }}" class="account-nav__link" {% if current == 'addresses' %}aria-current="page"{% endif %}>
+    {{ 'customer.account.addresses' | t }}
+  </a>
+  <a href="{{ routes.account_logout_url }}" class="account-nav__link account-nav__link--logout">
+    {{ 'customer.account.logout' | t }}
+  </a>
+</nav>

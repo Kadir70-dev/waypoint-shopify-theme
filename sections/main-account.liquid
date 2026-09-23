@@ -1,0 +1,51 @@
+<div class="section page-width">
+  <div class="account-layout">
+    {%- render 'account-nav', current: 'account' -%}
+
+    <div class="account-layout__main">
+      <div class="account-heading">
+        <h1>{{ 'customer.account.greeting' | t: name: customer.first_name }}</h1>
+      </div>
+
+      {%- if customer.orders.size == 0 -%}
+        <div class="collection-grid__empty">
+          <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 7h2l1.5 10.5a2 2 0 002 1.5h7a2 2 0 002-1.5L20 9H7"/><circle cx="10" cy="21" r="1"/><circle cx="17" cy="21" r="1"/>
+          </svg>
+          <p>{{ 'customer.account.no_orders' | t }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary" style="margin-top:8px">
+            {{ 'customer.account.start_shopping' | t }} &rarr;
+          </a>
+        </div>
+      {%- else -%}
+        {%- paginate customer.orders by 10 -%}
+          <div>
+            {%- for order in customer.orders -%}
+              <div class="order-row">
+                <div class="order-row__meta">
+                  <span class="order-row__number">{{ order.name }}</span>
+                  <span class="order-row__date">{{ order.created_at | date: '%B %d, %Y' }}</span>
+                </div>
+                <div class="order-row__status">
+                  <span class="badge">{{ order.financial_status_label }}</span>
+                  <span class="badge">{{ order.fulfillment_status_label }}</span>
+                </div>
+                <span>{{ order.total_price | money }}</span>
+                <a href="{{ order.url }}" class="form-toggle-link">{{ 'customer.account.view_order' | t }} &rarr;</a>
+              </div>
+            {%- endfor -%}
+          </div>
+          {%- if paginate.pages > 1 -%}
+            {%- render 'pagination', paginate: paginate -%}
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Account"
+}
+{% endschema %}

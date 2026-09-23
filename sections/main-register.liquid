@@ -1,0 +1,47 @@
+<div class="section page-width auth-page">
+  <div class="form-card">
+    <div class="auth-page__heading">
+      <h1>{{ 'customer.register.title' | t }}</h1>
+    </div>
+
+    {%- form 'create_customer', class: 'form-card' -%}
+      {%- if form.errors -%}
+        <div class="form-message">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+
+      <div class="field-row">
+        <div class="field">
+          <label class="field__label" for="RegisterFirstName">{{ 'customer.register.first_name' | t }}</label>
+          <input type="text" class="field__input" name="customer[first_name]" id="RegisterFirstName" autocomplete="given-name">
+        </div>
+        <div class="field">
+          <label class="field__label" for="RegisterLastName">{{ 'customer.register.last_name' | t }}</label>
+          <input type="text" class="field__input" name="customer[last_name]" id="RegisterLastName" autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="RegisterEmail">{{ 'customer.register.email' | t }}</label>
+        <input type="email" class="field__input" name="customer[email]" id="RegisterEmail" autocomplete="email" autocorrect="off" autocapitalize="off" required>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="RegisterPassword">{{ 'customer.register.password' | t }}</label>
+        <input type="password" class="field__input" name="customer[password]" id="RegisterPassword" autocomplete="new-password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">{{ 'customer.register.submit' | t }}</button>
+    {%- endform -%}
+
+    <p class="form-footer" style="margin-top:20px">
+      {{ 'customer.register.already_account' | t }}
+      <a href="{{ routes.account_login_url }}">{{ 'customer.register.sign_in' | t }}</a>
+    </p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Register"
+}
+{% endschema %}

@@ -1,0 +1,78 @@
+{%- comment -%}
+  Login + "forgot password" recovery in one template — Shopify's native
+  pattern: recover_customer_password has no template of its own, it's
+  requested and confirmed inline here. Both panels render un-hidden by
+  default (no-JS fallback: the page is fully usable either way);
+  assets/account.js layers the single-panel-at-a-time toggle on top and
+  lands on whichever panel actually has a live error/success message.
+{%- endcomment -%}
+<div class="section page-width auth-page">
+  <div class="form-card">
+
+    <div data-auth-panel="login">
+      <div class="auth-page__heading">
+        <h1>{{ 'customer.login.title' | t }}</h1>
+      </div>
+
+      {%- form 'customer_login', class: 'form-card' -%}
+        {%- if form.errors -%}
+          <div class="form-message">{{ form.errors | default_errors }}</div>
+        {%- endif -%}
+
+        <div class="field">
+          <label class="field__label" for="CustomerEmail">{{ 'customer.login.email' | t }}</label>
+          <input type="email" class="field__input" name="customer[email]" id="CustomerEmail" autocomplete="email" autocorrect="off" autocapitalize="off" required>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="CustomerPassword">{{ 'customer.login.password' | t }}</label>
+          <input type="password" class="field__input" name="customer[password]" id="CustomerPassword" autocomplete="current-password" required>
+        </div>
+
+        <button type="button" class="form-toggle-link" data-auth-toggle="recover" style="align-self:flex-start">
+          {{ 'customer.login.forgot_password' | t }}
+        </button>
+
+        <button type="submit" class="btn btn-primary btn-block">{{ 'customer.login.sign_in' | t }}</button>
+      {%- endform -%}
+
+      <p class="form-footer" style="margin-top:20px">
+        {{ 'customer.login.no_account' | t }}
+        <a href="{{ routes.account_register_url }}">{{ 'customer.login.create_account' | t }}</a>
+      </p>
+    </div>
+
+    <div data-auth-panel="recover">
+      <div class="auth-page__heading">
+        <h1>{{ 'customer.recover_password.title' | t }}</h1>
+        <p>{{ 'customer.recover_password.subtext' | t }}</p>
+      </div>
+
+      {%- form 'recover_customer_password', class: 'form-card' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="form-message form-message--success">{{ 'customer.recover_password.success' | t }}</div>
+        {%- else -%}
+          {%- if form.errors -%}
+            <div class="form-message">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+          <div class="field">
+            <label class="field__label" for="RecoverEmail">{{ 'customer.login.email' | t }}</label>
+            <input type="email" class="field__input" name="email" id="RecoverEmail" autocomplete="email" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">{{ 'customer.recover_password.submit' | t }}</button>
+        {%- endif -%}
+      {%- endform -%}
+
+      <button type="button" class="form-toggle-link" data-auth-toggle="login" style="margin-top:16px">
+        {{ 'customer.login.cancel' | t }}
+      </button>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Login"
+}
+{% endschema %}

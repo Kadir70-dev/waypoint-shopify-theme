@@ -1,0 +1,101 @@
+{%- comment -%}
+  Order detail — reuses .cart-line-item's visual structure (component-
+  cart.css) for line items, minus the quantity stepper/remove button
+  (read-only here), so a shipped order still looks like the same theme.
+{%- endcomment -%}
+<div class="section page-width">
+  <div class="account-layout">
+    {%- render 'account-nav', current: 'account' -%}
+
+    <div class="account-layout__main">
+      {%- assign order_date = order.created_at | date: '%B %d, %Y' -%}
+      <div class="account-heading">
+        <div>
+          <h1>{{ 'customer.order.title' | t: name: order.name }}</h1>
+          <p style="color:var(--muted);font-size:13px;margin-top:4px">
+            {{ 'customer.order.placed_on' | t: date: order_date }}
+          </p>
+        </div>
+        <a href="{{ routes.account_url }}" class="form-toggle-link">&larr; {{ 'customer.order.back_to_account' | t }}</a>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-bottom:20px">
+        <span class="badge">{{ order.financial_status_label }}</span>
+        <span class="badge">{{ order.fulfillment_status_label }}</span>
+      </div>
+
+      {%- if order.fulfillments.size > 0 and order.fulfillments.first.tracking_number -%}
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px">
+          {{ 'customer.order.tracking_number' | t }}: {{ order.fulfillments.first.tracking_number }}
+          {%- if order.fulfillments.first.tracking_url -%}
+            &mdash; <a href="{{ order.fulfillments.first.tracking_url }}">{{ 'customer.order.track_shipment' | t }}</a>
+          {%- endif -%}
+        </p>
+      {%- endif -%}
+
+      <div>
+        {%- for line_item in order.line_items -%}
+          <div class="cart-line-item" style="border-bottom:1px solid var(--border)">
+            <a href="{{ line_item.url }}" class="cart-line-item__media">
+              {%- if line_item.image -%}
+                {{ line_item.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: line_item.image.alt | default: line_item.title }}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'cart-line-item__placeholder' }}
+              {%- endif -%}
+            </a>
+            <div class="cart-line-item__body">
+              <div class="cart-line-item__header">
+                <a href="{{ line_item.url }}" class="cart-line-item__title">{{ line_item.title }}</a>
+              </div>
+              {%- if line_item.variant.title != 'Default Title' -%}
+                <p class="cart-line-item__variant">{{ line_item.variant.title }}</p>
+              {%- endif -%}
+              <div class="cart-line-item__footer">
+                <span style="font-size:13px;color:var(--muted)">{{ 'products.quantity' | t }}: {{ line_item.quantity }}</span>
+                <div class="cart-line-item__price">
+                  {%- if line_item.original_line_price != line_item.final_line_price -%}
+                    <span class="compare-at">{{ line_item.original_line_price | money }}</span>
+                  {%- endif -%}
+                  <span>{{ line_item.final_line_price | money }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="order-summary">
+        <div class="order-summary-row"><span>{{ 'customer.order.subtotal' | t }}</span><span>{{ order.subtotal_price | money }}</span></div>
+        {%- if order.total_discounts > 0 -%}
+          <div class="order-summary-row"><span>{{ 'customer.order.discount' | t }}</span><span>&minus;{{ order.total_discounts | money }}</span></div>
+        {%- endif -%}
+        {%- if order.shipping_methods.first.price -%}
+          <div class="order-summary-row"><span>{{ 'customer.order.shipping' | t }}</span><span>{{ order.shipping_methods.first.price | money }}</span></div>
+        {%- endif -%}
+        <div class="order-summary-row"><span>{{ 'customer.order.tax' | t }}</span><span>{{ order.total_tax | money }}</span></div>
+        <div class="order-summary-row order-summary-row--total"><span>{{ 'customer.order.total' | t }}</span><span>{{ order.total_price | money }}</span></div>
+      </div>
+
+      <div class="order-addresses">
+        {%- if order.shipping_address -%}
+          <div>
+            <h2 style="font-size:13px;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">{{ 'customer.order.shipping_address' | t }}</h2>
+            <address>{{ order.shipping_address | format_address }}</address>
+          </div>
+        {%- endif -%}
+        {%- if order.billing_address -%}
+          <div>
+            <h2 style="font-size:13px;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px">{{ 'customer.order.billing_address' | t }}</h2>
+            <address>{{ order.billing_address | format_address }}</address>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Order"
+}
+{% endschema %}
