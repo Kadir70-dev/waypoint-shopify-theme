@@ -8,6 +8,32 @@
   wasn't reached through a collection URL (collection.url is blank
   outside a /collections/x/products/y path).
 {%- endcomment -%}
+{%- comment -%}
+  ld_crumbs mirrors, in order, exactly the <li> items rendered below — the
+  JSON-LD BreadcrumbList must never diverge from what's visually shown.
+  Each entry is "url|name"; the final (current-page) crumb has no URL.
+{%- endcomment -%}
+{%- liquid
+  assign breadcrumb_home_label = 'products.breadcrumb_home' | t
+  assign ld_crumbs = ''
+  assign ld_crumbs = ld_crumbs | append: routes.root_url | append: '|' | append: breadcrumb_home_label | append: ';;'
+  if product
+    if collection.url
+      assign ld_crumbs = ld_crumbs | append: collection.url | append: '|' | append: collection.title | append: ';;'
+    elsif product.collections.first
+      assign ld_crumbs = ld_crumbs | append: product.collections.first.url | append: '|' | append: product.collections.first.title | append: ';;'
+    endif
+    assign ld_crumbs = ld_crumbs | append: '|' | append: product.title | append: ';;'
+  elsif blog
+    assign ld_crumbs = ld_crumbs | append: blog.url | append: '|' | append: blog.title | append: ';;'
+    if article
+      assign ld_crumbs = ld_crumbs | append: '|' | append: article.title | append: ';;'
+    endif
+  elsif page_title
+    assign ld_crumbs = ld_crumbs | append: '|' | append: page_title | append: ';;'
+  endif
+  assign ld_crumb_list = ld_crumbs | split: ';;'
+-%}
 <nav class="breadcrumb" aria-label="{{ 'accessibility.breadcrumb' | t }}">
   <ol class="breadcrumb__list">
     <li><a href="{{ routes.root_url }}">{{ 'products.breadcrumb_home' | t }}</a></li>
@@ -28,3 +54,21 @@
     {%- endif -%}
   </ol>
 </nav>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {%- for crumb in ld_crumb_list -%}
+      {%- assign crumb_url = crumb | split: '|' | first -%}
+      {%- assign crumb_name = crumb | remove_first: crumb_url | remove_first: '|' -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "name": {{ crumb_name | json }}{% if crumb_url != blank %},
+        "item": {{ crumb_url | prepend: shop.url | json }}{% endif %}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>

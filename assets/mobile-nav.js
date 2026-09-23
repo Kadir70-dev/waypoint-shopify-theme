@@ -11,10 +11,14 @@
   if (!nav) return;
 
   var panels = nav.querySelectorAll('[data-nav-panel]');
+  var drillButtons = nav.querySelectorAll('[data-nav-drill]');
 
   function showPanel(name) {
     panels.forEach(function (panel) {
       panel.hidden = panel.getAttribute('data-nav-panel') !== name;
+    });
+    drillButtons.forEach(function (button) {
+      button.setAttribute('aria-expanded', String(button.getAttribute('data-nav-drill') === name));
     });
     var target = nav.querySelector('[data-nav-panel="' + name + '"]');
     if (!target) return;

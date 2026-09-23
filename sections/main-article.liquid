@@ -5,6 +5,28 @@
   (article.comments_enabled? / article.comments are real native Shopify
   objects if a later milestone wants to add it; nothing here blocks that.)
 {%- endcomment -%}
+{%- comment -%}
+  Article structured data (Milestone 8 SEO). Real Shopify article fields
+  only; author is emitted as a plain Person name (Shopify's article.author
+  is a string, no separate profile data exists to fabricate).
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ article.title | json }},
+  "datePublished": {{ article.published_at | date: '%Y-%m-%d' | json }},
+  {%- if article.author != blank %}
+  "author": { "@type": "Person", "name": {{ article.author | json }} },
+  {%- endif %}
+  {%- if article.image %}
+  "image": [{{ article.image | image_url: width: 1400 | prepend: "https:" | json }}],
+  {%- endif %}
+  "description": {{ article.excerpt_or_content | strip_html | truncatewords: 40 | json }},
+  "mainEntityOfPage": { "@type": "WebPage", "@id": {{ canonical_url | json }} },
+  "publisher": { "@type": "Organization", "name": {{ shop.name | json }} }
+}
+</script>
 <div class="section page-width">
   <div class="article-header" data-reveal>
     {%- render 'breadcrumb', blog: blog, article: article -%}

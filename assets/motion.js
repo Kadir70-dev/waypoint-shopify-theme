@@ -65,10 +65,23 @@
     var interval = parseInt(slider.getAttribute('data-interval'), 10) || 6000;
     var timer = null;
 
+    function loadSlideBackground(slide) {
+      // Lazy, one-time: a slide with data-bg-mobile hasn't had its real
+      // background set yet. Removing the attributes after use marks it
+      // "already loaded" so re-activating the same slide is a no-op.
+      var mobileUrl = slide.getAttribute('data-bg-mobile');
+      if (!mobileUrl) return;
+      slide.style.setProperty('--bg-mobile', 'url(' + mobileUrl + ')');
+      slide.style.setProperty('--bg-desktop', 'url(' + (slide.getAttribute('data-bg-desktop') || mobileUrl) + ')');
+      slide.removeAttribute('data-bg-mobile');
+      slide.removeAttribute('data-bg-desktop');
+    }
+
     function show(index) {
       slides[current].removeAttribute('data-active');
       if (dots[current]) dots[current].setAttribute('aria-current', 'false');
       current = (index + slides.length) % slides.length;
+      loadSlideBackground(slides[current]);
       slides[current].setAttribute('data-active', 'true');
       if (dots[current]) dots[current].setAttribute('aria-current', 'true');
     }

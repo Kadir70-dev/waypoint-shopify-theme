@@ -18,6 +18,46 @@
   assign specs = product.metafields.specs
 -%}
 
+{%- comment -%}
+  Product structured data (Milestone 8 SEO). Only real Shopify data —
+  no fabricated ratings/reviews/price/availability. aggregateRating is
+  included only when the same reviews metafield namespace snippets/
+  star-rating.liquid reads is actually populated on this product.
+{%- endcomment -%}
+{%- liquid
+  assign ld_rating = product.metafields.reviews.rating.value
+  assign ld_rating_count = product.metafields.reviews.rating_count.value
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | json }},
+  {%- if product.vendor != blank %}
+  "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+  {%- endif %}
+  {%- if product.featured_image %}
+  "image": [{{ product.featured_image | image_url: width: 1200 | prepend: "https:" | json }}],
+  {%- endif %}
+  {%- if current_variant.sku != blank %}
+  "sku": {{ current_variant.sku | json }},
+  {%- endif %}
+  "offers": {
+    "@type": "Offer",
+    "url": {{ shop.url | append: product.url | json }},
+    "priceCurrency": {{ shop.currency | json }},
+    "price": {{ current_variant.price | divided_by: 100.0 | round: 2 | json }},
+    "availability": "https://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}"
+  }{%- if ld_rating != blank %},
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ ld_rating.rating | json }},
+    "reviewCount": {{ ld_rating_count | default: 0 | json }}
+  }{%- endif %}
+}
+</script>
+
 <div class="section page-width">
   {%- render 'breadcrumb', product: product -%}
 

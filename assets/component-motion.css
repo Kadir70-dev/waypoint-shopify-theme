@@ -16,6 +16,14 @@
   visibility: hidden;
   transition: opacity var(--dur-slow) var(--ease-out-slow), transform calc(var(--dur-slow) * 2) var(--ease-out-slow);
   transform: scale(1.04);
+  /* Responsive + lazy background image (Milestone 8 performance fix):
+     --bg-mobile/--bg-desktop are set inline for the first slide only;
+     every other slide gets them set by motion.js the first time it
+     actually becomes active, so unreached slides never download. */
+  background-image: var(--bg-mobile, none);
+}
+@media (min-width: 750px) {
+  .hero-slider__slide { background-image: var(--bg-desktop, none); }
 }
 .hero-slider__slide::before {
   content: "";

@@ -59,11 +59,34 @@
   </div>
 </form>
 
+<div
+  data-cart-status
+  aria-live="polite"
+  class="visually-hidden"
+  data-status-added="Item added to cart"
+  data-status-removed="Item removed from cart"
+  data-status-updated="Cart updated"
+  data-status-cleared="Cart cleared"
+  data-status-count-one="1 item in cart"
+  data-status-count-other="%d items in cart"
+></div>
+
+<form data-cart-form id="rapid-form">
+  <div data-cart-line-item data-line-key="9005:xyz">
+    <div class="quantity-stepper">
+      <button type="button" data-quantity-decrease>&minus;</button>
+      <input type="number" value="1" min="1" data-quantity-input data-cart-quantity-input>
+      <button type="button" data-quantity-increase>+</button>
+    </div>
+  </div>
+</form>
+
 <script>
   var logEl = document.getElementById('log');
   function log(msg) { logEl.textContent += msg + '\n'; }
 
   window.__fetchLog = [];
+  window.__abortLog = [];
   var CART_AFTER_ADD = { item_count: 1, items: [{ key: '9001:abc', quantity: 1 }], total_price: 24900 };
   var CART_AFTER_CHANGE = { item_count: 5, items: [{ key: '9001:abc', quantity: 5 }], total_price: 124500 };
   var CART_EMPTY = { item_count: 0, items: [], total_price: 0 };
@@ -77,15 +100,34 @@
     window.__fetchLog.push({ url: url, method: options.method || 'GET', body: options.body });
     log('[mock fetch] ' + (options.method || 'GET') + ' ' + url);
 
-    return new Promise(function (resolve) {
-      setTimeout(function () {
+    return new Promise(function (resolve, reject) {
+      var signal = options.signal;
+      var settled = false;
+      if (signal && signal.aborted) {
+        settled = true;
+        reject(new DOMException('Aborted', 'AbortError'));
+        return;
+      }
+
+      var timer = setTimeout(function () {
+        settled = true;
         if (url === '/cart/add.js') {
           resolve({ ok: true, json: function () { return Promise.resolve({ id: 9001, quantity: 1 }); } });
         } else if (url === '/cart.js') {
           resolve({ ok: true, json: function () { return Promise.resolve(CART_AFTER_ADD); } });
         } else if (url === '/cart/change.js') {
           var body = JSON.parse(options.body);
-          var cart = body.quantity === 0 ? CART_EMPTY : CART_AFTER_CHANGE;
+          var cart;
+          if (body.quantity === 0) {
+            cart = CART_EMPTY;
+          } else if (body.id === '9005:xyz') {
+            // Rapid-double-click fixture: the response always echoes the
+            // REQUESTED quantity, so the test can prove which of two
+            // overlapping requests actually won.
+            cart = { item_count: body.quantity, items: [{ key: '9005:xyz', quantity: body.quantity }], total_price: body.quantity * 10000 };
+          } else {
+            cart = CART_AFTER_CHANGE;
+          }
           nextDrawerHtml = DRAWER_HTML_AFTER_CHANGE;
           resolve({ ok: true, json: function () { return Promise.resolve(cart); } });
         } else if (url === '/cart/clear.js') {
@@ -96,6 +138,18 @@
           resolve({ ok: false, status: 404, json: function () { return Promise.resolve({}); }, text: function () { return Promise.resolve(''); } });
         }
       }, 30);
+
+      if (signal) {
+        signal.addEventListener('abort', function () {
+          // Mirrors real fetch(): aborting a request that has already
+          // settled is a documented no-op, not a second rejection.
+          if (settled) return;
+          settled = true;
+          window.__abortLog.push(url);
+          clearTimeout(timer);
+          reject(new DOMException('Aborted', 'AbortError'));
+        });
+      }
     });
   };
 </script>
@@ -153,6 +207,8 @@
       assert('button shows "Added" after a successful add', pdpButton.textContent === 'Added');
       assert('cart drawer opened as confirmation', document.getElementById('CartDrawer').getAttribute('data-state') === 'open');
       assert('drawer content swapped in from the section-id fetch', attr('#CartDrawerContent [data-marker]', 'data-marker') === 'refreshed-after-add');
+      var statusEl = document.querySelector('[data-cart-status]');
+      assert('aria-live status announces "added" with singular count text', statusEl.textContent === 'Item added to cart. 1 item in cart.');
 
       await waitUntil(function () { return pdpButton.textContent === 'Add to Cart →'; });
       assert('button reverts to "Add to Cart →" after the confirmation window', pdpButton.textContent === 'Add to Cart →');
@@ -186,6 +242,25 @@
       var removeCall = window.__fetchLog.filter(function (f) { return f.url === '/cart/change.js'; })[0];
       assert('remove sends quantity: 0 for the line', !!removeCall && JSON.parse(removeCall.body).quantity === 0);
       assert('header count drops to 0 and hides again', countEl.textContent === '0' && countEl.hidden === true);
+      assert('aria-live status announces "removed" with zero-count plural text', statusEl.textContent === 'Item removed from cart. 0 items in cart.');
+
+      log('--- rapid double-click on stepper aborts the superseded request ---');
+      window.__fetchLog.length = 0;
+      window.__abortLog.length = 0;
+      var rapidIncrease = document.querySelector('#rapid-form [data-quantity-increase]');
+      var rapidInput = document.querySelector('#rapid-form [data-cart-quantity-input]');
+      rapidIncrease.click();
+      assert('first rapid click incremented input locally (1 -> 2)', rapidInput.value === '2');
+      rapidIncrease.click();
+      assert('second rapid click incremented input locally (2 -> 3) before either response lands', rapidInput.value === '3');
+
+      await waitUntil(function () {
+        return window.__fetchLog.filter(function (f) { return f.url === '/cart/change.js'; }).length === 2;
+      });
+      await waitUntil(function () { return countEl.textContent === '3'; }, 2000);
+      assert('exactly one change.js POST was issued per click (two total)', window.__fetchLog.filter(function (f) { return f.url === '/cart/change.js'; }).length === 2);
+      assert('the first (superseded) request was aborted', window.__abortLog.length === 1 && window.__abortLog[0] === '/cart/change.js');
+      assert('final cart state reflects only the LAST request (quantity 3), never the stale intermediate (2)', countEl.textContent === '3');
 
       log('--- header cart-icon trigger never navigates ---');
       var trigger = document.querySelector('[data-overlay-trigger="CartDrawer"]');

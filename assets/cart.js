@@ -40,6 +40,23 @@
     });
   }
 
+  // ---------- screen-reader status announcement ----------
+  // Mirrors the PDP buy box's aria-live pattern (Milestone 4) — AJAX cart
+  // mutations had no equivalent until now (Milestone 8 accessibility fix).
+  function announceCartStatus(action, cart) {
+    qsa('[data-cart-status]').forEach(function (el) {
+      var actionText = el.getAttribute('data-status-' + action);
+      if (!actionText) return;
+      var countText;
+      if (cart.item_count === 1) {
+        countText = el.getAttribute('data-status-count-one');
+      } else {
+        countText = (el.getAttribute('data-status-count-other') || '').replace('%d', cart.item_count);
+      }
+      el.textContent = countText ? actionText + '. ' + countText + '.' : actionText + '.';
+    });
+  }
+
   // ---------- swap a whole cart surface by container id (drawer / page) ----------
   function swapSurface(sectionId, targetId) {
     var target = document.getElementById(targetId);
@@ -105,6 +122,7 @@
       })
       .then(function (cart) {
         updateHeaderCount(cart);
+        announceCartStatus('added', cart);
         setAddButtonState(submitButton, 'added');
         return refreshCartSurfaces();
       })
@@ -136,23 +154,38 @@
     return line ? line.getAttribute('data-line-key') : null;
   }
 
+  // Guards against rapid stepper clicks firing overlapping requests that
+  // could resolve out of order and leave stale UI showing — the same
+  // AbortController pattern already used in variant-picker.js and
+  // predictive-search.js, missing here until this Milestone 8 fix.
+  var activeChangeController = null;
+
   function changeLine(key, quantity, scope) {
+    if (activeChangeController) activeChangeController.abort();
+    activeChangeController = ('AbortController' in window) ? new AbortController() : null;
+
     if (scope) scope.setAttribute('aria-busy', 'true');
 
     return fetch('/cart/change.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ id: key, quantity: quantity })
+      body: JSON.stringify({ id: key, quantity: quantity }),
+      signal: activeChangeController ? activeChangeController.signal : undefined
     })
       .then(function (response) {
         return response.json();
       })
       .then(function (cart) {
         updateHeaderCount(cart);
+        announceCartStatus(quantity === 0 ? 'removed' : 'updated', cart);
         return refreshCartSurfaces();
       })
-      .catch(function () {
+      .then(function () {
         if (scope) scope.removeAttribute('aria-busy');
+      })
+      .catch(function (error) {
+        if (scope) scope.removeAttribute('aria-busy');
+        if (error.name === 'AbortError') return;
       });
   }
 
@@ -201,6 +234,7 @@
         })
         .then(function (cart) {
           updateHeaderCount(cart);
+          announceCartStatus('cleared', cart);
           return refreshCartSurfaces();
         });
     });

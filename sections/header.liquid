@@ -93,7 +93,7 @@
 </header>
 
 {%- comment -%} ---------- mobile navigation (full-screen, drill-down) ---------- {%- endcomment -%}
-<div id="MobileNav" class="mobile-nav" data-overlay hidden>
+<div id="MobileNav" class="mobile-nav" data-overlay hidden role="dialog" aria-modal="true" aria-label="{{ 'accessibility.mobile_menu_dialog' | t }}">
   <div class="mobile-nav__top">
     <div class="mobile-nav__top-icons">
       <button class="icon-btn" type="button" data-overlay-trigger="SearchOverlay" aria-controls="SearchOverlay" aria-label="{{ 'accessibility.search' | t }}">
@@ -111,7 +111,7 @@
       {%- for link in section.settings.main_menu.links -%}
         <li>
           {%- if link.links.size > 0 -%}
-            <button type="button" class="mobile-nav__drill" data-nav-drill="drill-{{ forloop.index }}">
+            <button type="button" class="mobile-nav__drill" data-nav-drill="drill-{{ forloop.index }}" aria-expanded="false" aria-controls="MobileNavDrill-{{ forloop.index }}">
               {{ link.title }}
               {%- render 'icon-chevron-right' -%}
             </button>
@@ -125,7 +125,7 @@
 
   {%- for link in section.settings.main_menu.links -%}
     {%- if link.links.size > 0 -%}
-      <div class="mobile-nav__panel" data-nav-panel="drill-{{ forloop.index }}" hidden>
+      <div class="mobile-nav__panel" id="MobileNavDrill-{{ forloop.index }}" data-nav-panel="drill-{{ forloop.index }}" hidden>
         <button type="button" class="mobile-nav__back" data-nav-back>
           {%- render 'icon-chevron-left' -%}
           {{ link.title }}
@@ -156,7 +156,7 @@
 </div>
 
 {%- comment -%} ---------- search overlay shell (Milestone 1: shell + open/close only) ---------- {%- endcomment -%}
-<div id="SearchOverlay" class="search-overlay" data-overlay data-overlay-backdrop hidden>
+<div id="SearchOverlay" class="search-overlay" data-overlay data-overlay-backdrop hidden role="dialog" aria-modal="true" aria-label="{{ 'accessibility.search_dialog' | t }}">
   <div class="search-overlay__panel">
     <div class="search-overlay__top">
       <button class="icon-btn" type="button" data-overlay-close aria-label="{{ 'accessibility.close' | t }}">
@@ -164,7 +164,9 @@
       </button>
     </div>
     <form action="{{ routes.search_url }}" method="get" role="search" autocomplete="off">
+      <label for="SearchOverlayField" class="visually-hidden">{{ 'search.field_label' | t }}</label>
       <input
+        id="SearchOverlayField"
         class="search-overlay__field"
         type="search"
         name="q"
@@ -208,7 +210,7 @@
 {%- section 'cart-drawer' -%}
 
 {%- comment -%} ---------- mobile bottom tab bar ---------- {%- endcomment -%}
-<nav class="mobile-tabbar" aria-label="{{ 'accessibility.menu' | t }}">
+<nav class="mobile-tabbar" aria-label="{{ 'accessibility.primary_navigation' | t }}">
   <a href="{{ routes.root_url }}" class="mobile-tabbar__item" {% if request.path == routes.root_url %}aria-current="page"{% endif %}>
     {%- render 'icon-home' -%}
     {{ 'navigation.home' | t }}

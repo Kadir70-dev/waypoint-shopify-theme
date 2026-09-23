@@ -7,7 +7,11 @@
     "account": "Account",
     "cart": "Cart",
     "breadcrumb": "Breadcrumb",
-    "remove": "Remove"
+    "remove": "Remove",
+    "mobile_menu_dialog": "Mobile menu",
+    "search_dialog": "Search",
+    "cart_dialog": "Shopping cart",
+    "primary_navigation": "Primary navigation"
   },
   "customer": {
     "login": {
@@ -107,6 +111,7 @@
     "account": "Account"
   },
   "search": {
+    "field_label": "Search",
     "placeholder": "Search gear, journal, categories…",
     "popular": "Popular Searches",
     "title": "Search",
@@ -181,7 +186,13 @@
     "free_shipping_progress": "Add {{ amount }} more for free shipping",
     "you_might_also_like": "You Might Also Like",
     "adding": "Adding…",
-    "added": "Added"
+    "added": "Added",
+    "status_added": "Added to cart",
+    "status_removed": "Removed from cart",
+    "status_updated": "Cart updated",
+    "status_cleared": "Cart cleared",
+    "status_count_one": "1 item in cart",
+    "status_count_other": "%d items in cart"
   },
   "products": {
     "badge_bestseller": "Bestseller",

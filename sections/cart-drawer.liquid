@@ -16,8 +16,19 @@
 <script type="application/json" data-cart-routes>
   { "cart_url": {{ routes.cart_url | json }} }
 </script>
-<div id="CartDrawer" class="cart-drawer" data-overlay data-overlay-backdrop hidden>
+<div id="CartDrawer" class="cart-drawer" data-overlay data-overlay-backdrop hidden role="dialog" aria-modal="true" aria-label="{{ 'accessibility.cart_dialog' | t }}">
   <div class="cart-drawer__panel">
+   <div
+     class="visually-hidden"
+     aria-live="polite"
+     data-cart-status
+     data-status-added="{{ 'cart.status_added' | t }}"
+     data-status-removed="{{ 'cart.status_removed' | t }}"
+     data-status-updated="{{ 'cart.status_updated' | t }}"
+     data-status-cleared="{{ 'cart.status_cleared' | t }}"
+     data-status-count-one="{{ 'cart.status_count_one' | t }}"
+     data-status-count-other="{{ 'cart.status_count_other' | t }}"
+   ></div>
    {%- comment -%}
      Everything below is swapped wholesale by cart.js on refresh (one id,
      one innerHTML replace) rather than several fine-grained swaps — the

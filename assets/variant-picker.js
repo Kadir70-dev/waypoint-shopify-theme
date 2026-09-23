@@ -54,6 +54,32 @@
       setActiveMedia(thumb.getAttribute('data-media-id'));
     });
 
+    // ---- thumbnail arrow-key navigation ----
+    // role="tablist"/"tab" was already declared on this markup (Milestone
+    // 4); the ARIA APG Tabs pattern requires Left/Right (and Home/End) to
+    // move between tabs, not just Tab — missing until this Milestone 8 fix.
+    gallery.addEventListener('keydown', function (e) {
+      var thumb = e.target.closest('[data-gallery-thumb]');
+      if (!thumb) return;
+      var key = e.key;
+      if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].indexOf(key) === -1) return;
+
+      var thumbs = Array.prototype.slice.call(gallery.querySelectorAll('[data-gallery-thumb]'));
+      var currentIndex = thumbs.indexOf(thumb);
+      if (currentIndex === -1) return;
+
+      var nextIndex = currentIndex;
+      if (key === 'ArrowLeft') nextIndex = (currentIndex - 1 + thumbs.length) % thumbs.length;
+      if (key === 'ArrowRight') nextIndex = (currentIndex + 1) % thumbs.length;
+      if (key === 'Home') nextIndex = 0;
+      if (key === 'End') nextIndex = thumbs.length - 1;
+
+      e.preventDefault();
+      var nextThumb = thumbs[nextIndex];
+      nextThumb.focus();
+      setActiveMedia(nextThumb.getAttribute('data-media-id'));
+    });
+
     // ---- selected options + unavailable-combination marking ----
     function getSelectedOptions() {
       var selected = [];

@@ -184,6 +184,34 @@
       assert('thumbnail click did NOT trigger a fetch', window.__fetchLog.length === 0);
       assert('thumbnail click switched the active main image back to 1001', document.querySelector('[data-gallery-main-item][data-media-id="1001"]').classList.contains('is-active'));
 
+      log('--- gallery arrow-key navigation (ARIA APG Tabs pattern) ---');
+      var thumb1001 = document.querySelector('[data-gallery-thumb][data-media-id="1001"]');
+      var thumb1002 = document.querySelector('[data-gallery-thumb][data-media-id="1002"]');
+      function press(el, key) {
+        el.dispatchEvent(new KeyboardEvent('keydown', { key: key, bubbles: true, cancelable: true }));
+      }
+      thumb1001.focus();
+      press(thumb1001, 'ArrowRight');
+      assert('ArrowRight moves focus to the next thumb (1001 -> 1002)', document.activeElement === thumb1002);
+      assert('ArrowRight also activates that thumb\'s media', document.querySelector('[data-gallery-main-item][data-media-id="1002"]').classList.contains('is-active'));
+
+      press(thumb1002, 'ArrowRight');
+      assert('ArrowRight wraps around past the last thumb back to the first', document.activeElement === thumb1001);
+
+      press(thumb1001, 'ArrowLeft');
+      assert('ArrowLeft wraps backward from the first thumb to the last', document.activeElement === thumb1002);
+
+      press(thumb1002, 'Home');
+      assert('Home moves focus to the first thumb', document.activeElement === thumb1001);
+
+      press(thumb1001, 'End');
+      assert('End moves focus to the last thumb', document.activeElement === thumb1002);
+      assert('End also activates the last thumb\'s media', document.querySelector('[data-gallery-main-item][data-media-id="1002"]').classList.contains('is-active'));
+
+      window.__fetchLog.length = 0;
+      press(thumb1002, 'End');
+      assert('gallery keyboard nav never triggers a fetch (pure client-side, like thumbnail clicks)', window.__fetchLog.length === 0);
+
       renderStatus();
       var failed = results.filter(function (r) { return !r.pass; });
       log('--- done ---');

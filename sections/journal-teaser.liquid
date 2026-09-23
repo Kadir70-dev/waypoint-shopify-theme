@@ -39,6 +39,9 @@
     { "type": "blog", "id": "blog", "label": "Blog" },
     { "type": "range", "id": "articles_to_show", "label": "Articles to show", "min": 2, "max": 8, "step": 1, "default": 4 }
   ],
-  "presets": [{ "name": "Journal teaser" }]
+  "presets": [{ "name": "Journal teaser" }],
+  "enabled_on": {
+    "templates": ["index", "blog", "article", "page"]
+  }
 }
 {% endschema %}

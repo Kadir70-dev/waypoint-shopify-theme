@@ -3,7 +3,7 @@
 {%- endcomment -%}
 <a href="{{ link | default: '#' }}" class="ccard" data-reveal>
   {%- if image -%}
-    {{ image | image_url: width: 500 | image_tag: loading: 'lazy', alt: label, widths: '300, 500' }}
+    {{ image | image_url: width: 500 | image_tag: loading: 'lazy', alt: label, widths: '300, 500', sizes: '(min-width: 750px) 25vw, 50vw' }}
   {%- else -%}
     {{ 'collection-1' | placeholder_svg_tag: 'ccard__placeholder' }}
   {%- endif -%}

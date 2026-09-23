@@ -5,18 +5,42 @@
   data-interval="{{ section.settings.autoplay_interval | times: 1000 }}"
 >
   {%- for block in section.blocks -%}
+    {%- liquid
+      assign mobile_url = blank
+      assign desktop_url = blank
+      if block.settings.image
+        assign mobile_url = block.settings.image | image_url: width: 800
+        assign desktop_url = block.settings.image | image_url: width: 1600
+      elsif forloop.index == 1
+        assign mobile_url = 'hero-slide-1.png' | asset_url
+        assign desktop_url = mobile_url
+      elsif forloop.index == 2
+        assign mobile_url = 'hero-slide-2.png' | asset_url
+        assign desktop_url = mobile_url
+      elsif forloop.index == 3
+        assign mobile_url = 'hero-slide-3.png' | asset_url
+        assign desktop_url = mobile_url
+      endif
+    -%}
     <div
       class="hero-slider__slide photo brand"
       data-hero-slide
-      {% if forloop.first %}data-active="true"{% endif %}
-      {% if block.settings.image %}
-        style="background-image:url({{ block.settings.image | image_url: width: 1600 }})"
-      {% elsif forloop.index == 1 %}
-        style="background-image:url({{ 'hero-slide-1.png' | asset_url }})"
-      {% elsif forloop.index == 2 %}
-        style="background-image:url({{ 'hero-slide-2.png' | asset_url }})"
-      {% elsif forloop.index == 3 %}
-        style="background-image:url({{ 'hero-slide-3.png' | asset_url }})"
+      {% comment %}
+        Only the first (initially active) slide's background loads eagerly
+        (inline custom properties, real request at paint time). Every other
+        slide only carries data-bg-* — motion.js's show() sets the real
+        --bg-mobile/--bg-desktop custom properties the first time that
+        slide actually becomes active, so slides a visitor never reaches
+        (or an autoplay-disabled reduced-motion visitor never advances to)
+        never download at all. See assets/component-motion.css for the
+        var(--bg-mobile)/(min-width:750px) var(--bg-desktop) rule.
+      {% endcomment %}
+      {% if forloop.first %}
+        data-active="true"
+        style="--bg-mobile:url({{ mobile_url }});--bg-desktop:url({{ desktop_url }})"
+      {% else %}
+        data-bg-mobile="{{ mobile_url }}"
+        data-bg-desktop="{{ desktop_url }}"
       {% endif %}
       {{ block.shopify_attributes }}
     >

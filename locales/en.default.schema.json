@@ -83,6 +83,13 @@
     },
     "social": {
       "name": "Social"
+    },
+    "seo": {
+      "name": "SEO",
+      "favicon": {
+        "label": "Favicon image",
+        "info": "Displayed as the browser tab icon. Recommended: square image, at least 32 x 32px."
+      }
     }
   }
 }

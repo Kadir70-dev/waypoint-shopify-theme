@@ -322,7 +322,8 @@
   text-transform: uppercase;
   padding: 10px 0;
 }
-.search-overlay__field:focus { border-bottom-color: var(--accent-light); outline: none; }
+.search-overlay__field:focus { border-bottom-color: var(--accent-light); }
+.search-overlay__field:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 .search-overlay__field::placeholder { color: var(--muted); text-transform: none; font-family: var(--font-body); letter-spacing: 0; }
 
 .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }

@@ -24,7 +24,7 @@
           <button type="submit">{{ 'newsletter.submit' | t }}</button>
         </div>
         <label class="newsletter-block__consent">
-          <input type="checkbox" required style="margin-top:2px">
+          <input type="checkbox" name="contact[accepts_marketing]" value="1" required style="margin-top:2px">
           {{ 'newsletter.consent' | t }}
         </label>
         {%- if form.errors -%}

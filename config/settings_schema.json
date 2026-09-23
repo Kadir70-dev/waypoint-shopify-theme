@@ -210,5 +210,16 @@
       { "type": "text", "id": "social_youtube_url", "label": "YouTube" },
       { "type": "text", "id": "social_spotify_url", "label": "Spotify" }
     ]
+  },
+  {
+    "name": "t:settings.seo.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:settings.seo.favicon.label",
+        "info": "t:settings.seo.favicon.info"
+      }
+    ]
   }
 ]

@@ -10,6 +10,17 @@
   replaces it.
 {%- endcomment -%}
 <div class="section page-width">
+ <div
+   class="visually-hidden"
+   aria-live="polite"
+   data-cart-status
+   data-status-added="{{ 'cart.status_added' | t }}"
+   data-status-removed="{{ 'cart.status_removed' | t }}"
+   data-status-updated="{{ 'cart.status_updated' | t }}"
+   data-status-cleared="{{ 'cart.status_cleared' | t }}"
+   data-status-count-one="{{ 'cart.status_count_one' | t }}"
+   data-status-count-other="{{ 'cart.status_count_other' | t }}"
+ ></div>
  <div id="CartPageContent">
   <div class="cart-page__top">
     <h1 class="cart-page__heading">

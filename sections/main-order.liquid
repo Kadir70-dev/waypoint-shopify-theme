@@ -38,7 +38,7 @@
           <div class="cart-line-item" style="border-bottom:1px solid var(--border)">
             <a href="{{ line_item.url }}" class="cart-line-item__media">
               {%- if line_item.image -%}
-                {{ line_item.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: line_item.image.alt | default: line_item.title }}
+                {{ line_item.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: line_item.image.alt | default: line_item.title, widths: '80, 120, 160', sizes: '80px' }}
               {%- else -%}
                 {{ 'product-1' | placeholder_svg_tag: 'cart-line-item__placeholder' }}
               {%- endif -%}

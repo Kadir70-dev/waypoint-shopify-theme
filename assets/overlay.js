@@ -11,13 +11,32 @@
   var FOCUSABLE =
     'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+  // Reference-counted so two trapped overlays opening in quick succession
+  // (e.g. add-to-cart opens the cart drawer while the mobile nav is still
+  // open) don't have the second close() un-inert the page too early.
+  var trappedOpenCount = 0;
+  function setBackgroundInert(inert) {
+    trappedOpenCount += inert ? 1 : -1;
+    var shouldBeInert = trappedOpenCount > 0;
+    ['#MainContent', '.site-footer'].forEach(function (selector) {
+      var el = document.querySelector(selector);
+      if (!el) return;
+      if (shouldBeInert) {
+        el.setAttribute('inert', '');
+      } else {
+        el.removeAttribute('inert');
+      }
+    });
+  }
+
   function AeraOverlay(el, options) {
     options = options || {};
     this.el = el;
-    // trap = true: dialog-like (mobile nav, search, later: cart/filter/quick-view).
+    // trap = true: dialog-like (mobile nav, search, cart drawer).
     // trap = false: disclosure (mega-menu) — Tab is allowed to leave it.
     this.trap = options.trap !== false;
     this.trigger = null;
+    this._generation = 0;
     this._onKeydown = this._onKeydown.bind(this);
     this._onBackdropClick = this._onBackdropClick.bind(this);
   }
@@ -28,11 +47,13 @@
 
   AeraOverlay.prototype.open = function (trigger) {
     if (this.isOpen()) return;
+    this._generation++;
     this.trigger = trigger || document.activeElement;
     this.el.hidden = false;
     this.el.getBoundingClientRect(); // flush layout so the transition runs
     this.el.setAttribute('data-state', 'open');
     if (trigger) trigger.setAttribute('aria-expanded', 'true');
+    if (this.trap) setBackgroundInert(true);
 
     document.addEventListener('keydown', this._onKeydown, true);
     this.el.addEventListener('click', this._onBackdropClick);
@@ -46,13 +67,20 @@
 
   AeraOverlay.prototype.close = function () {
     if (!this.isOpen()) return;
+    this._generation++;
+    var generation = this._generation;
     this.el.setAttribute('data-state', 'closing');
+    if (this.trap) setBackgroundInert(false);
 
     document.removeEventListener('keydown', this._onKeydown, true);
     this.el.removeEventListener('click', this._onBackdropClick);
 
     var reducedMotion = document.documentElement.classList.contains('reduced-motion');
     var finish = function () {
+      // A rapid reopen (or another close()) since this close() started
+      // bumps _generation — a stale transitionend/timeout must not force
+      // the overlay shut again out from under that newer state.
+      if (generation !== this._generation) return;
       this.el.setAttribute('data-state', 'closed');
       this.el.hidden = true;
       if (this.trigger) {

@@ -40,6 +40,102 @@
 
   <link rel="canonical" href="{{ canonical_url }}">
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  {%- if settings.favicon -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  {%- comment -%}
+    Open Graph + Twitter Card (Milestone 8 SEO). og:image / twitter:image
+    are omitted, never fabricated, when the current object has no image of
+    its own — the theme has no site-wide default share-image setting. See
+    Milestone 8 report, KNOWN LIMITATIONS.
+  {%- endcomment -%}
+  {%- liquid
+    assign og_type = 'website'
+    assign og_image = blank
+    assign og_description = page_description
+    case template
+      when 'product'
+        assign og_type = 'product'
+        assign og_image = product.featured_image
+        if og_description == blank
+          assign og_description = product.description | strip_html | truncatewords: 30
+        endif
+      when 'article'
+        assign og_type = 'article'
+        assign og_image = article.image
+        if og_description == blank
+          assign og_description = article.excerpt_or_content | strip_html | truncatewords: 30
+        endif
+      when 'collection'
+        assign og_image = collection.image
+        if og_description == blank
+          assign og_description = collection.description | strip_html | truncatewords: 30
+        endif
+    endcase
+  -%}
+  <meta property="og:site_name" content="{{ shop.name | escape }}">
+  <meta property="og:type" content="{{ og_type }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  {%- if og_description != blank -%}
+    <meta property="og:description" content="{{ og_description | escape }}">
+  {%- endif -%}
+  {%- if og_image != blank -%}
+    <meta property="og:image" content="https:{{ og_image | image_url: width: 1200 }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https:{{ og_image | image_url: width: 1200 }}">
+  {%- else -%}
+    <meta name="twitter:card" content="summary">
+  {%- endif -%}
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  {%- if og_description != blank -%}
+    <meta name="twitter:description" content="{{ og_description | escape }}">
+  {%- endif -%}
+
+  {%- comment -%}
+    Organization + WebSite structured data (Milestone 8 SEO), site-wide,
+    combined under one @graph so only one script tag is ever emitted here
+    (Product/BreadcrumbList/Article JSON-LD live in their own templates —
+    see main-product.liquid, breadcrumb.liquid, main-article.liquid —
+    never duplicated with this block).
+  {%- endcomment -%}
+  {%- liquid
+    assign same_as = ''
+    if settings.social_instagram_url != blank
+      assign same_as = same_as | append: settings.social_instagram_url | append: ','
+    endif
+    if settings.social_youtube_url != blank
+      assign same_as = same_as | append: settings.social_youtube_url | append: ','
+    endif
+    if settings.social_spotify_url != blank
+      assign same_as = same_as | append: settings.social_spotify_url | append: ','
+    endif
+    assign same_as_list = same_as | split: ','
+  -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ shop.url | json }}{% if same_as_list.size > 0 %},
+        "sameAs": [{% for url in same_as_list %}{{ url | json }}{% unless forloop.last %},{% endunless %}{% endfor %}]{% endif %}
+      },
+      {
+        "@type": "WebSite",
+        "name": {{ shop.name | json }},
+        "url": {{ shop.url | json }},
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {{ shop.url | append: routes.search_url | append: '?q={search_term_string}' | json }},
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
 
   {{ 'tokens.css' | asset_url | stylesheet_tag }}
   {{ 'base.css' | asset_url | stylesheet_tag }}
@@ -47,8 +143,18 @@
   {{ 'component-product-card.css' | asset_url | stylesheet_tag }}
   {{ 'component-collection.css' | asset_url | stylesheet_tag }}
   {{ 'component-cart.css' | asset_url | stylesheet_tag }}
-  {{ 'component-editorial.css' | asset_url | stylesheet_tag }}
-  {{ 'component-account.css' | asset_url | stylesheet_tag }}
+  {%- comment -%}
+    component-cart.css stays unconditional — the cart drawer (sections/
+    cart-drawer.liquid) is rendered from the header on every page. These
+    two are genuinely template-scoped (Milestone 8 performance fix: they
+    used to load site-wide for no reason).
+  {%- endcomment -%}
+  {%- if template == 'index' or template == 'blog' or template == 'article' or template == 'page' -%}
+    {{ 'component-editorial.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  {%- if template contains 'customers' -%}
+    {{ 'component-account.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
   {{ 'component-motion.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%}

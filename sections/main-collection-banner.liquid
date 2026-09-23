@@ -1,4 +1,8 @@
-<div class="collection-banner photo brand" data-reveal {% if collection.image %}style="background-image:url({{ collection.image | image_url: width: 1600 }})"{% endif %}>
+{%- if collection.image -%}
+  {%- assign banner_mobile_url = collection.image | image_url: width: 800 -%}
+  {%- assign banner_desktop_url = collection.image | image_url: width: 1600 -%}
+{%- endif -%}
+<div class="collection-banner photo brand" data-reveal {% if collection.image %}style="--bg-mobile:url({{ banner_mobile_url }});--bg-desktop:url({{ banner_desktop_url }})"{% endif %}>
   <div class="collection-banner__content">
     <h1>{{ collection.title }}</h1>
     {%- if collection.description != blank -%}
@@ -13,6 +17,10 @@
     min-height: 220px;
     display: flex;
     align-items: flex-end;
+    background-image: var(--bg-mobile, none);
+  }
+  @media (min-width: 750px) {
+    #shopify-section-{{ section.id }} .collection-banner { background-image: var(--bg-desktop, none); }
   }
   #shopify-section-{{ section.id }} .collection-banner::before {
     content: "";

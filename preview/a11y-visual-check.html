@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>AERA — Milestone 8 a11y visual spot-check</title>
+<!--
+  Static visual mockup linking the REAL theme CSS files directly, same
+  pattern as the other preview/*.html mockups. Isolates just the two
+  Milestone 8 CSS fixes that are hard to prove from source alone:
+  1) the search field's :focus-visible ring (vs. the old outline:none)
+  2) the cart line-item remove button's enlarged 28x28 touch target
+-->
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/base.css">
+<link rel="stylesheet" href="../assets/component-nav.css">
+<link rel="stylesheet" href="../assets/component-cart.css">
+<style>
+  body { background: #0E0F0D; color: #F5F4EF; padding: 40px; font-family: Arial, sans-serif; }
+  section { margin-bottom: 60px; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .04em; color: #999; }
+  .grid-ref { outline: 1px dashed rgba(255,255,255,.25); display: inline-block; }
+</style>
+
+<section>
+  <h2>1. Search field — Tab to it, confirm a visible focus ring appears</h2>
+  <div class="search-overlay" data-state="open" style="position:static;background:none;padding:0;justify-content:flex-start">
+    <div class="search-overlay__panel" style="max-width:480px">
+      <input class="search-overlay__field" type="search" placeholder="Search gear, journal, categories…" autocomplete="off">
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>2. Cart line-item remove button — dashed box marks the real click/tap target</h2>
+  <div class="cart-line-item" style="max-width:360px">
+    <div class="cart-line-item__media"></div>
+    <div class="cart-line-item__body">
+      <div class="cart-line-item__header">
+        <span class="cart-line-item__title">Summit 45</span>
+        <span class="grid-ref"><button type="button" class="cart-line-item__remove" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg></button></span>
+      </div>
+    </div>
+  </div>
+</section>
