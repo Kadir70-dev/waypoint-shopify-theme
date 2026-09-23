@@ -124,7 +124,11 @@
       "next": "Next"
     },
     "journal": {
-      "min_read": "min read"
+      "min_read": "min read",
+      "no_articles": "No stories published yet.",
+      "featured_story": "Featured Story",
+      "read_story": "Read the Full Story",
+      "article_navigation": "More stories"
     }
   },
   "general": {

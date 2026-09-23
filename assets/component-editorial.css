@@ -1,0 +1,84 @@
+/* AERA — article cards, Journal index, article page, generic content
+   page, rich-text prose (Milestone 6). Tokens only — no literal colors. */
+
+/* ---------- article card (journal-teaser + main-blog, shared) ---------- */
+.acard-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+@media (min-width: 750px) {
+  .acard-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.acard { display: block; }
+.acard__media { aspect-ratio: 4 / 3; background: var(--surface-3); overflow: hidden; }
+.acard__media img, .acard__media svg { width: 100%; height: 100%; object-fit: cover; }
+.acard__media img {
+  filter: grayscale(.25) sepia(.12) contrast(1.08) brightness(.62);
+  transition: transform var(--dur-base) var(--ease-out-slow);
+}
+.acard:hover .acard__media img { transform: scale(1.03); }
+.acard__body { padding-top: 10px; }
+.acard__eyebrow { display: block; margin-bottom: 6px; }
+.acard__title { font-family: var(--font-display); font-size: 14px; text-transform: uppercase; letter-spacing: .01em; margin: 0; }
+
+/* ---------- Journal index (main-blog.liquid) ---------- */
+.journal-header { display: flex; flex-direction: column; gap: 10px; padding-block: 30px 26px; max-width: 640px; }
+
+.journal-featured { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+.journal-featured__media { display: block; aspect-ratio: 16 / 10; background: var(--surface-3); overflow: hidden; }
+.journal-featured__media img, .journal-featured__media svg { width: 100%; height: 100%; object-fit: cover; }
+.journal-featured__media img { filter: grayscale(.2) sepia(.08) contrast(1.05) brightness(.7); }
+.journal-featured__body { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+@media (min-width: 990px) {
+  .journal-featured { grid-template-columns: 1.3fr 1fr; align-items: center; gap: 40px; }
+}
+
+.journal-quote { text-align: center; padding-block: 40px; border-block: 1px solid var(--border); margin-bottom: 40px; }
+.journal-quote p { font-size: clamp(18px, 2.4vw, 26px); max-width: 720px; margin-inline: auto; }
+.journal-quote footer { margin-top: 14px; font-size: 12px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+
+/* ---------- article page (main-article.liquid) ---------- */
+.article-header { max-width: 720px; margin: 0 auto; text-align: center; padding-block: 30px 20px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.article-header .breadcrumb { align-self: center; }
+.article-meta { font-size: 12px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.article-hero { display: block; aspect-ratio: 16 / 9; background: var(--surface-3); overflow: hidden; margin-bottom: 32px; }
+.article-hero img { width: 100%; height: 100%; object-fit: cover; }
+.article-body { max-width: 680px; margin: 0 auto; }
+.article-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 32px auto 0; max-width: 680px; }
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 680px;
+  margin: 40px auto 0;
+  padding: 24px 0 40px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+}
+.article-nav a { color: var(--muted); max-width: 45%; }
+.article-nav a:hover { color: var(--text); }
+.article-nav__next { text-align: right; margin-left: auto; }
+
+/* ---------- generic content page (main-page.liquid) ---------- */
+.page-header { text-align: center; max-width: 720px; margin: 0 auto; padding-block: 30px 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.page-header .breadcrumb { align-self: center; }
+.page-body { max-width: 680px; margin: 0 auto; padding-bottom: 48px; }
+
+/* ---------- rich-text prose (article body / page body) ---------- */
+.rte { color: var(--text); font-size: 15px; line-height: 1.75; }
+.rte > * + * { margin-top: 1.2em; }
+.rte h2 { font-family: var(--font-display); font-size: 20px; text-transform: uppercase; letter-spacing: .01em; margin-top: 2em; }
+.rte h3 { font-family: var(--font-display); font-size: 16px; text-transform: uppercase; letter-spacing: .01em; margin-top: 1.6em; }
+.rte p { margin: 0; }
+.rte a { color: var(--accent-light); text-decoration: underline; text-underline-offset: 2px; }
+.rte ul, .rte ol { padding-left: 1.4em; }
+.rte li + li { margin-top: .4em; }
+.rte blockquote {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: 19px;
+  border-left: 2px solid var(--border-strong);
+  padding-left: 20px;
+  margin-inline: 0;
+  color: var(--text);
+}
+.rte img { width: 100%; height: auto; }
+.rte hr { border: 0; border-top: 1px solid var(--border); }

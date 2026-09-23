@@ -1,0 +1,21 @@
+{%- comment -%}
+  AERA — generic content page (Milestone 6): About, Contact, Terms,
+  Privacy, etc. Plain rich-text body via page.content — merchants write
+  the actual page in the admin; nothing here is page-specific.
+{%- endcomment -%}
+<div class="section page-width">
+  <div class="page-header" data-reveal>
+    {%- render 'breadcrumb', page_title: page.title -%}
+    <h1 style="font-size:clamp(28px,4vw,38px)">{{ page.title }}</h1>
+  </div>
+
+  <div class="page-body rte" data-reveal>
+    {{ page.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page"
+}
+{% endschema %}

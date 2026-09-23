@@ -1,9 +1,8 @@
 {%- comment -%}
-  Article cards are inlined here rather than pulled into a shared
-  snippets/card-article.liquid — that snippet is scoped to Milestone 6
-  (Editorial/Pages), which is also where the single-article template that
-  actually needs a reusable version lands. Revisit then: extract this into
-  the shared snippet so the Journal index and this teaser stay in sync.
+  Uses the shared snippets/card-article.liquid (Milestone 6) so the
+  Journal index (main-blog.liquid) and this homepage teaser stay in sync
+  — this section used to inline its own article-card markup; see git
+  history for that version.
 {%- endcomment -%}
 
 {%- liquid
@@ -23,27 +22,12 @@
       </a>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px" class="journal-teaser__grid">
+    <div class="acard-grid">
       {%- for article in blog.articles limit: section.settings.articles_to_show -%}
-        <a href="{{ article.url }}" data-reveal>
-          <div class="photo brand" style="height:150px;{% if article.image %}background-image:url({{ article.image | image_url: width: 400 }}){% endif %}"></div>
-          <div style="padding-top:10px">
-            <span class="eyebrow">
-              {%- if article.tags.size > 0 -%}{{ article.tags.first }} &middot; {% endif -%}
-              {{ article.content | strip_html | split: ' ' | size | divided_by: 200 | plus: 1 }} {{ 'sections.journal.min_read' | t }}
-            </span>
-            <div style="font-family:var(--font-display);font-size:14px;text-transform:uppercase;margin-top:6px">{{ article.title }}</div>
-          </div>
-        </a>
+        {%- render 'card-article', article: article -%}
       {%- endfor -%}
     </div>
   </div>
-
-  <style>
-    @media (min-width: 750px) {
-      #shopify-section-{{ section.id }} .journal-teaser__grid { grid-template-columns: repeat(4, 1fr); }
-    }
-  </style>
 {%- endif -%}
 
 {% schema %}

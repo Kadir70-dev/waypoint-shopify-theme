@@ -1,18 +1,30 @@
 {%- comment -%}
-  Usage: {% render 'breadcrumb', product: product %}
-  Product-page breadcrumb: Home / Collection / Product — matches the
-  approved PDP reference. Falls back to the product's own default
-  collection when the page wasn't reached through a collection URL
-  (collection.url is blank outside a /collections/x/products/y path).
+  Usage:
+    {% render 'breadcrumb', product: product %}
+    {% render 'breadcrumb', blog: blog, article: article %}
+    {% render 'breadcrumb', page_title: page.title %}
+  Home / [context] / [current page] — matches the approved reference.
+  Falls back to the product's own default collection when the page
+  wasn't reached through a collection URL (collection.url is blank
+  outside a /collections/x/products/y path).
 {%- endcomment -%}
 <nav class="breadcrumb" aria-label="{{ 'accessibility.breadcrumb' | t }}">
   <ol class="breadcrumb__list">
     <li><a href="{{ routes.root_url }}">{{ 'products.breadcrumb_home' | t }}</a></li>
-    {%- if collection.url -%}
-      <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
-    {%- elsif product.collections.first -%}
-      <li><a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a></li>
+    {%- if product -%}
+      {%- if collection.url -%}
+        <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+      {%- elsif product.collections.first -%}
+        <li><a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a></li>
+      {%- endif -%}
+      <li aria-current="page">{{ product.title }}</li>
+    {%- elsif blog -%}
+      <li><a href="{{ blog.url }}">{{ blog.title }}</a></li>
+      {%- if article -%}
+        <li aria-current="page">{{ article.title }}</li>
+      {%- endif -%}
+    {%- elsif page_title -%}
+      <li aria-current="page">{{ page_title }}</li>
     {%- endif -%}
-    <li aria-current="page">{{ product.title }}</li>
   </ol>
 </nav>

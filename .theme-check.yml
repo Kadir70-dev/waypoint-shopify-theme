@@ -8,11 +8,15 @@ extends: theme-check:recommended
 
 MissingTemplate:
   enabled: true
-  ignore_missing: ["404", "page", "gift_card", "blog", "article", "customers/*"]
+  ignore_missing: ["404", "gift_card", "customers/*"]
   # "index" removed in Milestone 2 (templates/index.json now exists).
   # "list-collections" removed in Milestone 3 (templates/list-collections.json
-  # now exists). "search" and "collection" were never in this list since
-  # Theme Check doesn't flag their absence by default the way it does these.
+  # now exists). "page", "blog" and "article" removed in Milestone 6
+  # (templates/page.json, blog.json and article.json now exist). "search"
+  # and "collection" were never in this list since Theme Check doesn't
+  # flag their absence by default the way it does these. "gift_card" and
+  # "customers/*" stay ignored — out of scope, Shopify's own defaults
+  # are used for those.
 
 # Verified false positive in this Theme Check build: every snippet listed
 # here IS referenced (via {% render %}) from at least one section — checked
@@ -36,6 +40,7 @@ OrphanedSnippet:
     - "snippets/star-rating.liquid"
     - "snippets/cart-line-item.liquid"
     - "snippets/free-shipping-bar.liquid"
+    - "snippets/card-article.liquid"
     # pagination.liquid: rendered from inside main-collection-grid.liquid's
     # {% paginate %}...{% endpaginate %} block. chip-filter.liquid: rendered
     # from inside a nested {% for %}{% for %} loop there. filter-groups.liquid
@@ -61,3 +66,7 @@ OrphanedSnippet:
     # sections/cart-drawer.liquid and sections/main-cart.liquid — same
     # unreliable-analysis pattern as accordion.liquid above. Verified
     # referenced with grep.
+    # card-article.liquid (Milestone 6): rendered from
+    # sections/journal-teaser.liquid and from inside a {% for %} loop in
+    # sections/main-blog.liquid — same unreliable-analysis pattern as
+    # above. Verified referenced with grep.

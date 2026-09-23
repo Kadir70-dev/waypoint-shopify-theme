@@ -1,0 +1,93 @@
+{%- comment -%}
+  AERA Journal index (Milestone 6 — Editorial/Pages).
+
+  Featured-story spotlight uses blog.articles.first (native, no
+  fabricated metafields) and is excluded from the grid below it, page 1
+  only. The PDF reference's metadata sidebar for the featured story
+  (Location / Length / Photography / tags) has no native Shopify field
+  and no defined metafield schema — omitted rather than invented; see
+  Milestone 6 report, KNOWN DIFFERENCES.
+{%- endcomment -%}
+{%- liquid
+  assign show_featured = section.settings.show_featured_article
+-%}
+<div class="section page-width">
+  <div class="journal-header" data-reveal>
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h1 style="font-size:clamp(28px,4vw,40px)">{{ section.settings.heading }}</h1>
+    {%- if section.settings.subheading != blank -%}
+      <p style="color:var(--muted);font-size:15px">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- if blog.articles.size == 0 -%}
+    <div class="collection-grid__empty">
+      <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 5.5v15"/>
+      </svg>
+      <p>{{ 'sections.journal.no_articles' | t }}</p>
+    </div>
+  {%- else -%}
+    {%- paginate blog.articles by section.settings.articles_per_page -%}
+      {%- assign featured_article = blog.articles.first -%}
+      {%- if show_featured and paginate.current_page == 1 -%}
+        <div class="journal-featured" data-reveal>
+          <a href="{{ featured_article.url }}" class="journal-featured__media">
+            {%- if featured_article.image -%}
+              {{ featured_article.image | image_url: width: 900 | image_tag: loading: 'eager', alt: featured_article.image.alt | default: featured_article.title, widths: '450, 700, 900', sizes: '(min-width: 990px) 55vw, 100vw' }}
+            {%- else -%}
+              {{ 'life-2' | placeholder_svg_tag: 'journal-featured__placeholder' }}
+            {%- endif -%}
+          </a>
+          <div class="journal-featured__body">
+            <span class="eyebrow">{{ 'sections.journal.featured_story' | t }}</span>
+            <h2 style="font-size:26px">{{ featured_article.title }}</h2>
+            {%- if featured_article.excerpt != blank -%}
+              <p style="color:var(--muted);font-size:14px;line-height:1.6">{{ featured_article.excerpt | strip_html | truncate: 220 }}</p>
+            {%- endif -%}
+            <a href="{{ featured_article.url }}" class="btn btn-outline" style="margin-top:6px">
+              {{ 'sections.journal.read_story' | t }} &rarr;
+            </a>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.quote != blank -%}
+        <blockquote class="journal-quote" data-reveal>
+          <p class="editorial-quote">&ldquo;{{ section.settings.quote }}&rdquo;</p>
+          {%- if section.settings.quote_attribution != blank -%}
+            <footer>{{ section.settings.quote_attribution }}</footer>
+          {%- endif -%}
+        </blockquote>
+      {%- endif -%}
+
+      <div class="acard-grid" data-reveal-group>
+        {%- for article in blog.articles -%}
+          {%- unless show_featured and paginate.current_page == 1 and forloop.first -%}
+            {%- render 'card-article', article: article -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        {%- render 'pagination', paginate: paginate -%}
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Journal index",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AERA Journal" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Stories for a Wilder Tomorrow" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "People. Places. Perspectives. Exploring a deeper connection to the outdoors." },
+    { "type": "checkbox", "id": "show_featured_article", "label": "Show featured story (most recent article)", "default": true },
+    { "type": "range", "id": "articles_per_page", "label": "Articles per page", "min": 4, "max": 16, "step": 4, "default": 8 },
+    { "type": "header", "content": "Pull quote" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "The farther you go, the closer you get to what matters." },
+    { "type": "text", "id": "quote_attribution", "label": "Attribution", "default": "AERA Journal" }
+  ]
+}
+{% endschema %}

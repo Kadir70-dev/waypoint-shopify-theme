@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>AERA — Journal / Article / Page Preview</title>
+<script>
+  (function (html) {
+    html.classList.add('js');
+    html.classList.add('motion-detected');
+    html.setAttribute('data-preset', 'dark');
+    html.setAttribute('data-corners', 'sharp');
+  })(document.documentElement);
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+<!-- Links the real, unmodified CSS files directly (no Liquid to
+     interpolate here, so this is strictly more accurate than a
+     hand-copy) — same technique as cart-preview.html. -->
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/base.css">
+<link rel="stylesheet" href="../assets/component-nav.css">
+<link rel="stylesheet" href="../assets/component-product-card.css">
+<link rel="stylesheet" href="../assets/component-collection.css">
+<link rel="stylesheet" href="../assets/component-editorial.css">
+
+<style>
+  .preview-note { background: #1a1c16; color: #d8d6c8; font-family: Inter, sans-serif; font-size: 12px; padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  .preview-divider { text-align: center; font-family: Inter, sans-serif; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #6b6a5e; padding: 18px; border-top: 2px dashed rgba(255,255,255,.15); border-bottom: 2px dashed rgba(255,255,255,.15); margin-block: 20px; }
+</style>
+
+<div class="preview-note">Journal / Article / Page preview — three templates stacked for review, separated by dashed dividers. Header/footer chrome is the real markup/CSS, not a redesign.</div>
+
+<header class="site-header">
+  <div class="page-width site-header__row">
+    <button class="icon-btn hamburger-btn" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="site-header__nav" aria-label="Main"><a href="#">Shop</a><a href="#">Gear</a><a href="#">About</a><a href="#">Journal</a></nav>
+    <a href="#" class="site-header__logo">A E R A<small>Built for a wilder tomorrow</small></a>
+    <div class="site-header__icons">
+      <button class="icon-btn" type="button" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg></button>
+      <a href="#" class="icon-btn" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.5-4 4-6 7.5-6s6 2 7.5 6"/></svg></a>
+      <a href="#" class="icon-btn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h2l1.5 10.5a2 2 0 002 1.5h7a2 2 0 002-1.5L20 9H7"/><circle cx="10" cy="21" r="1"/><circle cx="17" cy="21" r="1"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<!-- ======================== templates/blog.json (main-blog.liquid) ======================== -->
+<main>
+  <div class="section page-width">
+    <div class="journal-header">
+      <span class="eyebrow">AERA Journal</span>
+      <h1 style="font-size:clamp(28px,4vw,40px)">Stories for a Wilder Tomorrow</h1>
+      <p style="color:var(--muted);font-size:15px">People. Places. Perspectives. Exploring a deeper connection to the outdoors.</p>
+    </div>
+
+    <div class="journal-featured">
+      <a href="#" class="journal-featured__media" style="background:linear-gradient(160deg,#1b1d16,#3a3f2c 45%,#11120e)"></a>
+      <div class="journal-featured__body">
+        <span class="eyebrow">Featured Story</span>
+        <h2 style="font-size:26px">Further by Nature</h2>
+        <p style="color:var(--muted);font-size:14px;line-height:1.6">A journey through Iceland's ever-changing landscapes reveals more than just dramatic views. It's a reminder that the wild has a way of putting things into perspective.</p>
+        <a href="#" class="btn btn-outline" style="margin-top:6px">Read the Full Story &rarr;</a>
+      </div>
+    </div>
+
+    <blockquote class="journal-quote">
+      <p class="editorial-quote">&ldquo;The farther you go, the closer you get to what matters.&rdquo;</p>
+      <footer>AERA Journal</footer>
+    </blockquote>
+
+    <div class="acard-grid">
+      <a href="#" class="acard"><div class="acard__media" style="background:linear-gradient(160deg,#222,#444)"></div><div class="acard__body"><span class="eyebrow acard__eyebrow">Knowledge &middot; 5 min read</span><h3 class="acard__title">Navigation in a Digital Age</h3></div></a>
+      <a href="#" class="acard"><div class="acard__media" style="background:linear-gradient(160deg,#2a2e20,#111)"></div><div class="acard__body"><span class="eyebrow acard__eyebrow">Places &middot; 6 min read</span><h3 class="acard__title">The North Still Calls</h3></div></a>
+      <a href="#" class="acard"><div class="acard__media" style="background:linear-gradient(160deg,#333,#111)"></div><div class="acard__body"><span class="eyebrow acard__eyebrow">Gear &middot; 4 min read</span><h3 class="acard__title">Field-Tested Essentials</h3></div></a>
+      <a href="#" class="acard"><div class="acard__media" style="background:linear-gradient(160deg,#2c2c2c,#161616)"></div><div class="acard__body"><span class="eyebrow acard__eyebrow">Lifestyle &middot; 5 min read</span><h3 class="acard__title">A Simpler Way Forward</h3></div></a>
+    </div>
+
+    <div class="pagination" style="margin-top:32px">
+      <span class="pagination__link pagination__link--current">1</span>
+      <a href="#" class="pagination__link">2</a>
+      <a href="#" class="pagination__link">3</a>
+      <a href="#" class="pagination__link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</main>
+
+<div class="preview-divider">templates/article.json (main-article.liquid) below</div>
+
+<!-- ======================== templates/article.json (main-article.liquid) ======================== -->
+<main>
+  <div class="section page-width">
+    <div class="article-header">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol class="breadcrumb__list">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Journal</a></li>
+          <li aria-current="page">Iceland: A Different Kind of Silence</li>
+        </ol>
+      </nav>
+      <span class="eyebrow">Expeditions</span>
+      <h1 style="font-size:clamp(28px,4vw,42px)">Iceland: A Different Kind of Silence</h1>
+      <p class="article-meta">March 12, 2026 &middot; AERA Collective</p>
+    </div>
+
+    <div class="article-hero" style="background:linear-gradient(160deg,#1b1d16,#3a3f2c 45%,#11120e)"></div>
+
+    <div class="article-body rte">
+      <p>Volcanoes, wide horizons and a reminder of what really matters. Iceland has a way of resetting your sense of scale — glaciers older than memory, black beaches that swallow the horizon, and a silence so complete it becomes its own kind of sound.</p>
+      <h2>Further by Nature</h2>
+      <p>We spent eight days moving between the highlands and the coast, testing gear in conditions it was built for and a few it wasn't. What follows is less a packing list than a record of what we noticed when we finally stopped moving.</p>
+      <blockquote>Not escape. Perspective.</blockquote>
+      <p>Every trip like this ends the same way — you come back lighter than you left, even carrying the same pack.</p>
+    </div>
+
+    <div class="article-tags">
+      <a href="#" class="chip">Expeditions</a>
+      <a href="#" class="chip">Iceland</a>
+      <a href="#" class="chip">Field Notes</a>
+    </div>
+
+    <nav class="article-nav" aria-label="More stories">
+      <a href="#" class="article-nav__prev">&larr; The Tools That Travel Further</a>
+      <a href="#" class="article-nav__next">Small Camps, Bigger Perspective &rarr;</a>
+    </nav>
+  </div>
+</main>
+
+<div class="preview-divider">templates/page.json (main-page.liquid) below</div>
+
+<!-- ======================== templates/page.json (main-page.liquid) ======================== -->
+<main>
+  <div class="section page-width">
+    <div class="page-header">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol class="breadcrumb__list">
+          <li><a href="#">Home</a></li>
+          <li aria-current="page">About</li>
+        </ol>
+      </nav>
+      <h1 style="font-size:clamp(28px,4vw,38px)">About AERA</h1>
+    </div>
+    <div class="page-body rte">
+      <p>AERA was built on a simple idea: gear should disappear into the experience, not distract from it. Every product is field-tested by the people who design it, in conditions that don't forgive shortcuts.</p>
+      <h2>Built for a Wilder Tomorrow</h2>
+      <p>We work with recycled and responsibly sourced materials wherever the performance bar allows it, and we're honest about the trade-offs when it doesn't.</p>
+      <ul>
+        <li>Field tested in extreme conditions</li>
+        <li>Lower-impact materials, longer product life</li>
+        <li>A global community of explorers</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="page-width site-footer__bottom">
+    <span>&copy; 2026 AERA. All rights reserved.</span>
+  </div>
+</footer>

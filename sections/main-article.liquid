@@ -1,0 +1,59 @@
+{%- comment -%}
+  AERA — single article page (Milestone 6). Comments are intentionally
+  not built here: the reference visuals never show a comment thread, and
+  there's no design for one — see Milestone 6 report, KNOWN DIFFERENCES.
+  (article.comments_enabled? / article.comments are real native Shopify
+  objects if a later milestone wants to add it; nothing here blocks that.)
+{%- endcomment -%}
+<div class="section page-width">
+  <div class="article-header" data-reveal>
+    {%- render 'breadcrumb', blog: blog, article: article -%}
+    <span class="eyebrow">
+      {%- if article.tags.size > 0 -%}{{ article.tags.first }}{%- else -%}{{ blog.title }}{%- endif -%}
+    </span>
+    <h1 style="font-size:clamp(28px,4vw,42px)">{{ article.title }}</h1>
+    <p class="article-meta">
+      {{ article.published_at | date: '%B %d, %Y' }}
+      {%- if article.author != blank %} &middot; {{ article.author }}{%- endif -%}
+    </p>
+  </div>
+
+  {%- if article.image -%}
+    <div class="article-hero" data-reveal>
+      {{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', alt: article.image.alt | default: article.title, widths: '700, 1000, 1400', sizes: '100vw' }}
+    </div>
+  {%- endif -%}
+
+  <div class="article-body rte" data-reveal>
+    {{ article.content }}
+  </div>
+
+  {%- if article.tags.size > 0 -%}
+    <div class="article-tags">
+      {%- for tag in article.tags -%}
+        <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="chip">{{ tag }}</a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <nav class="article-nav" aria-label="{{ 'sections.journal.article_navigation' | t }}">
+    {%- if article.previous_article -%}
+      <a href="{{ article.previous_article.url }}" class="article-nav__prev">
+        &larr; {{ article.previous_article.title }}
+      </a>
+    {%- else -%}
+      <span></span>
+    {%- endif -%}
+    {%- if article.next_article -%}
+      <a href="{{ article.next_article.url }}" class="article-nav__next">
+        {{ article.next_article.title }} &rarr;
+      </a>
+    {%- endif -%}
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "Article"
+}
+{% endschema %}

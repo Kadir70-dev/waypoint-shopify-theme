@@ -1,0 +1,23 @@
+{%- comment -%}
+  Usage: {% render 'card-article', article: article %}
+  Shared between journal-teaser.liquid (homepage) and main-blog.liquid
+  (Journal index) — extracted from journal-teaser's own inline markup
+  per its "scoped to Milestone 6" note, so both stay in sync.
+{%- endcomment -%}
+{%- assign read_minutes = article.content | strip_html | split: ' ' | size | divided_by: 200 | plus: 1 -%}
+<a href="{{ article.url }}" class="acard" data-reveal>
+  <div class="acard__media">
+    {%- if article.image -%}
+      {{ article.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: article.image.alt | default: article.title, widths: '300, 400, 500', sizes: '(min-width: 750px) 25vw, 50vw' }}
+    {%- else -%}
+      {{ 'life-1' | placeholder_svg_tag: 'acard__placeholder' }}
+    {%- endif -%}
+  </div>
+  <div class="acard__body">
+    <span class="eyebrow acard__eyebrow">
+      {%- if article.tags.size > 0 -%}{{ article.tags.first }} &middot; {% endif -%}
+      {{ read_minutes }} {{ 'sections.journal.min_read' | t }}
+    </span>
+    <h3 class="acard__title">{{ article.title }}</h3>
+  </div>
+</a>
