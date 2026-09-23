@@ -46,6 +46,7 @@
   <div class="pcard__body">
     <a href="{{ product.url }}" class="pcard__name">{{ product.title }}</a>
     {%- render 'price', product: product -%}
+    {%- render 'star-rating', product: product -%}
     {%- if color_option -%}
       <div class="pcard__swatches">
         {%- for value in color_option.values -%}

@@ -108,6 +108,10 @@ p { margin: 0; }
   border: 0;
 }
 
+/* Undefined custom elements are inline by default — this one wraps a
+   full-width section (see sections/product-recommendations.liquid). */
+product-recommendations { display: block; }
+
 /* --- horizontal-scroll guard ---
    Per the artifact/theme contract this project has followed throughout:
    the page body itself must never scroll horizontally; only a component

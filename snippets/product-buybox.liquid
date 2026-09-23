@@ -1,0 +1,87 @@
+{%- comment -%}
+  Usage: {% render 'product-buybox', product: product, current_variant: current_variant, section: section %}
+  This is the fragment re-fetched via the Section Rendering API on
+  variant change (?variant=<id>&section_id=main-product) — keep it free
+  of anything that shouldn't be re-rendered (the gallery lives outside
+  this snippet for that reason).
+{%- endcomment -%}
+<span class="eyebrow">{{ product.type | default: product.vendor }}</span>
+<h1 class="product-buybox__title">{{ product.title }}</h1>
+{%- render 'star-rating', product: product -%}
+{%- render 'price', product: product, variant: current_variant -%}
+
+{%- if current_variant.available == false -%}
+  <span class="badge" style="margin-top:6px">{{ 'products.sold_out' | t }}</span>
+{%- endif -%}
+
+{%- assign product_form_id = 'ProductForm-' | append: section.id -%}
+{%- form 'product', product, class: 'product-buybox__form', id: product_form_id -%}
+  <input type="hidden" name="id" value="{{ current_variant.id }}" data-product-form-variant-id>
+
+  {%- for option in product.options_with_values -%}
+    <fieldset class="option-selector">
+      <legend class="eyebrow">{{ option.name }}: <span data-option-selected-value>{{ option.selected_value }}</span></legend>
+      <div class="option-selector__values">
+        {%- for value in option.values -%}
+          {%- assign input_id = 'Option-' | append: section.id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+          <input
+            type="radio"
+            id="{{ input_id }}"
+            name="option-{{ option.position }}"
+            value="{{ value | escape }}"
+            {% if value == option.selected_value %}checked{% endif %}
+            data-option-position="{{ option.position }}"
+            class="visually-hidden option-selector__input"
+          >
+          {%- if option.name == 'Color' and value.swatch.color -%}
+            <label for="{{ input_id }}" class="option-selector__swatch" data-option-label style="background:{{ value.swatch.color }}" title="{{ value }}">
+              <span class="visually-hidden">{{ value }}<span data-unavailable-tag hidden> — {{ 'products.option_unavailable' | t }}</span></span>
+            </label>
+          {%- else -%}
+            <label for="{{ input_id }}" class="option-selector__pill" data-option-label>
+              {{- value -}}
+              <span class="visually-hidden" data-unavailable-tag hidden> — {{ 'products.option_unavailable' | t }}</span>
+            </label>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </fieldset>
+  {%- endfor -%}
+
+  <div class="product-buybox__quantity">
+    <label for="Quantity-{{ section.id }}" class="eyebrow">{{ 'products.quantity' | t }}</label>
+    <div class="quantity-stepper">
+      <button type="button" class="quantity-stepper__btn" data-quantity-decrease aria-label="{{ 'products.decrease_quantity' | t }}" aria-controls="Quantity-{{ section.id }}">&minus;</button>
+      <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" inputmode="numeric" data-quantity-input>
+      <button type="button" class="quantity-stepper__btn" data-quantity-increase aria-label="{{ 'products.increase_quantity' | t }}" aria-controls="Quantity-{{ section.id }}">+</button>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary btn-block"
+    data-product-form-submit
+    data-label-add="{{ 'products.add_to_cart' | t }}"
+    data-label-sold-out="{{ 'products.sold_out' | t }}"
+    {% unless current_variant.available %}disabled{% endunless %}
+  >
+    {%- if current_variant.available -%}
+      {{ 'products.add_to_cart' | t }} &rarr;
+    {%- else -%}
+      {{ 'products.sold_out' | t }}
+    {%- endif -%}
+  </button>
+
+  {%- if settings.show_free_shipping_bar -%}
+    {%- assign free_shipping_amount = settings.free_shipping_threshold | times: 100 | money_without_trailing_zeros -%}
+    <p class="product-buybox__shipping-note">
+      {{ 'products.free_shipping_over' | t: amount: free_shipping_amount }}
+    </p>
+  {%- endif -%}
+{%- endform -%}
+
+{%- if product.description != blank -%}
+  <div class="product-buybox__description">{{ product.description }}</div>
+{%- endif -%}
+
+<div class="visually-hidden" aria-live="polite" data-buybox-status></div>

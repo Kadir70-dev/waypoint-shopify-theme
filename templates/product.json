@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "specifications-1": { "type": "specifications" },
+        "accordion-1": { "type": "accordion", "settings": { "title": "Features" } },
+        "accordion-2": { "type": "accordion", "settings": { "title": "Materials & Care" } },
+        "accordion-3": { "type": "accordion", "settings": { "title": "Shipping & Returns" } }
+      },
+      "block_order": ["specifications-1", "accordion-1", "accordion-2", "accordion-3"]
+    },
+    "trust": {
+      "type": "trust-bar",
+      "blocks": {
+        "trust-1": { "type": "trust-item", "settings": { "icon": "mountain", "label": "Built for Real Life" } },
+        "trust-2": { "type": "trust-item", "settings": { "icon": "leaf", "label": "Weather Ready" } },
+        "trust-3": { "type": "trust-item", "settings": { "icon": "shield", "label": "Sustainable Choice" } },
+        "trust-4": { "type": "trust-item", "settings": { "icon": "globe", "label": "Trusted by Explorers" } }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"]
+    },
+    "recommendations": {
+      "type": "product-recommendations"
+    }
+  },
+  "order": ["main", "trust", "recommendations"]
+}

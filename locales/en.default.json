@@ -5,7 +5,8 @@
     "menu": "Menu",
     "search": "Search",
     "account": "Account",
-    "cart": "Cart"
+    "cart": "Cart",
+    "breadcrumb": "Breadcrumb"
   },
   "navigation": {
     "home": "Home",
@@ -66,7 +67,23 @@
   "products": {
     "badge_bestseller": "Bestseller",
     "badge_new": "New",
-    "quick_add": "Quick add"
+    "quick_add": "Quick add",
+    "sold_out": "Sold Out",
+    "add_to_cart": "Add to Cart",
+    "quantity": "Quantity",
+    "gallery_thumbnails": "Product images",
+    "gallery_view_image": "View image",
+    "gallery_play_video": "Play product video",
+    "decrease_quantity": "Decrease quantity",
+    "increase_quantity": "Increase quantity",
+    "option_unavailable": "Unavailable",
+    "specifications": "Technical Specifications",
+    "recommendations_heading": "You May Also Like",
+    "reviews_count_one": "{{ count }} review",
+    "reviews_count_other": "{{ count }} reviews",
+    "rating_label": "Rated {{ rating }} out of 5 stars",
+    "breadcrumb_home": "Home",
+    "free_shipping_over": "Free shipping over {{ amount }}"
   },
   "sections": {
     "hero": {

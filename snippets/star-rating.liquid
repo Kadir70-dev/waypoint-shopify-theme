@@ -1,0 +1,29 @@
+{%- comment -%}
+  Usage: {% render 'star-rating', product: product %}
+  Reads the de-facto Shopify Product Reviews metafield namespace
+  (product.metafields.reviews.rating / .rating_count — the same namespace
+  Shopify's own Product Reviews app and most review apps, e.g. Judge.me,
+  write to). No schema is defined for this in the theme itself: if the
+  metafields are never populated in the merchant's store, this renders
+  nothing. See Milestone 4 report — LIVE STORE VERIFICATION REQUIRED.
+{%- endcomment -%}
+{%- liquid
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value
+-%}
+{%- if rating != blank -%}
+  {%- assign rating_percent = rating.rating | times: 20 -%}
+  <div class="star-rating">
+    <span class="star-rating__stars" aria-hidden="true" style="--rating-percent: {{ rating_percent }}%"></span>
+    <span class="visually-hidden">{{ 'products.rating_label' | t: rating: rating.rating }}</span>
+    {%- if rating_count != blank -%}
+      <span class="star-rating__count">
+        {%- if rating_count == 1 -%}
+          {{ 'products.reviews_count_one' | t: count: rating_count }}
+        {%- else -%}
+          {{ 'products.reviews_count_other' | t: count: rating_count }}
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

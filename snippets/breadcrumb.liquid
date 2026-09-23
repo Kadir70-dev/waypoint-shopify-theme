@@ -1,0 +1,18 @@
+{%- comment -%}
+  Usage: {% render 'breadcrumb', product: product %}
+  Product-page breadcrumb: Home / Collection / Product — matches the
+  approved PDP reference. Falls back to the product's own default
+  collection when the page wasn't reached through a collection URL
+  (collection.url is blank outside a /collections/x/products/y path).
+{%- endcomment -%}
+<nav class="breadcrumb" aria-label="{{ 'accessibility.breadcrumb' | t }}">
+  <ol class="breadcrumb__list">
+    <li><a href="{{ routes.root_url }}">{{ 'products.breadcrumb_home' | t }}</a></li>
+    {%- if collection.url -%}
+      <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+    {%- elsif product.collections.first -%}
+      <li><a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a></li>
+    {%- endif -%}
+    <li aria-current="page">{{ product.title }}</li>
+  </ol>
+</nav>

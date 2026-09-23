@@ -98,6 +98,23 @@
   .tile-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
+/* ---------- star rating (card + PDP) ----------
+   Gated entirely on product.metafields.reviews.* — see star-rating.liquid.
+   Clipped-text technique: two stacked star strings, the foreground one
+   clipped to --rating-percent, so no icon asset or canvas is needed. */
+.star-rating { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+.star-rating__stars { position: relative; display: inline-block; font-size: 13px; letter-spacing: 2px; line-height: 1; }
+.star-rating__stars::before { content: "\2605\2605\2605\2605\2605"; color: var(--border-strong); }
+.star-rating__stars::after {
+  content: "\2605\2605\2605\2605\2605";
+  color: var(--accent-light);
+  position: absolute;
+  inset: 0;
+  width: var(--rating-percent, 0%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /* ---------- shared product grid ----------
    Used by featured-collection (Milestone 2) and, unmodified, by the
    collection/search grids in Milestone 3. Desktop column count follows

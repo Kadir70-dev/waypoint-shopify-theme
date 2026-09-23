@@ -30,6 +30,10 @@ OrphanedSnippet:
     - "snippets/chip-filter.liquid"
     - "snippets/filter-groups.liquid"
     - "snippets/predictive-search-results.liquid"
+    - "snippets/accordion.liquid"
+    - "snippets/product-buybox.liquid"
+    - "snippets/breadcrumb.liquid"
+    - "snippets/star-rating.liquid"
     # pagination.liquid: rendered from inside main-collection-grid.liquid's
     # {% paginate %}...{% endpaginate %} block. chip-filter.liquid: rendered
     # from inside a nested {% for %}{% for %} loop there. filter-groups.liquid
@@ -41,3 +45,12 @@ OrphanedSnippet:
     # template's section order (it's fetched directly via the Predictive
     # Search / Section Rendering API) — Theme Check's reachability analysis
     # doesn't follow that path, so it never sees the render call.
+    # accordion.liquid: rendered inside a {% for block in accordion_blocks %}
+    # loop in main-product.liquid. product-buybox.liquid: rendered directly
+    # (not nested) but still flagged — same unreliable-analysis pattern as
+    # filter-groups.liquid above. Both verified referenced with grep.
+    # breadcrumb.liquid (Milestone 4): rendered directly from
+    # sections/main-product.liquid. star-rating.liquid (Milestone 4):
+    # rendered directly from snippets/product-buybox.liquid and
+    # snippets/card-product.liquid. Same unreliable-analysis pattern as
+    # above — both verified referenced with grep.

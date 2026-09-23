@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>AERA — PDP variant picker: local DOM/event-flow test</title>
+<style>
+  body { margin: 0; background: #0E0F0D; color: #F5F4EF; font-family: Arial, sans-serif; padding: 20px; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+  .option-selector__pill { display: inline-flex; padding: 9px 16px; border: 1px solid #444; cursor: pointer; }
+  .option-selector__input:checked + .option-selector__pill { background: #fff; color: #000; }
+  .option-selector__pill.is-unavailable { opacity: .35; text-decoration: line-through; }
+  #log { background: #000; color: #8f8; font-family: monospace; font-size: 12px; padding: 14px; white-space: pre-wrap; max-height: 200px; overflow-y: auto; }
+  #status span { display: inline-block; padding: 3px 8px; margin: 2px 4px 2px 0; border: 1px solid #444; }
+  .pass { color: #8f8; border-color: #4a4 !important; }
+  .fail { color: #f88; border-color: #a44 !important; }
+</style>
+
+<h1 style="font-size:16px">PDP variant picker — local DOM/event-flow test</h1>
+<p style="font-size:13px;color:#999;max-width:640px">
+  Loads the real <code>variant-picker.js</code> unmodified. <code>window.fetch</code> is mocked
+  ONLY to stand in for the live Section Rendering API response. Proves client-side logic;
+  does not prove the live Shopify variant-fetch integration.
+</p>
+
+<div id="status"></div>
+<div id="log"></div>
+
+<div data-product-gallery>
+  <div class="product-gallery__main">
+    <div class="is-active" data-gallery-main-item data-media-id="1001"></div>
+    <div data-gallery-main-item data-media-id="1002" style="display:none"></div>
+  </div>
+  <div class="product-gallery__thumbs">
+    <button type="button" data-gallery-thumb data-media-id="1001" aria-pressed="true"></button>
+    <button type="button" data-gallery-thumb data-media-id="1002" aria-pressed="false"></button>
+  </div>
+</div>
+
+<div id="ProductBuyBox-abc123" data-product-buybox>
+  <h1>Summit 45</h1>
+  <span>€249,00</span>
+  <fieldset class="option-selector">
+    <legend>Color</legend>
+    <input type="radio" id="c1" name="option-1" value="Ranger Green" class="visually-hidden option-selector__input" data-option-position="1" checked>
+    <label for="c1" class="option-selector__pill">Ranger Green</label>
+    <input type="radio" id="c2" name="option-1" value="Black" class="visually-hidden option-selector__input" data-option-position="1">
+    <label for="c2" class="option-selector__pill">Black</label>
+  </fieldset>
+  <fieldset class="option-selector">
+    <legend>Capacity</legend>
+    <input type="radio" id="s1" name="option-2" value="45L" class="visually-hidden option-selector__input" data-option-position="2" checked>
+    <label for="s1" class="option-selector__pill" data-option-label>45L</label>
+    <input type="radio" id="s2" name="option-2" value="60L" class="visually-hidden option-selector__input" data-option-position="2">
+    <label for="s2" class="option-selector__pill" data-option-label>60L</label>
+    <input type="radio" id="s3" name="option-2" value="75L" class="visually-hidden option-selector__input" data-option-position="2">
+    <label for="s3" class="option-selector__pill" data-option-label>75L<span data-unavailable-tag hidden> (unavailable)</span></label>
+  </fieldset>
+  <div class="quantity-stepper">
+    <button type="button" data-quantity-decrease>&minus;</button>
+    <input type="number" id="qty" value="1" min="1" data-quantity-input>
+    <button type="button" data-quantity-increase>+</button>
+  </div>
+  <button type="submit" data-product-form-submit>Add to Cart</button>
+</div>
+
+<script type="application/json" data-product-json>
+{
+  "url": "/products/summit-45",
+  "variants": [
+    { "id": 9001, "available": true, "featured_media_id": 1001, "options": ["Ranger Green", "45L"] },
+    { "id": 9002, "available": true, "featured_media_id": 1001, "options": ["Ranger Green", "60L"] },
+    { "id": 9003, "available": false, "featured_media_id": 1002, "options": ["Black", "45L"] },
+    { "id": 9004, "available": true, "featured_media_id": 1002, "options": ["Black", "60L"] }
+  ]
+}
+</script>
+
+<script>
+  var logEl = document.getElementById('log');
+  function log(msg) { logEl.textContent += msg + '\n'; }
+
+  function buybox(price, colorChecked, capacityChecked, submitAttrs, submitLabel) {
+    function radio(name, pos, value, checked) {
+      return '<input type="radio" name="' + name + '" value="' + value + '" class="option-selector__input" data-option-position="' + pos + '"' + (checked ? ' checked' : '') + '><label class="option-selector__pill">' + value + '</label>';
+    }
+    return '<div id="ProductBuyBox-abc123"><h1>Summit 45</h1><span>' + price + '</span>' +
+      '<fieldset class="option-selector">' + radio('option-1', 1, 'Ranger Green', colorChecked === 'Ranger Green') + radio('option-1', 1, 'Black', colorChecked === 'Black') + '</fieldset>' +
+      '<fieldset class="option-selector">' + radio('option-2', 2, '45L', capacityChecked === '45L') + radio('option-2', 2, '60L', capacityChecked === '60L') + '</fieldset>' +
+      '<button type="submit" ' + submitAttrs + ' data-product-form-submit>' + submitLabel + '</button></div>';
+  }
+
+  var RESPONSES = {
+    9002: buybox('€259,00', 'Ranger Green', '60L', '', 'Add to Cart'),
+    9003: buybox('€249,00', 'Black', '45L', 'disabled', 'Sold Out'),
+    9004: buybox('€259,00', 'Black', '60L', '', 'Add to Cart')
+  };
+
+  window.__fetchLog = [];
+  window.fetch = function (url) {
+    window.__fetchLog.push(url);
+    log('[mock fetch] ' + url);
+    var idMatch = url.match(/variant=(\d+)/);
+    var id = idMatch ? idMatch[1] : null;
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve({ ok: true, status: 200, text: function () { return Promise.resolve(RESPONSES[id] || ''); } });
+      }, 30);
+    });
+  };
+</script>
+
+<script src="../assets/variant-picker.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var results = [];
+    function assert(name, cond) { results.push({ name: name, pass: !!cond }); log((cond ? 'PASS' : 'FAIL') + ' — ' + name); }
+    function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+    function renderStatus() {
+      document.getElementById('status').innerHTML = results.map(function (r) {
+        return '<span class="' + (r.pass ? 'pass' : 'fail') + '">' + (r.pass ? 'PASS' : 'FAIL') + '</span> ' + r.name;
+      }).join('');
+    }
+
+    async function run() {
+      var buybox = document.querySelector('[data-product-buybox]');
+
+      log('--- initial load: 75L has no matching variant for any color ---');
+      var input75 = document.getElementById('s3');
+      var label75 = input75.nextElementSibling;
+      assert('75L input is disabled on initial load (no variant exists at any color)', input75.disabled === true);
+      assert('75L is marked is-unavailable on initial load', label75.classList.contains('is-unavailable'));
+      assert('75L unavailable tag is un-hidden', label75.querySelector('[data-unavailable-tag]').hidden === false);
+      var input45 = document.getElementById('s1');
+      assert('45L (a real, reachable value) is NOT disabled', input45.disabled === false);
+      assert('45L (a real, reachable value) is NOT marked unavailable', !input45.nextElementSibling.classList.contains('is-unavailable'));
+
+      log('--- quantity stepper ---');
+      var qtyInput = document.getElementById('qty');
+      document.querySelector('[data-quantity-increase]').click();
+      document.querySelector('[data-quantity-increase]').click();
+      assert('quantity stepper increase button incremented 1 -> 3', qtyInput.value === '3');
+      document.querySelector('[data-quantity-decrease]').click();
+      assert('quantity stepper decrease button decremented 3 -> 2', qtyInput.value === '2');
+
+      log('--- selecting Capacity=60L (same color, should match variant 9002) ---');
+      document.getElementById('s2').checked = true;
+      document.getElementById('s2').dispatchEvent(new Event('change', { bubbles: true }));
+      await wait(1500);
+
+      assert('fetch issued for variant 9002', window.__fetchLog.some(function (u) { return u.indexOf('variant=9002') > -1; }));
+      assert('fetch hits Section Rendering API with section_id=main-product', window.__fetchLog[window.__fetchLog.length - 1].indexOf('section_id=main-product') > -1);
+      assert('buybox swapped to the fetched HTML (new price shown)', buybox.textContent.indexOf('259,00') > -1);
+      assert('gallery stayed on media 1001 (variant 9002 featured_media_id=1001, already active)', document.querySelector('[data-gallery-main-item][data-media-id="1001"]').classList.contains('is-active'));
+
+      log('--- selecting Color=Black AND Capacity=45L (should match variant 9003, sold out, featured_media_id=1002) ---');
+      window.__fetchLog.length = 0;
+      // after the swap, radios were replaced — re-query fresh ones by value
+      var blackRadio = buybox.querySelector('input[value="Black"]');
+      assert('swapped buybox still has a Color radio to select (proves swap preserved structure)', !!blackRadio);
+      if (blackRadio) {
+        blackRadio.checked = true;
+        blackRadio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      await wait(1500);
+
+      // re-query: the previous swap replaced the DOM, so any earlier reference is stale
+      var cap45Radio = buybox.querySelector('input[value="45L"]');
+      assert('re-swapped buybox still has a Capacity radio to select', !!cap45Radio);
+      if (cap45Radio) {
+        cap45Radio.checked = true;
+        cap45Radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      await wait(1500);
+
+      assert('intermediate fetch issued for variant 9004 (Black+60L, the full state after just the color change)', window.__fetchLog.some(function (u) { return u.indexOf('variant=9004') > -1; }));
+      assert('final fetch issued for variant 9003 (Black+45L, after both changes)', window.__fetchLog.some(function (u) { return u.indexOf('variant=9003') > -1; }));
+      assert('sold-out variant shows disabled submit button after swap', buybox.querySelector('[data-product-form-submit]') && buybox.querySelector('[data-product-form-submit]').disabled === true);
+      assert('gallery synced to media 1002 for the Black variant', document.querySelector('[data-gallery-main-item][data-media-id="1002"]').classList.contains('is-active'));
+      assert('gallery media 1001 no longer active', !document.querySelector('[data-gallery-main-item][data-media-id="1001"]').classList.contains('is-active'));
+
+      log('--- thumbnail click (no fetch — pure client-side) ---');
+      window.__fetchLog.length = 0;
+      document.querySelector('[data-gallery-thumb][data-media-id="1001"]').click();
+      await wait(200);
+      assert('thumbnail click did NOT trigger a fetch', window.__fetchLog.length === 0);
+      assert('thumbnail click switched the active main image back to 1001', document.querySelector('[data-gallery-main-item][data-media-id="1001"]').classList.contains('is-active'));
+
+      renderStatus();
+      var failed = results.filter(function (r) { return !r.pass; });
+      log('--- done ---');
+      log(failed.length === 0 ? 'ALL ' + results.length + ' CHECKS PASSED' : failed.length + ' CHECK(S) FAILED');
+    }
+
+    run();
+  });
+</script>
