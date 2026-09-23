@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article"
+    },
+    "more-stories": {
+      "type": "journal-teaser",
+      "settings": {
+        "heading": "More Stories",
+        "subheading": ""
+      }
+    },
+    "newsletter": {
+      "type": "newsletter"
+    }
+  },
+  "order": ["main", "more-stories", "newsletter"]
+}

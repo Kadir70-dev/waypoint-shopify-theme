@@ -49,7 +49,7 @@
         {%- if section.settings.product_image_override -%}
           {{ section.settings.product_image_override | image_url: width: 500 | image_tag: loading: 'lazy', alt: product.title }}
         {%- elsif product.featured_image -%}
-          {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: product.featured_image.alt | default: product.title }}
+          {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy' }}
         {%- endif -%}
       </div>
     </div>

@@ -14,3 +14,6 @@
     <span>{{ target.price | money }}</span>
   {%- endif -%}
 </span>
+{%- if target.unit_price_measurement -%}
+  <span class="muted" style="font-size:12px;display:block">{{ target.unit_price | unit_price_with_measurement: target.unit_price_measurement }}</span>
+{%- endif -%}

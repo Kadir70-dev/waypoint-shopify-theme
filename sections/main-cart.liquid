@@ -33,7 +33,7 @@
   </div>
 
   {%- if cart.item_count > 0 -%}
-    <form action="{{ routes.cart_url }}" method="post" class="cart-page__layout" data-cart-form>
+    {%- form 'cart', cart, id: 'CartPageForm', class: 'cart-page__layout', data-cart-form: true -%}
       <div class="cart-page__main">
         {%- render 'free-shipping-bar' -%}
 
@@ -57,6 +57,12 @@
           <span>{{ 'cart.subtotal' | t }} ({{ cart.item_count }})</span>
           <span data-cart-subtotal>{{ cart.total_price | money }}</span>
         </div>
+        {%- for discount in cart.cart_level_discount_applications -%}
+          <div class="cart-page__summary-row cart-page__summary-row--discount">
+            <span>{{ discount.title }}</span>
+            <span>&minus;{{ discount.total_allocated_amount | money }}</span>
+          </div>
+        {%- endfor -%}
         <p class="cart-page__shipping-note">{{ 'cart.shipping_at_checkout' | t }}</p>
         <div class="cart-page__summary-row cart-page__summary-row--total">
           <span>{{ 'cart.total' | t }}</span>
@@ -66,6 +72,13 @@
         <button type="submit" name="checkout" class="btn btn-primary btn-block" style="margin-top:14px">
           {{ 'cart.checkout' | t }} &rarr;
         </button>
+
+        {%- comment -%}
+          Accelerated checkout + Shop Pay Installments (Milestone 10,
+          Theme Store requirements).
+        {%- endcomment -%}
+        {{ form | payment_button }}
+        {{ form | payment_terms }}
 
         {%- if shop.enabled_payment_types.size > 0 -%}
           <div class="cart-page__payment-icons">
@@ -80,7 +93,7 @@
           {{ 'cart.secure_checkout' | t }}
         </p>
       </aside>
-    </form>
+    {%- endform -%}
   {%- else -%}
     <div class="cart-page__empty">
       <p>{{ 'cart.empty' | t }}</p>

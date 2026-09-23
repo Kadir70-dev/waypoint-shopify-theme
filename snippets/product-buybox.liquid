@@ -14,6 +14,36 @@
   <span class="badge" style="margin-top:6px">{{ 'products.sold_out' | t }}</span>
 {%- endif -%}
 
+{%- comment -%}
+  Local pickup availability (Milestone 10, Theme Store requirement).
+  Real store_availabilities data only — renders nothing if the merchant
+  has no locations with local pickup enabled. Shows the nearest
+  pickup-enabled location's real status/time; a proportionate summary
+  rather than a full multi-location picker/modal, since none of the
+  existing overlay components in this theme were built for that and
+  this milestone shouldn't introduce a new one for a single field.
+{%- endcomment -%}
+{%- assign pickup_locations = current_variant.store_availabilities | where: 'pick_up_enabled', true -%}
+{%- if pickup_locations.size > 0 -%}
+  {%- assign nearest_pickup = pickup_locations.first -%}
+  <div class="product-buybox__pickup" style="font-size:13px;color:var(--muted);margin-top:6px">
+    {%- if nearest_pickup.available -%}
+      <p>{{ 'products.pickup_available' | t: location: nearest_pickup.location.name }}</p>
+      {%- if nearest_pickup.pick_up_time != blank -%}
+        <p>{{ 'products.pickup_time' | t: time: nearest_pickup.pick_up_time }}</p>
+      {%- endif -%}
+    {%- else -%}
+      <p>{{ 'products.pickup_unavailable' | t: location: nearest_pickup.location.name }}</p>
+    {%- endif -%}
+    {%- assign other_location_count = pickup_locations.size | minus: 1 -%}
+    {%- if other_location_count == 1 -%}
+      <p>{{ 'products.pickup_other_locations_one' | t: count: other_location_count }}</p>
+    {%- elsif other_location_count > 1 -%}
+      <p>{{ 'products.pickup_other_locations_other' | t: count: other_location_count }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
 {%- assign product_form_id = 'ProductForm-' | append: section.id -%}
 {%- form 'product', product, class: 'product-buybox__form', id: product_form_id, data-cart-add-form: true -%}
   <input type="hidden" name="id" value="{{ current_variant.id }}" data-product-form-variant-id>
@@ -33,7 +63,12 @@
             data-option-position="{{ option.position }}"
             class="visually-hidden option-selector__input"
           >
-          {%- if option.name == 'Color' and value.swatch.color -%}
+          {%- if option.name == 'Color' and value.swatch.image -%}
+            {%- assign swatch_image_url = value.swatch.image | image_url: width: 64 -%}
+            <label for="{{ input_id }}" class="option-selector__swatch" data-option-label style="background-image:url({{ swatch_image_url }});background-size:cover" title="{{ value }}">
+              <span class="visually-hidden">{{ value }}<span data-unavailable-tag hidden> — {{ 'products.option_unavailable' | t }}</span></span>
+            </label>
+          {%- elsif option.name == 'Color' and value.swatch.color -%}
             <label for="{{ input_id }}" class="option-selector__swatch" data-option-label style="background:{{ value.swatch.color }}" title="{{ value }}">
               <span class="visually-hidden">{{ value }}<span data-unavailable-tag hidden> — {{ 'products.option_unavailable' | t }}</span></span>
             </label>
@@ -48,6 +83,31 @@
     </fieldset>
   {%- endfor -%}
 
+  {%- comment -%}
+    Selling plans / subscriptions (Milestone 10, Theme Store
+    requirement). Real product.selling_plan_groups only — renders
+    nothing if the merchant has no selling plans on this product.
+    "One-time purchase" submits an empty selling_plan value, which
+    Shopify's cart API treats as a standard one-time purchase.
+  {%- endcomment -%}
+  {%- if product.selling_plan_groups.size > 0 -%}
+    {%- for group in product.selling_plan_groups -%}
+      {%- assign one_time_id = 'SellingPlanOneTime-' | append: section.id | append: '-' | append: forloop.index -%}
+      <fieldset class="option-selector">
+        <legend class="eyebrow">{{ group.name }}</legend>
+        <div class="option-selector__values">
+          <input type="radio" id="{{ one_time_id }}" name="selling_plan" value="" checked class="visually-hidden option-selector__input">
+          <label for="{{ one_time_id }}" class="option-selector__pill">{{ 'products.one_time_purchase' | t }}</label>
+          {%- for plan in group.selling_plans -%}
+            {%- assign plan_input_id = 'SellingPlan-' | append: section.id | append: '-' | append: forloop.index -%}
+            <input type="radio" id="{{ plan_input_id }}" name="selling_plan" value="{{ plan.id }}" class="visually-hidden option-selector__input">
+            <label for="{{ plan_input_id }}" class="option-selector__pill">{{ plan.name }}</label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+    {%- endfor -%}
+  {%- endif -%}
+
   <div class="product-buybox__quantity">
     <label for="Quantity-{{ section.id }}" class="eyebrow">{{ 'products.quantity' | t }}</label>
     <div class="quantity-stepper">
@@ -56,6 +116,46 @@
       <button type="button" class="quantity-stepper__btn" data-quantity-increase aria-label="{{ 'products.increase_quantity' | t }}" aria-controls="Quantity-{{ section.id }}">+</button>
     </div>
   </div>
+
+  {%- if product.gift_card? -%}
+    {%- comment -%}
+      Native gift-card recipient fields (Milestone 10, Theme Store
+      requirement). Deliberately always visible (no JS-dependent show/
+      hide) so the form is fully correct with JS disabled — Shopify's
+      own server-side validation only requires the recipient fields when
+      __shopify_send_gift_card_to_recipient is checked, so an unchecked,
+      empty form still submits correctly. Real field names only, per
+      Shopify's documented gift-card recipient API. Per that same
+      documentation, accelerated checkout does not support recipient
+      validation, so payment_button is intentionally skipped below for
+      gift card products.
+    {%- endcomment -%}
+    <fieldset class="product-buybox__gift-recipient" style="display:flex;flex-direction:column;gap:10px;border:1px solid var(--border-strong);padding:14px;margin-top:4px">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px">
+        <input type="checkbox" name="properties[__shopify_send_gift_card_to_recipient]" value="true" data-gift-card-recipient-checkbox>
+        {{ 'gift_card.recipient.checkbox_label' | t }}
+      </label>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <label for="GiftCardRecipientEmail-{{ section.id }}" class="eyebrow">{{ 'gift_card.recipient.email_label' | t }}</label>
+          <input type="email" id="GiftCardRecipientEmail-{{ section.id }}" name="properties[Recipient email]" style="background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text);padding:10px 12px;font-family:var(--font-body);font-size:14px;">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <label for="GiftCardRecipientName-{{ section.id }}" class="eyebrow">{{ 'gift_card.recipient.name_label' | t }}</label>
+          <input type="text" id="GiftCardRecipientName-{{ section.id }}" name="properties[Recipient name]" style="background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text);padding:10px 12px;font-family:var(--font-body);font-size:14px;">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <label for="GiftCardRecipientMessage-{{ section.id }}" class="eyebrow">{{ 'gift_card.recipient.message_label' | t }}</label>
+          <textarea id="GiftCardRecipientMessage-{{ section.id }}" name="properties[Message]" rows="2" style="background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text);padding:10px 12px;font-family:var(--font-body);font-size:14px;resize:vertical;"></textarea>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <label for="GiftCardRecipientSendOn-{{ section.id }}" class="eyebrow">{{ 'gift_card.recipient.send_on_label' | t }}</label>
+          <input type="date" id="GiftCardRecipientSendOn-{{ section.id }}" name="properties[Send on]" style="background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text);padding:10px 12px;font-family:var(--font-body);font-size:14px;">
+          <span class="muted" style="font-size:11px">{{ 'gift_card.recipient.send_on_info' | t }}</span>
+        </div>
+      </div>
+    </fieldset>
+  {%- endif -%}
 
   <button
     type="submit"
@@ -74,6 +174,16 @@
     {%- endif -%}
   </button>
 
+  {%- comment -%}
+    Accelerated checkout + Shop Pay Installments (Milestone 10, Theme
+    Store requirements). payment_button is skipped for gift cards per
+    Shopify's own documented incompatibility with recipient validation.
+  {%- endcomment -%}
+  {%- unless product.gift_card? -%}
+    {{ form | payment_button }}
+  {%- endunless -%}
+  {{ form | payment_terms }}
+
   {%- if settings.show_free_shipping_bar -%}
     {%- assign free_shipping_amount = settings.free_shipping_threshold | times: 100 | money_without_trailing_zeros -%}
     <p class="product-buybox__shipping-note">
@@ -83,7 +193,7 @@
 {%- endform -%}
 
 {%- if product.description != blank -%}
-  <div class="product-buybox__description">{{ product.description }}</div>
+  <div class="product-buybox__description rte">{{ product.description }}</div>
 {%- endif -%}
 
 <div class="visually-hidden" aria-live="polite" data-buybox-status></div>

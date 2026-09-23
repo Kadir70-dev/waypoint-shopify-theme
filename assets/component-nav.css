@@ -475,6 +475,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
 }
 .site-footer__social { display: flex; gap: 14px; }
 .site-footer__social svg { width: 16px; height: 16px; }
+.site-footer__follow-on-shop { margin-top: 10px; }
 
 .locale-form { display: flex; gap: 10px; }
 .locale-form select {

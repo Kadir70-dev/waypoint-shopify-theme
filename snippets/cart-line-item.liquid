@@ -9,7 +9,7 @@
 <div class="cart-line-item" data-cart-line-item data-line-key="{{ item.key }}">
   <a href="{{ item.url }}" class="cart-line-item__media">
     {%- if item.image -%}
-      {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.image.alt | default: item.title, widths: '100, 150, 200', sizes: '80px' }}
+      {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', widths: '100, 150, 200', sizes: '80px' }}
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'cart-line-item__placeholder' }}
     {%- endif -%}
@@ -32,6 +32,10 @@
       <p class="cart-line-item__variant">{{ item.variant.title }}</p>
     {%- endunless -%}
 
+    {%- if item.variant.unit_price_measurement -%}
+      <p class="muted" style="font-size:12px">{{ item.variant.unit_price | unit_price_with_measurement: item.variant.unit_price_measurement }}</p>
+    {%- endif -%}
+
     {%- if item.properties.size > 0 -%}
       <dl class="cart-line-item__properties">
         {%- for property in item.properties -%}
@@ -45,6 +49,16 @@
     {%- unless item.variant.available -%}
       <span class="badge" style="margin-top:4px">{{ 'products.sold_out' | t }}</span>
     {%- endunless -%}
+
+    {%- if item.selling_plan_allocation -%}
+      <p class="muted" style="font-size:12px">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+    {%- endif -%}
+
+    {%- for allocation in item.line_level_discount_allocations -%}
+      <p class="cart-line-item__discount" style="font-size:12px;color:var(--muted)">
+        {{ allocation.discount_application.title }} (&minus;{{ allocation.amount | money }})
+      </p>
+    {%- endfor -%}
 
     <div class="cart-line-item__footer">
       <div class="quantity-stepper quantity-stepper--sm">

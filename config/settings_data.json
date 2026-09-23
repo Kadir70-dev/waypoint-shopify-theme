@@ -1,7 +1,7 @@
 {
-  "current": "AERA — Dark",
+  "current": "AERA",
   "presets": {
-    "AERA — Dark": {
+    "AERA": {
       "color_preset": "dark",
       "accent_color": "#5C6B4A",
       "font_display": "oswald_n7",

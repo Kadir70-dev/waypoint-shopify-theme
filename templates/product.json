@@ -10,6 +10,10 @@
       },
       "block_order": ["specifications-1", "accordion-1", "accordion-2", "accordion-3"]
     },
+    "complementary": {
+      "type": "product-recommendations",
+      "settings": { "heading": "Complete the Look", "intent": "complementary" }
+    },
     "trust": {
       "type": "trust-bar",
       "blocks": {
@@ -21,8 +25,9 @@
       "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"]
     },
     "recommendations": {
-      "type": "product-recommendations"
+      "type": "product-recommendations",
+      "settings": { "heading": "You May Also Like", "intent": "related" }
     }
   },
-  "order": ["main", "trust", "recommendations"]
+  "order": ["main", "complementary", "trust", "recommendations"]
 }

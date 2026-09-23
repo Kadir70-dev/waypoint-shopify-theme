@@ -30,7 +30,9 @@
 <div class="pcard{% if plain %} pcard--plain{% endif %}" data-reveal>
   <a href="{{ product.url }}" class="pcard__media">
     {%- if product.featured_image -%}
-      {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.featured_image.alt | default: product.title, widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, 50vw' }}
+      {%- assign focal_point = product.featured_image.presentation.focal_point -%}
+      {%- assign focal_style = 'object-position: ' | append: focal_point.x | append: '% ' | append: focal_point.y | append: '%' -%}
+      {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, 50vw', style: focal_style }}
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'pcard__placeholder' }}
     {%- endif -%}
@@ -55,7 +57,10 @@
     {%- if color_option -%}
       <div class="pcard__swatches">
         {%- for value in color_option.values -%}
-          {%- if value.swatch.color -%}
+          {%- if value.swatch.image -%}
+            {%- assign swatch_image_url = value.swatch.image | image_url: width: 32 -%}
+            <span class="swatch" style="background-image:url({{ swatch_image_url }});background-size:cover" title="{{ value }}"></span>
+          {%- elsif value.swatch.color -%}
             <span class="swatch" style="background:{{ value.swatch.color }}" title="{{ value }}"></span>
           {%- endif -%}
         {%- endfor -%}

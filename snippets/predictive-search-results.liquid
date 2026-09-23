@@ -15,7 +15,7 @@
               <a href="{{ product.url }}" class="predictive-search__product">
                 <span class="predictive-search__product-media">
                   {%- if product.featured_image -%}
-                    {{ product.featured_image | image_url: width: 80 | image_tag: loading: 'lazy', alt: product.featured_image.alt | default: product.title, width: 40, height: 40 }}
+                    {{ product.featured_image | image_url: width: 80 | image_tag: loading: 'lazy', width: 40, height: 40 }}
                   {%- endif -%}
                 </span>
                 <span class="predictive-search__product-body">

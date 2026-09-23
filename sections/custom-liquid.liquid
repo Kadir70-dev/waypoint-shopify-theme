@@ -1,0 +1,24 @@
+{%- comment -%}
+  Required Shopify Theme Store section (Milestone 10) — a raw Liquid
+  insertion point, addable to any sectioned template. Intentionally
+  minimal: the merchant supplies the markup, this section only renders
+  it inside the theme's standard page-width wrapper.
+{%- endcomment -%}
+<div class="section page-width">
+  {{ section.settings.custom_liquid }}
+</div>
+
+{% schema %}
+{
+  "name": "Custom Liquid",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Liquid code",
+      "info": "Add app snippets or custom code. Renders exactly as written — invalid Liquid or unclosed HTML tags may break page layout."
+    }
+  ],
+  "presets": [{ "name": "Custom Liquid" }]
+}
+{% endschema %}

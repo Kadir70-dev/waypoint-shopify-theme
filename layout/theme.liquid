@@ -149,7 +149,15 @@
     two are genuinely template-scoped (Milestone 8 performance fix: they
     used to load site-wide for no reason).
   {%- endcomment -%}
-  {%- if template == 'index' or template == 'blog' or template == 'article' or template == 'page' -%}
+  {%- comment -%}
+    'page' matched via contains, not ==, so it also covers alternate
+    page templates like page.contact (Milestone 10 fix — page.contact
+    didn't match the old == 'page' check, so its .rte content lost this
+    stylesheet on that template). 'product' added: the PDP's own
+    rich-text description now uses the same .rte class (Milestone 10
+    RTE-consistency fix) and needs these rules to actually render.
+  {%- endcomment -%}
+  {%- if template == 'index' or template == 'blog' or template == 'article' or template contains 'page' or template == 'product' -%}
     {{ 'component-editorial.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
   {%- if template contains 'customers' -%}

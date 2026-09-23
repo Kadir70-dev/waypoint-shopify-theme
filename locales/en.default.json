@@ -210,6 +210,12 @@
     "gallery_play_video": "Play product video",
     "decrease_quantity": "Decrease quantity",
     "increase_quantity": "Increase quantity",
+    "pickup_available": "Pickup available at {{ location }}",
+    "pickup_unavailable": "Pickup currently unavailable at {{ location }}",
+    "pickup_time": "Usually ready {{ time }}",
+    "pickup_other_locations_one": "+{{ count }} other location",
+    "pickup_other_locations_other": "+{{ count }} other locations",
+    "one_time_purchase": "One-time purchase",
     "option_unavailable": "Unavailable",
     "specifications": "Technical Specifications",
     "recommendations_heading": "You May Also Like",
@@ -267,6 +273,14 @@
     "remaining_balance": "{{ balance }} remaining",
     "expires_on": "Expires {{ date }}",
     "redeem_link": "View gift card details",
-    "print": "Print"
+    "print": "Print",
+    "recipient": {
+      "checkbox_label": "This is a gift",
+      "email_label": "Recipient email",
+      "name_label": "Recipient name (optional)",
+      "message_label": "Message (optional)",
+      "send_on_label": "Send on (optional)",
+      "send_on_info": "Leave blank to send immediately after purchase."
+    }
   }
 }

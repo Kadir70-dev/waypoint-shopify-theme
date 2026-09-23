@@ -95,6 +95,11 @@
         <a href="{{ settings.social_spotify_url }}" aria-label="Spotify">{%- render 'icon-spotify' -%}</a>
       {%- endif -%}
     </div>
+
+    {%- comment -%} Follow on Shop (Milestone 10, Theme Store requirement). {%- endcomment -%}
+    <div class="site-footer__follow-on-shop">
+      {{ shop | login_button: action: 'follow' }}
+    </div>
   </div>
 </footer>
 

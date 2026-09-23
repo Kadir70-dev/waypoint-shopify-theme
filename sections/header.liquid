@@ -69,9 +69,15 @@
       >
         {%- render 'icon-search' -%}
       </button>
-      <a href="{{ routes.account_url }}" class="icon-btn" aria-label="{{ 'accessibility.account' | t }}">
-        {%- render 'icon-account' -%}
-      </a>
+      {%- if shop.customer_accounts_enabled -%}
+        <span class="icon-btn">
+          <shopify-account menu="customer-account-main-menu"></shopify-account>
+        </span>
+      {%- else -%}
+        <a href="{{ routes.account_url }}" class="icon-btn" aria-label="{{ 'accessibility.account' | t }}">
+          {%- render 'icon-account' -%}
+        </a>
+      {%- endif -%}
       <a
         href="{{ routes.cart_url }}"
         class="icon-btn"
@@ -225,10 +231,17 @@
       {{ 'navigation.journal' | t }}
     </a>
   {%- endif -%}
-  <a href="{{ routes.account_url }}" class="mobile-tabbar__item">
-    {%- render 'icon-account' -%}
-    {{ 'navigation.account' | t }}
-  </a>
+  {%- if shop.customer_accounts_enabled -%}
+    <span class="mobile-tabbar__item">
+      <shopify-account menu="customer-account-main-menu"></shopify-account>
+      {{ 'navigation.account' | t }}
+    </span>
+  {%- else -%}
+    <a href="{{ routes.account_url }}" class="mobile-tabbar__item">
+      {%- render 'icon-account' -%}
+      {{ 'navigation.account' | t }}
+    </a>
+  {%- endif -%}
 </nav>
 
 {% schema %}

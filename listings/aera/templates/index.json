@@ -1,0 +1,86 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-slider",
+      "settings": { "autoplay": true, "autoplay_interval": 6, "tagline_word_1": "Explore", "tagline_word_2": "Adapt", "tagline_word_3": "Endure" },
+      "blocks": {
+        "slide-1": { "type": "slide", "settings": { "eyebrow": "Gear for Real Life", "heading": "Further by Nature", "subtext": "Technical gear for the unknown. Built to go further.", "cta_label": "Explore Gear" } },
+        "slide-2": { "type": "slide", "settings": { "eyebrow": "Engineered for Extremes", "heading": "Details That Perform", "subtext": "Premium materials. Rigorously tested. No compromises.", "cta_label": "Our Approach" } },
+        "slide-3": { "type": "slide", "settings": { "eyebrow": "AERA Journal", "heading": "A Life More Open", "subtext": "Stories, guides and perspectives from those who choose a wilder path.", "cta_label": "Explore the Journal" } }
+      },
+      "block_order": ["slide-1", "slide-2", "slide-3"]
+    },
+    "latest-releases": {
+      "type": "featured-collection",
+      "settings": { "heading": "Latest Releases", "subheading": "New gear for longer days.", "products_to_show": 6, "show_view_all": true }
+    },
+    "shop-by-category": {
+      "type": "category-grid",
+      "settings": { "heading": "Shop by Category" },
+      "blocks": {
+        "tile-1": { "type": "tile", "settings": { "label": "Backpacks", "sublabel": "Carry further." } },
+        "tile-2": { "type": "tile", "settings": { "label": "Camp & Shelter", "sublabel": "Stay ready." } },
+        "tile-3": { "type": "tile", "settings": { "label": "Tools & Equipment", "sublabel": "Built for more." } },
+        "tile-4": { "type": "tile", "settings": { "label": "Apparel", "sublabel": "All conditions." } }
+      },
+      "block_order": ["tile-1", "tile-2", "tile-3", "tile-4"]
+    },
+    "details-and-summit": {
+      "type": "feature-spotlight",
+      "settings": {
+        "eyebrow": "Engineered for Extremes",
+        "heading": "Details That Perform",
+        "text": "<p>From alpine ridges to dense forests, every element is designed with purpose. Premium materials. Rigorously tested. No compromises.</p>",
+        "cta_label": "Our Approach",
+        "product_eyebrow": "Featured Gear",
+        "product_text": "All-terrain backpack for multi-day missions.",
+        "product_cta_label": "View Product"
+      },
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "text": "Waterproof" } },
+        "f2": { "type": "feature", "settings": { "text": "Breathable" } },
+        "f3": { "type": "feature", "settings": { "text": "Durable" } },
+        "f4": { "type": "feature", "settings": { "text": "Lightweight" } },
+        "f5": { "type": "feature", "settings": { "text": "Field Tested" } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5"]
+    },
+    "life-more-open": {
+      "type": "split-promo",
+      "settings": {
+        "content_position": "left",
+        "eyebrow": "AERA Journal",
+        "heading": "A Life More Open",
+        "text": "<p>Stories, guides and perspectives from those who choose a wilder path.</p>",
+        "cta_label": "Explore the Journal",
+        "quote": "Not escape. Perspective.",
+        "quote_attribution": "AERA Journal, Vol. 04"
+      }
+    },
+    "trusted-by-explorers": {
+      "type": "social-proof",
+      "settings": { "heading": "Trusted by Explorers", "subheading": "Real people. Real places." },
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "quote": "AERA gear has been with me through Icelandic storms, alpine crossings and everything in between. It simply works.", "name": "M. Eriksson", "location": "Mountain Guide" } },
+        "ti1": { "type": "trust-item", "settings": { "icon": "mountain", "label": "Field Tested" } },
+        "ti2": { "type": "trust-item", "settings": { "icon": "leaf", "label": "Sustainable Practices" } },
+        "ti3": { "type": "trust-item", "settings": { "icon": "shield", "label": "Built to Last" } },
+        "ti4": { "type": "trust-item", "settings": { "icon": "globe", "label": "Global Community" } }
+      },
+      "block_order": ["t1", "ti1", "ti2", "ti3", "ti4"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": { "heading": "Stay in the Wild", "text": "Join for exclusive releases, field notes and 10% off your first order." }
+    }
+  },
+  "order": [
+    "hero",
+    "latest-releases",
+    "shop-by-category",
+    "details-and-summit",
+    "life-more-open",
+    "trusted-by-explorers",
+    "newsletter"
+  ]
+}
