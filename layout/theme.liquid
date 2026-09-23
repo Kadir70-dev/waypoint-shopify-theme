@@ -46,6 +46,7 @@
   {{ 'component-nav.css' | asset_url | stylesheet_tag }}
   {{ 'component-product-card.css' | asset_url | stylesheet_tag }}
   {{ 'component-collection.css' | asset_url | stylesheet_tag }}
+  {{ 'component-cart.css' | asset_url | stylesheet_tag }}
   {{ 'component-motion.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%}
@@ -86,6 +87,7 @@
   {%- sections 'footer-group' -%}
 
   <script src="{{ 'overlay.js' | asset_url }}" defer></script>
+  <script src="{{ 'cart.js' | asset_url }}" defer></script>
   <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
   <script src="{{ 'variant-picker.js' | asset_url }}" defer></script>
   <script src="{{ 'product-recommendations.js' | asset_url }}" defer></script>

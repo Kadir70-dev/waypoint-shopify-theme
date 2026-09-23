@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>AERA — cart: local DOM/event-flow test</title>
+<style>
+  body { margin: 0; background: #0E0F0D; color: #F5F4EF; font-family: Arial, sans-serif; padding: 20px; }
+  #log { background: #000; color: #8f8; font-family: monospace; font-size: 12px; padding: 14px; white-space: pre-wrap; max-height: 220px; overflow-y: auto; }
+  #status span { display: inline-block; padding: 3px 8px; margin: 2px 4px 2px 0; border: 1px solid #444; }
+  .pass { color: #8f8; border-color: #4a4 !important; }
+  .fail { color: #f88; border-color: #a44 !important; }
+  [hidden] { display: none !important; }
+</style>
+
+<h1 style="font-size:16px">Cart — local DOM/event-flow test</h1>
+<p style="font-size:13px;color:#999;max-width:640px">
+  Loads the real <code>overlay.js</code> and <code>cart.js</code> unmodified. <code>window.fetch</code>
+  is mocked ONLY to stand in for the live Cart AJAX API / Section Rendering API responses.
+  Proves client-side logic; does not prove the live Shopify cart integration.
+</p>
+
+<div id="status"></div>
+<div id="log"></div>
+
+<script type="application/json" data-cart-routes>{ "cart_url": "/cart" }</script>
+
+<a href="/cart" class="icon-btn" data-overlay-trigger="CartDrawer">
+  Cart <span data-cart-count hidden>0</span>
+</a>
+
+<div id="CartDrawer" data-overlay data-overlay-backdrop hidden>
+  <div id="CartDrawerContent">(initial drawer content — empty cart)</div>
+</div>
+
+<form data-cart-add-form id="pdp-form">
+  <input type="hidden" name="id" value="9001">
+  <input type="hidden" name="quantity" value="1">
+  <button
+    type="submit"
+    data-product-form-submit
+    data-label-add="Add to Cart"
+    data-label-adding="Adding…"
+    data-label-added="Added"
+    data-label-sold-out="Sold Out"
+  >Add to Cart &rarr;</button>
+</form>
+
+<form data-cart-add-form id="quickadd-form">
+  <input type="hidden" name="id" value="9002">
+  <button type="submit" class="pcard__quickadd" aria-label="Quick add">+</button>
+</form>
+
+<form data-cart-form id="cart-line-form">
+  <div data-cart-line-item data-line-key="9001:abc">
+    <button type="button" data-cart-remove aria-label="Remove">&times;</button>
+    <div class="quantity-stepper">
+      <button type="button" data-quantity-decrease>&minus;</button>
+      <input type="number" value="2" min="1" data-quantity-input data-cart-quantity-input>
+      <button type="button" data-quantity-increase>+</button>
+    </div>
+  </div>
+</form>
+
+<script>
+  var logEl = document.getElementById('log');
+  function log(msg) { logEl.textContent += msg + '\n'; }
+
+  window.__fetchLog = [];
+  var CART_AFTER_ADD = { item_count: 1, items: [{ key: '9001:abc', quantity: 1 }], total_price: 24900 };
+  var CART_AFTER_CHANGE = { item_count: 5, items: [{ key: '9001:abc', quantity: 5 }], total_price: 124500 };
+  var CART_EMPTY = { item_count: 0, items: [], total_price: 0 };
+  var DRAWER_HTML_AFTER_ADD = '<div id="CartDrawerContent"><span data-marker="refreshed-after-add">refreshed drawer content</span></div>';
+  var DRAWER_HTML_AFTER_CHANGE = '<div id="CartDrawerContent"><span data-marker="refreshed-after-change">refreshed drawer content 2</span></div>';
+
+  var nextDrawerHtml = DRAWER_HTML_AFTER_ADD;
+
+  window.fetch = function (url, options) {
+    options = options || {};
+    window.__fetchLog.push({ url: url, method: options.method || 'GET', body: options.body });
+    log('[mock fetch] ' + (options.method || 'GET') + ' ' + url);
+
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        if (url === '/cart/add.js') {
+          resolve({ ok: true, json: function () { return Promise.resolve({ id: 9001, quantity: 1 }); } });
+        } else if (url === '/cart.js') {
+          resolve({ ok: true, json: function () { return Promise.resolve(CART_AFTER_ADD); } });
+        } else if (url === '/cart/change.js') {
+          var body = JSON.parse(options.body);
+          var cart = body.quantity === 0 ? CART_EMPTY : CART_AFTER_CHANGE;
+          nextDrawerHtml = DRAWER_HTML_AFTER_CHANGE;
+          resolve({ ok: true, json: function () { return Promise.resolve(cart); } });
+        } else if (url === '/cart/clear.js') {
+          resolve({ ok: true, json: function () { return Promise.resolve(CART_EMPTY); } });
+        } else if (url.indexOf('section_id=cart-drawer') > -1) {
+          resolve({ ok: true, text: function () { return Promise.resolve(nextDrawerHtml); } });
+        } else {
+          resolve({ ok: false, status: 404, json: function () { return Promise.resolve({}); }, text: function () { return Promise.resolve(''); } });
+        }
+      }, 30);
+    });
+  };
+</script>
+
+<script src="../assets/overlay.js"></script>
+<script src="../assets/cart.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var results = [];
+    function assert(name, cond) { results.push({ name: name, pass: !!cond }); log((cond ? 'PASS' : 'FAIL') + ' — ' + name); }
+    function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+    function attr(selector, name) {
+      var el = document.querySelector(selector);
+      return el ? el.getAttribute(name) : null;
+    }
+    // Polls instead of a fixed sleep — background/automated tabs throttle
+    // setTimeout unpredictably (sometimes by 1s+), so a fixed wait() after
+    // a multi-hop mocked-fetch chain is flaky by nature. Polling with a
+    // generous ceiling waits only as long as actually needed.
+    function waitUntil(conditionFn, timeoutMs) {
+      var start = Date.now();
+      return new Promise(function (resolve) {
+        (function check() {
+          if (conditionFn() || Date.now() - start > (timeoutMs || 8000)) { resolve(); return; }
+          setTimeout(check, 40);
+        })();
+      });
+    }
+    function renderStatus() {
+      document.getElementById('status').innerHTML = results.map(function (r) {
+        return '<span class="' + (r.pass ? 'pass' : 'fail') + '">' + (r.pass ? 'PASS' : 'FAIL') + '</span> ' + r.name;
+      }).join('');
+    }
+
+    async function run() {
+      var countEl = document.querySelector('[data-cart-count]');
+      var pdpForm = document.getElementById('pdp-form');
+      var pdpButton = pdpForm.querySelector('button');
+      var drawerContent = document.getElementById('CartDrawerContent');
+
+      log('--- initial state ---');
+      assert('header count starts hidden (empty cart)', countEl.hidden === true);
+      assert('CartDrawer overlay instance exists (overlay.js wired it)', !!(window.AeraOverlays && window.AeraOverlays.CartDrawer));
+
+      log('--- submitting the PDP add-to-cart form ---');
+      pdpForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      assert('button shows "Adding…" immediately on submit', pdpButton.textContent === 'Adding…');
+      assert('button is disabled while adding', pdpButton.disabled === true);
+
+      await waitUntil(function () { return document.getElementById('CartDrawer').getAttribute('data-state') === 'open'; });
+      assert('POST issued to /cart/add.js', window.__fetchLog.some(function (f) { return f.url === '/cart/add.js' && f.method === 'POST'; }));
+      assert('GET issued to /cart.js for the fresh cart total', window.__fetchLog.some(function (f) { return f.url === '/cart.js'; }));
+      assert('header count updated to 1 and un-hidden', countEl.textContent === '1' && countEl.hidden === false);
+      assert('button shows "Added" after a successful add', pdpButton.textContent === 'Added');
+      assert('cart drawer opened as confirmation', document.getElementById('CartDrawer').getAttribute('data-state') === 'open');
+      assert('drawer content swapped in from the section-id fetch', attr('#CartDrawerContent [data-marker]', 'data-marker') === 'refreshed-after-add');
+
+      await waitUntil(function () { return pdpButton.textContent === 'Add to Cart →'; });
+      assert('button reverts to "Add to Cart →" after the confirmation window', pdpButton.textContent === 'Add to Cart →');
+      assert('button re-enabled after reverting', pdpButton.disabled === false);
+
+      log('--- submitting the icon-only quick-add form ---');
+      window.__fetchLog.length = 0;
+      var quickBtn = document.querySelector('#quickadd-form button');
+      document.getElementById('quickadd-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      assert('quick-add button gets .is-loading immediately (no text change — icon only)', quickBtn.classList.contains('is-loading'));
+      await waitUntil(function () { return quickBtn.classList.contains('is-added'); });
+      assert('quick-add POSTed to /cart/add.js too', window.__fetchLog.some(function (f) { return f.url === '/cart/add.js'; }));
+      assert('quick-add button gets .is-added after success', quickBtn.classList.contains('is-added'));
+
+      log('--- quantity stepper increase (line 9001:abc) ---');
+      window.__fetchLog.length = 0;
+      document.querySelector('[data-quantity-increase]').click();
+      var qtyInput = document.querySelector('[data-cart-quantity-input]');
+      assert('stepper incremented the input locally (2 -> 3) before the response lands', qtyInput.value === '3');
+      await waitUntil(function () { return attr('#CartDrawerContent [data-marker]', 'data-marker') === 'refreshed-after-change'; });
+      var changeCall = window.__fetchLog.filter(function (f) { return f.url === '/cart/change.js'; })[0];
+      assert('POST issued to /cart/change.js', !!changeCall);
+      assert('change payload carries the line key and new quantity', !!changeCall && JSON.parse(changeCall.body).id === '9001:abc' && JSON.parse(changeCall.body).quantity === 3);
+      assert('header count reflects the mocked post-change cart (5)', countEl.textContent === '5');
+      assert('drawer content swapped again after the change', attr('#CartDrawerContent [data-marker]', 'data-marker') === 'refreshed-after-change');
+
+      log('--- remove line item ---');
+      window.__fetchLog.length = 0;
+      document.querySelector('[data-cart-remove]').click();
+      await waitUntil(function () { return countEl.textContent === '0'; });
+      var removeCall = window.__fetchLog.filter(function (f) { return f.url === '/cart/change.js'; })[0];
+      assert('remove sends quantity: 0 for the line', !!removeCall && JSON.parse(removeCall.body).quantity === 0);
+      assert('header count drops to 0 and hides again', countEl.textContent === '0' && countEl.hidden === true);
+
+      log('--- header cart-icon trigger never navigates ---');
+      var trigger = document.querySelector('[data-overlay-trigger="CartDrawer"]');
+      var clickEvent = new MouseEvent('click', { cancelable: true, bubbles: true });
+      trigger.dispatchEvent(clickEvent);
+      assert('default navigation was prevented on the cart icon click', clickEvent.defaultPrevented === true);
+
+      renderStatus();
+      var failed = results.filter(function (r) { return !r.pass; });
+      log('--- done ---');
+      log(failed.length === 0 ? 'ALL ' + results.length + ' CHECKS PASSED' : failed.length + ' CHECK(S) FAILED');
+    }
+
+    run();
+  });
+</script>

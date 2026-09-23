@@ -1,0 +1,84 @@
+{%- comment -%}
+  Usage: {% render 'cart-line-item', item: item %}
+  Shared between the cart drawer and the full cart page — one row of
+  markup. Never mutated in place by JS: cart.js only sends quantity
+  changes to /cart/change.js and swaps in fresh server-rendered HTML
+  from each surface's own Section Rendering API fetch, same pattern the
+  PDP buy box already uses.
+{%- endcomment -%}
+<div class="cart-line-item" data-cart-line-item data-line-key="{{ item.key }}">
+  <a href="{{ item.url }}" class="cart-line-item__media">
+    {%- if item.image -%}
+      {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.image.alt | default: item.title, widths: '100, 150, 200' }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'cart-line-item__placeholder' }}
+    {%- endif -%}
+  </a>
+
+  <div class="cart-line-item__body">
+    <div class="cart-line-item__header">
+      <a href="{{ item.url }}" class="cart-line-item__title">{{ item.product.title }}</a>
+      <button
+        type="button"
+        class="cart-line-item__remove"
+        data-cart-remove
+        aria-label="{{ 'cart.remove_item' | t: title: item.product.title }}"
+      >
+        {%- render 'icon-close' -%}
+      </button>
+    </div>
+
+    {%- unless item.product.has_only_default_variant -%}
+      <p class="cart-line-item__variant">{{ item.variant.title }}</p>
+    {%- endunless -%}
+
+    {%- if item.properties.size > 0 -%}
+      <dl class="cart-line-item__properties">
+        {%- for property in item.properties -%}
+          {%- unless property.last == blank -%}
+            <div><dt>{{ property.first }}:</dt> <dd>{{ property.last }}</dd></div>
+          {%- endunless -%}
+        {%- endfor -%}
+      </dl>
+    {%- endif -%}
+
+    {%- unless item.variant.available -%}
+      <span class="badge" style="margin-top:4px">{{ 'products.sold_out' | t }}</span>
+    {%- endunless -%}
+
+    <div class="cart-line-item__footer">
+      <div class="quantity-stepper quantity-stepper--sm">
+        <button
+          type="button"
+          class="quantity-stepper__btn"
+          data-quantity-decrease
+          aria-label="{{ 'cart.decrease_quantity' | t: title: item.product.title }}"
+        >&minus;</button>
+        <input
+          type="number"
+          class="cart-line-item__qty-input"
+          name="updates[{{ item.key }}]"
+          value="{{ item.quantity }}"
+          min="1"
+          inputmode="numeric"
+          data-quantity-input
+          data-cart-quantity-input
+          aria-label="{{ 'cart.quantity' | t }}"
+        >
+        <button
+          type="button"
+          class="quantity-stepper__btn"
+          data-quantity-increase
+          aria-label="{{ 'cart.increase_quantity' | t: title: item.product.title }}"
+        >+</button>
+      </div>
+
+      <div class="cart-line-item__price">
+        {%- if item.original_line_price != item.final_line_price -%}
+          <span class="compare-at">{{ item.original_line_price | money }}</span>
+        {%- endif -%}
+        <span>{{ item.final_line_price | money }}</span>
+      </div>
+    </div>
+  </div>
+</div>

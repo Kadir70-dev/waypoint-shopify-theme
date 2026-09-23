@@ -4,11 +4,10 @@
   (plain = the plain-photography validation frame, not tied to any
   merchant setting — used where the theme wants to demonstrate/force it)
 
-  Quick-add here is a plain form POST to /cart/add (works today, no JS
-  required). The AJAX version that opens the cart drawer and plays the
-  confirm-morph motion lands in Milestone 5 once cart-drawer.liquid exists
-  — this markup does not need to change when that happens, only the JS
-  progressively enhances the same form.
+  Quick-add: a real form POST to /cart/add — works with zero JS. Milestone
+  5's cart.js progressively enhances it (data-cart-add-form): intercepts
+  the submit, adds via /cart/add.js, and opens the cart drawer as
+  confirmation instead of navigating.
 {%- endcomment -%}
 
 {%- liquid
@@ -35,7 +34,7 @@
   </a>
 
   {%- if settings.show_quick_add and variant.available -%}
-    <form method="post" action="{{ routes.cart_add_url }}" class="pcard__quickadd-form">
+    <form method="post" action="{{ routes.cart_add_url }}" class="pcard__quickadd-form" data-cart-add-form>
       <input type="hidden" name="id" value="{{ variant.id }}">
       <button type="submit" class="pcard__quickadd" aria-label="{{ 'products.quick_add' | t }}: {{ product.title }}">
         {%- render 'icon-plus' -%}

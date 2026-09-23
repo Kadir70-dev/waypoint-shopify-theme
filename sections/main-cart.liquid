@@ -1,0 +1,130 @@
+{%- comment -%}
+  AERA — full cart page (Milestone 5). Same Section Rendering API pattern
+  as the PDP buy box and cart drawer: cart.js re-fetches this section
+  (?section_id=main-cart) after an AJAX quantity/remove change and swaps
+  #CartPageContent wholesale (one id, one innerHTML replace) — the same
+  reasoning as the cart drawer's #CartDrawerContent: empty vs non-empty
+  is a structurally different layout, not just different values. The
+  <form> itself is a real, working no-JS fallback (native updates[] + a
+  "checkout" submit button) — JS only progressively enhances it, never
+  replaces it.
+{%- endcomment -%}
+<div class="section page-width">
+ <div id="CartPageContent">
+  <div class="cart-page__top">
+    <h1 class="cart-page__heading">
+      {{ 'cart.heading' | t }}
+      {%- if cart.item_count > 0 -%}
+        ({{ cart.item_count }})
+      {%- endif -%}
+    </h1>
+    <a href="{{ routes.all_products_collection_url }}" class="cart-page__continue">{{ 'cart.empty_cta' | t }} &rarr;</a>
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" class="cart-page__layout" data-cart-form>
+      <div class="cart-page__main">
+        {%- render 'free-shipping-bar' -%}
+
+        <div class="cart-page__items" data-cart-items>
+          {%- for item in cart.items -%}
+            {%- render 'cart-line-item', item: item -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="cart-page__actions">
+          <button type="submit" class="cart-page__update">{{ 'cart.update_cart' | t }}</button>
+          <button type="submit" formaction="/cart/clear" class="cart-page__clear" data-cart-clear>
+            {{ 'cart.clear_cart' | t }}
+          </button>
+        </div>
+      </div>
+
+      <aside class="cart-page__summary" data-cart-summary>
+        <h2 class="cart-page__summary-heading">{{ 'cart.total' | t }}</h2>
+        <div class="cart-page__summary-row">
+          <span>{{ 'cart.subtotal' | t }} ({{ cart.item_count }})</span>
+          <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+        </div>
+        <p class="cart-page__shipping-note">{{ 'cart.shipping_at_checkout' | t }}</p>
+        <div class="cart-page__summary-row cart-page__summary-row--total">
+          <span>{{ 'cart.total' | t }}</span>
+          <span data-cart-total>{{ cart.total_price | money }}</span>
+        </div>
+
+        <button type="submit" name="checkout" class="btn btn-primary btn-block" style="margin-top:14px">
+          {{ 'cart.checkout' | t }} &rarr;
+        </button>
+
+        {%- if shop.enabled_payment_types.size > 0 -%}
+          <div class="cart-page__payment-icons">
+            {%- for type in shop.enabled_payment_types -%}
+              {{ type | payment_type_svg_tag: class: 'cart-page__payment-icon' }}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <p class="cart-page__secure">
+          {%- render 'icon-shield' -%}
+          {{ 'cart.secure_checkout' | t }}
+        </p>
+      </aside>
+    </form>
+  {%- else -%}
+    <div class="cart-page__empty">
+      <p>{{ 'cart.empty' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ 'cart.empty_cta' | t }}</a>
+    </div>
+  {%- endif -%}
+ </div>
+</div>
+
+<style>
+  .cart-page__top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; padding-top: 24px; margin-bottom: 20px; }
+  .cart-page__heading { font-size: 26px; }
+  .cart-page__continue { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .cart-page__continue:hover { color: var(--text); }
+
+  .cart-page__layout { display: block; padding-bottom: 48px; }
+  .cart-page__main { display: flex; flex-direction: column; gap: 4px; }
+  .cart-page__items { display: flex; flex-direction: column; }
+  .cart-page__items .cart-line-item { border-bottom: 1px solid var(--border); }
+
+  .cart-page__actions { display: flex; justify-content: space-between; gap: 16px; padding-top: 18px; flex-wrap: wrap; }
+  .cart-page__update, .cart-page__clear {
+    background: none;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    cursor: pointer;
+  }
+  .cart-page__clear { border-color: transparent; color: var(--muted); padding-inline: 0; }
+  .cart-page__clear:hover { color: var(--text); }
+
+  .cart-page__summary { background: var(--surface-2); border: 1px solid var(--border); padding: 24px; align-self: flex-start; margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+  .cart-page__summary-heading { font-size: 16px; }
+  .cart-page__summary-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); }
+  .cart-page__summary-row--total { color: var(--text); font-size: 16px; border-top: 1px solid var(--border); padding-top: 12px; margin-top: 2px; }
+  .cart-page__shipping-note { font-size: 12px; color: var(--muted); }
+  .cart-page__payment-icons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .cart-page__payment-icon { height: 22px; width: auto; }
+  .cart-page__secure { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .cart-page__secure svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  .cart-page__empty { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; padding: 60px 20px; color: var(--muted); }
+
+  @media (min-width: 750px) {
+    .cart-page__layout { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+    .cart-page__summary { margin-top: 0; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Cart"
+}
+{% endschema %}

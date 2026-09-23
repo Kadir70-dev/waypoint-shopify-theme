@@ -72,11 +72,17 @@
       <a href="{{ routes.account_url }}" class="icon-btn" aria-label="{{ 'accessibility.account' | t }}">
         {%- render 'icon-account' -%}
       </a>
-      <a href="{{ routes.cart_url }}" class="icon-btn" aria-label="{{ 'accessibility.cart' | t }}">
+      <a
+        href="{{ routes.cart_url }}"
+        class="icon-btn"
+        aria-label="{{ 'accessibility.cart' | t }}"
+        {% if settings.cart_type == 'drawer' %}
+          data-overlay-trigger="CartDrawer"
+          aria-controls="CartDrawer"
+        {% endif %}
+      >
         {%- render 'icon-cart' -%}
-        {%- if cart.item_count > 0 -%}
-          <span class="icon-btn__count">{{ cart.item_count }}</span>
-        {%- endif -%}
+        <span class="icon-btn__count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
       </a>
     </div>
   </div>
@@ -197,6 +203,9 @@
     ></div>
   </div>
 </div>
+
+{%- comment -%} ---------- cart drawer (Milestone 5) ---------- {%- endcomment -%}
+{%- section 'cart-drawer' -%}
 
 {%- comment -%} ---------- mobile bottom tab bar ---------- {%- endcomment -%}
 <nav class="mobile-tabbar" aria-label="{{ 'accessibility.menu' | t }}">

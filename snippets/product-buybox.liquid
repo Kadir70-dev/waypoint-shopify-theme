@@ -15,7 +15,7 @@
 {%- endif -%}
 
 {%- assign product_form_id = 'ProductForm-' | append: section.id -%}
-{%- form 'product', product, class: 'product-buybox__form', id: product_form_id -%}
+{%- form 'product', product, class: 'product-buybox__form', id: product_form_id, data-cart-add-form: true -%}
   <input type="hidden" name="id" value="{{ current_variant.id }}" data-product-form-variant-id>
 
   {%- for option in product.options_with_values -%}
@@ -63,6 +63,8 @@
     data-product-form-submit
     data-label-add="{{ 'products.add_to_cart' | t }}"
     data-label-sold-out="{{ 'products.sold_out' | t }}"
+    data-label-adding="{{ 'products.adding' | t }}"
+    data-label-added="{{ 'products.added' | t }}"
     {% unless current_variant.available %}disabled{% endunless %}
   >
     {%- if current_variant.available -%}

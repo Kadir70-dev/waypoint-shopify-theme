@@ -143,6 +143,38 @@ html, body { overflow-x: hidden; }
 .btn-outline:hover { border-color: var(--text); background: rgba(127, 127, 127, .08); }
 .btn-block { width: 100%; justify-content: center; }
 
+/* --- quantity stepper ---
+   Cross-cutting primitive (PDP buy box since Milestone 4, cart line
+   items and the cart drawer since Milestone 5) — moved here rather than
+   living scoped inside any one section's <style> block. --sm is a denser
+   variant for cart line items, where the buybox's default size crowds
+   the row on mobile. */
+.quantity-stepper { display: inline-flex; align-items: stretch; border: 1px solid var(--border-strong); }
+.quantity-stepper__btn {
+  width: 36px;
+  background: var(--surface-2);
+  border: 0;
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+}
+.quantity-stepper__btn:hover { background: var(--surface-3); }
+.quantity-stepper input {
+  width: 54px;
+  background: var(--surface-2);
+  border: 0;
+  border-inline: 1px solid var(--border-strong);
+  color: var(--text);
+  text-align: center;
+  padding: 10px 4px;
+  font-size: 14px;
+  -moz-appearance: textfield;
+}
+.quantity-stepper input::-webkit-outer-spin-button,
+.quantity-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.quantity-stepper--sm .quantity-stepper__btn { width: 28px; font-size: 14px; }
+.quantity-stepper--sm input { width: 40px; padding: 6px 4px; font-size: 13px; }
+
 /* --- photography treatment ---
    .photo = cover/position primitive for any background-image div.
    .brand = the approved cinematic grade (graded gradients stand in for

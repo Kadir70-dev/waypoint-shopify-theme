@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>AERA — Cart Preview</title>
+<script>
+  (function (html) {
+    html.classList.add('js');
+    html.classList.add('motion-detected');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      html.classList.add('reduced-motion');
+    }
+    html.setAttribute('data-preset', 'dark');
+    html.setAttribute('data-corners', 'sharp');
+  })(document.documentElement);
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+<!--
+  Links the real, unmodified theme CSS files directly rather than hand-
+  copying them (as pdp-preview.html does) — this file has no Liquid to
+  interpolate, so a relative link is strictly more accurate than a
+  verbatim copy (zero drift risk) and needs no upkeep as those files
+  change. Served over a local static HTTP server, same-origin, fully
+  local — no live store involved.
+-->
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/base.css">
+<link rel="stylesheet" href="../assets/component-nav.css">
+<link rel="stylesheet" href="../assets/component-product-card.css">
+<link rel="stylesheet" href="../assets/component-cart.css">
+
+<style>
+  .preview-note { background: #1a1c16; color: #d8d6c8; font-family: Inter, sans-serif; font-size: 12px; padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,.12); }
+  body { padding-bottom: 40px; }
+</style>
+
+<div class="preview-note">Cart preview — drawer forced open via <code>data-state="open"</code> for screenshotting; header, footer and page chrome are the real markup/CSS, not a redesign.</div>
+
+<header class="site-header">
+  <div class="page-width site-header__row">
+    <button class="icon-btn hamburger-btn" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="site-header__nav" aria-label="Main"><a href="#">Shop</a><a href="#">Gear</a><a href="#">About</a><a href="#">Journal</a></nav>
+    <a href="#" class="site-header__logo">A E R A<small>Built for a wilder tomorrow</small></a>
+    <div class="site-header__icons">
+      <button class="icon-btn" type="button" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg></button>
+      <a href="#" class="icon-btn" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.5-4 4-6 7.5-6s6 2 7.5 6"/></svg></a>
+      <a href="#" class="icon-btn" data-overlay-trigger="CartDrawer" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h2l1.5 10.5a2 2 0 002 1.5h7a2 2 0 002-1.5L20 9H7"/><circle cx="10" cy="21" r="1"/><circle cx="17" cy="21" r="1"/></svg>
+        <span class="icon-btn__count">3</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="MainContent">
+  <div class="section page-width">
+    <div class="cart-page__top" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-top:24px;margin-bottom:20px">
+      <h1 style="font-size:26px">Your Cart (3)</h1>
+      <a href="#" style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Continue shopping &rarr;</a>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 340px;gap:48px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div class="free-shipping-bar">
+          <p class="free-shipping-bar__message">Add €50.00 more for free shipping</p>
+          <div class="free-shipping-bar__track"><div class="free-shipping-bar__fill" style="width:66%"></div></div>
+        </div>
+
+        <div style="display:flex;flex-direction:column">
+          <div class="cart-line-item" style="border-bottom:1px solid var(--border)">
+            <div class="cart-line-item__media" style="background:linear-gradient(160deg,#1b1d16,#3a3f2c 45%,#11120e)"></div>
+            <div class="cart-line-item__body">
+              <div class="cart-line-item__header">
+                <a href="#" class="cart-line-item__title">Altitude 35 Backpack</a>
+                <button type="button" class="cart-line-item__remove" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+              </div>
+              <p class="cart-line-item__variant">Ranger Green / 35L</p>
+              <div class="cart-line-item__footer">
+                <div class="quantity-stepper quantity-stepper--sm">
+                  <button type="button" class="quantity-stepper__btn">&minus;</button>
+                  <input type="number" value="1" readonly>
+                  <button type="button" class="quantity-stepper__btn">+</button>
+                </div>
+                <div class="cart-line-item__price"><span>€229,00</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cart-line-item" style="border-bottom:1px solid var(--border)">
+            <div class="cart-line-item__media" style="background:radial-gradient(circle at 30% 20%,#2a2e20,#0d0e0b 72%)"></div>
+            <div class="cart-line-item__body">
+              <div class="cart-line-item__header">
+                <a href="#" class="cart-line-item__title">Nova Tactical Light</a>
+                <button type="button" class="cart-line-item__remove" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+              </div>
+              <p class="cart-line-item__variant">Black</p>
+              <span class="badge" style="margin-top:2px">Sold Out</span>
+              <div class="cart-line-item__footer">
+                <div class="quantity-stepper quantity-stepper--sm">
+                  <button type="button" class="quantity-stepper__btn">&minus;</button>
+                  <input type="number" value="2" readonly>
+                  <button type="button" class="quantity-stepper__btn">+</button>
+                </div>
+                <div class="cart-line-item__price">
+                  <span class="compare-at">€149,00</span>
+                  <span>€129,00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;gap:16px;padding-top:18px;flex-wrap:wrap">
+          <button type="button" style="background:none;border:1px solid var(--border-strong);color:var(--text);font-family:var(--font-display);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:10px 16px;cursor:pointer">Update cart</button>
+          <button type="button" style="background:none;border:0;color:var(--muted);font-family:var(--font-display);font-size:11px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer">Clear cart</button>
+        </div>
+      </div>
+
+      <aside style="background:var(--surface-2);border:1px solid var(--border);padding:24px;display:flex;flex-direction:column;gap:12px">
+        <h2 style="font-size:16px">Total</h2>
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--muted)"><span>Subtotal (3)</span><span>€507,00</span></div>
+        <p style="font-size:12px;color:var(--muted)">Shipping calculated at checkout</p>
+        <div style="display:flex;justify-content:space-between;font-size:16px;border-top:1px solid var(--border);padding-top:12px"><span>Total</span><span>€507,00</span></div>
+        <button type="button" class="btn btn-primary btn-block" style="margin-top:14px">Proceed to Checkout &rarr;</button>
+        <p style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-top:4px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:16px;height:16px"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>
+          Secure checkout
+        </p>
+      </aside>
+    </div>
+  </div>
+
+  <div class="section page-width">
+    <h2 style="font-size:22px;margin-bottom:20px">You Might Also Like</h2>
+    <div class="product-grid" data-context="featured">
+      <div class="pcard"><a href="#" class="pcard__media" style="background:linear-gradient(160deg,#222,#444)"></a><div class="pcard__body"><a href="#" class="pcard__name">Ridge 25 Backpack</a><span class="pcard__price">€199,00</span></div></div>
+      <div class="pcard"><a href="#" class="pcard__media" style="background:linear-gradient(160deg,#2a2e20,#111)"></a><div class="pcard__body"><a href="#" class="pcard__name">Terrain Mid Boot</a><span class="pcard__price">€179,00</span></div></div>
+      <div class="pcard"><a href="#" class="pcard__media" style="background:linear-gradient(160deg,#333,#111)"></a><div class="pcard__body"><a href="#" class="pcard__name">Ember Insulated Hoodie</a><span class="pcard__price">€199,00</span></div></div>
+      <div class="pcard"><a href="#" class="pcard__media" style="background:linear-gradient(160deg,#2c2c2c,#161616)"></a><div class="pcard__body"><a href="#" class="pcard__name">Field Cook System</a><span class="pcard__price">€89,00</span></div></div>
+    </div>
+  </div>
+
+  <div class="section page-width">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px" class="trust-bar">
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:22px;height:22px;flex-shrink:0;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7h11v9H2z"/><path d="M13 10h4l4 3v3h-8z"/><circle cx="6.5" cy="18" r="1.75"/><circle cx="17" cy="18" r="1.75"/></svg></span><span style="font-family:var(--font-display);font-size:11px;letter-spacing:.06em;text-transform:uppercase">Fast &amp; Reliable Shipping</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:22px;height:22px;flex-shrink:0;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/></svg></span><span style="font-family:var(--font-display);font-size:11px;letter-spacing:.06em;text-transform:uppercase">Sustainable Practices</span></div>
+      <div style="display:flex;align-items:center;gap:10px"><span style="width:22px;height:22px;flex-shrink:0;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/></svg></span><span style="font-family:var(--font-display);font-size:11px;letter-spacing:.06em;text-transform:uppercase">A Global Community</span></div>
+    </div>
+  </div>
+</main>
+
+<!-- ---------- cart drawer, forced open ---------- -->
+<div id="CartDrawer" class="cart-drawer" data-overlay data-overlay-backdrop data-state="open">
+  <div class="cart-drawer__panel">
+    <div id="CartDrawerContent">
+      <div class="cart-drawer__top">
+        <h2 class="cart-drawer__heading">Your Cart <span class="cart-drawer__count">(3 items)</span></h2>
+        <button class="icon-btn" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+      </div>
+
+      <div class="free-shipping-bar">
+        <p class="free-shipping-bar__message">Add €50.00 more for free shipping</p>
+        <div class="free-shipping-bar__track"><div class="free-shipping-bar__fill" style="width:66%"></div></div>
+      </div>
+
+      <div class="cart-drawer__form">
+        <div class="cart-drawer__items">
+          <div class="cart-line-item">
+            <div class="cart-line-item__media" style="background:linear-gradient(160deg,#1b1d16,#3a3f2c 45%,#11120e)"></div>
+            <div class="cart-line-item__body">
+              <div class="cart-line-item__header">
+                <a href="#" class="cart-line-item__title">Altitude 35 Backpack</a>
+                <button type="button" class="cart-line-item__remove" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+              </div>
+              <p class="cart-line-item__variant">Ranger Green / 35L</p>
+              <div class="cart-line-item__footer">
+                <div class="quantity-stepper quantity-stepper--sm">
+                  <button type="button" class="quantity-stepper__btn">&minus;</button>
+                  <input type="number" value="1" readonly>
+                  <button type="button" class="quantity-stepper__btn">+</button>
+                </div>
+                <div class="cart-line-item__price"><span>€229,00</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="cart-line-item">
+            <div class="cart-line-item__media" style="background:radial-gradient(circle at 30% 20%,#2a2e20,#0d0e0b 72%)"></div>
+            <div class="cart-line-item__body">
+              <div class="cart-line-item__header">
+                <a href="#" class="cart-line-item__title">Nova Tactical Light</a>
+                <button type="button" class="cart-line-item__remove" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+              </div>
+              <p class="cart-line-item__variant">Black</p>
+              <div class="cart-line-item__footer">
+                <div class="quantity-stepper quantity-stepper--sm">
+                  <button type="button" class="quantity-stepper__btn">&minus;</button>
+                  <input type="number" value="2" readonly>
+                  <button type="button" class="quantity-stepper__btn">+</button>
+                </div>
+                <div class="cart-line-item__price">
+                  <span class="compare-at">€149,00</span>
+                  <span>€129,00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart-drawer__footer">
+          <div class="cart-drawer__subtotal"><span>Subtotal</span><span>€507,00</span></div>
+          <p class="cart-drawer__shipping-note">Shipping calculated at checkout</p>
+          <a href="#" class="btn btn-outline btn-block">View cart</a>
+          <button type="button" class="btn btn-primary btn-block" style="margin-top:10px">Proceed to Checkout &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Pure visual toggle for this static mockup only — real open/close,
+  // focus-trap and Escape/backdrop-close come from assets/overlay.js,
+  // already exercised for real in preview/cart-test.html.
+  var drawer = document.getElementById('CartDrawer');
+  document.querySelector('[data-overlay-trigger="CartDrawer"]').addEventListener('click', function (e) {
+    e.preventDefault();
+    drawer.setAttribute('data-state', drawer.getAttribute('data-state') === 'open' ? 'closed' : 'open');
+  });
+  drawer.querySelector('.icon-btn').addEventListener('click', function () {
+    drawer.setAttribute('data-state', 'closed');
+  });
+</script>

@@ -1,0 +1,84 @@
+{%- comment -%}
+  AERA cart drawer (Milestone 5).
+
+  A genuine section — not a snippet — so it's independently fetchable via
+  the Section Rendering API (?section_id=cart-drawer) after any cart
+  mutation. Intentionally never added to any JSON template's section
+  order, only ever reached by its handle — the same intentional pattern
+  sections/predictive-search.liquid already established in Milestone 1.
+  Included inline via the static {% section %} tag from
+  sections/header.liquid, so it always exists in the DOM regardless of
+  settings.cart_type (see cart.js: every successful add-to-cart opens it
+  as a confirmation, even in "page" cart mode — the header cart icon
+  itself only opens it as the primary click target when cart_type is
+  "drawer").
+{%- endcomment -%}
+<script type="application/json" data-cart-routes>
+  { "cart_url": {{ routes.cart_url | json }} }
+</script>
+<div id="CartDrawer" class="cart-drawer" data-overlay data-overlay-backdrop hidden>
+  <div class="cart-drawer__panel">
+   {%- comment -%}
+     Everything below is swapped wholesale by cart.js on refresh (one id,
+     one innerHTML replace) rather than several fine-grained swaps — the
+     simplest correct way to also handle the empty <-> non-empty layout
+     change, since the two states aren't just a few different values but
+     structurally different markup (no <form>/summary at all when empty).
+     Same "swap by container id" technique the PDP buy box already uses.
+   {%- endcomment -%}
+   <div id="CartDrawerContent">
+    <div class="cart-drawer__top">
+      <h2 class="cart-drawer__heading">
+        {{ 'cart.heading' | t }}
+        {%- if cart.item_count > 0 -%}
+          <span class="cart-drawer__count" data-cart-drawer-count>
+            {%- if cart.item_count == 1 -%}
+              ({{ 'cart.item_count_one' | t: count: cart.item_count }})
+            {%- else -%}
+              ({{ 'cart.item_count_other' | t: count: cart.item_count }})
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </h2>
+      <button class="icon-btn" type="button" data-overlay-close aria-label="{{ 'accessibility.close' | t }}" data-overlay-autofocus>
+        {%- render 'icon-close' -%}
+      </button>
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      {%- render 'free-shipping-bar' -%}
+
+      <form action="{{ routes.cart_url }}" method="post" class="cart-drawer__form" data-cart-form>
+        <div class="cart-drawer__items" data-cart-items>
+          {%- for item in cart.items -%}
+            {%- render 'cart-line-item', item: item -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="cart-drawer__footer">
+          <div class="cart-drawer__subtotal">
+            <span>{{ 'cart.subtotal' | t }}</span>
+            <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart-drawer__shipping-note">{{ 'cart.shipping_at_checkout' | t }}</p>
+          <a href="{{ routes.cart_url }}" class="btn btn-outline btn-block">{{ 'cart.view_cart' | t }}</a>
+          <button type="submit" name="checkout" class="btn btn-primary btn-block" style="margin-top:10px">
+            {{ 'cart.checkout' | t }} &rarr;
+          </button>
+        </div>
+      </form>
+    {%- else -%}
+      <div class="cart-drawer__empty">
+        <p>{{ 'cart.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-outline" data-overlay-close>{{ 'cart.empty_cta' | t }}</a>
+      </div>
+    {%- endif -%}
+   </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart drawer"
+}
+{% endschema %}

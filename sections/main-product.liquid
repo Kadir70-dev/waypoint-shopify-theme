@@ -247,29 +247,9 @@
   #shopify-section-{{ section.id }} .option-selector__swatch.is-unavailable { opacity: .3; cursor: not-allowed; }
 
   #shopify-section-{{ section.id }} .product-buybox__quantity { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
-  #shopify-section-{{ section.id }} .quantity-stepper { display: inline-flex; align-items: stretch; border: 1px solid var(--border-strong); }
-  #shopify-section-{{ section.id }} .quantity-stepper__btn {
-    width: 36px;
-    background: var(--surface-2);
-    border: 0;
-    color: var(--text);
-    font-size: 16px;
-    cursor: pointer;
-  }
-  #shopify-section-{{ section.id }} .quantity-stepper__btn:hover { background: var(--surface-3); }
-  #shopify-section-{{ section.id }} .quantity-stepper input {
-    width: 54px;
-    background: var(--surface-2);
-    border: 0;
-    border-inline: 1px solid var(--border-strong);
-    color: var(--text);
-    text-align: center;
-    padding: 10px 4px;
-    font-size: 14px;
-    -moz-appearance: textfield;
-  }
-  #shopify-section-{{ section.id }} .quantity-stepper input::-webkit-outer-spin-button,
-  #shopify-section-{{ section.id }} .quantity-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  /* .quantity-stepper itself now lives in base.css (Milestone 5) — it's
+     shared with cart line items, so it moved out of this section-scoped
+     block to stay a single, unscoped, cross-cutting primitive. */
 
   #shopify-section-{{ section.id }} .product-buybox__shipping-note { font-size: 12px; color: var(--muted); margin-top: -6px; }
   #shopify-section-{{ section.id }} .product-buybox__description { color: var(--muted); font-size: 14px; line-height: 1.6; margin-top: 8px; }

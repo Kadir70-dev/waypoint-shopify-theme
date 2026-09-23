@@ -1,0 +1,86 @@
+/* AERA — cart drawer, cart line item, free-shipping bar (Milestone 5).
+   Tokens only — no literal colors. The drawer reuses the [data-overlay]
+   backdrop/panel split sections/header.liquid's .search-overlay already
+   established, just right-aligned with a translateX slide instead of a
+   centered fade. See assets/overlay.js for the open/close/focus-trap
+   mechanics every [data-overlay] element (including this one) shares. */
+
+/* ---------- cart drawer ---------- */
+.cart-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(0, 0, 0, .55);
+  display: flex;
+  justify-content: flex-end;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out-slow);
+}
+.cart-drawer[data-state="open"] { opacity: 1; }
+.cart-drawer[data-overlay-backdrop] { cursor: default; }
+
+.cart-drawer__panel {
+  background: var(--bg);
+  border-left: 1px solid var(--border-strong);
+  width: 100%;
+  max-width: min(420px, 100vw);
+  height: 100%;
+  overflow-y: auto;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transform: translateX(24px);
+  transition: transform var(--dur-base) var(--ease-out-slow);
+}
+.cart-drawer[data-state="open"] .cart-drawer__panel { transform: translateX(0); }
+
+.cart-drawer[aria-busy="true"] .cart-drawer__panel { opacity: .6; pointer-events: none; }
+
+#CartDrawerContent { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 18px; }
+
+.cart-drawer__top { display: flex; justify-content: space-between; align-items: center; }
+.cart-drawer__heading { font-size: 18px; }
+.cart-drawer__count { font-family: var(--font-body); font-size: 13px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--muted); }
+
+.cart-drawer__form { display: flex; flex-direction: column; flex: 1; min-height: 0; gap: 14px; }
+.cart-drawer__items { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+.cart-drawer__items .cart-line-item { border-bottom: 1px solid var(--border); }
+.cart-drawer__items .cart-line-item:last-child { border-bottom: 0; }
+
+.cart-drawer__footer { flex-shrink: 0; border-top: 1px solid var(--border); padding-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+.cart-drawer__subtotal { display: flex; justify-content: space-between; font-size: 15px; }
+.cart-drawer__shipping-note { font-size: 12px; color: var(--muted); }
+
+.cart-drawer__empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; color: var(--muted); }
+
+/* ---------- free shipping progress bar (drawer + cart page) ---------- */
+.free-shipping-bar { display: flex; flex-direction: column; gap: 8px; }
+.free-shipping-bar__message { font-size: 12px; color: var(--muted); }
+.free-shipping-bar__track { height: 3px; background: var(--border); width: 100%; }
+.free-shipping-bar__fill { height: 100%; background: var(--accent-light); transition: width var(--dur-base) var(--ease-out-slow); }
+
+/* ---------- cart line item (drawer + cart page) ---------- */
+.cart-line-item { display: flex; gap: 12px; padding-block: 16px; }
+.cart-line-item__media { width: 80px; height: 80px; flex-shrink: 0; background: var(--surface-3); overflow: hidden; }
+.cart-line-item__media img { width: 100%; height: 100%; object-fit: cover; }
+.cart-line-item__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.cart-line-item__header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.cart-line-item__title { font-family: var(--font-display); font-size: 13px; letter-spacing: .04em; text-transform: uppercase; line-height: 1.3; }
+.cart-line-item__remove { background: none; border: 0; color: var(--muted); cursor: pointer; padding: 2px; flex-shrink: 0; }
+.cart-line-item__remove svg { width: 14px; height: 14px; }
+.cart-line-item__remove:hover { color: var(--text); }
+.cart-line-item__variant { font-size: 12px; color: var(--muted); }
+.cart-line-item__properties { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 2px; }
+.cart-line-item__properties div { display: flex; gap: 4px; }
+.cart-line-item__properties dt, .cart-line-item__properties dd { margin: 0; }
+.cart-line-item__footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 4px; }
+.cart-line-item__price { font-size: 14px; display: flex; gap: 8px; align-items: center; }
+.cart-line-item__price .compare-at { text-decoration: line-through; opacity: .7; color: var(--muted); }
+
+[data-cart-form][aria-busy="true"] { opacity: .6; pointer-events: none; }
+
+/* ---------- add-to-cart button states (PDP + quick-add) ---------- */
+.pcard__quickadd.is-loading, [data-product-form-submit].is-loading { opacity: .6; }
+.pcard__quickadd.is-added { background: var(--accent-light); }
+[data-product-form-submit].is-added { background: var(--accent-light); border-color: var(--accent-light); }

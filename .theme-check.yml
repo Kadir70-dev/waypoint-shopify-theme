@@ -34,6 +34,8 @@ OrphanedSnippet:
     - "snippets/product-buybox.liquid"
     - "snippets/breadcrumb.liquid"
     - "snippets/star-rating.liquid"
+    - "snippets/cart-line-item.liquid"
+    - "snippets/free-shipping-bar.liquid"
     # pagination.liquid: rendered from inside main-collection-grid.liquid's
     # {% paginate %}...{% endpaginate %} block. chip-filter.liquid: rendered
     # from inside a nested {% for %}{% for %} loop there. filter-groups.liquid
@@ -54,3 +56,8 @@ OrphanedSnippet:
     # rendered directly from snippets/product-buybox.liquid and
     # snippets/card-product.liquid. Same unreliable-analysis pattern as
     # above — both verified referenced with grep.
+    # cart-line-item.liquid and free-shipping-bar.liquid (Milestone 5):
+    # both rendered from inside an {% if cart.item_count > 0 %} block in
+    # sections/cart-drawer.liquid and sections/main-cart.liquid — same
+    # unreliable-analysis pattern as accordion.liquid above. Verified
+    # referenced with grep.
