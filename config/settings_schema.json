@@ -161,28 +161,6 @@
         "id": "show_sticky_atc_mobile",
         "label": "t:settings.product.show_sticky_atc_mobile.label",
         "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_3d_ar",
-        "label": "t:settings.product.enable_3d_ar.label",
-        "default": true,
-        "info": "t:settings.product.enable_3d_ar.info"
-      }
-    ]
-  },
-  {
-    "name": "t:settings.navigation.name",
-    "settings": [
-      {
-        "type": "select",
-        "id": "nav_style",
-        "label": "t:settings.navigation.nav_style.label",
-        "options": [
-          { "value": "mega-menu", "label": "t:settings.navigation.nav_style.mega_menu" },
-          { "value": "simple-dropdown", "label": "t:settings.navigation.nav_style.simple_dropdown" }
-        ],
-        "default": "mega-menu"
       }
     ]
   },

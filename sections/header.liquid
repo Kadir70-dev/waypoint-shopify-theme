@@ -219,10 +219,12 @@
     {%- render 'icon-bag' -%}
     {{ 'navigation.shop' | t }}
   </a>
-  <a href="{{ blogs[section.settings.journal_blog_handle].url | default: '#' }}" class="mobile-tabbar__item">
-    {%- render 'icon-book' -%}
-    {{ 'navigation.journal' | t }}
-  </a>
+  {%- if section.settings.journal_blog != blank -%}
+    <a href="{{ section.settings.journal_blog.url }}" class="mobile-tabbar__item">
+      {%- render 'icon-book' -%}
+      {{ 'navigation.journal' | t }}
+    </a>
+  {%- endif -%}
   <a href="{{ routes.account_url }}" class="mobile-tabbar__item">
     {%- render 'icon-account' -%}
     {{ 'navigation.account' | t }}

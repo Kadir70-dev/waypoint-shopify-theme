@@ -120,6 +120,21 @@
   margin-left: 4px;
 }
 
+/* ---------- sort-by (Milestone 9) ---------- */
+.collection-sort select {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  padding: 8px 10px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.collection-sort select:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+.collection-sort noscript button { margin-left: 8px; }
+
 /* ---------- mobile filter trigger + drawer ---------- */
 .collection-grid__filter-trigger {
   display: inline-flex;

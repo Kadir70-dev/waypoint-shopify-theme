@@ -153,6 +153,7 @@
     "price_max": "Maximum price",
     "apply": "Apply",
     "filters": "Filters",
+    "sort_by_label": "Sort by",
     "show_results_one": "Show {{ count }} Result",
     "show_results_other": "Show {{ count }} Results"
   },
@@ -197,6 +198,7 @@
   "products": {
     "badge_bestseller": "Bestseller",
     "badge_new": "New",
+    "badge_sale": "Sale",
     "quick_add": "Quick add",
     "sold_out": "Sold Out",
     "add_to_cart": "Add to Cart",
@@ -242,6 +244,29 @@
       "login_form_password_placeholder": "Your password",
       "login_form_error": "Wrong password!",
       "login_form_submit": "Enter"
+    },
+    "404": {
+      "title": "Page Not Found",
+      "text": "The page you're looking for doesn't exist or has moved.",
+      "link": "Back to Home"
     }
+  },
+  "contact": {
+    "form": {
+      "name_label": "Name",
+      "email_label": "Email",
+      "phone_label": "Phone (optional)",
+      "message_label": "Message",
+      "submit": "Send Message",
+      "post_success": "Thanks — your message has been sent. We'll get back to you soon."
+    }
+  },
+  "gift_card": {
+    "title": "Your {{ value }} gift card for {{ shop }}",
+    "disabled": "This gift card is no longer active.",
+    "remaining_balance": "{{ balance }} remaining",
+    "expires_on": "Expires {{ date }}",
+    "redeem_link": "View gift card details",
+    "print": "Print"
   }
 }

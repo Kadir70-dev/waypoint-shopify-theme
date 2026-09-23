@@ -12,13 +12,13 @@
         assign mobile_url = block.settings.image | image_url: width: 800
         assign desktop_url = block.settings.image | image_url: width: 1600
       elsif forloop.index == 1
-        assign mobile_url = 'hero-slide-1.png' | asset_url
+        assign mobile_url = 'hero-slide-1.jpg' | asset_url
         assign desktop_url = mobile_url
       elsif forloop.index == 2
-        assign mobile_url = 'hero-slide-2.png' | asset_url
+        assign mobile_url = 'hero-slide-2.jpg' | asset_url
         assign desktop_url = mobile_url
       elsif forloop.index == 3
-        assign mobile_url = 'hero-slide-3.png' | asset_url
+        assign mobile_url = 'hero-slide-3.jpg' | asset_url
         assign desktop_url = mobile_url
       endif
     -%}
@@ -91,7 +91,7 @@
 
 {% schema %}
 {
-  "name": "Hero slider",
+  "name": "Hero slideshow",
   "settings": [
     { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": true },
     { "type": "range", "id": "autoplay_interval", "label": "Autoplay interval (seconds)", "min": 3, "max": 12, "step": 1, "default": 6 },
@@ -116,7 +116,7 @@
   ],
   "presets": [
     {
-      "name": "Hero slider",
+      "name": "Hero slideshow",
       "blocks": [
         { "type": "slide", "settings": { "eyebrow": "Gear for Real Life", "heading": "Further by Nature", "subtext": "Technical gear for the unknown. Built to go further.", "cta_label": "Explore Gear" } },
         { "type": "slide", "settings": { "eyebrow": "Engineered for Extremes", "heading": "Details That Perform", "subtext": "Premium materials. Rigorously tested. No compromises.", "cta_label": "Our Approach" } },

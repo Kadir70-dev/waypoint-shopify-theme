@@ -172,9 +172,20 @@
       --font-display: {{ settings.font_display.family }}, {{ settings.font_display.fallback_families }};
       --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
       --font-editorial: {{ settings.font_editorial.family }}, {{ settings.font_editorial.fallback_families }};
-      --accent: {{ settings.accent_color }};
       --page-width: {{ settings.page_width }}px;
       --type-scale: {{ settings.type_scale | default: 100 | divided_by: 100.0 }};
+    }
+
+    {%- comment -%}
+      [data-preset] (not bare :root) is required here: tokens.css defines
+      Fieldbook's own --accent on the more-specific :root[data-preset=
+      "fieldbook"] selector, which would otherwise beat a plain :root
+      override here regardless of source order and silently no-op
+      accent_color on that preset (Milestone 9 fix — previously only
+      worked correctly on the Dark preset).
+    {%- endcomment -%}
+    :root[data-preset] {
+      --accent: {{ settings.accent_color }};
     }
   {%- endstyle -%}
 

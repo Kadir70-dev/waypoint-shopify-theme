@@ -1,0 +1,24 @@
+{%- comment -%}
+  Required Shopify Theme Store template (Milestone 9). Reuses the same
+  empty-state visual pattern already established for the collection
+  grid's "no products" state (sections/main-collection-grid.liquid) so
+  a 404 doesn't introduce a new one-off visual treatment.
+{%- endcomment -%}
+<div class="section page-width">
+  <div class="collection-grid__empty" style="min-height:50vh">
+    <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3">
+      <rect x="14" y="14" width="36" height="36"/><path d="M14 14 L50 50 M50 14 L14 50"/>
+    </svg>
+    <h1 style="font-size:22px">{{ 'general.404.title' | t }}</h1>
+    <p class="muted" style="font-size:13px">{{ 'general.404.text' | t }}</p>
+    <a href="{{ routes.root_url }}" class="btn btn-primary" style="margin-top:8px">
+      {{ 'general.404.link' | t }} &rarr;
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404 page"
+}
+{% endschema %}

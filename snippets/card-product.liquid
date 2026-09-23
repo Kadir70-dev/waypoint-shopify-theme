@@ -13,7 +13,13 @@
 {%- liquid
   assign variant = product.selected_or_first_available_variant
   assign badge_text = blank
-  if settings.show_badges and product.tags contains 'bestseller'
+  assign badge_muted = false
+  if variant.available == false
+    assign badge_text = 'products.sold_out' | t
+    assign badge_muted = true
+  elsif settings.show_badges and variant.compare_at_price > variant.price
+    assign badge_text = 'products.badge_sale' | t
+  elsif settings.show_badges and product.tags contains 'bestseller'
     assign badge_text = 'products.badge_bestseller' | t
   elsif settings.show_badges and product.tags contains 'new'
     assign badge_text = 'products.badge_new' | t
@@ -29,7 +35,7 @@
       {{ 'product-1' | placeholder_svg_tag: 'pcard__placeholder' }}
     {%- endif -%}
     {%- if badge_text != blank -%}
-      <span class="badge pcard__badge">{{ badge_text }}</span>
+      <span class="badge pcard__badge{% if badge_muted %} badge--muted{% endif %}">{{ badge_text }}</span>
     {%- endif -%}
   </a>
 

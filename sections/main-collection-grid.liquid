@@ -18,12 +18,38 @@
         {{ 'collection.products_count_other' | t: count: collection.products.size }}
       {%- endif -%}
     </span>
-    {%- if collection.filters.size > 0 -%}
-      <button type="button" class="collection-grid__filter-trigger" data-overlay-trigger="MobileFilters" aria-controls="MobileFilters">
-        {%- render 'icon-filter' -%} {{ 'collection.filters' | t }}
-        {%- if has_active_filters -%}<span class="collection-grid__filter-count">{{ active_filter_count }}</span>{%- endif -%}
-      </button>
-    {%- endif -%}
+    <div style="display:flex;align-items:center;gap:12px">
+      {%- if collection.sort_options.size > 1 -%}
+        <form method="get" action="{{ collection.url }}" class="collection-sort">
+          <label for="SortBy-{{ section.id }}" class="visually-hidden">{{ 'collection.sort_by_label' | t }}</label>
+          <select name="sort_by" id="SortBy-{{ section.id }}" onchange="this.form.submit()">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+          {%- for filter in collection.filters -%}
+            {%- for value in filter.active_values -%}
+              <input type="hidden" name="{{ value.param_name }}" value="{{ value.value }}">
+            {%- endfor -%}
+            {%- if filter.type == 'price_range' -%}
+              {%- if filter.min_value.value != blank -%}
+                <input type="hidden" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}">
+              {%- endif -%}
+              {%- if filter.max_value.value != blank -%}
+                <input type="hidden" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}">
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <noscript><button type="submit" class="btn btn-sm btn-outline">{{ 'collection.apply' | t }}</button></noscript>
+        </form>
+      {%- endif -%}
+      {%- if collection.filters.size > 0 -%}
+        <button type="button" class="collection-grid__filter-trigger" data-overlay-trigger="MobileFilters" aria-controls="MobileFilters">
+          {%- render 'icon-filter' -%} {{ 'collection.filters' | t }}
+          {%- if has_active_filters -%}<span class="collection-grid__filter-count">{{ active_filter_count }}</span>{%- endif -%}
+        </button>
+      {%- endif -%}
+    </div>
   </div>
 
   <div class="collection-layout">

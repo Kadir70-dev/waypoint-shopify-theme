@@ -1,0 +1,94 @@
+{%- comment -%}
+  Required Shopify Theme Store template (Milestone 9). Standalone —
+  `layout none` renders with no header/footer/cart, matching Shopify's
+  own convention for this template (a print-friendly, shareable page,
+  not a normal storefront page). Self-contained like layout/password
+  .liquid, for the same reason.
+
+  Only real, documented gift_card object properties are used (balance,
+  initial_value, code, expires_on, enabled, url — verified against
+  Shopify's official object reference). A QR code image is intentionally
+  NOT included: gift_card.qr_identifier exists, but Shopify's docs note
+  turning it into an image relies on an external QR service whose exact
+  endpoint we could not verify here — inventing one would risk shipping
+  a fabricated URL, so the real redeem `url` is shown/linked as text
+  instead. See Milestone 9 report, KNOWN LIMITATIONS.
+{%- endcomment -%}
+{%- layout none -%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" dir="ltr" data-preset="{{ settings.color_preset | default: 'dark' }}" data-corners="{{ settings.corner_style | default: 'sharp' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  {%- assign gc_initial_value = gift_card.initial_value | money -%}
+  <title>{{ 'gift_card.title' | t: value: gc_initial_value, shop: shop.name }}</title>
+  <meta name="robots" content="noindex">
+
+  {{ 'tokens.css' | asset_url | stylesheet_tag }}
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+
+  {%- style -%}
+    {{ settings.font_display | font_face: font_display: 'swap' }}
+    {{ settings.font_body | font_face: font_display: 'swap' }}
+    :root {
+      --font-display: {{ settings.font_display.family }}, {{ settings.font_display.fallback_families }};
+      --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+    }
+    :root[data-preset] { --accent: {{ settings.accent_color }}; }
+    .gift-card-panel {
+      max-width: 480px;
+      margin: 60px auto;
+      padding: 40px;
+      border: 1px solid var(--border-strong);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .gift-card-panel__value { font-family: var(--font-display); font-size: 40px; }
+    .gift-card-panel__code {
+      font-family: var(--font-body);
+      font-size: 20px;
+      letter-spacing: .08em;
+      background: var(--surface-2);
+      border: 1px solid var(--border-strong);
+      padding: 14px;
+    }
+    .gift-card-panel__actions { display: flex; gap: 10px; justify-content: center; }
+    @media print { .gift-card-panel__actions, .site-header, .site-footer { display: none; } }
+  {%- endstyle -%}
+
+  {{ content_for_header }}
+</head>
+<body>
+  <main id="MainContent" tabindex="-1">
+    <div class="gift-card-panel">
+      <div class="eyebrow">{{ shop.name }}</div>
+
+      {%- if gift_card.enabled == false or gift_card.expired -%}
+        <p role="status">{{ 'gift_card.disabled' | t }}</p>
+      {%- endif -%}
+
+      <p class="gift-card-panel__value">{{ gift_card.initial_value | money }}</p>
+
+      {%- if gift_card.balance != gift_card.initial_value -%}
+        {%- assign gc_balance = gift_card.balance | money -%}
+        <p class="muted">{{ 'gift_card.remaining_balance' | t: balance: gc_balance }}</p>
+      {%- endif -%}
+
+      <p class="gift-card-panel__code">{{ gift_card.code | format_code }}</p>
+
+      {%- if gift_card.expires_on -%}
+        {%- assign gc_expires_on = gift_card.expires_on | date: '%B %d, %Y' -%}
+        <p class="muted" style="font-size:13px">{{ 'gift_card.expires_on' | t: date: gc_expires_on }}</p>
+      {%- endif -%}
+
+      <p style="font-size:13px"><a href="{{ gift_card.url }}">{{ 'gift_card.redeem_link' | t }}</a></p>
+
+      <div class="gift-card-panel__actions">
+        <button type="button" class="btn btn-outline" onclick="window.print()">{{ 'gift_card.print' | t }}</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

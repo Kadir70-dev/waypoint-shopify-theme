@@ -172,6 +172,7 @@ html, body { overflow-x: hidden; }
 }
 .quantity-stepper input::-webkit-outer-spin-button,
 .quantity-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.quantity-stepper input:focus-visible { outline: var(--focus-ring); outline-offset: -2px; }
 .quantity-stepper--sm .quantity-stepper__btn { width: 28px; font-size: 14px; }
 .quantity-stepper--sm input { width: 40px; padding: 6px 4px; font-size: 13px; }
 
@@ -215,6 +216,8 @@ html, body { overflow-x: hidden; }
   padding: 4px 9px;
   border-radius: var(--radius);
 }
+/* Status (not promotional) — sold out, unavailable, etc. */
+.badge--muted { background: var(--surface-3); color: var(--muted); }
 
 /* --- scroll reveal (motion.js adds .is-revealed on intersect) ---
    Gated on the .js class (set synchronously in layout/theme.liquid,

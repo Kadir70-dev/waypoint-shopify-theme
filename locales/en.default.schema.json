@@ -57,19 +57,7 @@
     },
     "product": {
       "name": "Product Page",
-      "show_sticky_atc_mobile": { "label": "Show sticky add-to-cart bar on mobile" },
-      "enable_3d_ar": {
-        "label": "Enable 3D / AR media",
-        "info": "Uses Shopify's native 3D model viewer and AR quick-look. No effect on products without a 3D model uploaded."
-      }
-    },
-    "navigation": {
-      "name": "Navigation",
-      "nav_style": {
-        "label": "Menu style",
-        "mega_menu": "Mega-menu",
-        "simple_dropdown": "Simple dropdown"
-      }
+      "show_sticky_atc_mobile": { "label": "Show sticky add-to-cart bar on mobile" }
     },
     "icons": {
       "name": "Icons",
