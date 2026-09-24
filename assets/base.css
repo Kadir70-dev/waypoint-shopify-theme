@@ -79,6 +79,32 @@ p { margin: 0; }
   .section { padding-block: calc(var(--space-unit) * 6); }
 }
 
+/* --- section heading row (Module 04) ---
+   Shared "heading (+ optional subheading) + view-all link" row, previously
+   copy-pasted as inline styles across category-grid/featured-collection
+   (and the margin was a hardcoded 20px, ignoring settings.spacing_scale
+   the way .section/.page-width already respect it). One fluid title size
+   also closes a 20/22px drift between homepage section headings. */
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: calc(var(--space-unit) * 2.5);
+}
+.section-heading__title { font-size: clamp(20px, 2.2vw, 24px); }
+.section-heading__subheading { color: var(--muted); margin-top: 6px; }
+.section-heading__view-all {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color var(--dur-fast) var(--ease-out-slow);
+}
+.section-heading__view-all:hover,
+.section-heading__view-all:focus-visible { color: var(--accent-light); }
+
 /* --- global focus state ---
    One rule covers default elements; components that need a custom
    treatment (swatches, chips) extend rather than remove it. Never

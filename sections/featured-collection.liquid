@@ -1,13 +1,13 @@
 <div class="section page-width" data-reveal-group>
-  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+  <div class="section-heading">
     <div>
-      <h2 style="font-size:22px">{{ section.settings.heading }}</h2>
+      <h2 class="section-heading__title">{{ section.settings.heading }}</h2>
       {%- if section.settings.subheading != blank -%}
-        <p class="muted" style="color:var(--muted);margin-top:6px">{{ section.settings.subheading }}</p>
+        <p class="section-heading__subheading">{{ section.settings.subheading }}</p>
       {%- endif -%}
     </div>
     {%- if section.settings.show_view_all and section.settings.collection != blank -%}
-      <a href="{{ section.settings.collection.url }}" style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">
+      <a href="{{ section.settings.collection.url }}" class="section-heading__view-all">
         {{ 'general.view_all' | t }} &rarr;
       </a>
     {%- endif -%}

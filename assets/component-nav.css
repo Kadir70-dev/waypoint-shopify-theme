@@ -481,7 +481,9 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
   border: 0;
   padding: 0 18px;
   cursor: pointer;
+  transition: opacity var(--dur-fast) var(--ease-out-slow);
 }
+.newsletter-block__row button:hover { opacity: .85; }
 .newsletter-block__consent { display: flex; gap: 8px; align-items: flex-start; font-size: 11px; color: var(--muted); }
 
 .site-footer__bottom {

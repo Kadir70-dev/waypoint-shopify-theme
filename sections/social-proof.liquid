@@ -9,7 +9,7 @@
 <div class="section page-width">
   <div class="social-proof" data-carousel>
     <div class="social-proof__heading">
-      <h2 style="font-size:20px">{{ section.settings.heading }}</h2>
+      <h2 class="section-heading__title">{{ section.settings.heading }}</h2>
       {%- if section.settings.subheading != blank -%}
         <p style="color:var(--muted);font-size:13px;margin-top:6px">{{ section.settings.subheading }}</p>
       {%- endif -%}
@@ -81,6 +81,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: border-color var(--dur-fast) var(--ease-out-slow), color var(--dur-fast) var(--ease-out-slow);
+  }
+  #shopify-section-{{ section.id }} .carousel__nav-btn:hover {
+    border-color: var(--accent-light);
+    color: var(--accent-light);
   }
   #shopify-section-{{ section.id }} .carousel__nav-btn svg { width: 16px; height: 16px; }
   #shopify-section-{{ section.id }} .social-proof__blockquote {

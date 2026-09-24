@@ -51,6 +51,12 @@
     gap: 20px;
     flex-wrap: wrap;
     background-image: var(--bg-mobile, none);
+    /* Hairline separation from feature-spotlight, the other full-bleed
+       photo band directly above it in the homepage flow — both are
+       edge-to-edge by design, so padding would fight that, but a crisp
+       border reads as an intentional page-break rather than two
+       full-bleed sections silently colliding. */
+    border-top: 1px solid var(--border);
   }
   #shopify-section-{{ section.id }} .split-promo--right { flex-direction: row-reverse; }
   #shopify-section-{{ section.id }} .split-promo::before {
