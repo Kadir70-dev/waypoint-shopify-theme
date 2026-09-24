@@ -76,6 +76,15 @@
   --focus-ring: 2px solid var(--accent-light);
   --focus-ring-offset: 3px;
 
+  /* --- imagery (Module 02) ---
+     Named crop ratios so every card/hero/editorial component references
+     one contract instead of repeating literal 4/3, 16/10, 16/9, 1/1
+     across component-*.css and section-scoped <style> blocks. */
+  --ratio-square: 1 / 1;
+  --ratio-editorial-card: 4 / 3;
+  --ratio-editorial-featured: 16 / 10;
+  --ratio-editorial-hero: 16 / 9;
+
   color-scheme: dark;
 }
 

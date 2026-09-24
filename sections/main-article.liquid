@@ -42,7 +42,7 @@
 
   {%- if article.image -%}
     <div class="article-hero" data-reveal>
-      {{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '700, 1000, 1400', sizes: '100vw' }}
+      {{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '700, 1000, 1400', sizes: '100vw' }}
     </div>
   {%- endif -%}
 

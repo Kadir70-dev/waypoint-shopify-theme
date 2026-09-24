@@ -1,7 +1,20 @@
+{%- liquid
+  assign promo_mobile_url = blank
+  assign promo_desktop_url = blank
+  assign promo_bg_position = blank
+  if section.settings.image
+    assign promo_mobile_url = section.settings.image | image_url: width: 800
+    assign promo_desktop_url = section.settings.image | image_url: width: 1600
+    assign promo_focal_point = section.settings.image.presentation.focal_point
+    if promo_focal_point
+      assign promo_bg_position = promo_focal_point.x | append: '% ' | append: promo_focal_point.y | append: '%'
+    endif
+  endif
+-%}
 <div
   class="split-promo photo brand{% if section.settings.content_position == 'right' %} split-promo--right{% endif %}"
   data-reveal-group
-  {% if section.settings.image %}style="background-image:url({{ section.settings.image | image_url: width: 1600 }})"{% endif %}
+  {% if section.settings.image %}style="--bg-mobile:url({{ promo_mobile_url }});--bg-desktop:url({{ promo_desktop_url }}){% if promo_bg_position %};--bg-position:{{ promo_bg_position }}{% endif %}"{% endif %}
 >
   <div class="split-promo__content" data-reveal>
     {%- if section.settings.eyebrow != blank -%}
@@ -37,6 +50,7 @@
     justify-content: space-between;
     gap: 20px;
     flex-wrap: wrap;
+    background-image: var(--bg-mobile, none);
   }
   #shopify-section-{{ section.id }} .split-promo--right { flex-direction: row-reverse; }
   #shopify-section-{{ section.id }} .split-promo::before {
@@ -74,7 +88,7 @@
     color: #ccc;
   }
   @media (min-width: 750px) {
-    #shopify-section-{{ section.id }} .split-promo { min-height: 520px; }
+    #shopify-section-{{ section.id }} .split-promo { min-height: 520px; background-image: var(--bg-desktop, none); }
     #shopify-section-{{ section.id }} .split-promo__content,
     #shopify-section-{{ section.id }} .split-promo__quote { padding: 60px; }
   }

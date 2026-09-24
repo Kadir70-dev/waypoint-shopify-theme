@@ -8,9 +8,14 @@
     {%- liquid
       assign mobile_url = blank
       assign desktop_url = blank
+      assign bg_position = blank
       if block.settings.image
         assign mobile_url = block.settings.image | image_url: width: 800
         assign desktop_url = block.settings.image | image_url: width: 1600
+        assign focal_point = block.settings.image.presentation.focal_point
+        if focal_point
+          assign bg_position = focal_point.x | append: '% ' | append: focal_point.y | append: '%'
+        endif
       elsif forloop.index == 1
         assign mobile_url = 'hero-slide-1.jpg' | asset_url
         assign desktop_url = mobile_url
@@ -37,10 +42,11 @@
       {% endcomment %}
       {% if forloop.first %}
         data-active="true"
-        style="--bg-mobile:url({{ mobile_url }});--bg-desktop:url({{ desktop_url }})"
+        style="--bg-mobile:url({{ mobile_url }});--bg-desktop:url({{ desktop_url }}){% if bg_position %};--bg-position:{{ bg_position }}{% endif %}"
       {% else %}
         data-bg-mobile="{{ mobile_url }}"
         data-bg-desktop="{{ desktop_url }}"
+        {% if bg_position %}data-bg-position="{{ bg_position }}"{% endif %}
       {% endif %}
       {{ block.shopify_attributes }}
     >

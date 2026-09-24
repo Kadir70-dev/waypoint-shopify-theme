@@ -216,7 +216,7 @@ html, body { overflow-x: hidden; }
    .brand = the approved cinematic grade (graded gradients stand in for
    real photography until a campaign shoot is dropped in — see the
    Photography Resilience Strategy; layout/crop/scrim logic is final). */
-.photo { background-size: cover; background-position: center; background-color: var(--surface-2); }
+.photo { background-size: cover; background-position: var(--bg-position, center); background-color: var(--surface-2); }
 .photo.brand { filter: grayscale(.25) sepia(.12) contrast(1.08) brightness(.62); }
 .photo.brand.light { filter: grayscale(.2) sepia(.08) contrast(1.05) brightness(.85); }
 

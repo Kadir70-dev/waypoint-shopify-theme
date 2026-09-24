@@ -34,7 +34,7 @@
         <div class="journal-featured" data-reveal>
           <a href="{{ featured_article.url }}" class="journal-featured__media">
             {%- if featured_article.image -%}
-              {{ featured_article.image | image_url: width: 900 | image_tag: loading: 'eager', widths: '450, 700, 900', sizes: '(min-width: 990px) 55vw, 100vw' }}
+              {{ featured_article.image | image_url: width: 900 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '450, 700, 900', sizes: '(min-width: 990px) 55vw, 100vw' }}
             {%- else -%}
               {{ 'life-2' | placeholder_svg_tag: 'journal-featured__placeholder' }}
             {%- endif -%}

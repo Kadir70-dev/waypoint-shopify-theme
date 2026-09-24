@@ -73,8 +73,11 @@
       if (!mobileUrl) return;
       slide.style.setProperty('--bg-mobile', 'url(' + mobileUrl + ')');
       slide.style.setProperty('--bg-desktop', 'url(' + (slide.getAttribute('data-bg-desktop') || mobileUrl) + ')');
+      var bgPosition = slide.getAttribute('data-bg-position');
+      if (bgPosition) slide.style.setProperty('--bg-position', bgPosition);
       slide.removeAttribute('data-bg-mobile');
       slide.removeAttribute('data-bg-desktop');
+      slide.removeAttribute('data-bg-position');
     }
 
     function show(index) {

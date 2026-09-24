@@ -11,7 +11,7 @@
 }
 .pcard__media {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: var(--ratio-square);
   background: var(--surface-3);
   overflow: hidden;
 }

@@ -32,10 +32,23 @@
         </div>
 
       {%- when 'featured-tile' -%}
+        {%- liquid
+          assign tile_mobile_url = blank
+          assign tile_desktop_url = blank
+          assign tile_bg_position = blank
+          if block.settings.image
+            assign tile_mobile_url = block.settings.image | image_url: width: 400
+            assign tile_desktop_url = block.settings.image | image_url: width: 700
+            assign tile_focal_point = block.settings.image.presentation.focal_point
+            if tile_focal_point
+              assign tile_bg_position = tile_focal_point.x | append: '% ' | append: tile_focal_point.y | append: '%'
+            endif
+          endif
+        -%}
         <a
           href="{{ block.settings.link.url | default: '#' }}"
           class="mega-menu__tile"
-          {% if block.settings.image %}style="background-image:url({{ block.settings.image | image_url: width: 600 }})"{% endif %}
+          {% if block.settings.image %}style="--bg-mobile:url({{ tile_mobile_url }});--bg-desktop:url({{ tile_desktop_url }}){% if tile_bg_position %};--bg-position:{{ tile_bg_position }}{% endif %}"{% endif %}
           {{ block.shopify_attributes }}
         >
           <span class="mega-menu__tile-label">
