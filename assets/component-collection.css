@@ -103,6 +103,7 @@
   padding: 8px 6px;
   font-size: 12px;
   -moz-appearance: textfield;
+  border-radius: var(--radius);
 }
 .filter-group__price input::-webkit-outer-spin-button,
 .filter-group__price input::-webkit-inner-spin-button {
@@ -128,9 +129,10 @@
   padding: 8px 10px;
   font-family: var(--font-display);
   font-size: 11px;
-  letter-spacing: .04em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   cursor: pointer;
+  border-radius: var(--radius);
 }
 .collection-sort select:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 .collection-sort noscript button { margin-left: 8px; }
@@ -146,9 +148,10 @@
   padding: 8px 14px;
   font-family: var(--font-display);
   font-size: 11px;
-  letter-spacing: .08em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   cursor: pointer;
+  border-radius: var(--radius);
 }
 .collection-grid__filter-trigger svg { width: 16px; height: 16px; }
 .collection-grid__filter-count {

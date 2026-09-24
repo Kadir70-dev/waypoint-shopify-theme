@@ -22,6 +22,13 @@
 .cart-drawer__panel {
   background: var(--bg);
   border-left: 1px solid var(--border-strong);
+  /* Only the inward-facing edge rounds — the other three sides are
+     flush with the viewport, so rounding them would look like a gap
+     rather than an intentional corner (Module 01: radius applied per
+     surface, not the same treatment as a free-floating card). */
+  border-top-left-radius: var(--radius-surface);
+  border-bottom-left-radius: var(--radius-surface);
+  box-shadow: var(--shadow-elevated);
   width: 100%;
   max-width: min(420px, 100vw);
   height: 100%;

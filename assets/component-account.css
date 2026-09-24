@@ -9,7 +9,7 @@
    Login/register/address forms need many, so this is now the shared
    primitive; nothing tracked so far had that need. */
 .field { display: flex; flex-direction: column; gap: 6px; }
-.field__label { font-family: var(--font-display); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.field__label { font-family: var(--font-display); font-size: 11px; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); }
 .field__input {
   background: var(--surface-2);
   border: 1px solid var(--border-strong);
@@ -18,6 +18,7 @@
   font-family: var(--font-body);
   font-size: 14px;
   width: 100%;
+  border-radius: var(--radius);
 }
 .field__input:focus { border-color: var(--accent-light); }
 .field__input:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }

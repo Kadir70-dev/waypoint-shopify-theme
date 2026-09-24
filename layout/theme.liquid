@@ -182,6 +182,15 @@
       --font-editorial: {{ settings.font_editorial.family }}, {{ settings.font_editorial.fallback_families }};
       --page-width: {{ settings.page_width }}px;
       --type-scale: {{ settings.type_scale | default: 100 | divided_by: 100.0 }};
+      {%- comment -%}
+        Module 01 fix: settings.spacing_scale existed since Milestone 0
+        and even differs between the two presets, but was never actually
+        read anywhere — --space-unit stayed hardcoded at 8px in
+        tokens.css regardless. Wiring it here is what makes base.css's
+        --space-unit-driven section/page-width rhythm (and therefore the
+        Fieldbook preset's airier spacing) real instead of a no-op.
+      {%- endcomment -%}
+      --space-unit: {{ settings.spacing_scale | default: 100 | times: 8 | divided_by: 100.0 }}px;
     }
 
     {%- comment -%}

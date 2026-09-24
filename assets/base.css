@@ -15,7 +15,7 @@ body {
   color: var(--text);
   font-family: var(--font-body);
   font-size: calc(16px * var(--type-scale));
-  line-height: 1.5;
+  line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -23,11 +23,18 @@ img, svg { max-width: 100%; display: block; }
 
 a { color: inherit; text-decoration: none; }
 
+/* Module 01: headings dropped the blanket uppercase + wide tracking
+   treatment — every h1-h4 in the theme inherited it by default (most
+   set only font-size inline), which read as a loud, generic commerce
+   template rather than an art-directed one. Tracked-out caps are now
+   reserved for short labels (.eyebrow, buttons, badges, nav) via
+   --tracking-label; real headings get a tight display tracking instead,
+   appropriate for mixed-case text at display sizes. */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .01em;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
   margin: 0;
   text-wrap: balance;
 }
@@ -37,7 +44,7 @@ h1, h2, h3, h4 {
 .eyebrow {
   font-family: var(--font-display);
   font-size: 11px;
-  letter-spacing: .18em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -49,21 +56,27 @@ h1, h2, h3, h4 {
 
 p { margin: 0; }
 
-/* --- layout primitives --- */
+/* --- layout primitives ---
+   Module 01: section/page-width rhythm now derives from --space-unit
+   instead of hardcoded pixels, so settings.spacing_scale (wired in
+   layout/theme.liquid) has a real, visible effect — previously the
+   setting existed and even differed between the two presets but was
+   never actually read anywhere, so it did nothing. Values below are
+   the exact same defaults as before (--space-unit: 8px) at 100% scale. */
 .page-width {
   width: 100%;
   max-width: var(--page-width);
   margin-inline: auto;
-  padding-inline: 20px;
+  padding-inline: calc(var(--space-unit) * 2.5);
 }
 
 @media (min-width: 750px) {
-  .page-width { padding-inline: 28px; }
+  .page-width { padding-inline: calc(var(--space-unit) * 3.5); }
 }
 
-.section { padding-block: 36px; }
+.section { padding-block: calc(var(--space-unit) * 4.5); }
 @media (min-width: 750px) {
-  .section { padding-block: 48px; }
+  .section { padding-block: calc(var(--space-unit) * 6); }
 }
 
 /* --- global focus state ---
@@ -88,7 +101,7 @@ p { margin: 0; }
   padding: 12px 18px;
   font-family: var(--font-display);
   font-size: 12px;
-  letter-spacing: .08em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   transition: top var(--dur-fast) var(--ease-out-slow);
 }
@@ -128,7 +141,7 @@ html, body { overflow-x: hidden; }
   gap: 8px;
   font-family: var(--font-display);
   font-size: 12px;
-  letter-spacing: .12em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   padding: 14px 22px;
   border: 1px solid var(--border-strong);
@@ -142,6 +155,9 @@ html, body { overflow-x: hidden; }
 .btn-primary:hover { opacity: .85; }
 .btn-outline:hover { border-color: var(--text); background: rgba(127, 127, 127, .08); }
 .btn-block { width: 100%; justify-content: center; }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn:disabled:hover { background: transparent; border-color: var(--border-strong); }
+.btn-primary:disabled:hover { background: var(--cta-bg); border-color: var(--cta-bg); }
 
 /* --- quantity stepper ---
    Cross-cutting primitive (PDP buy box since Milestone 4, cart line
@@ -149,7 +165,7 @@ html, body { overflow-x: hidden; }
    living scoped inside any one section's <style> block. --sm is a denser
    variant for cart line items, where the buybox's default size crowds
    the row on mobile. */
-.quantity-stepper { display: inline-flex; align-items: stretch; border: 1px solid var(--border-strong); }
+.quantity-stepper { display: inline-flex; align-items: stretch; border: 1px solid var(--border-strong); border-radius: var(--radius); overflow: hidden; }
 .quantity-stepper__btn {
   width: 36px;
   background: var(--surface-2);
@@ -209,7 +225,7 @@ html, body { overflow-x: hidden; }
   display: inline-block;
   font-family: var(--font-display);
   font-size: 10px;
-  letter-spacing: .1em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   background: var(--cta-bg);
   color: var(--cta-text);

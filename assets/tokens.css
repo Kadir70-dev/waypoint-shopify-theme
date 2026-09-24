@@ -43,8 +43,28 @@
 
   /* --- layout --- */
   --page-width: 1200px;
-  --space-unit: 8px; /* multiplied by settings.spacing_scale at the component level */
-  --radius: 0px; /* "sharp" corner_style default */
+  --space-unit: 8px; /* overridden inline from settings.spacing_scale — see layout/theme.liquid */
+  --radius: 0px; /* "sharp" corner_style default — commerce controls: buttons, inputs, badges */
+  --radius-surface: 0px; /* larger panels: cart drawer, search overlay, mega-menu */
+
+  /* --- typography rhythm (Module 01) ---
+     Two tracking levels replace five ad-hoc per-component values
+     (.01em/.18em/.08em/.12em/.1em): a tight display tracking for real
+     headings now that they're no longer forced uppercase, and one
+     restrained "label" tracking shared by every small tracked-caps use
+     (eyebrow, buttons, badges, skip link) — dialed back from the old
+     .18em eyebrow value, which read as excessive. */
+  --tracking-tight: -0.01em;
+  --tracking-label: .08em;
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  /* --- elevation ---
+     One restrained shadow for floating panels (search overlay, cart
+     drawer, mega-menu) — refined depth, not a card-shadow aesthetic;
+     never used on inline content or product cards. */
+  --shadow-elevated: 0 24px 30px rgba(0, 0, 0, .25);
 
   /* --- motion --- */
   --ease-out-slow: cubic-bezier(0.16, 1, 0.3, 1);
@@ -82,9 +102,13 @@
   color-scheme: light;
 }
 
-/* corner_style: rounded (opt-in via settings.corner_style) */
+/* corner_style: rounded (opt-in via settings.corner_style). Two steps,
+   not one — a larger surface reads better with more curvature than a
+   small control does at the same radius (Module 01: intentional radius
+   per surface type, rather than one flat value applied everywhere). */
 :root[data-corners="rounded"] {
   --radius: 6px;
+  --radius-surface: 12px;
 }
 
 /* Reduced motion: zero out travel/duration at the token level so every
