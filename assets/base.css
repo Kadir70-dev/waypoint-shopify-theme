@@ -120,7 +120,7 @@ p { margin: 0; }
 .skip-link {
   position: absolute;
   top: -100%;
-  left: 12px;
+  inset-inline-start: 12px;
   z-index: 100;
   background: var(--cta-bg);
   color: var(--cta-text);
@@ -232,7 +232,7 @@ html, body { overflow-x: hidden; }
   font-size: 12px;
   color: var(--muted);
 }
-.breadcrumb__list li:not(:last-child)::after { content: "/"; margin-left: 6px; color: var(--border-strong); }
+.breadcrumb__list li:not(:last-child)::after { content: "/"; margin-inline-start: 6px; color: var(--border-strong); }
 .breadcrumb__list a { color: var(--muted); }
 .breadcrumb__list a:hover { color: var(--text); }
 .breadcrumb__list li[aria-current="page"] { color: var(--text); }
@@ -273,4 +273,18 @@ html, body { overflow-x: hidden; }
   transition: opacity var(--dur-slow) var(--ease-out-slow), transform var(--dur-slow) var(--ease-out-slow);
 }
 .js [data-reveal].is-revealed { opacity: 1; transform: translateY(0); }
+
+/* --- RTL: mirror directional chevron icons (Module 10) ---
+   icon-chevron-left/-right are used as prev/next or back/drill-in
+   indicators; under dir="rtl" the logical direction of "previous" and
+   "next" reverses, so the icon must too. Positioning for the buttons
+   themselves already uses inset-inline-*/border-inline-* (logical
+   properties flip automatically); only the icon glyph needs this. */
+[dir="rtl"] .pagination__link svg,
+[dir="rtl"] .mobile-nav__back svg,
+[dir="rtl"] .mobile-nav__drill svg,
+[dir="rtl"] .carousel__nav-btn svg,
+[dir="rtl"] .product-gallery__zoom-nav svg {
+  transform: scaleX(-1);
+}
 

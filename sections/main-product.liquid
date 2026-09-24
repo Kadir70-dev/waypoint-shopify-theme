@@ -264,7 +264,7 @@
   #shopify-section-{{ section.id }} .product-gallery__main-item model-viewer { width: 100%; height: 100%; object-fit: cover; border: 0; display: block; }
   #shopify-section-{{ section.id }} .product-gallery__zoom-trigger {
     position: absolute;
-    right: 12px;
+    inset-inline-end: 12px;
     bottom: 12px;
     width: 36px;
     height: 36px;
@@ -355,9 +355,9 @@
   }
   #shopify-section-{{ section.id }} .product-gallery__zoom-close svg,
   #shopify-section-{{ section.id }} .product-gallery__zoom-nav svg { width: 18px; height: 18px; }
-  #shopify-section-{{ section.id }} .product-gallery__zoom-close { top: 16px; right: 16px; }
-  #shopify-section-{{ section.id }} .product-gallery__zoom-nav--prev { left: 16px; top: 50%; transform: translateY(-50%); }
-  #shopify-section-{{ section.id }} .product-gallery__zoom-nav--next { right: 16px; top: 50%; transform: translateY(-50%); }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-close { top: 16px; inset-inline-end: 16px; }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-nav--prev { inset-inline-start: 16px; top: 50%; transform: translateY(-50%); }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-nav--next { inset-inline-end: 16px; top: 50%; transform: translateY(-50%); }
 
   #shopify-section-{{ section.id }} .product-buybox { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
   #shopify-section-{{ section.id }} .product-buybox[aria-busy="true"] { opacity: .6; pointer-events: none; }
@@ -419,7 +419,7 @@
   #shopify-section-{{ section.id }} .product-specs dl { display: grid; gap: 10px; }
   #shopify-section-{{ section.id }} .product-specs__row { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
   #shopify-section-{{ section.id }} .product-specs__row dt { color: var(--muted); }
-  #shopify-section-{{ section.id }} .product-specs__row dd { margin: 0; text-align: right; }
+  #shopify-section-{{ section.id }} .product-specs__row dd { margin: 0; text-align: end; }
 
   #shopify-section-{{ section.id }} .product-accordions .accordion { border-bottom: 1px solid var(--border); }
   #shopify-section-{{ section.id }} .accordion__trigger {

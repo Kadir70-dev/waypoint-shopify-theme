@@ -23,14 +23,14 @@
 }
 .pcard:hover .pcard__media img { transform: scale(1.03); }
 
-.pcard__badge { position: absolute; top: 10px; left: 10px; z-index: 1; }
+.pcard__badge { position: absolute; top: 10px; inset-inline-start: 10px; z-index: 1; }
 
 .pcard__quickadd-form { display: contents; }
 
 .pcard__quickadd {
   position: absolute;
   bottom: 10px;
-  right: 10px;
+  inset-inline-end: 10px;
   z-index: 1;
   width: 32px;
   height: 32px;
@@ -242,7 +242,7 @@
   overflow-y: auto;
 }
 .quick-add-dialog::backdrop { background: rgba(0, 0, 0, .55); }
-.quick-add-dialog__close { position: absolute; top: 14px; right: 14px; }
+.quick-add-dialog__close { position: absolute; top: 14px; inset-inline-end: 14px; }
 .quick-add-dialog__content[aria-busy="true"] { opacity: .5; pointer-events: none; }
 
 @media (max-width: 480px) {

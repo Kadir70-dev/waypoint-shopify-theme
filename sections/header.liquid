@@ -25,7 +25,7 @@
       {%- render 'icon-menu' -%}
     </button>
 
-    <nav class="site-header__nav" aria-label="Main">
+    <nav class="site-header__nav" aria-label="{{ 'accessibility.primary_navigation' | t }}">
       {%- for link in section.settings.main_menu.links -%}
         {%- if section.settings.enable_mega_menu and link.title == section.settings.mega_menu_trigger_label -%}
           <a

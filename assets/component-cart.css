@@ -21,13 +21,15 @@
 
 .cart-drawer__panel {
   background: var(--bg);
-  border-left: 1px solid var(--border-strong);
+  border-inline-start: 1px solid var(--border-strong);
   /* Only the inward-facing edge rounds — the other three sides are
      flush with the viewport, so rounding them would look like a gap
      rather than an intentional corner (Module 01: radius applied per
-     surface, not the same treatment as a free-floating card). */
-  border-top-left-radius: var(--radius-surface);
-  border-bottom-left-radius: var(--radius-surface);
+     surface, not the same treatment as a free-floating card). Logical
+     start-edge corners so this stays correct when the panel flips side
+     under [dir="rtl"] (Module 10). */
+  border-start-start-radius: var(--radius-surface);
+  border-end-start-radius: var(--radius-surface);
   box-shadow: var(--shadow-elevated);
   width: 100%;
   max-width: min(420px, 100vw);
@@ -37,9 +39,11 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  transform: translateX(24px);
+  --slide-nudge: 24px;
+  transform: translateX(var(--slide-nudge));
   transition: transform var(--dur-base) var(--ease-out-slow);
 }
+[dir="rtl"] .cart-drawer__panel { --slide-nudge: -24px; }
 .cart-drawer[data-state="open"] .cart-drawer__panel { transform: translateX(0); }
 
 .cart-drawer[aria-busy="true"] .cart-drawer__panel { opacity: .6; pointer-events: none; }
@@ -69,7 +73,7 @@
   color: var(--text);
   background: var(--surface-2);
   border: 1px solid var(--border-strong);
-  border-left: 2px solid var(--text);
+  border-inline-start: 2px solid var(--text);
 }
 .cart-drawer__error[hidden] { display: none; }
 

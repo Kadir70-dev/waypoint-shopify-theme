@@ -74,10 +74,10 @@ a.pagination__link:hover { border-color: var(--text); }
     display: flex;
     flex-direction: column;
     gap: 22px;
-    padding-right: 20px;
-    border-right: 1px solid var(--border);
+    padding-inline-end: 20px;
+    border-inline-end: 1px solid var(--border);
   }
-  .collection-layout__main { padding-left: 20px; min-width: 0; }
+  .collection-layout__main { padding-inline-start: 20px; min-width: 0; }
 }
 
 .filter-group { display: flex; flex-direction: column; gap: 10px; }
@@ -123,13 +123,13 @@ a.pagination__link:hover { border-color: var(--text); }
 }
 
 .filter-chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
-.filter-chip span { color: var(--muted); font-size: 13px; margin-left: 2px; }
+.filter-chip span { color: var(--muted); font-size: 13px; margin-inline-start: 2px; }
 .filter-chips__clear {
   font-size: 11px;
   color: var(--muted);
   letter-spacing: .06em;
   text-transform: uppercase;
-  margin-left: 4px;
+  margin-inline-start: 4px;
   transition: color var(--dur-fast) var(--ease-out-slow);
 }
 .filter-chips__clear:hover,
@@ -151,7 +151,7 @@ a.pagination__link:hover { border-color: var(--text); }
 }
 .collection-sort select:hover { border-color: var(--text); }
 .collection-sort select:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-.collection-sort noscript button { margin-left: 8px; }
+.collection-sort noscript button { margin-inline-start: 8px; }
 
 /* ---------- mobile filter trigger + drawer ---------- */
 .collection-grid__filter-trigger {
@@ -222,7 +222,7 @@ a.pagination__link:hover { border-color: var(--text); }
   letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-right: auto;
+  margin-inline-end: auto;
   transition: color var(--dur-fast) var(--ease-out-slow);
 }
 .mobile-filter-drawer__clear:hover,

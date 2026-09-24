@@ -57,7 +57,7 @@
 
 .hero-slider__dots {
   position: absolute;
-  left: 40px;
+  inset-inline-start: 40px;
   bottom: 20px;
   z-index: 2;
   display: flex;
@@ -81,7 +81,7 @@
 
 .hero-slider__corner-tag {
   position: absolute;
-  right: 24px;
+  inset-inline-end: 24px;
   bottom: 24px;
   z-index: 2;
   display: flex;
@@ -103,7 +103,7 @@
 
 @media (min-width: 750px) {
   .hero-slider__content { padding: 60px; }
-  .hero-slider__corner-tag { right: 40px; bottom: 32px; font-size: 11px; }
+  .hero-slider__corner-tag { inset-inline-end: 40px; bottom: 32px; font-size: 11px; }
 }
 
 /* ---------- carousel (testimonials, later cross-sell rows) ---------- */

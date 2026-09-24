@@ -55,7 +55,7 @@
 }
 .article-nav a { color: var(--muted); max-width: 45%; }
 .article-nav a:hover { color: var(--text); }
-.article-nav__next { text-align: right; margin-left: auto; }
+.article-nav__next { text-align: end; margin-inline-start: auto; }
 
 /* ---------- generic content page (main-page.liquid) ---------- */
 .page-header { text-align: center; max-width: 720px; margin: 0 auto; padding-block: 30px 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
@@ -69,14 +69,14 @@
 .rte h3 { font-family: var(--font-display); font-size: 16px; text-transform: uppercase; letter-spacing: .01em; margin-top: 1.6em; }
 .rte p { margin: 0; }
 .rte a { color: var(--accent-light); text-decoration: underline; text-underline-offset: 2px; }
-.rte ul, .rte ol { padding-left: 1.4em; }
+.rte ul, .rte ol { padding-inline-start: 1.4em; }
 .rte li + li { margin-top: .4em; }
 .rte blockquote {
   font-family: var(--font-editorial);
   font-style: italic;
   font-size: 19px;
-  border-left: 2px solid var(--border-strong);
-  padding-left: 20px;
+  border-inline-start: 2px solid var(--border-strong);
+  padding-inline-start: 20px;
   margin-inline: 0;
   color: var(--text);
 }

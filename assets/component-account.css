@@ -61,8 +61,8 @@
 .account-layout__main { min-width: 0; }
 @media (min-width: 990px) {
   .account-layout { display: grid; grid-template-columns: 220px 1fr; gap: 0; align-items: start; }
-  .account-layout__sidebar { padding-right: 20px; border-right: 1px solid var(--border); margin-bottom: 0; }
-  .account-layout__main { padding-left: 30px; }
+  .account-layout__sidebar { padding-inline-end: 20px; border-inline-end: 1px solid var(--border); margin-bottom: 0; }
+  .account-layout__main { padding-inline-start: 30px; }
 }
 
 .account-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
