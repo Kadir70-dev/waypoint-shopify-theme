@@ -10,11 +10,13 @@
 
   var reducedMotion = document.documentElement.classList.contains('reduced-motion');
 
-  // ---------- transparent overlay header (home hero) ----------
-  var transparentHeader = document.querySelector('.site-header--transparent');
-  if (transparentHeader) {
+  // ---------- header scroll state (transparent overlay + plain sticky) ----------
+  // Mutually exclusive in Liquid (header_transparent forces is_sticky=false),
+  // so one header element only ever matches one of these two selectors.
+  var scrollHeader = document.querySelector('.site-header--transparent, .site-header[data-sticky="true"]');
+  if (scrollHeader) {
     var setHeaderScrolled = function () {
-      transparentHeader.setAttribute('data-scrolled', window.scrollY > 10 ? 'true' : 'false');
+      scrollHeader.setAttribute('data-scrolled', window.scrollY > 10 ? 'true' : 'false');
     };
     setHeaderScrolled();
     window.addEventListener('scroll', setHeaderScrolled, { passive: true });

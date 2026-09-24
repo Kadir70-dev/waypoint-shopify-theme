@@ -50,7 +50,7 @@
           alt="{{ shop.name }}"
           width="{{ section.settings.logo_width }}"
           height="{{ logo_height }}"
-          style="width:{{ section.settings.logo_width }}px;height:auto;"
+          style="width:{{ section.settings.logo_width }}px;height:auto;--logo-height:{{ logo_height }}px;"
           loading="eager"
         >
       {%- else -%}
@@ -143,10 +143,17 @@
         </ul>
 
         {%- if section.settings.enable_mega_menu and link.title == section.settings.mega_menu_trigger_label and section.settings.mobile_tile_image -%}
+          {%- liquid
+            assign mobile_tile_bg_position = blank
+            assign mobile_tile_focal_point = section.settings.mobile_tile_image.presentation.focal_point
+            if mobile_tile_focal_point
+              assign mobile_tile_bg_position = mobile_tile_focal_point.x | append: '% ' | append: mobile_tile_focal_point.y | append: '%'
+            endif
+          -%}
           <a
             href="{{ section.settings.mobile_tile_link | default: link.url }}"
             class="mobile-nav__tile"
-            style="background-image:url({{ section.settings.mobile_tile_image | image_url: width: 500 }})"
+            style="background-image:url({{ section.settings.mobile_tile_image | image_url: width: 500 }}){% if mobile_tile_bg_position %};--bg-position:{{ mobile_tile_bg_position }}{% endif %}"
           >
             <span class="mobile-nav__tile-label">
               <span class="eyebrow" style="color:#ddd">{{ section.settings.mobile_tile_eyebrow }}</span>
@@ -186,7 +193,7 @@
       <input type="hidden" name="type" value="product,collection,article">
     </form>
 
-    {%- if section.settings.popular_search_1 != blank or section.settings.popular_search_2 != blank or section.settings.popular_search_3 != blank -%}
+    {%- if section.settings.popular_search_1 != blank or section.settings.popular_search_2 != blank or section.settings.popular_search_3 != blank or section.settings.popular_search_4 != blank -%}
       <div data-predictive-search-prompt>
         <div class="eyebrow" style="margin-bottom:10px">{{ 'search.popular' | t }}</div>
         <div class="chip-row">
@@ -271,6 +278,7 @@
     { "type": "text", "id": "popular_search_1", "label": "Popular search 1", "default": "Backpacks" },
     { "type": "text", "id": "popular_search_2", "label": "Popular search 2", "default": "Waterproof" },
     { "type": "text", "id": "popular_search_3", "label": "Popular search 3" },
+    { "type": "text", "id": "popular_search_4", "label": "Popular search 4" },
     { "type": "header", "content": "Mobile tab bar" },
     { "type": "text", "id": "journal_blog_handle", "label": "Journal blog handle", "default": "journal" }
   ]

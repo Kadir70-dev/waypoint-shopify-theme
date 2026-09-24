@@ -28,6 +28,13 @@
   position: sticky;
   top: env(safe-area-inset-top, 0px);
   z-index: 30;
+  transition: box-shadow var(--dur-base) var(--ease-out-slow);
+}
+/* Subtle separation once content has scrolled beneath the sticky bar —
+   restrained, not a card-shadow (see --shadow-elevated's own scope note:
+   floating panels only, never inline chrome). */
+.site-header[data-sticky="true"][data-scrolled="true"] {
+  box-shadow: 0 1px 0 var(--border-strong);
 }
 
 /* Overlay header (home page only): floats transparently over the hero
@@ -118,7 +125,9 @@
   color: var(--text);
   cursor: pointer;
   padding: 4px;
+  transition: opacity var(--dur-fast) var(--ease-out-slow);
 }
+.icon-btn:hover { opacity: .7; }
 .icon-btn svg { width: 20px; height: 20px; }
 
 .icon-btn__count {
@@ -176,6 +185,9 @@
   margin-bottom: 14px;
 }
 .mega-menu__column ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+.mega-menu__column ul a { transition: color var(--dur-fast) var(--ease-out-slow); }
+.mega-menu__column ul a:hover,
+.mega-menu__column ul a:focus-visible { color: var(--accent-light); }
 
 .mega-menu__tile {
   position: relative;
@@ -250,7 +262,10 @@
   text-align: left;
   cursor: pointer;
   padding: 0;
+  transition: color var(--dur-fast) var(--ease-out-slow);
 }
+.mobile-nav__links a:hover,
+.mobile-nav__drill:hover { color: var(--accent-light); }
 
 .mobile-nav__back {
   display: flex;
@@ -275,7 +290,7 @@
   display: block;
   min-height: 150px;
   background-size: cover;
-  background-position: center;
+  background-position: var(--bg-position, center);
   margin-top: auto;
 }
 .mobile-nav__tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0, 0, 0, .65), rgba(0, 0, 0, .05)); }
@@ -343,7 +358,9 @@
   background: transparent;
   color: var(--text);
   cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out-slow), color var(--dur-fast) var(--ease-out-slow);
 }
+.chip:hover { border-color: var(--accent-light); color: var(--accent-light); }
 
 /* ---------- predictive search results ---------- */
 .predictive-search__target[hidden] { display: none; }
