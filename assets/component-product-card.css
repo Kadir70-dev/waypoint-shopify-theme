@@ -153,7 +153,36 @@
    variant-picker.js already toggles. */
 .option-selector { border: 0; margin: 0; padding: 0; }
 .option-selector + .option-selector { margin-top: calc(var(--space-unit) * 2.5); }
-.option-selector legend { margin-bottom: 10px; padding: 0; }
+.option-selector legend { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; padding: 0; }
+
+/* ---------- size chart trigger + dialog (Module 12) ----------
+   .quick-add-dialog (component-product-card.css above) is reused
+   unmodified for the dialog shell — no duplicate dialog CSS. */
+.product-size-chart__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out-slow);
+}
+.product-size-chart__trigger svg { width: 13px; height: 13px; }
+.product-size-chart__trigger:hover,
+.product-size-chart__trigger:focus-visible { color: var(--text); }
+
+/* ---------- back in stock (Module 12) ---------- */
+.back-in-stock { margin-top: 4px; padding-top: 16px; border-top: 1px solid var(--border); }
+.back-in-stock__label { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+.back-in-stock__row { max-width: 360px; }
+.back-in-stock__success { font-size: 13px; color: var(--text); }
+.back-in-stock__error { font-size: 12px; color: var(--text); margin-top: 6px; }
 .option-selector__values { display: flex; flex-wrap: wrap; gap: 8px; }
 
 .option-selector__pill {

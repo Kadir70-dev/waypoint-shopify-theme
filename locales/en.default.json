@@ -12,7 +12,8 @@
     "search_dialog": "Search",
     "cart_dialog": "Shopping cart",
     "primary_navigation": "Primary navigation",
-    "quick_add_dialog": "Quick add"
+    "quick_add_dialog": "Quick add",
+    "size_chart_dialog": "Size chart"
   },
   "customer": {
     "login": {
@@ -203,6 +204,11 @@
     "quick_add": "Quick add",
     "quick_add_error": "Something went wrong. Try again or view the full product page.",
     "view_full_details": "View full details",
+    "size_chart": "Size chart",
+    "back_in_stock_prompt": "This size is out of stock. Enter your email and we'll let you know when it's back.",
+    "back_in_stock_email_label": "Email",
+    "back_in_stock_cta": "Notify me",
+    "back_in_stock_success": "Thanks — we'll email you when this is back in stock.",
     "sold_out": "Sold Out",
     "add_to_cart": "Add to Cart",
     "adding": "Adding…",
