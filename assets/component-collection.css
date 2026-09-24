@@ -7,7 +7,7 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin: 24px 0 20px;
+  margin: calc(var(--space-unit) * 3) 0 calc(var(--space-unit) * 2.5);
 }
 
 .collection-grid__empty {
@@ -43,8 +43,10 @@
   color: var(--text);
   font-family: var(--font-display);
   font-size: 12px;
+  transition: border-color var(--dur-fast) var(--ease-out-slow);
 }
 .pagination__link svg { width: 14px; height: 14px; }
+a.pagination__link:hover { border-color: var(--text); }
 .pagination__link--current {
   background: var(--cta-bg);
   color: var(--cta-text);
@@ -83,6 +85,7 @@
   gap: 8px;
   font-size: 13px;
   color: var(--text);
+  transition: color var(--dur-fast) var(--ease-out-slow);
 }
 .filter-option__box {
   width: 14px;
@@ -90,7 +93,12 @@
   flex-shrink: 0;
   border: 1px solid var(--border-strong);
   display: inline-block;
+  transition: border-color var(--dur-fast) var(--ease-out-slow), background-color var(--dur-fast) var(--ease-out-slow);
 }
+.filter-option:hover,
+.filter-option:focus-visible { color: var(--accent-light); }
+.filter-option:hover .filter-option__box,
+.filter-option:focus-visible .filter-option__box { border-color: var(--accent-light); }
 .filter-option--active .filter-option__box { background: var(--cta-bg); border-color: var(--cta-bg); }
 .filter-group__price { display: flex; align-items: center; gap: 8px; }
 .filter-group__price input {
@@ -119,7 +127,10 @@
   letter-spacing: .06em;
   text-transform: uppercase;
   margin-left: 4px;
+  transition: color var(--dur-fast) var(--ease-out-slow);
 }
+.filter-chips__clear:hover,
+.filter-chips__clear:focus-visible { color: var(--accent-light); }
 
 /* ---------- sort-by (Milestone 9) ---------- */
 .collection-sort select {
@@ -133,7 +144,9 @@
   text-transform: uppercase;
   cursor: pointer;
   border-radius: var(--radius);
+  transition: border-color var(--dur-fast) var(--ease-out-slow);
 }
+.collection-sort select:hover { border-color: var(--text); }
 .collection-sort select:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 .collection-sort noscript button { margin-left: 8px; }
 
@@ -152,7 +165,9 @@
   text-transform: uppercase;
   cursor: pointer;
   border-radius: var(--radius);
+  transition: border-color var(--dur-fast) var(--ease-out-slow);
 }
+.collection-grid__filter-trigger:hover { border-color: var(--text); }
 .collection-grid__filter-trigger svg { width: 16px; height: 16px; }
 .collection-grid__filter-count {
   background: var(--cta-bg);
@@ -205,7 +220,10 @@
   text-transform: uppercase;
   color: var(--muted);
   margin-right: auto;
+  transition: color var(--dur-fast) var(--ease-out-slow);
 }
+.mobile-filter-drawer__clear:hover,
+.mobile-filter-drawer__clear:focus-visible { color: var(--accent-light); }
 .mobile-filter-drawer__body {
   flex: 1;
   overflow-y: auto;
