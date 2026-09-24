@@ -9,8 +9,8 @@
   endfor
 -%}
 
-<div class="section page-width">
-  <div class="collection-grid__meta">
+<div class="section page-width" data-collection-facets data-section-id="{{ section.id }}" data-url="{{ collection.url }}">
+  <div class="collection-grid__meta" id="CollectionMeta-{{ section.id }}">
     <span class="eyebrow">
       {%- if collection.products.size == 1 -%}
         {{ 'collection.products_count_one' | t: count: collection.products.size }}
@@ -54,12 +54,12 @@
 
   <div class="collection-layout">
     {%- if collection.filters.size > 0 -%}
-      <aside class="collection-layout__sidebar">
+      <aside class="collection-layout__sidebar" id="CollectionSidebar-{{ section.id }}">
         {%- render 'filter-groups', filters: collection.filters -%}
       </aside>
     {%- endif -%}
 
-    <div class="collection-layout__main">
+    <div class="collection-layout__main" id="CollectionMain-{{ section.id }}">
       {%- if has_active_filters -%}
         <div class="filter-chips">
           {%- for filter in collection.filters -%}
@@ -108,7 +108,7 @@
 
 {%- if collection.filters.size > 0 -%}
   <div id="MobileFilters" class="mobile-filter-drawer" data-overlay data-overlay-backdrop hidden>
-    <div class="mobile-filter-drawer__panel">
+    <div class="mobile-filter-drawer__panel" id="MobileFiltersPanel-{{ section.id }}">
       <div class="mobile-filter-drawer__top">
         <span class="eyebrow" style="font-size:13px;color:var(--text)">{{ 'collection.filters' | t }}</span>
         {%- if has_active_filters -%}

@@ -3,6 +3,9 @@
    per-section convention; this file covers what's shared across collection
    AND (later) search results — grid meta, empty state, pagination. */
 
+.collection-layout__main[aria-busy="true"],
+.collection-layout__sidebar[aria-busy="true"] { opacity: .5; pointer-events: none; transition: opacity var(--dur-fast) var(--ease-out-slow); }
+
 .collection-grid__meta {
   display: flex;
   justify-content: space-between;
