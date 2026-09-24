@@ -55,6 +55,10 @@
     if (activeController) activeController.abort();
     activeController = ('AbortController' in window) ? new AbortController() : null;
     if (typeof dialog.showModal === 'function') dialog.showModal();
+    // Content loads async after showModal(), so native initial-focus (which
+    // runs against the still-empty dialog) has nothing to land on — the
+    // close button is the one control guaranteed to exist immediately.
+    if (closeBtn) closeBtn.focus();
     load(productUrl + '?view=quick-add', activeController && activeController.signal);
   }
 

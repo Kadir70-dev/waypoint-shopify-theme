@@ -54,6 +54,11 @@
       var index = images.findIndex(function (img) { return String(img.getAttribute('data-media-id')) === String(mediaId); });
       show(index === -1 ? 0 : index);
       if (typeof dialog.showModal === 'function') dialog.showModal();
+      // No [autofocus] child, so native initial focus lands on the dialog
+      // itself rather than a control — send it to the one guaranteed to
+      // exist: close.
+      var closeBtn = dialog.querySelector('[data-gallery-zoom-close]');
+      if (closeBtn) closeBtn.focus();
     }
 
     document.querySelectorAll('[data-gallery-zoom-trigger]').forEach(function (trigger) {

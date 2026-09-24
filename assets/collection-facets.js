@@ -43,6 +43,7 @@
 
   function render(html, targetUrl) {
     var doc = new DOMParser().parseFromString(html, 'text/html');
+    var statusText = doc.querySelector('#CollectionMeta-' + sectionId + ' .eyebrow');
     swapIds.forEach(function (id) {
       var next = doc.getElementById(id);
       var current = document.getElementById(id);
@@ -50,6 +51,11 @@
       else if (current && !next) current.remove(); // e.g. filters removed entirely
     });
     rebindFilterTrigger();
+    // The swapped regions are replaced wholesale, not mutated in place, so
+    // a live region living inside one of them can't be relied on to
+    // announce — this status node stays put across every render() call.
+    var status = document.querySelector('[data-collection-status]');
+    if (status && statusText) status.textContent = statusText.textContent.trim();
     if (targetUrl) window.history.pushState({ collectionFacets: true }, '', targetUrl);
     setBusy(false);
     if (document.getElementById('CollectionMain-' + sectionId)) {

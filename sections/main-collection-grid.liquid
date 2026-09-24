@@ -10,6 +10,7 @@
 -%}
 
 <div class="section page-width" data-collection-facets data-section-id="{{ section.id }}" data-url="{{ collection.url }}">
+  <div class="visually-hidden" aria-live="polite" data-collection-status></div>
   <div class="collection-grid__meta" id="CollectionMeta-{{ section.id }}">
     <span class="eyebrow">
       {%- if collection.products.size == 1 -%}

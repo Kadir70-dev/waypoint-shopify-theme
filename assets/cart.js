@@ -127,6 +127,10 @@
         return refreshCartSurfaces();
       })
       .then(function () {
+        // A native <dialog> (quick add, PDP zoom) may still be open — two
+        // modal surfaces competing for the focus trap is a real conflict,
+        // not a cosmetic one, so close any before opening the drawer.
+        qsa('dialog[open]').forEach(function (openDialog) { openDialog.close(); });
         if (window.AeraOverlays && window.AeraOverlays.CartDrawer) {
           window.AeraOverlays.CartDrawer.open();
         }
