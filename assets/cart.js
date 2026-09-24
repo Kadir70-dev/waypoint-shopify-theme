@@ -167,11 +167,19 @@
   // predictive-search.js, missing here until this Milestone 8 fix.
   var activeChangeController = null;
 
-  function changeLine(key, quantity, scope) {
+  function showCartError(message) {
+    qsa('[data-cart-error]').forEach(function (el) {
+      el.textContent = message;
+      el.hidden = !message;
+    });
+  }
+
+  function changeLine(key, quantity, scope, onError) {
     if (activeChangeController) activeChangeController.abort();
     activeChangeController = ('AbortController' in window) ? new AbortController() : null;
 
     if (scope) scope.setAttribute('aria-busy', 'true');
+    showCartError('');
 
     return fetch('/cart/change.js', {
       method: 'POST',
@@ -180,7 +188,13 @@
       signal: activeChangeController ? activeChangeController.signal : undefined
     })
       .then(function (response) {
-        return response.json();
+        return response.json().then(function (data) {
+          if (!response.ok) {
+            var error = new Error(data.description || data.message || 'Unable to update cart');
+            throw error;
+          }
+          return data;
+        });
       })
       .then(function (cart) {
         updateHeaderCount(cart);
@@ -193,6 +207,8 @@
       .catch(function (error) {
         if (scope) scope.removeAttribute('aria-busy');
         if (error.name === 'AbortError') return;
+        if (onError) onError();
+        showCartError(error.message || 'Unable to update cart');
       });
   }
 
@@ -211,22 +227,24 @@
         e.preventDefault();
         var input = stepperBtn.parentElement.querySelector('[data-quantity-input]');
         if (!input) return;
+        var previous = input.value;
         var min = parseInt(input.getAttribute('min'), 10) || 1;
         var value = parseInt(input.value, 10) || min;
         value = stepperBtn.hasAttribute('data-quantity-decrease') ? Math.max(min, value - 1) : value + 1;
         input.value = value;
         var lineKey = findLineKey(stepperBtn);
-        if (lineKey) changeLine(lineKey, value, form);
+        if (lineKey) changeLine(lineKey, value, form, function () { input.value = previous; });
       }
     });
 
     form.addEventListener('change', function (e) {
       if (!e.target.matches('[data-cart-quantity-input]')) return;
+      var previousValue = e.target.defaultValue;
       var value = parseInt(e.target.value, 10);
       if (!value || value < 1) value = 1;
       e.target.value = value;
       var key = findLineKey(e.target);
-      if (key) changeLine(key, value, form);
+      if (key) changeLine(key, value, form, function () { e.target.value = previousValue; });
     });
   });
 

@@ -29,6 +29,7 @@
      data-status-count-one="{{ 'cart.status_count_one' | t }}"
      data-status-count-other="{{ 'cart.status_count_other' | t }}"
    ></div>
+   <div class="cart-drawer__error" data-cart-error hidden role="alert"></div>
    {%- comment -%}
      Everything below is swapped wholesale by cart.js on refresh (one id,
      one innerHTML replace) rather than several fine-grained swaps — the
@@ -87,6 +88,10 @@
       {%- endform -%}
     {%- else -%}
       <div class="cart-drawer__empty">
+        <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3">
+          <path d="M14 20h36l-3 26a4 4 0 0 1-4 3.6H21a4 4 0 0 1-4-3.6L14 20Z"/>
+          <path d="M23 20v-4a9 9 0 0 1 18 0v4"/>
+        </svg>
         <p>{{ 'cart.empty' | t }}</p>
         <a href="{{ routes.all_products_collection_url }}" class="btn btn-outline" data-overlay-close>{{ 'cart.empty_cta' | t }}</a>
       </div>
