@@ -45,6 +45,7 @@ OrphanedSnippet:
     - "snippets/card-article.liquid"
     - "snippets/account-nav.liquid"
     - "snippets/address-fields.liquid"
+    - "snippets/quick-add-dialog.liquid"
     # pagination.liquid: rendered from inside main-collection-grid.liquid's
     # {% paginate %}...{% endpaginate %} block. chip-filter.liquid: rendered
     # from inside a nested {% for %}{% for %} loop there. filter-groups.liquid
@@ -80,3 +81,7 @@ OrphanedSnippet:
     # sit inside a {% for %} loop (address-fields.liquid, twice per
     # address), same unreliable-analysis pattern as above. Verified
     # referenced with grep.
+    # quick-add-dialog.liquid (Module 08): rendered directly from
+    # layout/theme.liquid — Theme Check's reachability analysis doesn't
+    # scan layout files for {% render %} calls at all. Verified referenced
+    # with grep.

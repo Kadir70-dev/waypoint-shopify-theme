@@ -141,12 +141,19 @@
       });
   }
 
-  qsa('[data-cart-add-form]').forEach(function (form) {
+  function bindAddForm(form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       addToCart(form);
     });
-  });
+  }
+  qsa('[data-cart-add-form]').forEach(bindAddForm);
+
+  // Exposed so surfaces that inject a [data-cart-add-form] after this
+  // script's initial pass (e.g. the quick-add popover's fetched markup)
+  // can wire the same add-to-cart path instead of a second implementation.
+  window.AeraCart = window.AeraCart || {};
+  window.AeraCart.bindAddForm = bindAddForm;
 
   // ---------- quantity / remove within a cart surface ----------
   function findLineKey(el) {

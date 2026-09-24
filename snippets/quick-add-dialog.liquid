@@ -1,0 +1,11 @@
+{%- comment -%}
+  One shared shell for every product card's quick-add trigger — content is
+  fetched and injected by assets/quick-add.js. Rendered once from
+  layout/theme.liquid — see OrphanedSnippet ignore list in .theme-check.yml.
+{%- endcomment -%}
+<dialog id="QuickAddDialog" class="quick-add-dialog" aria-label="{{ 'accessibility.quick_add_dialog' | t }}">
+  <button type="button" class="quick-add-dialog__close icon-btn" data-quick-add-close aria-label="{{ 'accessibility.close' | t }}">
+    {%- render 'icon-close' -%}
+  </button>
+  <div class="quick-add-dialog__content" data-quick-add-content data-error-text="{{ 'products.quick_add_error' | t | escape }}" aria-live="polite"></div>
+</dialog>

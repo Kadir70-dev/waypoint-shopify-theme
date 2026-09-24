@@ -222,3 +222,40 @@
 .buybox-field textarea { resize: vertical; }
 .buybox-field input:focus-visible,
 .buybox-field textarea:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+
+/* ---------- quick add popover (Module 08) ----------
+   .option-selector/.quantity-stepper are reused unmodified from the
+   PDP/global primitives above and in base.css — no duplicate variant-
+   picker CSS here. */
+.quick-add-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  margin: auto;
+  padding: 28px 24px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-surface);
+  background: var(--surface);
+  color: var(--text);
+  overflow-y: auto;
+}
+.quick-add-dialog::backdrop { background: rgba(0, 0, 0, .55); }
+.quick-add-dialog__close { position: absolute; top: 14px; right: 14px; }
+.quick-add-dialog__content[aria-busy="true"] { opacity: .5; pointer-events: none; }
+
+@media (max-width: 480px) {
+  .quick-add-dialog { inset: auto 0 0 0; max-width: none; max-height: 85vh; border-radius: var(--radius-surface) var(--radius-surface) 0 0; margin: 0; }
+}
+
+.quick-add { display: flex; gap: 16px; }
+.quick-add__media { flex: 0 0 88px; width: 88px; height: 88px; background: var(--surface-2); overflow: hidden; }
+.quick-add__media img, .quick-add__media svg { width: 100%; height: 100%; object-fit: cover; }
+.quick-add__body { display: flex; flex-direction: column; gap: 8px; min-width: 0; flex: 1 1 auto; }
+.quick-add__title { font-family: var(--font-display); font-size: 15px; color: var(--text); }
+.quick-add__badge { align-self: flex-start; }
+.quick-add__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; }
+.quick-add__full-details { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+.quick-add__full-details:hover, .quick-add__full-details:focus-visible { color: var(--accent-light); }
+.quick-add__error { font-size: 13px; color: var(--muted); text-align: center; padding: 24px 0; }

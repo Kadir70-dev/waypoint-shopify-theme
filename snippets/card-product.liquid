@@ -42,12 +42,18 @@
   </a>
 
   {%- if settings.show_quick_add and variant.available -%}
-    <form method="post" action="{{ routes.cart_add_url }}" class="pcard__quickadd-form" data-cart-add-form>
-      <input type="hidden" name="id" value="{{ variant.id }}">
-      <button type="submit" class="pcard__quickadd" aria-label="{{ 'products.quick_add' | t }}: {{ product.title }}">
+    {%- if product.has_only_default_variant -%}
+      <form method="post" action="{{ routes.cart_add_url }}" class="pcard__quickadd-form" data-cart-add-form>
+        <input type="hidden" name="id" value="{{ variant.id }}">
+        <button type="submit" class="pcard__quickadd" aria-label="{{ 'products.quick_add' | t }}: {{ product.title }}">
+          {%- render 'icon-plus' -%}
+        </button>
+      </form>
+    {%- else -%}
+      <button type="button" class="pcard__quickadd" data-quick-add-trigger data-product-url="{{ product.url }}" aria-haspopup="dialog" aria-controls="QuickAddDialog" aria-label="{{ 'products.quick_add' | t }}: {{ product.title }}">
         {%- render 'icon-plus' -%}
       </button>
-    </form>
+    {%- endif -%}
   {%- endif -%}
 
   <div class="pcard__body">

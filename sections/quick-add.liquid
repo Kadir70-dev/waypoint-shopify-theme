@@ -1,0 +1,101 @@
+{%- comment -%}
+  Module 08 — Quick Add fragment. Rendered only via templates/product.
+  quick-add.json (layout: false) fetched by assets/quick-add.js; never
+  linked to directly. Mirrors main-product.liquid's Section Rendering
+  API pattern: JS only computes which variant id matches the selected
+  options, then re-fetches this whole fragment server-rendered for that
+  variant — price/availability/badge are never computed client-side.
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+<div class="quick-add" id="QuickAdd-{{ section.id }}" data-quick-add-root data-product-url="{{ product.url }}">
+  <a href="{{ product.url }}" class="quick-add__media">
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 300 | image_tag: loading: 'lazy', widths: '150, 300', sizes: '96px', alt: product.title }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'quick-add__placeholder' }}
+    {%- endif -%}
+  </a>
+
+  <div class="quick-add__body">
+    <a href="{{ product.url }}" class="quick-add__title">{{ product.title }}</a>
+    {%- render 'price', product: product, variant: current_variant -%}
+    {%- render 'star-rating', product: product -%}
+
+    {%- if current_variant.available == false -%}
+      <span class="badge badge--muted quick-add__badge">{{ 'products.sold_out' | t }}</span>
+    {%- endif -%}
+
+    {%- assign quick_add_form_id = 'QuickAddForm-' | append: section.id -%}
+    {%- form 'product', product, id: quick_add_form_id, data-cart-add-form: true -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+      {%- for option in product.options_with_values -%}
+        <fieldset class="option-selector">
+          <legend class="eyebrow">{{ option.name }}: <span data-option-selected-value>{{ option.selected_value }}</span></legend>
+          <div class="option-selector__values">
+            {%- for value in option.values -%}
+              {%- assign input_id = 'QuickOption-' | append: section.id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+              <input
+                type="radio"
+                id="{{ input_id }}"
+                name="option-{{ option.position }}"
+                value="{{ value | escape }}"
+                {% if value == option.selected_value %}checked{% endif %}
+                data-option-position="{{ option.position }}"
+                class="visually-hidden option-selector__input"
+              >
+              {%- if option.name == 'Color' and value.swatch.image -%}
+                <label for="{{ input_id }}" class="option-selector__swatch" style="background-image:url({{ value.swatch.image | image_url: width: 64 }});background-size:cover" title="{{ value }}"><span class="visually-hidden">{{ value }}</span></label>
+              {%- elsif option.name == 'Color' and value.swatch.color -%}
+                <label for="{{ input_id }}" class="option-selector__swatch" style="background:{{ value.swatch.color }}" title="{{ value }}"><span class="visually-hidden">{{ value }}</span></label>
+              {%- else -%}
+                <label for="{{ input_id }}" class="option-selector__pill">{{ value }}</label>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- endfor -%}
+
+      <div class="quick-add__row">
+        <div class="quantity-stepper quantity-stepper--sm" data-quick-add-quantity>
+          <button type="button" class="quantity-stepper__btn" data-quantity-decrease aria-label="{{ 'products.decrease_quantity' | t }}">&minus;</button>
+          <input type="number" name="quantity" value="1" min="1" inputmode="numeric" data-quantity-input>
+          <button type="button" class="quantity-stepper__btn" data-quantity-increase aria-label="{{ 'products.increase_quantity' | t }}">+</button>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          data-label-add="{{ 'products.add_to_cart' | t }}"
+          data-label-sold-out="{{ 'products.sold_out' | t }}"
+          data-label-adding="{{ 'products.adding' | t }}"
+          data-label-added="{{ 'products.added' | t }}"
+          {% unless current_variant.available %}disabled{% endunless %}
+        >
+          {%- if current_variant.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
+        </button>
+      </div>
+    {%- endform -%}
+
+    <a href="{{ product.url }}" class="quick-add__full-details">{{ 'products.view_full_details' | t }} &rarr;</a>
+  </div>
+</div>
+
+<script type="application/json" data-quick-add-json>
+  {
+    "url": {{ product.url | json }},
+    "variants": [
+      {%- for variant in product.variants -%}
+        { "id": {{ variant.id | json }}, "available": {{ variant.available | json }}, "options": {{ variant.options | json }} }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Quick add",
+  "settings": []
+}
+{% endschema %}

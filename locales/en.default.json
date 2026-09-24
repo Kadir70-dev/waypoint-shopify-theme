@@ -11,7 +11,8 @@
     "mobile_menu_dialog": "Mobile menu",
     "search_dialog": "Search",
     "cart_dialog": "Shopping cart",
-    "primary_navigation": "Primary navigation"
+    "primary_navigation": "Primary navigation",
+    "quick_add_dialog": "Quick add"
   },
   "customer": {
     "login": {
@@ -200,6 +201,8 @@
     "badge_new": "New",
     "badge_sale": "Sale",
     "quick_add": "Quick add",
+    "quick_add_error": "Something went wrong. Try again or view the full product page.",
+    "view_full_details": "View full details",
     "sold_out": "Sold Out",
     "add_to_cart": "Add to Cart",
     "adding": "Adding…",

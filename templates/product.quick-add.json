@@ -1,0 +1,9 @@
+{
+  "layout": false,
+  "sections": {
+    "quick-add": {
+      "type": "quick-add"
+    }
+  },
+  "order": ["quick-add"]
+}
