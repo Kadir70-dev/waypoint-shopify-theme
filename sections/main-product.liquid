@@ -64,7 +64,7 @@
   <div class="product-layout">
     <div class="product-gallery" data-product-gallery>
       {%- if product.media.size > 0 -%}
-        <div class="product-gallery__main">
+        <div class="product-gallery__main" data-gallery-scroller tabindex="0" role="group" aria-label="{{ 'products.gallery_thumbnails' | t }}" aria-roledescription="carousel">
           {%- for media in product.media -%}
             {%- assign loading_strategy = 'lazy' -%}
             {%- assign fetchpriority = 'auto' -%}
@@ -75,10 +75,12 @@
             <div
               class="product-gallery__main-item{% if forloop.first %} is-active{% endif %}"
               id="GalleryItem-{{ section.id }}-{{ media.id }}"
-              role="tabpanel"
+              role="group"
+              aria-roledescription="slide"
               aria-labelledby="Thumb-{{ section.id }}-{{ media.id }}"
               data-gallery-main-item
               data-media-id="{{ media.id }}"
+              data-media-type="{{ media.media_type }}"
             >
               {%- case media.media_type -%}
                 {%- when 'video' -%}
@@ -86,11 +88,14 @@
                 {%- when 'external_video' -%}
                   {{ media | external_video_tag: autoplay: false }}
                 {%- when 'model' -%}
-                  {{ media | model_viewer_tag: image_size: '900x' }}
+                  {{ media | model_viewer_tag: image_size: '900x', reveal: 'interaction' }}
                 {%- else -%}
                   {%- assign focal_point = media.preview_image.presentation.focal_point -%}
                   {%- assign focal_style = 'object-position: ' | append: focal_point.x | append: '% ' | append: focal_point.y | append: '%' -%}
                   {{ media.preview_image | image_url: width: 900 | image_tag: loading: loading_strategy, fetchpriority: fetchpriority, widths: '450, 600, 900', sizes: '(min-width: 750px) 50vw, 100vw', style: focal_style }}
+                  <button type="button" class="product-gallery__zoom-trigger" data-gallery-zoom-trigger data-media-id="{{ media.id }}" aria-label="{{ 'products.gallery_zoom' | t }}">
+                    {%- render 'icon-search' -%}
+                  </button>
               {%- endcase -%}
             </div>
           {%- endfor -%}
@@ -113,11 +118,35 @@
                 {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
                   <span class="product-gallery__thumb-play" aria-hidden="true">{%- render 'icon-play' -%}</span>
                   <span class="visually-hidden">{{ 'products.gallery_play_video' | t }}</span>
+                {%- elsif media.media_type == 'model' -%}
+                  <span class="product-gallery__thumb-play" aria-hidden="true">{%- render 'icon-3d' -%}</span>
                 {%- endif -%}
               </button>
             {%- endfor -%}
           </div>
         {%- endif -%}
+
+        <dialog class="product-gallery__zoom" data-gallery-zoom-dialog aria-label="{{ 'products.gallery_zoom' | t }}">
+          <button type="button" class="product-gallery__zoom-close" data-gallery-zoom-close aria-label="{{ 'accessibility.close' | t }}">{%- render 'icon-close' -%}</button>
+          <button type="button" class="product-gallery__zoom-nav product-gallery__zoom-nav--prev" data-gallery-zoom-prev aria-label="{{ 'products.gallery_previous' | t }}">{%- render 'icon-chevron-left' -%}</button>
+          <div class="product-gallery__zoom-stage" data-gallery-zoom-stage>
+            {%- for media in product.media -%}
+              {%- unless media.media_type == 'image' %}{% continue %}{% endunless -%}
+              <img
+                class="product-gallery__zoom-image"
+                data-gallery-zoom-image
+                data-media-id="{{ media.id }}"
+                src="{{ media.preview_image | image_url: width: 1800 }}"
+                width="{{ media.preview_image.width }}"
+                height="{{ media.preview_image.height }}"
+                alt="{{ media.alt | escape }}"
+                loading="lazy"
+                hidden
+              >
+            {%- endfor -%}
+          </div>
+          <button type="button" class="product-gallery__zoom-nav product-gallery__zoom-nav--next" data-gallery-zoom-next aria-label="{{ 'products.gallery_next' | t }}">{%- render 'icon-chevron-right' -%}</button>
+        </dialog>
       {%- else -%}
         <div class="product-gallery__main">
           <div class="product-gallery__main-item is-active">
@@ -210,12 +239,51 @@
     gap: 32px;
     padding-block: 24px;
   }
-  #shopify-section-{{ section.id }} .product-gallery__main-item { display: none; aspect-ratio: var(--ratio-square); background: var(--surface-2); }
+  #shopify-section-{{ section.id }} .product-gallery__main {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #shopify-section-{{ section.id }} .product-gallery__main::-webkit-scrollbar { display: none; }
+  #shopify-section-{{ section.id }} .product-gallery__main:focus-visible { outline: var(--focus-ring); outline-offset: -2px; }
+  #shopify-section-{{ section.id }} .product-gallery__main-item {
+    position: relative;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    aspect-ratio: var(--ratio-square);
+    background: var(--surface-2);
+  }
   #shopify-section-{{ section.id }} .product-gallery__main-item img,
   #shopify-section-{{ section.id }} .product-gallery__main-item svg,
   #shopify-section-{{ section.id }} .product-gallery__main-item video,
-  #shopify-section-{{ section.id }} .product-gallery__main-item iframe { width: 100%; height: 100%; object-fit: cover; border: 0; }
-  #shopify-section-{{ section.id }} .product-gallery__main-item.is-active { display: block; }
+  #shopify-section-{{ section.id }} .product-gallery__main-item iframe,
+  #shopify-section-{{ section.id }} .product-gallery__main-item model-viewer { width: 100%; height: 100%; object-fit: cover; border: 0; display: block; }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-trigger {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    cursor: zoom-in;
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease-out-slow);
+  }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-trigger svg { width: 16px; height: 16px; }
+  #shopify-section-{{ section.id }} .product-gallery__main-item:hover .product-gallery__zoom-trigger,
+  #shopify-section-{{ section.id }} .product-gallery__zoom-trigger:focus-visible { opacity: 1; }
+  @media (hover: none) {
+    #shopify-section-{{ section.id }} .product-gallery__zoom-trigger { opacity: 1; }
+  }
   #shopify-section-{{ section.id }} .product-gallery__thumbs { display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; }
   #shopify-section-{{ section.id }} .product-gallery__thumb {
     position: relative;
@@ -240,6 +308,56 @@
     background: rgba(0, 0, 0, .35);
   }
   #shopify-section-{{ section.id }} .product-gallery__thumb-play svg { width: 18px; height: 18px; }
+
+  .reduced-motion #shopify-section-{{ section.id }} .product-gallery__main { scroll-behavior: auto; }
+
+  /* ---------- zoom dialog (native <dialog>, no library) ---------- */
+  #shopify-section-{{ section.id }} .product-gallery__zoom {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--bg);
+    color: var(--text);
+  }
+  #shopify-section-{{ section.id }} .product-gallery__zoom::backdrop { background: var(--bg); }
+  #shopify-section-{{ section.id }} .product-gallery__zoom[open] { display: flex; align-items: center; justify-content: center; }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-stage { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-image {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    cursor: zoom-in;
+    transition: transform var(--dur-base) var(--ease-out-slow);
+    touch-action: pinch-zoom;
+  }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-image.is-zoomed { cursor: zoom-out; transform: scale(2); }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-close,
+  #shopify-section-{{ section.id }} .product-gallery__zoom-nav {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    cursor: pointer;
+    z-index: 1;
+  }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-close svg,
+  #shopify-section-{{ section.id }} .product-gallery__zoom-nav svg { width: 18px; height: 18px; }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-close { top: 16px; right: 16px; }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-nav--prev { left: 16px; top: 50%; transform: translateY(-50%); }
+  #shopify-section-{{ section.id }} .product-gallery__zoom-nav--next { right: 16px; top: 50%; transform: translateY(-50%); }
 
   #shopify-section-{{ section.id }} .product-buybox { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
   #shopify-section-{{ section.id }} .product-buybox[aria-busy="true"] { opacity: .6; pointer-events: none; }

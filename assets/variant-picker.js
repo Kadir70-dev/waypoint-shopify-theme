@@ -32,14 +32,21 @@
 
     function setActiveMedia(mediaId) {
       if (!mediaId) return;
+      var reducedMotion = document.documentElement.classList.contains('reduced-motion');
+      var targetItem = null;
       gallery.querySelectorAll('[data-gallery-main-item]').forEach(function (item) {
         var active = String(item.getAttribute('data-media-id')) === String(mediaId);
         item.classList.toggle('is-active', active);
-        if (!active) {
+        if (active) {
+          targetItem = item;
+        } else {
           var video = item.querySelector('video');
           if (video) video.pause();
         }
       });
+      if (targetItem && typeof targetItem.scrollIntoView === 'function') {
+        targetItem.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', inline: 'start', block: 'nearest' });
+      }
       gallery.querySelectorAll('[data-gallery-thumb]').forEach(function (thumb) {
         var active = String(thumb.getAttribute('data-media-id')) === String(mediaId);
         thumb.classList.toggle('is-active', active);
