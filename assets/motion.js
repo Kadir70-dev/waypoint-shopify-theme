@@ -150,6 +150,15 @@
     });
     if (prev) prev.addEventListener('click', function () { show(current - 1, true, 'prev'); });
     if (next) next.addEventListener('click', function () { show(current + 1, true, 'next'); });
+    slider.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        show(current - 1, true, 'prev');
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        show(current + 1, true, 'next');
+      }
+    });
 
     slider.addEventListener('mouseenter', pause);
     slider.addEventListener('mouseleave', restart);
