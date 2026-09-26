@@ -2,7 +2,7 @@
   Usage: {% render 'card-category', image: block.settings.image, label: block.settings.label, sublabel: block.settings.sublabel, link: block.settings.link %}
 {%- endcomment -%}
 {%- if path_style -%}
-  <a href="{{ link | default: '#' }}" class="ccard ccard--path" data-reveal aria-label="{{ label | escape }}">
+  <a href="{{ link | default: routes.all_products_collection_url }}" class="ccard ccard--path" data-reveal aria-label="{{ label | escape }}">
     <div class="ccard__path-media">
       {%- if mobile_image -%}
         <picture>
@@ -36,7 +36,7 @@
     </span>
   </a>
 {%- else -%}
-  <a href="{{ link | default: '#' }}" class="ccard" data-reveal>
+  <a href="{{ link | default: routes.all_products_collection_url }}" class="ccard" data-reveal>
     {%- if image -%}
       {{ image | image_url: width: 500 | image_tag: loading: 'lazy', alt: label, widths: '300, 500', sizes: '(min-width: 750px) 25vw, 50vw' }}
     {%- else -%}

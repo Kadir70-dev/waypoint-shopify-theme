@@ -26,20 +26,20 @@
     </button>
 
     <nav class="site-header__nav" aria-label="{{ 'accessibility.primary_navigation' | t }}">
-      {%- for link in section.settings.main_menu.links -%}
-        {%- if section.settings.enable_mega_menu and link.title == section.settings.mega_menu_trigger_label -%}
-          <a
-            href="{{ link.url }}"
-            aria-haspopup="true"
-            aria-controls="MegaMenu"
-            data-overlay-trigger="MegaMenu"
-          >
-            {{ link.title }}
-          </a>
-        {%- else -%}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {%- endif -%}
-      {%- endfor -%}
+      {%- if section.settings.main_menu != blank and section.settings.main_menu.links.size > 0 -%}
+        {%- for link in section.settings.main_menu.links -%}
+          {%- if section.settings.enable_mega_menu and link.title == section.settings.mega_menu_trigger_label -%}
+            <a href="{{ link.url }}" aria-haspopup="true" aria-controls="MegaMenu" data-overlay-trigger="MegaMenu">{{ link.title }}</a>
+          {%- else -%}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}">{{ 'navigation.home' | t }}</a>
+        <a href="{{ routes.all_products_collection_url }}">{{ 'navigation.shop' | t }}</a>
+        <a href="{{ routes.search_url }}">Search</a>
+        <a href="{{ routes.cart_url }}">Cart</a>
+      {%- endif -%}
     </nav>
 
     <a href="{{ routes.root_url }}" class="site-header__logo">
@@ -111,18 +111,22 @@
 
   <div class="mobile-nav__panel" data-nav-panel="root">
     <ul class="mobile-nav__links">
-      {%- for link in section.settings.main_menu.links -%}
-        <li>
-          {%- if link.links.size > 0 -%}
-            <button type="button" class="mobile-nav__drill" data-nav-drill="drill-{{ forloop.index }}" aria-expanded="false" aria-controls="MobileNavDrill-{{ forloop.index }}">
-              {{ link.title }}
-              {%- render 'icon-chevron-right' -%}
-            </button>
-          {%- else -%}
-            <a href="{{ link.url }}">{{ link.title }}</a>
-          {%- endif -%}
-        </li>
-      {%- endfor -%}
+      {%- if section.settings.main_menu != blank and section.settings.main_menu.links.size > 0 -%}
+        {%- for link in section.settings.main_menu.links -%}
+          <li>
+            {%- if link.links.size > 0 -%}
+              <button type="button" class="mobile-nav__drill" data-nav-drill="drill-{{ forloop.index }}" aria-expanded="false" aria-controls="MobileNavDrill-{{ forloop.index }}">{{ link.title }} {%- render 'icon-chevron-right' -%}</button>
+            {%- else -%}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        <li><a href="{{ routes.root_url }}">{{ 'navigation.home' | t }}</a></li>
+        <li><a href="{{ routes.all_products_collection_url }}">{{ 'navigation.shop' | t }}</a></li>
+        <li><a href="{{ routes.search_url }}">Search</a></li>
+        <li><a href="{{ routes.cart_url }}">Cart</a></li>
+      {%- endif -%}
     </ul>
   </div>
 

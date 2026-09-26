@@ -46,7 +46,7 @@
           endif
         -%}
         <a
-          href="{{ block.settings.link.url | default: '#' }}"
+          href="{{ block.settings.link.url | default: routes.all_products_collection_url }}"
           class="mega-menu__tile"
           {% if block.settings.image %}style="--bg-mobile:url({{ tile_mobile_url }});--bg-desktop:url({{ tile_desktop_url }}){% if tile_bg_position %};--bg-position:{{ tile_bg_position }}{% endif %}"{% endif %}
           {{ block.shopify_attributes }}

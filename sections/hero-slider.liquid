@@ -67,7 +67,7 @@
           <p class="hero-slider__body" style="color:#eee">{{ block.settings.subtext }}</p>
         {%- endif -%}
         {%- if block.settings.cta_label != blank -%}
-          <a href="{{ block.settings.cta_link | default: '#' }}" class="hero-slider__cta btn btn-primary" style="align-self:flex-start;margin-top:6px">
+          <a href="{{ block.settings.cta_link | default: routes.all_products_collection_url }}" class="hero-slider__cta btn btn-primary" style="align-self:flex-start;margin-top:6px">
             {{ block.settings.cta_label }}
           </a>
         {%- endif -%}
