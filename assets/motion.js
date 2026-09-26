@@ -103,22 +103,35 @@
       resetProgress();
       if (!autoplay || paused || document.hidden) return;
       timer = window.setTimeout(function () {
-        show(current + 1, false);
+        show(current + 1, false, 'next');
         schedule();
       }, interval);
     }
 
-    function show(index, manual) {
+    function show(index, manual, directionOverride) {
+      var previous = current;
+      var direction = directionOverride || (index < current && !(index === 0 && current === slides.length - 1) ? 'prev' : 'next');
       if (slides[current]) {
         slides[current].removeAttribute('data-active');
+        slides[current].setAttribute('data-leaving', 'true');
+        slides[current].setAttribute('data-direction', direction);
         slides[current].setAttribute('aria-hidden', 'true');
       }
       if (dots[current]) dots[current].setAttribute('aria-current', 'false');
       current = (index + slides.length) % slides.length;
       loadSlideBackground(slides[current]);
+      slides[current].removeAttribute('data-leaving');
+      slides[current].setAttribute('data-entering', 'true');
+      slides[current].setAttribute('data-direction', direction);
       slides[current].setAttribute('data-active', 'true');
       slides[current].setAttribute('aria-hidden', 'false');
       if (dots[current]) dots[current].setAttribute('aria-current', 'true');
+      window.requestAnimationFrame(function () {
+        slides[current].removeAttribute('data-entering');
+      });
+      window.setTimeout(function () {
+        slides[previous].removeAttribute('data-leaving');
+      }, parseInt(slider.getAttribute('data-transition'), 10) || 600);
       if (manual) schedule();
     }
 
@@ -135,8 +148,8 @@
     dots.forEach(function (dot, i) {
       dot.addEventListener('click', function () { show(i, true); });
     });
-    if (prev) prev.addEventListener('click', function () { show(current - 1, true); });
-    if (next) next.addEventListener('click', function () { show(current + 1, true); });
+    if (prev) prev.addEventListener('click', function () { show(current - 1, true, 'prev'); });
+    if (next) next.addEventListener('click', function () { show(current + 1, true, 'next'); });
 
     slider.addEventListener('mouseenter', pause);
     slider.addEventListener('mouseleave', restart);
@@ -155,6 +168,7 @@
     });
     document.addEventListener('shopify:block:deselect', function () { restart(); });
 
+    slider.classList.add('is-ready');
     show(0, false);
     schedule();
   });

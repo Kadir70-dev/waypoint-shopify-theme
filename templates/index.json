@@ -2,7 +2,7 @@
   "sections": {
     "hero": {
       "type": "hero-slider",
-      "settings": { "autoplay": true, "autoplay_interval": 6, "tagline_word_1": "Explore", "tagline_word_2": "Adapt", "tagline_word_3": "Endure" },
+      "settings": { "autoplay": true, "autoplay_interval": 9, "transition_duration": 600, "tagline_word_1": "Explore", "tagline_word_2": "Adapt", "tagline_word_3": "Endure" },
       "blocks": {
         "slide-1": { "type": "slide", "settings": { "eyebrow": "Gear for Real Life", "heading": "Further by Nature", "subtext": "Technical gear for the unknown. Built to go further.", "cta_label": "Explore Gear" } },
         "slide-2": { "type": "slide", "settings": { "eyebrow": "Engineered for Extremes", "heading": "Details That Perform", "subtext": "Premium materials. Rigorously tested. No compromises.", "cta_label": "Our Approach" } },

@@ -58,16 +58,16 @@
     >
       <div class="hero-slider__content">
         {%- if block.settings.eyebrow != blank -%}
-          <span class="eyebrow" style="color:#ddd">{{ block.settings.eyebrow }}</span>
+          <span class="hero-slider__eyebrow eyebrow" style="color:#ddd">{{ block.settings.eyebrow }}</span>
         {%- endif -%}
         {%- if block.settings.heading != blank -%}
-          <h1 style="color:#fff;font-size:clamp(28px, 5vw, 44px)">{{ block.settings.heading }}</h1>
+          <h1 class="hero-slider__heading" style="color:#fff;font-size:clamp(28px, 5vw, 44px)">{{ block.settings.heading }}</h1>
         {%- endif -%}
         {%- if block.settings.subtext != blank -%}
-          <p style="color:#eee">{{ block.settings.subtext }}</p>
+          <p class="hero-slider__body" style="color:#eee">{{ block.settings.subtext }}</p>
         {%- endif -%}
         {%- if block.settings.cta_label != blank -%}
-          <a href="{{ block.settings.cta_link | default: '#' }}" class="btn btn-primary" style="align-self:flex-start;margin-top:6px">
+          <a href="{{ block.settings.cta_link | default: '#' }}" class="hero-slider__cta btn btn-primary" style="align-self:flex-start;margin-top:6px">
             {{ block.settings.cta_label }}
           </a>
         {%- endif -%}
@@ -110,8 +110,8 @@
   "name": "Hero slideshow",
   "settings": [
     { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": true },
-    { "type": "range", "id": "autoplay_interval", "label": "Autoplay interval (seconds)", "min": 3, "max": 12, "step": 1, "default": 5 },
-    { "type": "range", "id": "transition_duration", "label": "Transition duration (milliseconds)", "min": 800, "max": 1200, "step": 100, "default": 1000 },
+    { "type": "range", "id": "autoplay_interval", "label": "Autoplay interval (seconds)", "min": 3, "max": 12, "step": 1, "default": 9 },
+    { "type": "range", "id": "transition_duration", "label": "Transition duration (milliseconds)", "min": 600, "max": 1200, "step": 100, "default": 600 },
     { "type": "header", "content": "Corner tagline" },
     { "type": "text", "id": "tagline_word_1", "label": "Word 1", "default": "Explore" },
     { "type": "text", "id": "tagline_word_2", "label": "Word 2", "default": "Adapt" },

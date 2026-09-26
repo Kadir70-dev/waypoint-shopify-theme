@@ -12,10 +12,10 @@
 .hero-slider__slide {
   position: absolute;
   inset: 0;
-  opacity: 0;
   visibility: hidden;
-  transition: opacity var(--hero-transition, var(--dur-slow)) var(--ease-out-slow), transform var(--hero-transition, var(--dur-slow)) var(--ease-out-slow);
-  transform: scale(1.04) translate3d(1.2%, 0, 0);
+  opacity: 1;
+  transform: translate3d(100%, 0, 0);
+  transition: transform var(--hero-transition, 600ms) var(--ease-out-slow);
   /* Responsive + lazy background image (Milestone 8 performance fix):
      --bg-mobile/--bg-desktop are set inline for the first slide only;
      every other slide gets them set by motion.js the first time it
@@ -34,20 +34,13 @@
 }
 .hero-slider__slide[data-active="true"] {
   position: relative;
-  opacity: 1;
   visibility: visible;
-  transform: scale(1) translate3d(0, 0, 0);
-}
-.hero-slider__slide:not([data-active="true"]) .hero-slider__content {
-  opacity: 0;
-  transform: translate3d(0, 16px, 0);
-}
-.hero-slider__slide[data-active="true"] .hero-slider__content {
-  opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition: opacity calc(var(--hero-transition, var(--dur-slow)) * .7) var(--ease-out-slow), transform calc(var(--hero-transition, var(--dur-slow)) * .7) var(--ease-out-slow);
-  transition-delay: calc(var(--hero-transition, var(--dur-slow)) * .12);
 }
+.hero-slider__slide[data-leaving="true"] { visibility: visible; }
+.hero-slider__slide[data-leaving="true"][data-direction="next"] { transform: translate3d(-100%, 0, 0); }
+.hero-slider__slide[data-entering="true"][data-direction="prev"] { transform: translate3d(-100%, 0, 0); }
+.hero-slider__slide[data-leaving="true"][data-direction="prev"] { transform: translate3d(100%, 0, 0); }
 /* Stack every slide in the same grid cell so the crossfade has something
    to fade between, without JS having to manage layout. */
 .hero-slider { display: grid; }
@@ -64,6 +57,13 @@
   gap: 12px;
 }
 .hero-slider__slide { display: flex; align-items: flex-end; }
+.hero-slider__content > * { opacity: 0; transform: translate3d(0, 200%, 0); }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__content > * { animation: hero-content-reveal 900ms var(--ease-out-slow) both; }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__eyebrow { animation-delay: 850ms; }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__heading { animation-delay: 900ms; }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__body { animation-delay: 1150ms; }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__cta { animation-delay: 1400ms; }
+@keyframes hero-content-reveal { from { opacity: 0; transform: translate3d(0, 200%, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
 
 .hero-slider__controls {
   position: absolute;
@@ -175,8 +175,7 @@
 .carousel__nav button svg { width: 16px; height: 16px; }
 
 .reduced-motion .hero-slider__slide { transform: none; transition: none; }
-.reduced-motion .hero-slider__slide[data-active="true"] .hero-slider__content,
-.reduced-motion .hero-slider__slide:not([data-active="true"]) .hero-slider__content { transform: none; transition: none; }
+.reduced-motion .hero-slider__slide[data-active="true"] .hero-slider__content > * { opacity: 1; transform: none; animation: none; }
 .reduced-motion .hero-slider__progress { display: none; }
 
 @media (max-width: 749px) {
