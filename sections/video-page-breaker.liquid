@@ -14,13 +14,15 @@
         <span class="video-page-breaker__poster-placeholder" aria-hidden="true"></span>
       {%- endif -%}
     </picture>
-    {%- if section.settings.video != blank -%}
-      <video class="video-page-breaker__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+    <video class="video-page-breaker__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+      {%- if section.settings.video != blank -%}
         {%- for source in section.settings.video.sources -%}
           <source src="{{ source.url }}" type="{{ source.mime_type }}">
         {%- endfor -%}
-      </video>
-    {%- endif -%}
+      {%- else -%}
+        <source src="{{ 'breakervideo.mp4' | asset_url }}" type="video/mp4">
+      {%- endif -%}
+    </video>
     <div class="video-page-breaker__overlay" aria-hidden="true"></div>
   </div>
 
@@ -50,7 +52,14 @@
       video.pause();
       return;
     }
-    var ready = function () { section.classList.add('video-page-breaker--ready'); };
+    var ready = function () {
+      var playback = video.play();
+      if (playback && playback.then) {
+        playback.then(function () { section.classList.add('video-page-breaker--ready'); }).catch(function () {});
+      } else {
+        section.classList.add('video-page-breaker--ready');
+      }
+    };
     video.addEventListener('canplay', ready, { once: true });
     if (video.readyState >= 3) ready();
   }());
