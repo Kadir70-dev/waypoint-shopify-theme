@@ -14,30 +14,56 @@
   assign variant = product.selected_or_first_available_variant
   assign badge_text = blank
   assign badge_muted = false
+  assign badge_kind = blank
   if variant.available == false
     assign badge_text = 'products.sold_out' | t
     assign badge_muted = true
+    assign badge_kind = 'muted'
   elsif settings.show_badges and variant.compare_at_price > variant.price
     assign badge_text = 'products.badge_sale' | t
-  elsif settings.show_badges and product.tags contains 'bestseller'
-    assign badge_text = 'products.badge_bestseller' | t
-  elsif settings.show_badges and product.tags contains 'new'
-    assign badge_text = 'products.badge_new' | t
+    assign badge_kind = 'sale'
+  elsif settings.show_badges
+    assign badge_map = settings.badge_tag_map | default: 'new:New,bestseller:Bestseller,limited:Limited,exclusive:Exclusive'
+    assign badge_rules = badge_map | split: ','
+    for badge_rule in badge_rules
+      assign badge_parts = badge_rule | split: ':'
+      assign badge_tag = badge_parts[0] | strip
+      assign badge_label = badge_parts[1] | strip
+      if badge_tag != blank and product.tags contains badge_tag
+        assign badge_text = badge_label
+        assign badge_kind = badge_tag | handleize
+        break
+      endif
+    endfor
   endif
   assign color_option = product.options_with_values | where: 'name', 'Color' | first
+  assign secondary_image = blank
+  assign image_count = 0
+  for media in product.media
+    if media.media_type == 'image'
+      assign image_count = image_count | plus: 1
+      if image_count == 2
+        assign secondary_image = media
+        break
+      endif
+    endif
+  endfor
 -%}
 
-<div class="pcard{% if plain %} pcard--plain{% endif %}" data-reveal>
+<div class="pcard{% if plain %} pcard--plain{% endif %} pcard--ratio-{{ settings.product_card_ratio | default: 'square' }}" data-reveal>
   <a href="{{ product.url }}" class="pcard__media">
     {%- if product.featured_image -%}
       {%- assign focal_point = product.featured_image.presentation.focal_point -%}
       {%- assign focal_style = 'object-position: ' | append: focal_point.x | append: '% ' | append: focal_point.y | append: '%' -%}
       {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, 50vw', style: focal_style }}
+      {%- if settings.show_product_card_secondary_image and secondary_image != blank -%}
+        {{ secondary_image | image_url: width: 600 | image_tag: class: 'pcard__secondary-image', loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, 50vw', alt: '' }}
+      {%- endif -%}
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'pcard__placeholder' }}
     {%- endif -%}
     {%- if badge_text != blank -%}
-      <span class="badge pcard__badge{% if badge_muted %} badge--muted{% endif %}">{{ badge_text }}</span>
+      <span class="badge pcard__badge{% if badge_muted %} badge--muted{% endif %}{% if badge_kind != blank %} badge--{{ badge_kind }}{% endif %}">{{ badge_text }}</span>
     {%- endif -%}
   </a>
 

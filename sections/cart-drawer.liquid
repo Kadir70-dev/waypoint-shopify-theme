@@ -60,6 +60,33 @@
     {%- if cart.item_count > 0 -%}
       {%- render 'free-shipping-bar' -%}
 
+      {%- assign cross_sell_collection = settings.cart_cross_sell_collection -%}
+      {%- if settings.show_cart_cross_sell and cross_sell_collection != blank and cross_sell_collection.products_count > 0 -%}
+        <section class="cart-cross-sell" aria-labelledby="CartCrossSellHeading">
+          <h3 id="CartCrossSellHeading">{{ settings.cart_cross_sell_heading | default: 'You May Also Like' }}</h3>
+          <div class="cart-cross-sell__items">
+            {%- for cross_product in cross_sell_collection.products limit: settings.cart_cross_sell_products -%}
+              {%- assign cross_variant = cross_product.selected_or_first_available_variant -%}
+              <article class="cart-cross-sell__item">
+                <a href="{{ cross_product.url }}" class="cart-cross-sell__media">
+                  {%- if cross_product.featured_image -%}{{ cross_product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60, 120', sizes: '60px', alt: cross_product.title }}{%- endif -%}
+                </a>
+                <div class="cart-cross-sell__body">
+                  <a href="{{ cross_product.url }}" class="cart-cross-sell__title">{{ cross_product.title }}</a>
+                  {%- render 'price', product: cross_product, variant: cross_variant -%}
+                </div>
+                {%- if cross_variant.available and cross_product.has_only_default_variant -%}
+                  <form method="post" action="{{ routes.cart_add_url }}" data-cart-add-form>
+                    <input type="hidden" name="id" value="{{ cross_variant.id }}">
+                    <button type="submit" class="icon-btn" aria-label="{{ 'products.quick_add' | t }}: {{ cross_product.title }}">{%- render 'icon-plus' -%}</button>
+                  </form>
+                {%- endif -%}
+              </article>
+            {%- endfor -%}
+          </div>
+        </section>
+      {%- endif -%}
+
       {%- form 'cart', cart, id: 'CartDrawerForm', class: 'cart-drawer__form', data-cart-form: true -%}
         <div class="cart-drawer__items" data-cart-items>
           {%- for item in cart.items -%}

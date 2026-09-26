@@ -123,6 +123,32 @@
         "id": "free_shipping_threshold",
         "label": "t:settings.cart.free_shipping_threshold.label",
         "default": 100
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_cross_sell",
+        "label": "Show cart cross-sell",
+        "default": false
+      },
+      {
+        "type": "collection",
+        "id": "cart_cross_sell_collection",
+        "label": "Cart cross-sell collection"
+      },
+      {
+        "type": "text",
+        "id": "cart_cross_sell_heading",
+        "label": "Cart cross-sell heading",
+        "default": "You May Also Like"
+      },
+      {
+        "type": "range",
+        "id": "cart_cross_sell_products",
+        "label": "Cart cross-sell products",
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "default": 2
       }
     ]
   },
@@ -150,6 +176,31 @@
         "id": "show_badges",
         "label": "t:settings.grid.show_badges.label",
         "default": true
+      },
+      {
+        "type": "select",
+        "id": "product_card_ratio",
+        "label": "Product card media ratio",
+        "options": [
+          { "value": "square", "label": "Square" },
+          { "value": "portrait", "label": "Portrait" },
+          { "value": "landscape", "label": "Landscape" },
+          { "value": "natural", "label": "Natural" }
+        ],
+        "default": "square"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_card_secondary_image",
+        "label": "Show secondary image on hover",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "badge_tag_map",
+        "label": "Product badge tag map",
+        "info": "Comma-separated tag:label pairs, for example new:New,bestseller:Bestseller,limited:Limited,exclusive:Exclusive.",
+        "default": "new:New,bestseller:Bestseller,limited:Limited,exclusive:Exclusive"
       }
     ]
   },

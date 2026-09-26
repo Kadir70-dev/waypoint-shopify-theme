@@ -20,8 +20,8 @@
 >
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
     <div class="section page-width" data-reveal-group>
-      <h2 style="font-size:22px;margin-bottom:20px">{{ section.settings.heading }}</h2>
-      <div class="product-grid" data-context="featured">
+      <h2 class="recommendations__heading">{{ section.settings.heading }}</h2>
+      <div class="product-grid product-grid--recommendations" data-context="recommendations" data-columns="{{ section.settings.columns }}">
         {%- for product in recommendations.products -%}
           {%- render 'card-product', product: product -%}
         {%- endfor -%}
@@ -45,6 +45,16 @@
         { "value": "complementary", "label": "Complementary (goes well with)" }
       ],
       "default": "related"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Desktop recommendation columns",
+      "options": [
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "4"
     }
   ]
 }

@@ -62,6 +62,16 @@
 .cart-drawer__footer { flex-shrink: 0; border-top: 1px solid var(--border); padding-top: 16px; display: flex; flex-direction: column; gap: 10px; }
 .cart-drawer__subtotal { display: flex; justify-content: space-between; font-size: 15px; }
 .cart-drawer__shipping-note { font-size: 12px; color: var(--muted); }
+.cart-cross-sell { border-block: 1px solid var(--border); padding-block: 14px; }
+.cart-cross-sell h3 { font-family: var(--font-display); font-size: 11px; letter-spacing: var(--tracking-label); text-transform: uppercase; margin: 0 0 10px; }
+.cart-cross-sell__items { display: flex; flex-direction: column; gap: 10px; }
+.cart-cross-sell__item { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.cart-cross-sell__media { width: 52px; height: 52px; flex: 0 0 52px; background: var(--surface-3); }
+.cart-cross-sell__media img { width: 100%; height: 100%; object-fit: cover; }
+.cart-cross-sell__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.cart-cross-sell__title { font-family: var(--font-display); font-size: 11px; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cart-cross-sell__body .pcard__price { font-size: 12px; }
+.cart-cross-sell__item form { flex: 0 0 auto; }
 
 .cart-drawer__empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; color: var(--muted); padding: 40px 20px; }
 .cart-drawer__empty .empty-icon { width: 48px; height: 48px; opacity: .5; }

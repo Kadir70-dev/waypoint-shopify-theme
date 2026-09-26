@@ -15,12 +15,22 @@
   background: var(--surface-3);
   overflow: hidden;
 }
+.pcard--ratio-portrait .pcard__media { aspect-ratio: 4 / 5; }
+.pcard--ratio-landscape .pcard__media { aspect-ratio: 4 / 3; }
+.pcard--ratio-natural .pcard__media { aspect-ratio: auto; }
+.pcard--ratio-natural .pcard__media img { position: relative; height: auto; aspect-ratio: auto; }
+.pcard--ratio-natural .pcard__media .pcard__secondary-image { position: absolute; inset: 0; height: 100%; }
 .pcard__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--dur-base) var(--ease-out-slow);
+  transition: transform var(--dur-base) var(--ease-out-slow), opacity var(--dur-fast) var(--ease-out-slow);
 }
+.pcard__media .pcard__secondary-image { position: absolute; inset: 0; opacity: 0; }
+.pcard__media:hover .pcard__secondary-image,
+.pcard__media:focus-within .pcard__secondary-image { opacity: 1; }
+.pcard__media:hover > img:first-child,
+.pcard__media:focus-within > img:first-child { opacity: 0; }
 .pcard:hover .pcard__media img { transform: scale(1.03); }
 
 .pcard__badge { position: absolute; top: 10px; inset-inline-start: 10px; z-index: 1; }
@@ -134,6 +144,13 @@
   .product-grid[data-density="3"] { grid-template-columns: repeat(3, 1fr); }
   .product-grid[data-density="4"] { grid-template-columns: repeat(4, 1fr); }
 }
+.recommendations__heading { font-size: 22px; margin: 0 0 20px; }
+.product-grid--recommendations { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 750px) {
+  .product-grid--recommendations[data-columns="3"] { grid-template-columns: repeat(3, 1fr); }
+  .product-grid--recommendations[data-columns="4"] { grid-template-columns: repeat(4, 1fr); }
+}
+
 /* featured-collection shows a wider row on desktop than a density-3/4
    collection grid, since it's a homepage highlight strip, not the grid */
 .product-grid[data-context="featured"] {
