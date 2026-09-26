@@ -1,19 +1,54 @@
 {%- comment -%}
   Usage: {% render 'card-category', image: block.settings.image, label: block.settings.label, sublabel: block.settings.sublabel, link: block.settings.link %}
 {%- endcomment -%}
-<a href="{{ link | default: '#' }}" class="ccard" data-reveal>
-  {%- if image -%}
-    {{ image | image_url: width: 500 | image_tag: loading: 'lazy', alt: label, widths: '300, 500', sizes: '(min-width: 750px) 25vw, 50vw' }}
-  {%- else -%}
-    {{ 'collection-1' | placeholder_svg_tag: 'ccard__placeholder' }}
-  {%- endif -%}
-  <span class="ccard__label">
-    <span>
-      <span style="display:block;font-family:var(--font-display);font-size:16px;text-transform:uppercase">{{ label }}</span>
-      {%- if sublabel != blank -%}
-        <span style="display:block;font-size:12px;color:#ddd;margin-top:2px">{{ sublabel }}</span>
+{%- if path_style -%}
+  <a href="{{ link | default: '#' }}" class="ccard ccard--path" data-reveal aria-label="{{ label | escape }}">
+    <div class="ccard__path-media">
+      {%- if mobile_image -%}
+        <picture>
+          <source media="(max-width: 749px)" srcset="{{ mobile_image | image_url: width: 700 }}">
+          {{ image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '500, 700, 900', sizes: '260px', alt: label, class: 'ccard__path-image' }}
+        </picture>
+      {%- elsif image -%}
+        {{ image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '500, 700, 900', sizes: '260px', alt: label, class: 'ccard__path-image' }}
+      {%- else -%}
+        {{ 'collection-1' | placeholder_svg_tag: 'ccard__path-image ccard__placeholder' }}
+      {%- endif -%}
+      <span class="ccard__path-gradient" aria-hidden="true"></span>
+      {%- if badge != blank -%}<span class="ccard__path-badge">{{ badge }}</span>{%- endif -%}
+      <span class="ccard__path-collapsed">
+        <span class="ccard__path-title">{{ label }}</span>
+        {%- if sublabel != blank -%}<span class="ccard__path-sublabel">{{ sublabel }}</span>{%- endif -%}
+      </span>
+      <span class="ccard__path-arrow" aria-hidden="true">{%- render 'icon-arrow-right' -%}</span>
+    </div>
+    <span class="ccard__path-expanded">
+      <span>
+        <span class="ccard__path-expanded-title">{{ label }}</span>
+        {%- if description != blank -%}<span class="ccard__path-description">{{ description }}</span>{%- endif -%}
+      </span>
+      {%- if meta_label != blank or meta_value != blank -%}
+        <span>
+          <span class="ccard__path-divider"></span>
+          {%- if meta_label != blank -%}<span class="ccard__path-meta-label">{{ meta_label }}</span>{%- endif -%}
+          {%- if meta_value != blank -%}<span class="ccard__path-meta-value">{{ meta_value }}</span>{%- endif -%}
+        </span>
       {%- endif -%}
     </span>
-    {%- render 'icon-arrow-right' -%}
-  </span>
-</a>
+  </a>
+{%- else -%}
+  <a href="{{ link | default: '#' }}" class="ccard" data-reveal>
+    {%- if image -%}
+      {{ image | image_url: width: 500 | image_tag: loading: 'lazy', alt: label, widths: '300, 500', sizes: '(min-width: 750px) 25vw, 50vw' }}
+    {%- else -%}
+      {{ 'collection-1' | placeholder_svg_tag: 'ccard__placeholder' }}
+    {%- endif -%}
+    <span class="ccard__label">
+      <span>
+        <span style="display:block;font-family:var(--font-display);font-size:16px;text-transform:uppercase">{{ label }}</span>
+        {%- if sublabel != blank -%}<span style="display:block;font-size:12px;color:#ddd;margin-top:2px">{{ sublabel }}</span>{%- endif -%}
+      </span>
+      {%- render 'icon-arrow-right' -%}
+    </span>
+  </a>
+{%- endif -%}

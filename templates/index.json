@@ -16,14 +16,15 @@
     },
     "shop-by-category": {
       "type": "category-grid",
-      "settings": { "heading": "Shop by Category" },
+      "settings": { "heading": "Shop by Category", "path_cards": true },
       "blocks": {
         "tile-1": { "type": "tile", "settings": { "label": "Backpacks", "sublabel": "Carry further." } },
         "tile-2": { "type": "tile", "settings": { "label": "Camp & Shelter", "sublabel": "Stay ready." } },
         "tile-3": { "type": "tile", "settings": { "label": "Tools & Equipment", "sublabel": "Built for more." } },
-        "tile-4": { "type": "tile", "settings": { "label": "Apparel", "sublabel": "All conditions." } }
+        "tile-4": { "type": "tile", "settings": { "label": "Apparel", "sublabel": "All conditions." } },
+        "tile-5": { "type": "tile", "settings": { "label": "Accessories", "sublabel": "Ready for the unexpected." } }
       },
-      "block_order": ["tile-1", "tile-2", "tile-3", "tile-4"]
+      "block_order": ["tile-1", "tile-2", "tile-3", "tile-4", "tile-5"]
     },
     "details-and-summit": {
       "type": "feature-spotlight",
