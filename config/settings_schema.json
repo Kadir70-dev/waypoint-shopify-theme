@@ -197,6 +197,13 @@
       },
       {
         "type": "text",
+        "id": "product_card_swatch_option",
+        "label": "Product card swatch option",
+        "info": "Option name used for product-card swatches, for example Color or Finish.",
+        "default": "Color"
+      },
+      {
+        "type": "text",
         "id": "badge_tag_map",
         "label": "Product badge tag map",
         "info": "Comma-separated tag:label pairs, for example new:New,bestseller:Bestseller,limited:Limited,exclusive:Exclusive.",

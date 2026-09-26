@@ -36,7 +36,8 @@
       endif
     endfor
   endif
-  assign color_option = product.options_with_values | where: 'name', 'Color' | first
+  assign swatch_option_name = settings.product_card_swatch_option | default: 'Color'
+  assign color_option = product.options_with_values | where: 'name', swatch_option_name | first
   assign secondary_image = blank
   assign image_count = 0
   for media in product.media
