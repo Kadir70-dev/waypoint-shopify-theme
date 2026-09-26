@@ -29,14 +29,7 @@
     "video-page-breaker": {
       "type": "video-page-breaker",
       "settings": {
-        "eyebrow": "BUILT FOR WHAT'S OUT THERE",
-        "heading": "GO BEYOND THE\nEXPECTED",
-        "text": "Equipment and essentials made for the places that demand more.",
-        "desktop_height": 640,
-        "mobile_height": 500,
-        "overlay_opacity": 40,
-        "content_alignment": "center",
-        "text_color": "#FFFFFF"
+        "desktop_height": 640, "mobile_height": 500
       }
     },
     "details-and-summit": {
