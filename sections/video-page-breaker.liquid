@@ -45,6 +45,11 @@
     var section = document.getElementById('VideoPageBreaker-{{ section.id }}');
     var video = section && section.querySelector('.video-page-breaker__video');
     if (!video) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.removeAttribute('autoplay');
+      video.pause();
+      return;
+    }
     var ready = function () { section.classList.add('video-page-breaker--ready'); };
     video.addEventListener('canplay', ready, { once: true });
     if (video.readyState >= 3) ready();
