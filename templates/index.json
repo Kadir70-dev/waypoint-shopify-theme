@@ -18,11 +18,11 @@
       "type": "category-grid",
       "settings": { "heading": "Shop by Category", "path_cards": true },
       "blocks": {
-        "tile-1": { "type": "tile", "settings": { "label": "Backpacks", "sublabel": "Carry further." } },
-        "tile-2": { "type": "tile", "settings": { "label": "Camp & Shelter", "sublabel": "Stay ready." } },
-        "tile-3": { "type": "tile", "settings": { "label": "Tools & Equipment", "sublabel": "Built for more." } },
-        "tile-4": { "type": "tile", "settings": { "label": "Apparel", "sublabel": "All conditions." } },
-        "tile-5": { "type": "tile", "settings": { "label": "Accessories", "sublabel": "Ready for the unexpected." } }
+        "tile-1": { "type": "tile", "settings": { "label": "Backpacks", "sublabel": "Carry further.", "description": "Built for long trails, daily missions and everything in between.", "meta_label": "Includes", "meta_value": "Day Packs · Expedition · Travel · Hydration" } },
+        "tile-2": { "type": "tile", "settings": { "label": "Camp & Shelter", "sublabel": "Stay ready.", "description": "Reliable shelter and sleep systems engineered for nights beyond the familiar.", "meta_label": "Includes", "meta_value": "Tents · Shelters · Sleeping Gear · Camp Essentials" } },
+        "tile-3": { "type": "tile", "settings": { "label": "Tools & Equipment", "sublabel": "Built for more.", "description": "Dependable field equipment designed for demanding environments and unexpected moments.", "meta_label": "Includes", "meta_value": "Navigation · Lighting · Multi-Tools · Field Gear" } },
+        "tile-4": { "type": "tile", "settings": { "label": "Apparel", "sublabel": "All conditions.", "description": "Technical layers designed for changing weather, hard movement and everyday exploration.", "meta_label": "Includes", "meta_value": "Base Layers · Outerwear · Performance · Essentials" } },
+        "tile-5": { "type": "tile", "settings": { "label": "Accessories", "sublabel": "Ready for the unexpected.", "description": "Small essentials that make a big difference when you're moving beyond the everyday.", "meta_label": "Includes", "meta_value": "Hydration · Storage · Protection · Everyday Gear" } }
       },
       "block_order": ["tile-1", "tile-2", "tile-3", "tile-4", "tile-5"]
     },
