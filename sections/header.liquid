@@ -93,9 +93,6 @@
     </div>
   </div>
 
-  {%- if section.settings.enable_mega_menu -%}
-    {%- section 'mega-menu' -%}
-  {%- endif -%}
 </header>
 
 {%- comment -%} ---------- mobile navigation (full-screen, drill-down) ---------- {%- endcomment -%}
@@ -220,7 +217,6 @@
 </div>
 
 {%- comment -%} ---------- cart drawer (Milestone 5) ---------- {%- endcomment -%}
-{%- section 'cart-drawer' -%}
 
 {%- comment -%} ---------- mobile bottom tab bar ---------- {%- endcomment -%}
 <nav class="mobile-tabbar" aria-label="{{ 'accessibility.primary_navigation' | t }}">
