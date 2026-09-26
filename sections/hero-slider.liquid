@@ -3,6 +3,8 @@
   data-hero-slider
   data-autoplay="{{ section.settings.autoplay }}"
   data-interval="{{ section.settings.autoplay_interval | times: 1000 }}"
+  data-transition="{{ section.settings.transition_duration }}"
+  style="--hero-interval:{{ section.settings.autoplay_interval | times: 1000 }}ms;--hero-transition:{{ section.settings.transition_duration }}ms"
 >
   {%- for block in section.blocks -%}
     {%- liquid
@@ -30,6 +32,10 @@
     <div
       class="hero-slider__slide photo brand"
       data-hero-slide
+      role="group"
+      aria-roledescription="slide"
+      aria-label="{{ forloop.index }} / {{ section.blocks.size }}"
+      aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
       {% comment %}
         Only the first (initially active) slide's background loads eagerly
         (inline custom properties, real request at paint time). Every other
@@ -79,19 +85,23 @@
   {%- endif -%}
 
   {%- if section.blocks.size > 1 -%}
-    <div class="hero-slider__dots">
-      {%- for block in section.blocks -%}
-        {%- assign idx = forloop.index -%}
-        <button
-          type="button"
-          data-hero-dot
-          aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
-          aria-label="{{ 'sections.hero.slide' | t }} {{ idx }}"
-        >
-          {%- if idx < 10 -%}0{{ idx }}{%- else -%}{{ idx }}{%- endif -%}
-        </button>
-      {%- endfor -%}
+    <div class="hero-slider__controls" aria-label="{{ 'sections.hero.controls' | t }}">
+      <button type="button" data-hero-prev aria-label="{{ 'sections.carousel.previous' | t }}">
+        {%- render 'icon-chevron-left' -%}
+      </button>
+      <div class="hero-slider__dots">
+        {%- for block in section.blocks -%}
+          {%- assign idx = forloop.index -%}
+          <button type="button" data-hero-dot aria-current="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ 'sections.hero.slide' | t }} {{ idx }}">
+            {%- if idx < 10 -%}0{{ idx }}{%- else -%}{{ idx }}{%- endif -%}
+          </button>
+        {%- endfor -%}
+      </div>
+      <button type="button" data-hero-next aria-label="{{ 'sections.carousel.next' | t }}">
+        {%- render 'icon-chevron-right' -%}
+      </button>
     </div>
+    <div class="hero-slider__progress" aria-hidden="true"><span data-hero-progress></span></div>
   {%- endif -%}
 </div>
 
@@ -100,7 +110,8 @@
   "name": "Hero slideshow",
   "settings": [
     { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": true },
-    { "type": "range", "id": "autoplay_interval", "label": "Autoplay interval (seconds)", "min": 3, "max": 12, "step": 1, "default": 6 },
+    { "type": "range", "id": "autoplay_interval", "label": "Autoplay interval (seconds)", "min": 3, "max": 12, "step": 1, "default": 5 },
+    { "type": "range", "id": "transition_duration", "label": "Transition duration (milliseconds)", "min": 800, "max": 1200, "step": 100, "default": 1000 },
     { "type": "header", "content": "Corner tagline" },
     { "type": "text", "id": "tagline_word_1", "label": "Word 1", "default": "Explore" },
     { "type": "text", "id": "tagline_word_2", "label": "Word 2", "default": "Adapt" },

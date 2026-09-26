@@ -239,7 +239,8 @@
   },
   "sections": {
     "hero": {
-      "slide": "Slide"
+      "slide": "Slide",
+      "controls": "Hero controls"
     },
     "carousel": {
       "previous": "Previous",

@@ -58,19 +58,20 @@
 
   // ---------- hero slider ----------
   document.querySelectorAll('[data-hero-slider]').forEach(function (slider) {
-    var slides = slider.querySelectorAll('[data-hero-slide]');
-    var dots = slider.querySelectorAll('[data-hero-dot]');
+    var slides = Array.prototype.slice.call(slider.querySelectorAll('[data-hero-slide]'));
+    var dots = Array.prototype.slice.call(slider.querySelectorAll('[data-hero-dot]'));
+    var prev = slider.querySelector('[data-hero-prev]');
+    var next = slider.querySelector('[data-hero-next]');
+    var progress = slider.querySelector('[data-hero-progress]');
     if (slides.length < 2) return;
 
     var current = 0;
     var autoplay = slider.getAttribute('data-autoplay') === 'true' && !reducedMotion;
-    var interval = parseInt(slider.getAttribute('data-interval'), 10) || 6000;
+    var interval = parseInt(slider.getAttribute('data-interval'), 10) || 5000;
     var timer = null;
+    var paused = false;
 
     function loadSlideBackground(slide) {
-      // Lazy, one-time: a slide with data-bg-mobile hasn't had its real
-      // background set yet. Removing the attributes after use marks it
-      // "already loaded" so re-activating the same slide is a no-op.
       var mobileUrl = slide.getAttribute('data-bg-mobile');
       if (!mobileUrl) return;
       slide.style.setProperty('--bg-mobile', 'url(' + mobileUrl + ')');
@@ -82,41 +83,80 @@
       slide.removeAttribute('data-bg-position');
     }
 
-    function show(index) {
-      slides[current].removeAttribute('data-active');
+    function resetProgress() {
+      if (!progress) return;
+      progress.classList.remove('is-running');
+      if (autoplay && !paused && !document.hidden) {
+        void progress.offsetWidth;
+        progress.classList.add('is-running');
+      }
+    }
+
+    function clearTimer() {
+      if (timer) window.clearTimeout(timer);
+      timer = null;
+      if (progress) progress.classList.remove('is-running');
+    }
+
+    function schedule() {
+      clearTimer();
+      resetProgress();
+      if (!autoplay || paused || document.hidden) return;
+      timer = window.setTimeout(function () {
+        show(current + 1, false);
+        schedule();
+      }, interval);
+    }
+
+    function show(index, manual) {
+      if (slides[current]) {
+        slides[current].removeAttribute('data-active');
+        slides[current].setAttribute('aria-hidden', 'true');
+      }
       if (dots[current]) dots[current].setAttribute('aria-current', 'false');
       current = (index + slides.length) % slides.length;
       loadSlideBackground(slides[current]);
       slides[current].setAttribute('data-active', 'true');
+      slides[current].setAttribute('aria-hidden', 'false');
       if (dots[current]) dots[current].setAttribute('aria-current', 'true');
+      if (manual) schedule();
+    }
+
+    function pause() {
+      paused = true;
+      clearTimer();
     }
 
     function restart() {
-      if (!autoplay) return;
-      clearInterval(timer);
-      timer = setInterval(function () {
-        show(current + 1);
-      }, interval);
+      paused = false;
+      schedule();
     }
 
     dots.forEach(function (dot, i) {
-      dot.addEventListener('click', function () {
-        show(i);
-        restart();
-      });
+      dot.addEventListener('click', function () { show(i, true); });
     });
+    if (prev) prev.addEventListener('click', function () { show(current - 1, true); });
+    if (next) next.addEventListener('click', function () { show(current + 1, true); });
 
-    // Pause on hover/focus so autoplay never fights a reading user.
-    slider.addEventListener('mouseenter', function () {
-      clearInterval(timer);
-    });
+    slider.addEventListener('mouseenter', pause);
     slider.addEventListener('mouseleave', restart);
-    slider.addEventListener('focusin', function () {
-      clearInterval(timer);
+    slider.addEventListener('focusin', pause);
+    slider.addEventListener('focusout', function (event) {
+      if (!slider.contains(event.relatedTarget)) restart();
     });
-    slider.addEventListener('focusout', restart);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) pause();
+      else restart();
+    });
+    document.addEventListener('shopify:block:select', function (event) {
+      var selected = event.target && event.target.closest ? event.target.closest('[data-hero-slide]') : null;
+      var index = selected ? slides.indexOf(selected) : -1;
+      if (index >= 0) { pause(); show(index, false); }
+    });
+    document.addEventListener('shopify:block:deselect', function () { restart(); });
 
-    restart();
+    show(0, false);
+    schedule();
   });
 
   // ---------- carousel prev/next (testimonials, later: cross-sell rows) ----------
