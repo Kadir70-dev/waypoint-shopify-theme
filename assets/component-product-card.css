@@ -344,10 +344,6 @@
 .ccard__path-title, .ccard__path-sublabel, .ccard__path-expanded-title, .ccard__path-description, .ccard__path-meta-label, .ccard__path-meta-value { display: block; }
 .ccard__path-title { font-family: var(--font-display); font-size: 24px; line-height: 1.2; letter-spacing: .02em; text-transform: uppercase; }
 .ccard__path-sublabel { margin-top: 8px; color: rgba(255, 255, 255, .7); font-size: 14px; text-transform: uppercase; }
-.ccard__path-arrow { position: absolute; inset-inline-end: 20px; bottom: 20px; width: 56px; height: 56px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 80%, transparent); display: flex; align-items: center; justify-content: center; }
-.ccard__path-arrow svg { width: 24px; height: 24px; }
-.ccard--path:hover .ccard__path-arrow,
-.ccard--path:focus-within .ccard__path-arrow { display: none; }
 .ccard__path-expanded { position: absolute; inset-inline: 0; bottom: 0; height: 58%; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; opacity: 0; visibility: hidden; pointer-events: none; }
 .ccard--path:hover .ccard__path-expanded,
 .ccard--path:focus-within .ccard__path-expanded { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .3s cubic-bezier(.25, .1, .35, 1), visibility .3s; }
