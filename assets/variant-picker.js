@@ -184,6 +184,9 @@
             buybox.innerHTML = fresh.innerHTML;
             markUnavailableCombinations();
             announceStatus(fresh);
+            var pageUrl = new URL(window.location.href);
+            pageUrl.searchParams.set("variant", variant.id);
+            window.history.replaceState(window.history.state, "", pageUrl.href);
           }
           buybox.removeAttribute('aria-busy');
           syncStickyBar(variant);

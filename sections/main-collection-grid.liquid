@@ -13,10 +13,10 @@
   <div class="visually-hidden" aria-live="polite" data-collection-status></div>
   <div class="collection-grid__meta" id="CollectionMeta-{{ section.id }}">
     <span class="eyebrow">
-      {%- if collection.products.size == 1 -%}
-        {{ 'collection.products_count_one' | t: count: collection.products.size }}
+      {%- if collection.products_count == 1 -%}
+        {{ 'collection.products_count_one' | t: count: collection.products_count }}
       {%- else -%}
-        {{ 'collection.products_count_other' | t: count: collection.products.size }}
+        {{ 'collection.products_count_other' | t: count: collection.products_count }}
       {%- endif -%}
     </span>
     <div style="display:flex;align-items:center;gap:12px">
@@ -72,7 +72,7 @@
         </div>
       {%- endif -%}
 
-      {%- if collection.products.size == 0 and has_active_filters -%}
+      {%- if collection.products_count == 0 and has_active_filters -%}
         <div class="collection-grid__empty">
           <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3">
             <rect x="14" y="14" width="36" height="36"/><path d="M14 14 L50 50 M50 14 L14 50"/>
@@ -83,7 +83,7 @@
             {{ 'collection.clear_all_filters' | t }}
           </a>
         </div>
-      {%- elsif collection.products.size == 0 -%}
+      {%- elsif collection.products_count == 0 -%}
         <div class="collection-grid__empty">
           <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3">
             <rect x="14" y="14" width="36" height="36"/><path d="M14 14 L50 50 M50 14 L14 50"/>
@@ -122,10 +122,10 @@
       </div>
       <div class="mobile-filter-drawer__footer">
         <button type="button" class="btn btn-primary btn-block" data-overlay-close>
-          {%- if collection.products.size == 1 -%}
-            {{ 'collection.show_results_one' | t: count: collection.products.size }}
+          {%- if collection.products_count == 1 -%}
+            {{ 'collection.show_results_one' | t: count: collection.products_count }}
           {%- else -%}
-            {{ 'collection.show_results_other' | t: count: collection.products.size }}
+            {{ 'collection.show_results_other' | t: count: collection.products_count }}
           {%- endif -%}
         </button>
       </div>
