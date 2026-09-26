@@ -3,18 +3,16 @@
   class="video-page-breaker"
   style="--video-desktop-height:{{ section.settings.desktop_height }}px;--video-mobile-height:{{ section.settings.mobile_height }}px"
 >
-  <picture class="video-page-breaker__poster">
-    {%- if section.settings.mobile_poster != blank -%}
-      <source media="(max-width: 749px)" srcset="{{ section.settings.mobile_poster | image_url: width: 1200 }}">
-    {%- endif -%}
-    {%- if section.settings.desktop_poster != blank -%}
-      {{ section.settings.desktop_poster | image_url: width: 2200 | image_tag: loading: 'lazy', sizes: '100vw', alt: '', class: 'video-page-breaker__poster-image' }}
-    {%- else -%}
-      <span class="video-page-breaker__poster-placeholder" aria-hidden="true"></span>
-    {%- endif -%}
-  </picture>
-
-  <video class="video-page-breaker__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+  <video
+    class="video-page-breaker__video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    aria-hidden="true"
+    tabindex="-1"
+  >
     {%- if section.settings.video != blank -%}
       {%- for source in section.settings.video.sources -%}
         <source src="{{ source.url }}" type="{{ source.mime_type }}">
@@ -27,38 +25,18 @@
 
 <script>
   (function () {
-    var section = document.getElementById('VideoPageBreaker-{{ section.id }}');
-    var video = section && section.querySelector('.video-page-breaker__video');
-    if (!video) return;
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var video = document.querySelector('#VideoPageBreaker-{{ section.id }} .video-page-breaker__video');
+    if (video && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       video.removeAttribute('autoplay');
       video.pause();
-      return;
     }
-    var ready = function () {
-      var playback = video.play();
-      if (playback && playback.then) {
-        playback.then(function () { section.classList.add('video-page-breaker--ready'); }).catch(function () {});
-      } else {
-        section.classList.add('video-page-breaker--ready');
-      }
-    };
-    video.addEventListener('canplay', ready, { once: true });
-    if (video.readyState >= 3) ready();
   }());
 </script>
 
 {% stylesheet %}
-.video-page-breaker { position: relative; height: var(--video-mobile-height); overflow: hidden; background: var(--surface-3); }
-.video-page-breaker__poster, .video-page-breaker__video { position: absolute; inset: 0; width: 100%; height: 100%; }
-.video-page-breaker__poster { z-index: 0; }
-.video-page-breaker__poster-image, .video-page-breaker__poster-placeholder { display: block; width: 100%; height: 100%; object-fit: cover; }
-.video-page-breaker__poster-placeholder { background: var(--surface-3); }
-.video-page-breaker__video { z-index: 1; display: block; object-fit: cover; opacity: 0; transition: opacity var(--dur-base) var(--ease-out-slow); }
-.video-page-breaker--ready .video-page-breaker__poster { opacity: 0; }
-.video-page-breaker--ready .video-page-breaker__video { opacity: 1; }
+.video-page-breaker { position: relative; width: 100%; height: var(--video-mobile-height); overflow: hidden; background: var(--surface-3); }
+.video-page-breaker__video { position: absolute; inset: 0; z-index: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (min-width: 750px) { .video-page-breaker { height: var(--video-desktop-height); } }
-@media (prefers-reduced-motion: reduce) { .video-page-breaker__video { transition: none; } }
 {% endstylesheet %}
 
 {% schema %}
@@ -66,8 +44,6 @@
   "name": "Video page breaker",
   "settings": [
     { "type": "video", "id": "video", "label": "Background video" },
-    { "type": "image_picker", "id": "desktop_poster", "label": "Desktop poster" },
-    { "type": "image_picker", "id": "mobile_poster", "label": "Mobile poster" },
     { "type": "range", "id": "desktop_height", "label": "Desktop height", "min": 500, "max": 800, "step": 10, "default": 640, "unit": "px" },
     { "type": "range", "id": "mobile_height", "label": "Mobile height", "min": 400, "max": 650, "step": 10, "default": 500, "unit": "px" }
   ],
