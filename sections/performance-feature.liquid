@@ -1,0 +1,61 @@
+{%- assign featured_product = section.settings.product -%}
+<section class="performance-feature" data-reveal-group>
+  <div class="performance-feature__editorial" style="--editorial-image: url({% if section.settings.image %}{{ section.settings.image | image_url: width: 1800 }}{% else %}{{ 'hero-slide-2.jpg' | asset_url }}{% endif %});{% if section.settings.mobile_image %}--editorial-image-mobile: url({{ section.settings.mobile_image | image_url: width: 900 }});{% endif %}">
+    <div class="performance-feature__copy">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+      <div class="performance-feature__body">{{ section.settings.body }}</div>
+      {% if section.settings.cta_label != blank %}<a class="performance-feature__link" href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}">{{ section.settings.cta_label }} <span aria-hidden="true">&rarr;</span></a>{% endif %}
+    </div>
+    <ul class="performance-feature__list">
+      {% for block in section.blocks %}<li {{ block.shopify_attributes }}>{{ block.settings.label }}</li>{% endfor %}
+    </ul>
+  </div>
+  <div class="performance-feature__product">
+    <div class="performance-feature__product-copy">
+      <p class="eyebrow">{{ section.settings.product_eyebrow }}</p>
+      {% if featured_product != blank %}
+        <h3>{{ featured_product.title }}</h3>
+        <p>{{ section.settings.product_description | default: 'All-terrain backpack for multi-day missions.' }}</p>
+        {% render 'price', product: featured_product %}
+        <a class="performance-feature__link" href="{{ featured_product.url }}">{{ section.settings.product_cta_label }} <span aria-hidden="true">&rarr;</span></a>
+      {% else %}
+        <h3>{{ section.settings.demo_title }}</h3>
+        <p>{{ section.settings.product_description | default: 'All-terrain backpack for multi-day missions.' }}</p>
+        <p class="performance-feature__demo-price">{{ section.settings.demo_price }}</p>
+      {% endif %}
+    </div>
+    <div class="performance-feature__product-image">
+      {% if featured_product and featured_product.featured_image %}
+        {{ featured_product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: featured_product.title }}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'performance-feature__placeholder' }}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+#shopify-section-{{ section.id }} .performance-feature { display:grid; grid-template-columns:1fr; background:var(--bg); color:var(--text); }
+#shopify-section-{{ section.id }} .performance-feature__editorial { position:relative; min-height:460px; display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; padding:clamp(2rem,4vw,4rem); background-image:linear-gradient(90deg,rgba(0,0,0,.48),rgba(0,0,0,.08) 72%),var(--editorial-image); background-position:center; background-size:cover; color:#fff; }
+#shopify-section-{{ section.id }} .performance-feature__copy,#shopify-section-{{ section.id }} .performance-feature__list { position:relative; z-index:1; }
+#shopify-section-{{ section.id }} .performance-feature__copy { max-width:31rem; }
+#shopify-section-{{ section.id }} .performance-feature h2 { max-width:8ch; margin:.75rem 0 1.25rem; font-family:var(--font-display); font-size:clamp(3rem,5.4vw,5.5rem); letter-spacing:-.035em; line-height:.92; text-transform:uppercase; }
+#shopify-section-{{ section.id }} .performance-feature__body { max-width:28rem; color:rgba(255,255,255,.82); line-height:1.55; }
+#shopify-section-{{ section.id }} .performance-feature__link { display:inline-flex; gap:.5rem; margin-top:1.5rem; border-bottom:1px solid currentColor; color:inherit; font-size:.72rem; font-weight:600; letter-spacing:var(--tracking-label); text-decoration:none; text-transform:uppercase; }
+#shopify-section-{{ section.id }} .performance-feature__link:focus-visible { outline:var(--focus-ring); outline-offset:var(--focus-ring-offset); }
+#shopify-section-{{ section.id }} .performance-feature__list { display:flex; flex-direction:column; gap:.7rem; align-self:center; margin:0; padding:0; list-style:none; color:rgba(255,255,255,.82); font-family:var(--font-display); font-size:.7rem; letter-spacing:.12em; text-align:right; text-transform:uppercase; }
+#shopify-section-{{ section.id }} .performance-feature__product { display:flex; align-items:center; justify-content:space-between; gap:1.5rem; min-height:320px; padding:clamp(2rem,4vw,4rem); background:var(--surface-2); }
+#shopify-section-{{ section.id }} .performance-feature__product-copy { max-width:15rem; }
+#shopify-section-{{ section.id }} .performance-feature h3 { margin:.75rem 0 .6rem; font-family:var(--font-display); font-size:clamp(1.8rem,3vw,3rem); line-height:1; text-transform:uppercase; }
+#shopify-section-{{ section.id }} .performance-feature__product-copy p:not(.eyebrow) { color:var(--muted); line-height:1.5; }
+#shopify-section-{{ section.id }} .performance-feature__demo-price { color:var(--text)!important; font-family:var(--font-display); font-size:1.1rem; }
+#shopify-section-{{ section.id }} .performance-feature__product-image { width:42%; max-width:15rem; }
+#shopify-section-{{ section.id }} .performance-feature__product-image img,#shopify-section-{{ section.id }} .performance-feature__placeholder { display:block; width:100%; height:auto; }
+@media (min-width:750px) { #shopify-section-{{ section.id }} .performance-feature { grid-template-columns:1.9fr 1fr; } }
+@media (max-width:749px) { #shopify-section-{{ section.id }} .performance-feature__editorial { min-height:520px; background-image:linear-gradient(90deg,rgba(0,0,0,.46),rgba(0,0,0,.08)),var(--editorial-image-mobile,var(--editorial-image)); } #shopify-section-{{ section.id }} .performance-feature__list { align-self:flex-end; } #shopify-section-{{ section.id }} .performance-feature__product { min-height:290px; } }
+</style>
+
+{% schema %}
+{"name":"Performance feature","settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"ENGINEERED FOR EXTREMES"},{"type":"text","id":"heading","label":"Heading","default":"DETAILS\nTHAT PERFORM"},{"type":"richtext","id":"body","label":"Body","default":"<p>From alpine ridges to dense forests, every element is designed with purpose. Premium materials. Rigorously tested. No compromises.</p>"},{"type":"text","id":"cta_label","label":"CTA label","default":"OUR APPROACH"},{"type":"url","id":"cta_url","label":"CTA URL"},{"type":"image_picker","id":"image","label":"Editorial image"},{"type":"image_picker","id":"mobile_image","label":"Mobile editorial image"},{"type":"product","id":"product","label":"Featured product"},{"type":"text","id":"product_eyebrow","label":"Product eyebrow","default":"FEATURED GEAR"},{"type":"textarea","id":"product_description","label":"Product description override"},{"type":"text","id":"product_cta_label","label":"Product CTA","default":"VIEW PRODUCT"},{"type":"text","id":"demo_title","label":"Demo product title","default":"SUMMIT 45"},{"type":"text","id":"demo_price","label":"Demo price","default":"€249.00"}],"blocks":[{"type":"feature","name":"Feature","limit":5,"settings":[{"type":"text","id":"label","label":"Label","default":"WATERPROOF"}]}],"presets":[{"name":"Performance feature","blocks":[{"type":"feature","settings":{"label":"WATERPROOF"}},{"type":"feature","settings":{"label":"BREATHABLE"}},{"type":"feature","settings":{"label":"DURABLE"}},{"type":"feature","settings":{"label":"LIGHTWEIGHT"}},{"type":"feature","settings":{"label":"FIELD TESTED"}}]}]}
+{% endschema %}
