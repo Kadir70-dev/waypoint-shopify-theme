@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "intro": {
+      "type": "main-page"
+    },
+    "guide": {
+      "type": "faq-content"
+    },
+    "contact": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Need help choosing?"
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "guide",
+    "contact"
+  ]
+}

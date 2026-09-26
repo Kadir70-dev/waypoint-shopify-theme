@@ -1,0 +1,28 @@
+<div class="section page-width faq-content">
+  {%- if section.settings.heading != blank -%}<h1 class="faq-content__heading">{{ section.settings.heading }}</h1>{%- endif -%}
+  <div class="faq-content__list">
+    {%- for block in section.blocks -%}
+      {%- render 'accordion', title: block.settings.question, content: block.settings.answer, open: false -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ content",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions, answered" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How can we help?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Add a helpful answer for your customers.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FAQ content", "blocks": [{ "type": "faq" }, { "type": "faq" }, { "type": "faq" }] }]
+}
+{% endschema %}

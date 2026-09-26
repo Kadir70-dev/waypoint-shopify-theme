@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "intro": {
+      "type": "main-page"
+    },
+    "faq": {
+      "type": "faq-content"
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Stay in the know",
+        "text": "Join for new releases, stories and thoughtful updates."
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "faq",
+    "newsletter"
+  ]
+}
