@@ -1,7 +1,6 @@
 <section
   id="VideoPageBreaker-{{ section.id }}"
   class="video-page-breaker"
-  style="--video-desktop-height:{{ section.settings.desktop_height }}px;--video-mobile-height:{{ section.settings.mobile_height }}px"
 >
   <video
     class="video-page-breaker__video"
@@ -9,7 +8,7 @@
     muted
     loop
     playsinline
-    preload="metadata"
+    preload="auto"
     aria-hidden="true"
     tabindex="-1"
   >
@@ -23,29 +22,16 @@
   </video>
 </section>
 
-<script>
-  (function () {
-    var video = document.querySelector('#VideoPageBreaker-{{ section.id }} .video-page-breaker__video');
-    if (video && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      video.removeAttribute('autoplay');
-      video.pause();
-    }
-  }());
-</script>
-
 {% stylesheet %}
-.video-page-breaker { position: relative; width: 100%; height: var(--video-mobile-height); overflow: hidden; background: var(--surface-3); }
-.video-page-breaker__video { position: absolute; inset: 0; z-index: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
-@media (min-width: 750px) { .video-page-breaker { height: var(--video-desktop-height); } }
+.video-page-breaker { width: 100%; overflow: hidden; }
+.video-page-breaker__video { display: block; width: 100%; height: auto; }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Video page breaker",
   "settings": [
-    { "type": "video", "id": "video", "label": "Background video" },
-    { "type": "range", "id": "desktop_height", "label": "Desktop height", "min": 500, "max": 800, "step": 10, "default": 640, "unit": "px" },
-    { "type": "range", "id": "mobile_height", "label": "Mobile height", "min": 400, "max": 650, "step": 10, "default": 500, "unit": "px" }
+    { "type": "video", "id": "video", "label": "Video" }
   ],
   "presets": [
     { "name": "Video page breaker" }
