@@ -99,8 +99,21 @@
     });
 
     dialog.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        e.preventDefault();
+        dialog.close();
+        return;
+      }
       if (e.key === 'ArrowLeft') show(currentIndex - 1);
       if (e.key === 'ArrowRight') show(currentIndex + 1);
     });
   });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' && e.key !== 'Esc') return;
+    var openDialog = document.querySelector('[data-gallery-zoom-dialog][open]');
+    if (!openDialog) return;
+    e.preventDefault();
+    openDialog.close();
+  }, true);
 }());
