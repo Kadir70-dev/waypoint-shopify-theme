@@ -26,6 +26,19 @@
       },
       "block_order": ["tile-1", "tile-2", "tile-3", "tile-4", "tile-5"]
     },
+    "video-page-breaker": {
+      "type": "video-page-breaker",
+      "settings": {
+        "eyebrow": "BUILT FOR WHAT'S OUT THERE",
+        "heading": "GO BEYOND THE\nEXPECTED",
+        "text": "Equipment and essentials made for the places that demand more.",
+        "desktop_height": 640,
+        "mobile_height": 500,
+        "overlay_opacity": 40,
+        "content_alignment": "center",
+        "text_color": "#FFFFFF"
+      }
+    },
     "details-and-summit": {
       "type": "feature-spotlight",
       "settings": {
@@ -79,6 +92,7 @@
     "hero",
     "latest-releases",
     "shop-by-category",
+    "video-page-breaker",
     "details-and-summit",
     "life-more-open",
     "trusted-by-explorers",
