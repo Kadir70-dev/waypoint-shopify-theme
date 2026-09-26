@@ -70,27 +70,10 @@
   inset-inline: 40px;
   bottom: 20px;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 16px;
 }
-.hero-slider__controls > button {
-  width: 32px;
-  height: 32px;
-  padding: 7px;
-  border: 1px solid rgba(255, 255, 255, .35);
-  background: rgba(0, 0, 0, .16);
-  color: #fff;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.hero-slider__controls > button:hover,
-.hero-slider__controls > button:focus-visible { background: rgba(0, 0, 0, .34); }
-.hero-slider__controls svg { width: 16px; height: 16px; }
 .hero-slider__dots { display: flex; gap: 14px; }
 .hero-slider__dots button {
+  position: relative;
   background: none;
   border: 0;
   color: rgba(255, 255, 255, .55);
@@ -98,29 +81,24 @@
   font-size: 11px;
   letter-spacing: .08em;
   cursor: pointer;
-  padding: 4px 0;
-  border-bottom: 1px solid transparent;
+  padding: 4px 0 8px;
 }
-.hero-slider__dots button[aria-current="true"] { color: #fff; border-bottom-color: #fff; }
-.hero-slider__progress {
+.hero-slider__dots button:hover,
+.hero-slider__dots button:focus-visible,
+.hero-slider__dots button[aria-current="true"] { color: #fff; }
+.hero-slider__dot-progress {
   position: absolute;
-  inset-inline: 40px;
-  bottom: 12px;
-  z-index: 2;
+  inset-inline: 0;
+  bottom: 0;
   height: 1px;
-  background: rgba(255, 255, 255, .28);
-  pointer-events: none;
-}
-.hero-slider__progress span {
-  display: block;
-  width: 100%;
-  height: 100%;
   background: #fff;
-  transform-origin: left center;
   transform: scaleX(0);
+  transform-origin: left center;
 }
-.hero-slider__progress.is-running span { animation: hero-progress var(--hero-interval, 5000ms) linear both; }
-@keyframes hero-progress { to { transform: scaleX(1); } }
+.hero-slider__dots.is-running button[aria-current="true"] .hero-slider__dot-progress {
+  animation: hero-dot-progress var(--hero-interval, 15000ms) linear both;
+}
+@keyframes hero-dot-progress { to { transform: scaleX(1); } }
 
 .hero-slider__corner-tag {
   position: absolute;
@@ -176,11 +154,10 @@
 
 .reduced-motion .hero-slider__slide { transform: none; transition: none; }
 .reduced-motion .hero-slider__slide[data-active="true"] .hero-slider__content > * { opacity: 1; transform: none; animation: none; }
-.reduced-motion .hero-slider__progress { display: none; }
+.reduced-motion .hero-slider__dot-progress { display: none; }
 
 @media (max-width: 749px) {
   .hero-slider__content { padding: 28px 20px 76px; max-width: min(100%, 420px); }
   .hero-slider__controls { inset-inline: 20px; bottom: 20px; gap: 12px; }
-  .hero-slider__progress { inset-inline: 20px; bottom: 12px; }
   .hero-slider__controls > button { width: 36px; height: 36px; }
 }

@@ -60,9 +60,7 @@
   document.querySelectorAll('[data-hero-slider]').forEach(function (slider) {
     var slides = Array.prototype.slice.call(slider.querySelectorAll('[data-hero-slide]'));
     var dots = Array.prototype.slice.call(slider.querySelectorAll('[data-hero-dot]'));
-    var prev = slider.querySelector('[data-hero-prev]');
-    var next = slider.querySelector('[data-hero-next]');
-    var progress = slider.querySelector('[data-hero-progress]');
+    var dotsContainer = slider.querySelector('[data-hero-dots]');
     if (slides.length < 2) return;
 
     var current = 0;
@@ -84,18 +82,18 @@
     }
 
     function resetProgress() {
-      if (!progress) return;
-      progress.classList.remove('is-running');
+      if (!dotsContainer) return;
+      dotsContainer.classList.remove('is-running');
       if (autoplay && !paused && !document.hidden) {
-        void progress.offsetWidth;
-        progress.classList.add('is-running');
+        void dotsContainer.offsetWidth;
+        dotsContainer.classList.add('is-running');
       }
     }
 
     function clearTimer() {
       if (timer) window.clearTimeout(timer);
       timer = null;
-      if (progress) progress.classList.remove('is-running');
+      if (dotsContainer) dotsContainer.classList.remove('is-running');
     }
 
     function schedule() {
@@ -148,8 +146,6 @@
     dots.forEach(function (dot, i) {
       dot.addEventListener('click', function () { show(i, true); });
     });
-    if (prev) prev.addEventListener('click', function () { show(current - 1, true, 'prev'); });
-    if (next) next.addEventListener('click', function () { show(current + 1, true, 'next'); });
     slider.addEventListener('keydown', function (event) {
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
@@ -162,10 +158,6 @@
 
     slider.addEventListener('mouseenter', pause);
     slider.addEventListener('mouseleave', restart);
-    slider.addEventListener('focusin', pause);
-    slider.addEventListener('focusout', function (event) {
-      if (!slider.contains(event.relatedTarget)) restart();
-    });
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) pause();
       else restart();
