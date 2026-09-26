@@ -8,17 +8,11 @@
     muted
     loop
     playsinline
-    preload="auto"
+    preload="metadata"
     aria-hidden="true"
     tabindex="-1"
   >
-    {%- if section.settings.video != blank -%}
-      {%- for source in section.settings.video.sources -%}
-        <source src="{{ source.url }}" type="{{ source.mime_type }}">
-      {%- endfor -%}
-    {%- else -%}
-      <source src="{{ 'breakervideo.mp4' | asset_url }}" type="video/mp4">
-    {%- endif -%}
+    <source src="{{ 'breakervideo.mp4' | asset_url }}" type="video/mp4">
   </video>
 </section>
 
@@ -30,9 +24,7 @@
 {% schema %}
 {
   "name": "Video page breaker",
-  "settings": [
-    { "type": "video", "id": "video", "label": "Video" }
-  ],
+  "settings": [],
   "presets": [
     { "name": "Video page breaker" }
   ]
