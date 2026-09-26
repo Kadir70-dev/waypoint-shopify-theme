@@ -288,3 +288,21 @@ html, body { overflow-x: hidden; }
   transform: scaleX(-1);
 }
 
+
+
+/* Module 13 — shared visual language for dense commerce and forms. */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field__label { font-family: var(--font-display); font-size: 11px; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); }
+.field__input {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  color: var(--text);
+  padding: 12px 14px;
+  font: 14px/1.4 var(--font-body);
+}
+.field__input:focus { border-color: var(--accent-light); }
+.field__input:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+.form-message { padding: 14px 16px; border: 1px solid var(--border-strong); font-size: 13px; line-height: 1.5; }
+.form-message--success { border-color: var(--accent-light); color: var(--accent-light); }

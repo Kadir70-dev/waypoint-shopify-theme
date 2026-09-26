@@ -117,3 +117,13 @@
 .pcard__quickadd.is-loading, [data-product-form-submit].is-loading { opacity: .6; }
 .pcard__quickadd.is-added { background: var(--accent-light); }
 [data-product-form-submit].is-added { background: var(--accent-light); border-color: var(--accent-light); }
+
+
+.cart-cross-sell { padding-block: 12px; }
+.cart-cross-sell h3 { color: var(--muted); font-size: 10px; }
+.cart-page__checkout { margin-top: 4px; }
+@media (max-width: 480px) {
+  .cart-drawer__panel { padding: 18px; gap: 14px; }
+  #CartDrawerContent { gap: 14px; }
+  .cart-drawer__form { gap: 10px; }
+}

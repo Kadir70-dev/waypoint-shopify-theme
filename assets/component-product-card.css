@@ -45,9 +45,9 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--cta-bg);
-  color: var(--cta-text);
-  border: 0;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +56,7 @@
 .pcard__quickadd svg { width: 16px; height: 16px; }
 
 .pcard__body { padding: 12px; display: flex; flex-direction: column; gap: 4px; }
-.pcard__name { font-family: var(--font-display); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+.pcard__name { font-family: var(--font-body); font-size: 13px; font-weight: 500; line-height: 1.35; letter-spacing: .01em; }
 .pcard__price { font-size: 13px; color: var(--muted); display: flex; gap: 8px; }
 .pcard__price .compare-at { text-decoration: line-through; opacity: .7; }
 
@@ -302,6 +302,6 @@
 .quick-add__title { font-family: var(--font-display); font-size: 15px; color: var(--text); }
 .quick-add__badge { align-self: flex-start; }
 .quick-add__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; }
-.quick-add__full-details { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+.quick-add__full-details { font-size: 11px; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); margin-top: 2px; }
 .quick-add__full-details:hover, .quick-add__full-details:focus-visible { color: var(--accent-light); }
 .quick-add__error { font-size: 13px; color: var(--muted); text-align: center; padding: 24px 0; }

@@ -10,7 +10,7 @@
   padding: 8px 16px;
   font-family: var(--font-display);
   font-size: 11px;
-  letter-spacing: .08em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -78,7 +78,7 @@
   gap: 22px;
   font-family: var(--font-display);
   font-size: 12px;
-  letter-spacing: .08em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -259,7 +259,7 @@
   border: 0;
   color: var(--text);
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: clamp(22px, 7vw, 26px);
   text-transform: uppercase;
   text-align: start;
   cursor: pointer;
@@ -280,7 +280,7 @@
   padding: 0 0 20px;
   font-family: var(--font-display);
   font-size: 11px;
-  letter-spacing: .1em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 .mobile-nav__back svg { width: 16px; height: 16px; }
@@ -353,7 +353,7 @@
 .chip {
   font-family: var(--font-display);
   font-size: 10px;
-  letter-spacing: .08em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   border: 1px solid var(--border-strong);
   padding: 7px 10px;
@@ -476,7 +476,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
 .newsletter-block__row button {
   font-family: var(--font-display);
   font-size: 11px;
-  letter-spacing: .08em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   background: var(--cta-bg);
   color: var(--cta-text);
@@ -516,4 +516,11 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
 
 @media (min-width: 750px) {
   .site-footer__grid:has(.newsletter-block) { grid-template-columns: 1.4fr 1fr; align-items: start; }
+}
+
+
+@media (max-width: 480px) {
+  .search-overlay { padding: 4vh 12px 12px; }
+  .search-overlay__panel { padding: 24px 20px; max-height: 88vh; gap: 18px; }
+  .search-overlay__field { font-size: 20px; }
 }

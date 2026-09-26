@@ -359,9 +359,9 @@
   #shopify-section-{{ section.id }} .product-gallery__zoom-nav--prev { inset-inline-start: 16px; top: 50%; transform: translateY(-50%); }
   #shopify-section-{{ section.id }} .product-gallery__zoom-nav--next { inset-inline-end: 16px; top: 50%; transform: translateY(-50%); }
 
-  #shopify-section-{{ section.id }} .product-buybox { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  #shopify-section-{{ section.id }} .product-buybox { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
   #shopify-section-{{ section.id }} .product-buybox[aria-busy="true"] { opacity: .6; pointer-events: none; }
-  #shopify-section-{{ section.id }} .product-buybox__title { font-size: 24px; }
+  #shopify-section-{{ section.id }} .product-buybox__title { font-size: clamp(24px, 2.5vw, 30px); line-height: 1.08; }
   #shopify-section-{{ section.id }} .product-buybox .pcard__price { font-size: 16px; color: var(--text); }
   #shopify-section-{{ section.id }} .product-buybox__form { display: flex; flex-direction: column; gap: 18px; width: 100%; margin-top: 6px; }
   #shopify-section-{{ section.id }} .option-selector { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
@@ -409,7 +409,7 @@
      block to stay a single, unscoped, cross-cutting primitive. */
 
   #shopify-section-{{ section.id }} .product-buybox__shipping-note { font-size: 12px; color: var(--muted); margin-top: -6px; }
-  #shopify-section-{{ section.id }} .product-buybox__description { color: var(--muted); font-size: 14px; line-height: 1.6; margin-top: 8px; }
+  #shopify-section-{{ section.id }} .product-buybox__description { color: var(--muted); font-size: 14px; line-height: 1.7; max-width: 46ch; margin-top: 14px; }
 
   #shopify-section-{{ section.id }} .star-rating { margin-top: -6px; }
 
@@ -450,11 +450,11 @@
     justify-content: space-between;
     gap: 12px;
     padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
-    background: var(--surface);
-    border-top: 1px solid var(--border);
+    background: var(--surface-2);
+    border-top: 1px solid var(--border-strong);
   }
   .sticky-atc__info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-  .sticky-atc__title { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sticky-atc__title { max-width: 34vw; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .sticky-atc .btn { flex-shrink: 0; }
 
   @media (max-width: 749px) {

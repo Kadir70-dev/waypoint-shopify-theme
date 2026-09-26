@@ -19,7 +19,7 @@
         {{ 'collection.products_count_other' | t: count: collection.products_count }}
       {%- endif -%}
     </span>
-    <div style="display:flex;align-items:center;gap:12px">
+    <div class="collection-grid__controls">
       {%- if collection.sort_options.size > 1 -%}
         <form method="get" action="{{ collection.url }}" class="collection-sort">
           <label for="SortBy-{{ section.id }}" class="visually-hidden">{{ 'collection.sort_by_label' | t }}</label>

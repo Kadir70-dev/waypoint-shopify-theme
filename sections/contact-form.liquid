@@ -7,17 +7,17 @@
   a page template that doesn't load that stylesheet (see layout/theme
   .liquid's per-template CSS gating, Milestone 8).
 {%- endcomment -%}
-<div class="section page-width" style="max-width:560px">
+<div class="section page-width contact-form">
   {%- if section.settings.heading != blank -%}
-    <h2 style="font-size:22px;margin-bottom:20px">{{ section.settings.heading }}</h2>
+    <h2 class="contact-form__heading">{{ section.settings.heading }}</h2>
   {%- endif -%}
 
   {%- form 'contact', id: 'ContactForm' -%}
     {%- if form.posted_successfully? -%}
-      <p role="status" style="margin-bottom:16px">{{ 'contact.form.post_success' | t }}</p>
+      <p class="form-message form-message--success" role="status">{{ 'contact.form.post_success' | t }}</p>
     {%- endif -%}
     {%- if form.errors -%}
-      <div role="alert" style="margin-bottom:16px">
+      <div class="form-message" role="alert">
         <ul>
           {%- for field in form.errors -%}
             <li>
@@ -32,54 +32,51 @@
       </div>
     {%- endif -%}
 
-    <div style="display:flex;flex-direction:column;gap:16px">
-      <div style="display:flex;flex-direction:column;gap:6px;text-align:start">
+    <div class="contact-form__fields">
+      <div class="field">
         <label for="ContactFormName" class="eyebrow">{{ 'contact.form.name_label' | t }}</label>
         <input
           type="text"
           id="ContactFormName"
+          class="field__input"
           name="contact[name]"
           value="{{ form.name }}"
-          style="background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text);padding:12px 14px;font-family:var(--font-body);font-size:14px;"
         >
       </div>
-      <div style="display:flex;flex-direction:column;gap:6px;text-align:start">
+      <div class="field">
         <label for="ContactFormEmail" class="eyebrow">{{ 'contact.form.email_label' | t }}</label>
         <input
           type="email"
           id="ContactFormEmail"
+          class="field__input"
           name="contact[email]"
           value="{{ form.email | default: customer.email }}"
           autocomplete="email"
           required
-          style="background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text);padding:12px 14px;font-family:var(--font-body);font-size:14px;"
         >
       </div>
-      <div style="display:flex;flex-direction:column;gap:6px;text-align:start">
+      <div class="field">
         <label for="ContactFormPhone" class="eyebrow">{{ 'contact.form.phone_label' | t }}</label>
         <input
           type="tel"
           id="ContactFormPhone"
+          class="field__input"
           name="contact[phone]"
           value="{{ form.phone }}"
           autocomplete="tel"
-          style="background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text);padding:12px 14px;font-family:var(--font-body);font-size:14px;"
         >
       </div>
-      <div style="display:flex;flex-direction:column;gap:6px;text-align:start">
+      <div class="field">
         <label for="ContactFormMessage" class="eyebrow">{{ 'contact.form.message_label' | t }}</label>
         <textarea
           id="ContactFormMessage"
+          class="field__input"
           name="contact[body]"
           rows="6"
           required
-          style="background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text);padding:12px 14px;font-family:var(--font-body);font-size:14px;resize:vertical;"
         >{{ form.body }}</textarea>
       </div>
-      <button
-        type="submit"
-        style="font-family:var(--font-display);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:14px 22px;background:var(--cta-bg);color:var(--cta-text);border:0;cursor:pointer;align-self:flex-start;"
-      >
+      <button type="submit" class="btn btn-primary contact-form__submit">
         {{ 'contact.form.submit' | t }}
       </button>
     </div>
