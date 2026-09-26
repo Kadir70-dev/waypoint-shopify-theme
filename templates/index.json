@@ -247,6 +247,78 @@
         "quote_attribution": "AERA Journal, Vol. 04",
         "body": "<p>Stories, guides and perspectives from those who choose a wilder path.</p>"
       }
+    },
+    "testimonials-marquee": {
+      "type": "testimonials-marquee",
+      "settings": {},
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "name": "MAYA R.",
+            "location": "COLORADO"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "name": "ELIAS T.",
+            "location": "NORWAY"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "name": "JONAH K.",
+            "location": "SCOTLAND"
+          }
+        },
+        "testimonial-4": {
+          "type": "testimonial",
+          "settings": {
+            "name": "AMELIA S.",
+            "location": "CANADA"
+          }
+        },
+        "testimonial-5": {
+          "type": "testimonial",
+          "settings": {
+            "name": "NOAH B.",
+            "location": "SWITZERLAND"
+          }
+        },
+        "testimonial-6": {
+          "type": "testimonial",
+          "settings": {
+            "name": "LENA M.",
+            "location": "GERMANY"
+          }
+        },
+        "testimonial-7": {
+          "type": "testimonial",
+          "settings": {
+            "name": "ADAM C.",
+            "location": "ICELAND"
+          }
+        },
+        "testimonial-8": {
+          "type": "testimonial",
+          "settings": {
+            "name": "SOFIA N.",
+            "location": "ITALY"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial-1",
+        "testimonial-2",
+        "testimonial-3",
+        "testimonial-4",
+        "testimonial-5",
+        "testimonial-6",
+        "testimonial-7",
+        "testimonial-8"
+      ]
     }
   },
   "order": [
@@ -256,6 +328,7 @@
     "video-page-breaker",
     "performance-feature",
     "journal-banner",
+    "testimonials-marquee",
     "trusted-by-explorers",
     "newsletter"
   ]

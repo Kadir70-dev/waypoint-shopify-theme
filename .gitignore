@@ -4,3 +4,11 @@ node_modules/
 *.log
 .env
 .shopify/
+
+# Ruflo/Claude Code machine-local runtime state
+.claude-flow/
+.swarm/
+ruvector.db
+.claude/settings.local.json
+.claude/proven-config.json
+.claude/.proven-config-version
