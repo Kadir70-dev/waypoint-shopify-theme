@@ -319,6 +319,10 @@
         "testimonial-7",
         "testimonial-8"
       ]
+    },
+    "latest-releases-editorial": {
+      "type": "latest-releases-editorial",
+      "settings": {}
     }
   },
   "order": [
