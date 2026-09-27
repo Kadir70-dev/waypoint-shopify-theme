@@ -17,6 +17,9 @@
   assign current_variant = product.selected_or_first_available_variant
   assign specs = product.metafields.specs
 -%}
+{%- if section.settings.use_demo_presentation -%}
+  {%- render 'product-demo-pdp', product: product, current_variant: current_variant, section: section -%}
+{%- else -%}
 
 {%- comment -%}
   Product structured data (Milestone 8 SEO). Only real Shopify data —
@@ -227,7 +230,38 @@
   }
 </script>
 
+{%- endif -%}
+
 <style>
+  .aera-demo-pdp { min-height: calc(100vh - 86px); display:grid; grid-template-columns:minmax(0,1.7fr) minmax(360px,.95fr); background:var(--bg); color:var(--text); }
+  .aera-demo-pdp__gallery { display:grid; grid-template-columns:76px minmax(0,1fr); min-height:720px; padding:28px 28px 28px 38px; gap:14px; }
+  .aera-demo-pdp__thumbs { display:flex; flex-direction:column; gap:8px; }
+  .aera-demo-pdp__thumb { width:68px; height:80px; padding:0; border:1px solid var(--border); background:var(--surface-2); opacity:.52; cursor:pointer; }
+  .aera-demo-pdp__thumb.is-active { opacity:1; border-color:var(--text); }
+  .aera-demo-pdp__thumb img { width:100%; height:100%; object-fit:cover; }
+  .aera-demo-pdp__stage { position:relative; min-width:0; min-height:650px; background:#252b27; overflow:hidden; }
+  .aera-demo-pdp__stage > img { width:100%; height:100%; min-height:650px; object-fit:contain; display:block; }
+  .aera-demo-pdp__controls { position:absolute; inset-inline:18px; bottom:18px; display:flex; justify-content:space-between; align-items:end; }
+  .aera-demo-pdp__controls > div { display:flex; gap:22px; }
+  .aera-demo-pdp__counter { padding:0 0 7px; border:0; border-bottom:1px solid transparent; color:rgba(255,255,255,.55); background:none; font-size:11px; cursor:pointer; }
+  .aera-demo-pdp__counter.is-active { color:#fff; border-color:#fff; }
+  .aera-demo-pdp__expand { width:32px; height:32px; border:1px solid rgba(255,255,255,.35); background:rgba(0,0,0,.25); color:#fff; cursor:pointer; }
+  .aera-demo-pdp__expand svg { width:15px; }
+  .aera-demo-pdp__info { padding:58px 56px 42px 48px; display:flex; flex-direction:column; align-items:flex-start; }
+  .aera-demo-pdp__info h1 { margin:18px 0 14px; font-family:var(--font-display); font-size:clamp(42px,4.5vw,72px); line-height:.88; letter-spacing:.055em; }
+  .aera-demo-pdp__tagline { margin:0; font-size:15px; letter-spacing:.08em; color:var(--text); }
+  .aera-demo-pdp__description { margin:28px 0 0; max-width:43ch; color:var(--muted); font-size:13px; line-height:1.65; }
+  .aera-demo-pdp__price-row { width:100%; display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-top:28px; }
+  .aera-demo-pdp__price-row strong { font-size:21px; font-weight:500; }
+  .aera-demo-pdp__price-row span { color:#d5d2c8; font-size:12px; white-space:nowrap; }
+  .aera-demo-pdp__price-row b { font-weight:500; margin-inline-start:5px; }.aera-demo-pdp__price-row em { color:var(--muted); font-style:normal; }
+  .aera-demo-pdp__rule { width:100%; border-top:1px solid var(--border); margin:25px 0 23px; }
+  .aera-demo-pdp__choice { width:100%; border:0; padding:0; margin:0 0 24px; }.aera-demo-pdp__choice legend { margin-bottom:12px; padding:0; }.aera-demo-pdp__choice > div { display:flex; gap:13px; }
+  .aera-demo-pdp__color { width:34px; height:34px; border-radius:50%; padding:3px; border:1px solid var(--border-strong); background:none; cursor:pointer; }.aera-demo-pdp__color span { display:block; width:100%; height:100%; border-radius:50%; background:#687452; }.aera-demo-pdp__color:nth-child(2) span { background:#343936; }.aera-demo-pdp__color:nth-child(3) span { background:#a1815c; }.aera-demo-pdp__color:nth-child(4) span { background:#111; }.aera-demo-pdp__color.is-active { outline:1px solid var(--text); outline-offset:3px; }
+  .aera-demo-pdp__capacity { min-width:62px; height:38px; padding:0 14px; border:1px solid var(--border-strong); color:var(--muted); background:var(--surface-2); cursor:pointer; font-family:var(--font-display); letter-spacing:.08em; }.aera-demo-pdp__capacity.is-active { border-color:var(--text); color:var(--text); }
+  .aera-demo-pdp__form { width:100%; }.aera-demo-pdp__purchase { display:grid; grid-template-columns:112px minmax(0,1fr); gap:10px; width:100%; }.aera-demo-pdp__quantity { display:grid; grid-template-columns:32px 1fr 32px; height:52px; border:1px solid var(--border-strong); }.aera-demo-pdp__quantity button,.aera-demo-pdp__quantity input { border:0; background:transparent; color:var(--text); text-align:center; }.aera-demo-pdp__quantity button { cursor:pointer; font-size:18px; }.aera-demo-pdp__quantity input { width:100%; -moz-appearance:textfield; }.aera-demo-pdp__quantity input::-webkit-inner-spin-button { appearance:none; }.aera-demo-pdp__add { height:52px; border:0; background:#f4f2ec; color:#151714; cursor:pointer; letter-spacing:.08em; font-size:12px; }.aera-demo-pdp__add span { margin-inline-start:12px; font-size:16px; }
+  .aera-demo-pdp__trust { width:100%; display:flex; align-items:center; gap:14px; margin-top:22px; color:var(--muted); font-size:11px; }.aera-demo-pdp__trust span { display:flex; align-items:center; gap:7px; white-space:nowrap; }.aera-demo-pdp__trust svg { width:15px; height:15px; }.aera-demo-pdp__trust i { height:14px; border-left:1px solid var(--border-strong); }
+  @media (max-width:749px) { .aera-demo-pdp { display:block; min-height:0; }.aera-demo-pdp__gallery { display:flex; flex-direction:column-reverse; padding:12px; min-height:0; }.aera-demo-pdp__stage,.aera-demo-pdp__stage > img { min-height:390px; height:390px; }.aera-demo-pdp__thumbs { flex-direction:row; overflow:auto; }.aera-demo-pdp__thumb { width:58px; height:64px; }.aera-demo-pdp__info { padding:30px 20px 38px; }.aera-demo-pdp__info h1 { font-size:48px; }.aera-demo-pdp__price-row { align-items:flex-start; flex-direction:column; gap:8px; }.aera-demo-pdp__purchase { grid-template-columns:100px minmax(0,1fr); }.aera-demo-pdp__trust { gap:8px; font-size:10px; } }
   /* .breadcrumb itself now lives in base.css (Milestone 6) — it's shared
      with the article and page templates, so it moved out of this
      section-scoped block (same reasoning as the quantity stepper in
@@ -469,6 +503,9 @@
 {% schema %}
 {
   "name": "Product information",
+  "settings": [
+    { "type": "checkbox", "id": "use_demo_presentation", "label": "Use AERA demo PDP presentation", "default": false }
+  ],
   "blocks": [
     {
       "type": "specifications",

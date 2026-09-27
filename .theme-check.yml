@@ -33,6 +33,7 @@ OrphanedSnippet:
     - "snippets/card-product-demo.liquid"
     - "snippets/card-collection-demo.liquid"
     - "snippets/filter-groups-demo.liquid"
+    - "snippets/product-demo-pdp.liquid"
     - "snippets/card-category.liquid"
     - "snippets/price.liquid"
     - "snippets/pagination.liquid"
