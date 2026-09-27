@@ -15,7 +15,7 @@
 <style>
 #shopify-section-{{ section.id }} .testimonials-marquee { overflow:hidden; padding:clamp(4rem,8vw,7rem) 0; background:var(--bg); color:var(--text); }
 #shopify-section-{{ section.id }} .testimonials-marquee__intro { width:min(600px,calc(100% - 3rem)); margin:0 auto clamp(2.5rem,5vw,4rem); }
-#shopify-section-{{ section.id }} .testimonials-marquee__intro h2 { max-width:10ch; margin:.75rem 0 1.25rem; font-family:var(--font-display); font-size:clamp(3rem,6vw,6rem); letter-spacing:-.04em; line-height:.9; text-transform:uppercase; }
+#shopify-section-{{ section.id }} .testimonials-marquee__intro h2 { max-width:10ch; margin:.75rem 0 1.25rem; font-family:var(--font-display); font-size:clamp(2rem,3vw,3.5rem); letter-spacing:-.04em; line-height:.9; text-transform:uppercase; }
 #shopify-section-{{ section.id }} .testimonials-marquee__intro > p:last-child { max-width:25rem; margin:0; color:var(--muted); line-height:1.5; }
 #shopify-section-{{ section.id }} .testimonials-marquee__viewport { width:100%; overflow:hidden; }
 #shopify-section-{{ section.id }} .testimonials-marquee__track { display:flex; width:max-content; animation: testimonials-marquee-left 42s linear infinite; will-change:transform; }
@@ -32,7 +32,7 @@
 #shopify-section-{{ section.id }} .testimonials-marquee__avatar { width:2.5rem; height:2.5rem; margin-bottom:.75rem; border-radius:50%; object-fit:cover; }
 #shopify-section-{{ section.id }} .testimonials-marquee__track:hover,#shopify-section-{{ section.id }} .testimonials-marquee__track:focus-within { animation-play-state:paused; }
 @keyframes testimonials-marquee-left { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-@media (max-width:749px) { #shopify-section-{{ section.id }} .testimonials-marquee__intro { width:calc(100% - 3rem); } #shopify-section-{{ section.id }} .testimonials-marquee__track { animation-duration:58s; } #shopify-section-{{ section.id }} .testimonials-marquee__track--slow { animation-duration:72s; } #shopify-section-{{ section.id }} .testimonials-marquee__track--fast { animation-duration:46s; } #shopify-section-{{ section.id }} .testimonials-marquee__card { flex-basis:84vw; min-height:240px; } }
+@media (max-width:749px) { #shopify-section-{{ section.id }} .testimonials-marquee__intro { width:calc(100% - 3rem); } #shopify-section-{{ section.id }} .testimonials-marquee__intro h2 { font-size:clamp(1.75rem,8vw,2.25rem); } #shopify-section-{{ section.id }} .testimonials-marquee__track { animation-duration:58s; } #shopify-section-{{ section.id }} .testimonials-marquee__track--slow { animation-duration:72s; } #shopify-section-{{ section.id }} .testimonials-marquee__track--fast { animation-duration:46s; } #shopify-section-{{ section.id }} .testimonials-marquee__card { flex-basis:84vw; min-height:240px; } }
 @media (prefers-reduced-motion: reduce) { #shopify-section-{{ section.id }} .testimonials-marquee__track { animation:none; transform:none; overflow-x:auto; scroll-snap-type:x proximity; } #shopify-section-{{ section.id }} .testimonials-marquee__set[aria-hidden="true"] { display:none; } #shopify-section-{{ section.id }} .testimonials-marquee__card { scroll-snap-align:start; } }
 </style>
 
