@@ -86,6 +86,7 @@
 
   <div class="pcard__body">
     <a href="{{ product.url }}" class="pcard__name">{{ product.title }}</a>
+    {%- if collection_context and product.description != blank -%}<p class="pcard__excerpt">{{ product.description | strip_html | truncatewords: 10 }}</p>{%- endif -%}
     {%- render 'price', product: product -%}
     {%- render 'star-rating', product: product -%}
     {%- if color_option -%}

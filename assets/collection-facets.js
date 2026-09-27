@@ -87,6 +87,15 @@
   // (only their children, via swapIds) — survives every DOM swap.
   root.addEventListener('click', onClick);
   if (mobilePanel) mobilePanel.parentElement.addEventListener('click', onClick);
+  document.addEventListener('click', function (e) {
+    var button = e.target.closest('[data-collection-view]');
+    if (!button) return;
+    var grid = document.querySelector('.collection-product-grid, .collection-page .product-grid[data-context="collection"]');
+    if (!grid) return;
+    var view = button.getAttribute('data-collection-view');
+    grid.classList.toggle('collection-product-grid--list', view === 'list');
+    document.querySelectorAll('[data-collection-view]').forEach(function (item) { item.setAttribute('aria-pressed', String(item === button)); });
+  });
 
   function onSubmit(e) {
     var form = e.target.closest('form.collection-sort, form.filter-group__price');

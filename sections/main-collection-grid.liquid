@@ -9,7 +9,7 @@
   endfor
 -%}
 
-<div class="section page-width" data-collection-facets data-section-id="{{ section.id }}" data-url="{{ collection.url }}">
+<div class="section page-width collection-page" data-collection-facets data-section-id="{{ section.id }}" data-url="{{ collection.url }}">
   <div class="visually-hidden" aria-live="polite" data-collection-status></div>
   <div class="collection-grid__meta" id="CollectionMeta-{{ section.id }}">
     <span class="eyebrow">
@@ -50,13 +50,18 @@
           {%- if has_active_filters -%}<span class="collection-grid__filter-count">{{ active_filter_count }}</span>{%- endif -%}
         </button>
       {%- endif -%}
+      <div class="collection-view-toggle" aria-label="Collection view">
+        <button type="button" data-collection-view="grid" aria-label="Grid view" aria-pressed="true">▦</button>
+        <button type="button" data-collection-view="list" aria-label="List view" aria-pressed="false">☰</button>
+      </div>
     </div>
   </div>
 
   <div class="collection-layout">
-    {%- if collection.filters.size > 0 -%}
-      <aside class="collection-layout__sidebar" id="CollectionSidebar-{{ section.id }}">
-        {%- render 'filter-groups', filters: collection.filters -%}
+      {%- if collection.filters.size > 0 -%}
+        <aside class="collection-layout__sidebar" id="CollectionSidebar-{{ section.id }}">
+          <div class="collection-sidebar__head"><span class="eyebrow">{{ 'collection.filters' | t }}</span><a href="{{ collection.url }}" class="filter-chips__clear">{{ 'collection.clear_all' | t }}</a></div>
+          {%- render 'filter-groups', filters: collection.filters -%}
       </aside>
     {%- endif -%}
 
@@ -97,7 +102,12 @@
         {%- paginate collection.products by section.settings.products_per_page -%}
           <div class="product-grid" data-density="{{ settings.grid_density }}" data-context="collection">
             {%- for product in collection.products -%}
-              {%- render 'card-product', product: product -%}
+              {%- render 'card-product', product: product, collection_context: true -%}
+              {%- if forloop.index == 8 -%}
+                <div class="collection-editorial-banner" role="complementary" style="background-image:linear-gradient(90deg,rgba(14,15,13,.92),rgba(14,15,13,.38)),url({{ 'hero-slide-2.jpg' | asset_url }});">
+                  <div><p class="eyebrow">Gear for real life</p><h2>GEAR FOR<br>REAL LIFE</h2><p>Backpacks built to go further.<br>In all conditions. For what's next.</p><a href="{{ routes.blog_url }}">Explore our journal &rarr;</a></div><blockquote>“Not escape. Perspective.”<footer>AERA Journal</footer></blockquote>
+                </div>
+              {%- endif -%}
             {%- endfor -%}
           </div>
           {%- render 'pagination', paginate: paginate -%}
