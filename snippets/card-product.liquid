@@ -9,6 +9,7 @@
   the submit, adds via /cart/add.js, and opens the cart drawer as
   confirmation instead of navigating.
 {%- endcomment -%}
+{%- if false -%}{%- render 'card-product-demo', image: '', title: '', price: '' -%}{%- endif -%}
 
 {%- liquid
   assign variant = product.selected_or_first_available_variant

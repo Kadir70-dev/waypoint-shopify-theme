@@ -30,6 +30,7 @@ OrphanedSnippet:
   ignore:
     - "snippets/icon-*.liquid"
     - "snippets/card-product.liquid"
+    - "snippets/card-product-demo.liquid"
     - "snippets/card-category.liquid"
     - "snippets/price.liquid"
     - "snippets/pagination.liquid"
