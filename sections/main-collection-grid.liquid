@@ -77,7 +77,27 @@
         </div>
       {%- endif -%}
 
-      {%- if collection.products_count == 0 and has_active_filters -%}
+      {%- if section.settings.use_demo_products -%}
+        {%- assign demo_summit_colors = '#5C6B4A,#2B2B2B,#B99A6B' | split: ',' -%}
+        {%- assign demo_altitude_colors = '#20221D,#2B2B2B' | split: ',' -%}
+        {%- assign demo_ridgeline_colors = '#B99A6B,#6B4A2F,#2B2B2B' | split: ',' -%}
+        {%- assign demo_expedition_colors = '#596348,#2B2B2B,#7F6A45' | split: ',' -%}
+        {%- assign demo_traverse_colors = '#2B2B2B,#5C6B4A' | split: ',' -%}
+        {%- assign demo_range_colors = '#B99A6B,#5C6B4A,#2B2B2B' | split: ',' -%}
+        {%- assign demo_jaakari_colors = '#596348,#2B2B2B,#7F6A45' | split: ',' -%}
+        {%- assign demo_nomad_colors = '#2B2B2B,#5C6B4A,#B99A6B' | split: ',' -%}
+        <div class="product-grid" data-density="compact" data-context="collection">
+          {%- render 'card-collection-demo', title: 'SUMMIT 45', description: 'All-terrain backpack for multi-day missions.', price: '€249.00', badge: 'BESTSELLER', image: 'demo-summit-45.png', colors: demo_summit_colors -%}
+          {%- render 'card-collection-demo', title: 'ALTITUDE 35', description: 'Technical daypack built for movement.', price: '€229.00', image: 'demo-altitude-35.png', colors: demo_altitude_colors -%}
+          {%- render 'card-collection-demo', title: 'RIDGELINE 25', description: 'Versatile pack for day adventures.', price: '€179.00', image: 'demo-ridgeline-25.png', colors: demo_ridgeline_colors -%}
+          {%- render 'card-collection-demo', title: 'EXPEDITION 60', description: 'Maximum capacity. No compromise.', price: '€299.00', badge: 'NEW', image: 'demo-expedition-60.png', colors: demo_expedition_colors -%}
+          {%- render 'card-collection-demo', title: 'TRAVERSE 20', description: 'Lightweight pack for everyday exploration.', price: '€149.00', image: 'demo-traverse-20.png', colors: demo_traverse_colors -%}
+          {%- render 'card-collection-demo', title: 'RANGE 32', description: 'Modular tactical backpack for extended field use.', price: '€209.00', image: 'demo-range-32.png', colors: demo_range_colors -%}
+          {%- render 'card-collection-demo', title: 'JÄÄKÄRI 30', description: 'Rugged rolltop pack for all conditions.', price: '€189.00', image: 'demo-jaakari-30.png', colors: demo_jaakari_colors -%}
+          {%- render 'card-collection-demo', title: 'NOMAD 40', description: 'Travel-ready pack for modern explorers.', price: '€239.00', image: 'demo-nomad-40.png', colors: demo_nomad_colors -%}
+          <div class="collection-editorial-banner" role="complementary" style="background-image:linear-gradient(90deg,rgba(14,15,13,.92),rgba(14,15,13,.38)),url({{ 'hero-slide-2.jpg' | asset_url }});"><div><p class="eyebrow">Gear for real life</p><h2>GEAR FOR<br>REAL LIFE</h2><p>Backpacks built to go further.<br>In all conditions. For what's next.</p><a href="{{ routes.blog_url }}">Explore our journal &rarr;</a></div><blockquote>“Not escape. Perspective.”<footer>AERA Journal</footer></blockquote></div>
+        </div>
+      {%- elsif collection.products_count == 0 and has_active_filters -%}
         <div class="collection-grid__empty">
           <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3">
             <rect x="14" y="14" width="36" height="36"/><path d="M14 14 L50 50 M50 14 L14 50"/>
@@ -147,7 +167,8 @@
 {
   "name": "Collection grid",
   "settings": [
-    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "checkbox", "id": "use_demo_products", "label": "Use AERA demo collection products", "default": true }
   ]
 }
 {% endschema %}

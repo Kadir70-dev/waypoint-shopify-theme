@@ -28,6 +28,7 @@
 .collection-page .product-grid[data-context="collection"] .pcard__price { font-size:12px; }
 .collection-page .product-grid[data-context="collection"] .pcard__swatches { gap:5px; margin-top:3px; }
 .collection-page .product-grid[data-context="collection"] .pcard__swatches .swatch { width:10px; height:10px; }
+.collection-page .product-grid[data-context="collection"] .collection-demo-card .pcard__media img { object-fit:contain; padding:10px; box-sizing:border-box; }
 .collection-editorial-banner { grid-column:1 / -1; height:170px; min-height:170px; box-sizing:border-box; display:flex; align-items:center; justify-content:space-between; gap:28px; padding:20px 28px; margin-top:0; color:#f5f4ef; background:linear-gradient(90deg,rgba(14,15,13,.92),rgba(14,15,13,.38)) center/cover; }
 .collection-editorial-banner h2 { margin:8px 0 12px; font-family:var(--font-display); font-size:clamp(28px,4vw,46px); line-height:.9; letter-spacing:.03em; }
 .collection-editorial-banner p:not(.eyebrow) { color:rgba(245,244,239,.72); font-size:13px; line-height:1.5; }

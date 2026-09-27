@@ -2,7 +2,7 @@
   "sections": {
     "product-grid": {
       "type": "main-collection-grid",
-      "settings": { "products_per_page": 24 }
+      "settings": { "products_per_page": 24, "use_demo_products": true }
     }
   },
   "order": ["product-grid"]
