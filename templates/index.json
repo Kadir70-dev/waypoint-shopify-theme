@@ -312,10 +312,6 @@
         "testimonial-7",
         "testimonial-8"
       ]
-    },
-    "latest-releases-editorial": {
-      "type": "latest-releases-editorial",
-      "settings": {}
     }
   },
   "order": [
@@ -326,7 +322,6 @@
     "performance-feature",
     "journal-banner",
     "testimonials-marquee",
-    "latest-releases-editorial",
     "trusted-by-explorers",
     "newsletter"
   ]
