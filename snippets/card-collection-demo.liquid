@@ -1,5 +1,8 @@
 {%- liquid
   assign demo_href = routes.all_products_collection_url
+  if title == 'ALTITUDE 35'
+    assign demo_href = '/products/aera-altitude-35'
+  endif
 -%}
 <article class="pcard collection-demo-card" data-category="{{ category }}" data-capacity="{{ capacity }}" data-colors="{{ product_colors }}" data-features="{{ features }}" data-activities="{{ activities }}">
   <a class="pcard__link" href="{{ demo_href }}" aria-label="Demo presentation: {{ title }}">

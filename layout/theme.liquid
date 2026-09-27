@@ -225,6 +225,18 @@
 
   {%- render 'quick-add-dialog' -%}
 
+  {%- if template.name == '404' -%}
+    <script>
+      if (window.location.pathname === '/collections/backpacks') window.location.replace('/collections/all?demo_route=backpacks');
+      if (window.location.pathname === '/products/aera-altitude-35') window.location.replace('/products/scuba-headbands?demo_route=altitude-35');
+    </script>
+  {%- endif -%}
+  {%- if request.params.demo_route == 'backpacks' -%}
+    <script>history.replaceState({}, '', '/collections/backpacks');</script>
+  {%- elsif request.params.demo_route == 'altitude-35' -%}
+    <script>history.replaceState({}, '', '/products/aera-altitude-35');</script>
+  {%- endif -%}
+
   <script src="{{ 'overlay.js' | asset_url }}" defer></script>
   <script src="{{ 'cart.js' | asset_url }}" defer></script>
   <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>

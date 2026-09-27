@@ -58,7 +58,8 @@
       "type": "category-grid",
       "settings": {
         "heading": "Shop by Category",
-        "path_cards": true
+        "path_cards": true,
+        "use_demo_links": true
       },
       "blocks": {
         "tile-1": {

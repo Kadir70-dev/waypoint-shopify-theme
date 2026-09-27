@@ -1,8 +1,10 @@
 {%- comment -%}
   Usage: {% render 'card-category', image: block.settings.image, label: block.settings.label, sublabel: block.settings.sublabel, link: block.settings.link %}
 {%- endcomment -%}
+{%- assign category_href = link | default: routes.all_products_collection_url -%}
+{%- if demo_mode and label == 'Backpacks' -%}{%- assign category_href = '/collections/backpacks' -%}{%- endif -%}
 {%- if path_style -%}
-  <a href="{{ link | default: routes.all_products_collection_url }}" class="ccard ccard--path" data-reveal aria-label="{{ label | escape }}">
+  <a href="{{ category_href }}" class="ccard ccard--path" data-reveal aria-label="{{ label | escape }}">
     <div class="ccard__path-media">
       {%- if asset_image != blank -%}
         <img src="{{ asset_image | asset_url }}" width="1672" height="941" loading="lazy" alt="{{ label | escape }}" class="ccard__path-image">
@@ -38,7 +40,7 @@
     </span>
   </a>
 {%- else -%}
-  <a href="{{ link | default: routes.all_products_collection_url }}" class="ccard" data-reveal>
+  <a href="{{ category_href }}" class="ccard" data-reveal>
     {%- if image -%}
       {{ image | image_url: width: 500 | image_tag: loading: 'lazy', alt: label, widths: '300, 500', sizes: '(min-width: 750px) 25vw, 50vw' }}
     {%- else -%}
