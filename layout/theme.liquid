@@ -231,11 +231,10 @@
       if (window.location.pathname === '/products/aera-altitude-35') window.location.replace('/products/scuba-headbands?demo_route=altitude-35');
     </script>
   {%- endif -%}
-  {%- if request.params.demo_route == 'backpacks' -%}
-    <script>history.replaceState({}, '', '/collections/backpacks');</script>
-  {%- elsif request.params.demo_route == 'altitude-35' -%}
-    <script>history.replaceState({}, '', '/products/aera-altitude-35');</script>
-  {%- endif -%}
+  <script>
+    if (new URLSearchParams(window.location.search).get('demo_route') === 'backpacks') history.replaceState({}, '', '/collections/backpacks');
+    if (new URLSearchParams(window.location.search).get('demo_route') === 'altitude-35') history.replaceState({}, '', '/products/aera-altitude-35');
+  </script>
 
   <script src="{{ 'overlay.js' | asset_url }}" defer></script>
   <script src="{{ 'cart.js' | asset_url }}" defer></script>
