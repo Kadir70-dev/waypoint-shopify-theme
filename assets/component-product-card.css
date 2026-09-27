@@ -98,6 +98,7 @@
   height: 100%;
   padding: 16px;
   color: #fff;
+
 }
 .ccard__label svg { width: 18px; height: 18px; transition: transform var(--dur-fast) var(--ease-out-slow); }
 .ccard:hover .ccard__label svg { transform: translateX(4px); }
@@ -441,14 +442,15 @@
   background: var(--surface-2);
   box-shadow: 0 10px 40px rgba(0, 0, 0, .28);
   color: #fff;
+  pointer-events: auto;
 }
-.ccard__path-media { position: absolute; inset: 0; height: 100%; transition: height .4s ease-out; }
+.ccard__path-media { position: absolute; inset: 0; height: 100%; transition: height .4s ease-out; pointer-events: none; }
 .ccard--path:hover .ccard__path-media,
 .ccard--path:focus-within .ccard__path-media { height: 42%; }
 .ccard__path-image { display: block; width: 100%; height: 100%; object-fit: cover; }
-.ccard__path-gradient { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0, 0, 0, .9), transparent); }
-.ccard__path-badge { position: absolute; top: 16px; inset-inline-start: 16px; padding: 4px 12px; border-radius: 999px; background: var(--surface); color: var(--text); font-size: 12px; text-transform: uppercase; }
-.ccard__path-collapsed { position: absolute; inset-inline-start: 20px; inset-inline-end: 20px; bottom: 24px; }
+.ccard__path-gradient { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0, 0, 0, .9), transparent); pointer-events: none; }
+.ccard__path-badge { position: absolute; top: 16px; inset-inline-start: 16px; padding: 4px 12px; border-radius: 999px; background: var(--surface); color: var(--text); font-size: 12px; text-transform: uppercase; pointer-events: none; }
+.ccard__path-collapsed { position: absolute; inset-inline-start: 20px; inset-inline-end: 20px; bottom: 24px; pointer-events: none; }
 .ccard--path:hover .ccard__path-collapsed,
 .ccard--path:focus-within .ccard__path-collapsed { display: none; }
 .ccard__path-title, .ccard__path-sublabel, .ccard__path-expanded-title, .ccard__path-description, .ccard__path-meta-label, .ccard__path-meta-value { display: block; }
@@ -456,7 +458,7 @@
 .ccard__path-sublabel { margin-top: 8px; color: rgba(255, 255, 255, .7); font-size: 14px; text-transform: uppercase; }
 .ccard__path-expanded { position: absolute; inset-inline: 0; bottom: 0; height: 58%; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; opacity: 0; visibility: hidden; pointer-events: none; }
 .ccard--path:hover .ccard__path-expanded,
-.ccard--path:focus-within .ccard__path-expanded { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .3s cubic-bezier(.25, .1, .35, 1), visibility .3s; }
+.ccard--path:focus-within .ccard__path-expanded { opacity: 1; visibility: visible; pointer-events: none; transition: opacity .3s cubic-bezier(.25, .1, .35, 1), visibility .3s; }
 .ccard__path-expanded-title { font-family: var(--font-display); font-size: 22px; line-height: 1.2; text-transform: uppercase; }
 .ccard__path-description { margin-top: 16px; color: rgba(255, 255, 255, .8); font-size: 14px; line-height: 1.625; text-transform: uppercase; }
 .ccard__path-divider { display: block; width: 100%; height: 2px; margin-bottom: 16px; background: var(--accent-light); }
