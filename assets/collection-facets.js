@@ -113,4 +113,34 @@
   });
 
   window.history.replaceState({ collectionFacets: true }, '', window.location.href);
+
+  // Demo presentation filters intentionally stay separate from Shopify facets.
+  var demoFilters = document.querySelectorAll('[data-demo-filters]');
+  if (demoFilters.length) {
+    var demoStarted = false;
+    function applyDemoFilters() {
+      var selected = {};
+      document.querySelectorAll('[data-demo-filters] input[data-demo-filter]:checked').forEach(function (input) {
+        var group = input.getAttribute('data-demo-filter');
+        if (!selected[group]) selected[group] = [];
+        selected[group].push(input.value);
+      });
+      document.querySelectorAll('.collection-demo-card').forEach(function (card) {
+        var visible = !demoStarted || Object.keys(selected).every(function (group) {
+          var values = (card.getAttribute('data-' + (group === 'features' ? 'features' : group === 'activity' ? 'activities' : group + 's')) || card.getAttribute('data-' + group) || '').split('|');
+          return selected[group].some(function (value) { return values.indexOf(value) !== -1; });
+        });
+        card.setAttribute('data-demo-hidden', String(!visible));
+      });
+    }
+    demoFilters.forEach(function (group) { group.addEventListener('change', function () { demoStarted = true; applyDemoFilters(); }); });
+    document.querySelectorAll('[data-demo-filter-clear]').forEach(function (clear) {
+      clear.addEventListener('click', function () {
+        document.querySelectorAll('[data-demo-filters] input[data-demo-filter]').forEach(function (input) { input.checked = false; });
+        document.querySelectorAll('[data-demo-filters] input[data-demo-filter="category"][value="Backpacks"]').forEach(function (input) { input.checked = true; });
+        demoStarted = false;
+        applyDemoFilters();
+      });
+    });
+  }
 }());
