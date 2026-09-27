@@ -105,6 +105,9 @@ a.pagination__link:hover { border-color: var(--text); }
 .collection-layout { display: block; }
 .collection-layout__sidebar { display: none; }
 @media (min-width: 990px) {
+  .collection-page { display:grid; grid-template-columns:230px minmax(0,1fr); column-gap:0; }
+  .collection-page > .collection-grid__meta { grid-column:2; margin:0 0 12px; padding-inline-start:20px; }
+  .collection-page > .collection-layout { grid-column:1 / -1; }
   .collection-layout { display: grid; grid-template-columns: 230px 1fr; gap: 0; align-items: start; }
   .collection-layout__sidebar {
     display: flex;
@@ -112,6 +115,7 @@ a.pagination__link:hover { border-color: var(--text); }
     gap: 22px;
     padding-inline-end: 20px;
     border-inline-end: 1px solid var(--border);
+    margin-top: -48px;
   }
   .collection-layout__main { padding-inline-start: 20px; min-width: 0; }
 }
