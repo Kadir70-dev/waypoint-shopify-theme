@@ -66,6 +66,7 @@
           "settings": {
             "label": "Backpacks",
             "sublabel": "Carry further.",
+            "image_asset": "category-backpacks.png",
             "description": "Built for long trails, daily missions and everything in between.",
             "meta_label": "Includes",
             "meta_value": "Day Packs · Expedition · Travel · Hydration"
@@ -76,6 +77,7 @@
           "settings": {
             "label": "Camp & Shelter",
             "sublabel": "Stay ready.",
+            "image_asset": "category-camp-shelter.png",
             "description": "Reliable shelter and sleep systems engineered for nights beyond the familiar.",
             "meta_label": "Includes",
             "meta_value": "Tents · Shelters · Sleeping Gear · Camp Essentials"
@@ -86,6 +88,7 @@
           "settings": {
             "label": "Tools & Equipment",
             "sublabel": "Built for more.",
+            "image_asset": "category-tools-equipment.png",
             "description": "Dependable field equipment designed for demanding environments and unexpected moments.",
             "meta_label": "Includes",
             "meta_value": "Navigation · Lighting · Multi-Tools · Field Gear"
@@ -96,19 +99,10 @@
           "settings": {
             "label": "Apparel",
             "sublabel": "All conditions.",
+            "image_asset": "category-apparel.png",
             "description": "Technical layers designed for changing weather, hard movement and everyday exploration.",
             "meta_label": "Includes",
             "meta_value": "Base Layers · Outerwear · Performance · Essentials"
-          }
-        },
-        "tile-5": {
-          "type": "tile",
-          "settings": {
-            "label": "Accessories",
-            "sublabel": "Ready for the unexpected.",
-            "description": "Small essentials that make a big difference when you're moving beyond the everyday.",
-            "meta_label": "Includes",
-            "meta_value": "Hydration · Storage · Protection · Everyday Gear"
           }
         }
       },
@@ -116,8 +110,7 @@
         "tile-1",
         "tile-2",
         "tile-3",
-        "tile-4",
-        "tile-5"
+        "tile-4"
       ]
     },
     "video-page-breaker": {

@@ -4,7 +4,9 @@
 {%- if path_style -%}
   <a href="{{ link | default: routes.all_products_collection_url }}" class="ccard ccard--path" data-reveal aria-label="{{ label | escape }}">
     <div class="ccard__path-media">
-      {%- if mobile_image -%}
+      {%- if asset_image != blank -%}
+        <img src="{{ asset_image | asset_url }}" width="1672" height="941" loading="lazy" alt="{{ label | escape }}" class="ccard__path-image">
+      {%- elsif mobile_image -%}
         <picture>
           <source media="(max-width: 749px)" srcset="{{ mobile_image | image_url: width: 700 }}">
           {{ image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '500, 700, 900', sizes: '260px', alt: label, class: 'ccard__path-image' }}
