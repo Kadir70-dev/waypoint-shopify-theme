@@ -162,21 +162,24 @@
 
 /* ---------- compact homepage latest-releases shelf ---------- */
 .featured-releases {
-  padding-block: 28px 24px;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  padding: 28px 32px 24px;
 }
 .featured-releases .section-heading {
   margin-bottom: 14px;
   align-items: flex-start;
 }
 .featured-releases .section-heading__title {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.1;
   font-weight: 700;
   letter-spacing: .12em;
 }
 .featured-releases .section-heading__subheading {
   margin-top: 4px;
-  font-size: 10px;
+  font-size: 9px;
   line-height: 1.2;
 }
 .featured-releases .section-heading__view-all {
@@ -204,10 +207,20 @@
   padding: 4px 12px 0;
 }
 .featured-releases .pcard__media img {
+  display: block;
+  width: 72%;
+  height: 72%;
+  margin: 0 auto;
   object-fit: contain;
   transition: transform var(--dur-base) var(--ease-out-slow), opacity var(--dur-fast) var(--ease-out-slow);
 }
-.featured-releases .pcard:hover .pcard__media img { transform: scale(1.03); }
+.featured-releases .pcard:hover .pcard__media img { transform: scale(1.02); }
+.featured-releases .pcard:nth-child(2) .pcard__media img,
+.featured-releases .pcard:nth-child(4) .pcard__media img,
+.featured-releases .pcard:nth-child(5) .pcard__media img { transform: scale(.82); }
+.featured-releases .pcard:nth-child(1) .pcard__media img,
+.featured-releases .pcard:nth-child(3) .pcard__media img,
+.featured-releases .pcard:nth-child(6) .pcard__media img { transform: scale(.9); }
 .featured-releases .pcard__body {
   min-height: 55px;
   padding: 8px 12px 0;
@@ -215,7 +228,7 @@
 }
 .featured-releases .pcard__name {
   overflow: hidden;
-  font-size: 10px;
+  font-size: 9px;
   line-height: 1.25;
   font-weight: 600;
   letter-spacing: .05em;
@@ -224,7 +237,7 @@
   white-space: nowrap;
 }
 .featured-releases .pcard__price {
-  font-size: 10px;
+  font-size: 9px;
   line-height: 1.2;
   color: rgba(245, 244, 239, .78);
 }
@@ -233,12 +246,12 @@
   margin-top: 2px;
 }
 .featured-releases .pcard__swatches .swatch {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-width: 1px;
 }
 @media (max-width: 749px) {
-  .featured-releases { padding-block: 22px 20px; }
+  .featured-releases { padding: 22px 20px 20px; }
   .featured-releases__grid {
     display: flex;
     overflow-x: auto;
@@ -253,6 +266,7 @@
     scroll-snap-align: start;
   }
   .featured-releases .pcard__media { height: 178px; padding-inline: 8px; }
+  .featured-releases .pcard__media img { width: 72%; height: 72%; }
   .featured-releases .pcard__body { padding-inline: 8px; }
 }
 
