@@ -500,8 +500,10 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
   font-size: 11px;
   color: var(--muted);
 }
-.site-footer__social { display: flex; gap: 14px; }
-.site-footer__social svg { width: 16px; height: 16px; }
+.site-footer__social { display: flex; gap: 18px; align-items: center; }
+.site-footer__social a { display: inline-flex; color: var(--muted); transition: color var(--dur-fast) var(--ease-out-slow); }
+.site-footer__social a:hover { color: var(--text); }
+.site-footer__social svg { width: 17px; height: 17px; }
 .site-footer__follow-on-shop { margin-top: 10px; }
 
 .locale-form { display: flex; gap: 10px; }

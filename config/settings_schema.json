@@ -243,6 +243,8 @@
     "name": "t:settings.social.name",
     "settings": [
       { "type": "text", "id": "social_instagram_url", "label": "Instagram" },
+      { "type": "text", "id": "social_facebook_url", "label": "Facebook" },
+      { "type": "text", "id": "social_linkedin_url", "label": "LinkedIn" },
       { "type": "text", "id": "social_youtube_url", "label": "YouTube" },
       { "type": "text", "id": "social_spotify_url", "label": "Spotify" }
     ]

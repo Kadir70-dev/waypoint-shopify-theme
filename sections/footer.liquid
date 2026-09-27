@@ -86,13 +86,19 @@
 
     <div class="site-footer__social">
       {%- if settings.social_instagram_url != blank -%}
-        <a href="{{ settings.social_instagram_url }}" aria-label="Instagram">{%- render 'icon-instagram' -%}</a>
+        <a href="{{ settings.social_instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">{%- render 'icon-instagram' -%}</a>
+      {%- endif -%}
+      {%- if settings.social_facebook_url != blank -%}
+        <a href="{{ settings.social_facebook_url }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook">{%- render 'icon-facebook' -%}</a>
+      {%- endif -%}
+      {%- if settings.social_linkedin_url != blank -%}
+        <a href="{{ settings.social_linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">{%- render 'icon-linkedin' -%}</a>
       {%- endif -%}
       {%- if settings.social_youtube_url != blank -%}
-        <a href="{{ settings.social_youtube_url }}" aria-label="YouTube">{%- render 'icon-youtube' -%}</a>
+        <a href="{{ settings.social_youtube_url }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube">{%- render 'icon-youtube' -%}</a>
       {%- endif -%}
       {%- if settings.social_spotify_url != blank -%}
-        <a href="{{ settings.social_spotify_url }}" aria-label="Spotify">{%- render 'icon-spotify' -%}</a>
+        <a href="{{ settings.social_spotify_url }}" target="_blank" rel="noopener noreferrer" aria-label="Spotify">{%- render 'icon-spotify' -%}</a>
       {%- endif -%}
     </div>
 
