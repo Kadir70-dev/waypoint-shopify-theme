@@ -160,6 +160,102 @@
   .product-grid[data-context="featured"] { grid-template-columns: repeat(6, 1fr); }
 }
 
+/* ---------- compact homepage latest-releases shelf ---------- */
+.featured-releases {
+  padding-block: 28px 24px;
+}
+.featured-releases .section-heading {
+  margin-bottom: 14px;
+  align-items: flex-start;
+}
+.featured-releases .section-heading__title {
+  font-size: 14px;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+.featured-releases .section-heading__subheading {
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 1.2;
+}
+.featured-releases .section-heading__view-all {
+  padding-top: 1px;
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+.featured-releases__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0;
+  background: transparent;
+}
+.featured-releases__grid > .pcard {
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  border-inline-start: 1px solid var(--border);
+}
+.featured-releases__grid > .pcard:first-child { border-inline-start: 0; }
+.featured-releases .pcard__media {
+  height: 208px;
+  aspect-ratio: auto;
+  background: transparent;
+  padding: 4px 12px 0;
+}
+.featured-releases .pcard__media img {
+  object-fit: contain;
+  transition: transform var(--dur-base) var(--ease-out-slow), opacity var(--dur-fast) var(--ease-out-slow);
+}
+.featured-releases .pcard:hover .pcard__media img { transform: scale(1.03); }
+.featured-releases .pcard__body {
+  min-height: 55px;
+  padding: 8px 12px 0;
+  gap: 3px;
+}
+.featured-releases .pcard__name {
+  overflow: hidden;
+  font-size: 10px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.featured-releases .pcard__price {
+  font-size: 10px;
+  line-height: 1.2;
+  color: rgba(245, 244, 239, .78);
+}
+.featured-releases .pcard__swatches {
+  gap: 4px;
+  margin-top: 2px;
+}
+.featured-releases .pcard__swatches .swatch {
+  width: 8px;
+  height: 8px;
+  border-width: 1px;
+}
+@media (max-width: 749px) {
+  .featured-releases { padding-block: 22px 20px; }
+  .featured-releases__grid {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: -1px;
+  }
+  .featured-releases__grid::-webkit-scrollbar { display: none; }
+  .featured-releases__grid > .pcard {
+    flex: 0 0 calc((100% - 12px) / 1.7);
+    scroll-snap-align: start;
+  }
+  .featured-releases .pcard__media { height: 178px; padding-inline: 8px; }
+  .featured-releases .pcard__body { padding-inline: 8px; }
+}
+
 /* ---------- variant picker (option-selector, product-buybox.liquid) ----------
    Module 05: this component had zero CSS anywhere in the theme — swatches
    and size pills rendered as unstyled inputs/labels. Also used unmodified
