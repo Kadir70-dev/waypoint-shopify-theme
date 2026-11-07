@@ -272,9 +272,9 @@ html, body { overflow-x: hidden; }
    default and only animate-in when .js is actually present. */
 [data-reveal] { opacity: 1; transform: none; }
 .js [data-reveal] {
-  opacity: 0;
+  opacity: 1;
   transform: translateY(16px);
-  transition: opacity var(--dur-slow) var(--ease-out-slow), transform var(--dur-slow) var(--ease-out-slow);
+  transition: transform var(--dur-slow) var(--ease-out-slow);
 }
 .js [data-reveal].is-revealed { opacity: 1; transform: translateY(0); }
 

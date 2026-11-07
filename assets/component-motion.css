@@ -64,7 +64,7 @@
 .hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__cta { animation-delay: 460ms; }
 /* Text is visible by default; it only animates in once motion.js marks the slider ready,
    and the whole sequence finishes within ~1.3s so the CTA is never held back. */
-@keyframes hero-content-reveal { from { opacity: 0; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+@keyframes hero-content-reveal { from { opacity: 1; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
 
 /* Gentle hero image drift: the slide's own background is repeated on a layer
    behind the gradient and eased from 106% to 100% while the slide is active. */
