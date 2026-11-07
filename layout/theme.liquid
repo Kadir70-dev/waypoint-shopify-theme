@@ -152,8 +152,16 @@
   {{ 'base.css' | asset_url | stylesheet_tag }}
   {{ 'component-nav.css' | asset_url | stylesheet_tag }}
   {{ 'component-product-card.css' | asset_url | stylesheet_tag }}
-  {{ 'component-collection.css' | asset_url | stylesheet_tag }}
-  {{ 'component-cart.css' | asset_url | stylesheet_tag }}
+  {%- if template contains 'collection' or template contains 'search' -%}
+    {{ 'component-collection.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  {%- comment -%} Cart drawer starts closed, so off the cart page its CSS loads non-blocking. {%- endcomment -%}
+  {%- if template == 'cart' -%}
+    {{ 'component-cart.css' | asset_url | stylesheet_tag }}
+  {%- else -%}
+    <link rel="stylesheet" href="{{ 'component-cart.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript>{{ 'component-cart.css' | asset_url | stylesheet_tag }}</noscript>
+  {%- endif -%}
   {%- comment -%}
     component-cart.css stays unconditional — the cart drawer (sections/
     cart-drawer.liquid) is rendered from the header on every page. These
@@ -244,11 +252,15 @@
   <script src="{{ 'overlay.js' | asset_url }}" defer></script>
   <script src="{{ 'cart.js' | asset_url }}" defer></script>
   <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
-  <script src="{{ 'variant-picker.js' | asset_url }}" defer></script>
-  <script src="{{ 'product-gallery.js' | asset_url }}" defer></script>
-  <script src="{{ 'collection-facets.js' | asset_url }}" defer></script>
+  {%- if template contains 'product' -%}
+    <script src="{{ 'variant-picker.js' | asset_url }}" defer></script>
+    <script src="{{ 'product-gallery.js' | asset_url }}" defer></script>
+    <script src="{{ 'size-chart.js' | asset_url }}" defer></script>
+  {%- endif -%}
+  {%- if template contains 'collection' or template contains 'search' -%}
+    <script src="{{ 'collection-facets.js' | asset_url }}" defer></script>
+  {%- endif -%}
   <script src="{{ 'quick-add.js' | asset_url }}" defer></script>
-  <script src="{{ 'size-chart.js' | asset_url }}" defer></script>
   <script src="{{ 'product-recommendations.js' | asset_url }}" defer></script>
   <script src="{{ 'mobile-nav.js' | asset_url }}" defer></script>
   {%- if template contains 'customers' -%}

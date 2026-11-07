@@ -55,7 +55,7 @@
   <a href="{{ product.url }}" class="pcard__media">
     {%- if product.featured_image -%}
       {%- assign focal_point = product.featured_image.presentation.focal_point -%}
-      {%- assign focal_style = 'object-position: ' | append: focal_point.x | append: '% ' | append: focal_point.y | append: '%' -%}
+      {%- assign focal_style = '' -%}{%- if focal_point != blank -%}{%- assign focal_style = 'object-position: ' | append: focal_point -%}{%- endif -%}
       {%- if eager -%}{%- assign img_loading = 'eager' -%}{%- assign img_priority = 'high' -%}{%- else -%}{%- assign img_loading = 'lazy' -%}{%- assign img_priority = 'auto' -%}{%- endif -%}
       {{ product.featured_image | image_url: width: 600 | image_tag: loading: img_loading, fetchpriority: img_priority, widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, 50vw', style: focal_style, alt: product.featured_image.alt | default: product.title }}
       {%- if settings.show_product_card_secondary_image and secondary_image != blank -%}
