@@ -102,7 +102,7 @@
         {%- paginate collection.products by section.settings.products_per_page -%}
           <div class="product-grid" data-density="{{ settings.grid_density }}" data-context="collection">
             {%- for product in collection.products -%}
-              {%- render 'card-product', product: product, collection_context: true -%}
+              {%- render 'card-product', product: product, collection_context: true, eager: forloop.first -%}
             {%- endfor -%}
           </div>
           {%- render 'pagination', paginate: paginate -%}
