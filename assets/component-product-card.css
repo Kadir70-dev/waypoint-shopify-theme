@@ -408,3 +408,8 @@
 .site-footer__cols:not(:has(> div)) { display: none; }
 .site-footer__grid:not(:has(.site-footer__cols > div, .newsletter-block)) { display: none; }
 .site-footer__grid:not(:has(.site-footer__cols > div, .newsletter-block)) + .site-footer__bottom { margin-top: 0; padding-top: 0; border-top: 0; }
+
+/* PDP gallery: reserve the media box before the section's own <style> block
+   (which sits after the markup) arrives — removes the gallery layout shift. */
+.product-gallery__main { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.product-gallery__main-item { position: relative; flex: 0 0 100%; aspect-ratio: var(--ratio-square); }
