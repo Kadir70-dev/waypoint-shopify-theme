@@ -2,14 +2,13 @@
   Usage: {% render 'card-product', product: product %}
   or: {% render 'card-product', product: product, plain: true %}
   (plain = the plain-photography validation frame, not tied to any
-  merchant setting — used where the theme wants to demonstrate/force it)
+  merchant setting)
 
   Quick-add: a real form POST to /cart/add — works with zero JS. Milestone
   5's cart.js progressively enhances it (data-cart-add-form): intercepts
   the submit, adds via /cart/add.js, and opens the cart drawer as
   confirmation instead of navigating.
 {%- endcomment -%}
-{%- if false -%}{%- render 'card-product-demo', image: '', title: '', price: '' -%}{%- endif -%}
 
 {%- liquid
   assign variant = product.selected_or_first_available_variant
@@ -57,7 +56,7 @@
     {%- if product.featured_image -%}
       {%- assign focal_point = product.featured_image.presentation.focal_point -%}
       {%- assign focal_style = 'object-position: ' | append: focal_point.x | append: '% ' | append: focal_point.y | append: '%' -%}
-      {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, 50vw', style: focal_style }}
+      {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, 50vw', style: focal_style, alt: product.featured_image.alt | default: product.title }}
       {%- if settings.show_product_card_secondary_image and secondary_image != blank -%}
         {{ secondary_image | image_url: width: 600 | image_tag: class: 'pcard__secondary-image', loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 990px) 25vw, 50vw', alt: '' }}
       {%- endif -%}

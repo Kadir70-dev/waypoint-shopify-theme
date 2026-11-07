@@ -25,7 +25,7 @@
         </div>
         <label class="newsletter-block__consent">
           <input type="checkbox" name="contact[accepts_marketing]" value="1" required style="margin-top:2px">
-          {{ 'newsletter.consent' | t }}
+          {{ 'newsletter.consent' | t: shop_name: shop.name }}
         </label>
         {%- if form.errors -%}
           <p role="alert">{{ form.errors.messages['contact[email]'] }}</p>

@@ -10,6 +10,8 @@
   id="MegaMenu"
   class="mega-menu"
   data-mega-menu
+  role="region"
+  aria-label="{{ section.settings.trigger_label | escape }}"
   data-trigger-label="{{ section.settings.trigger_label | escape }}"
   data-overlay
   data-overlay-trap="false"
@@ -21,12 +23,8 @@
         <div class="mega-menu__column" {{ block.shopify_attributes }}>
           <h3 class="eyebrow">{{ block.settings.heading }}</h3>
           <ul>
-            {%- for i in (1..6) -%}
-              {%- assign link_key = 'link_' | append: i -%}
-              {%- assign link = block.settings[link_key] -%}
-              {%- if link != blank -%}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {%- endif -%}
+            {%- for link in block.settings.menu.links -%}
+              <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
             {%- endfor -%}
           </ul>
         </div>
@@ -81,12 +79,7 @@
       "limit": 5,
       "settings": [
         { "type": "text", "id": "heading", "label": "Heading", "default": "Column" },
-        { "type": "url", "id": "link_1", "label": "Link 1" },
-        { "type": "url", "id": "link_2", "label": "Link 2" },
-        { "type": "url", "id": "link_3", "label": "Link 3" },
-        { "type": "url", "id": "link_4", "label": "Link 4" },
-        { "type": "url", "id": "link_5", "label": "Link 5" },
-        { "type": "url", "id": "link_6", "label": "Link 6" }
+        { "type": "link_list", "id": "menu", "label": "Menu" }
       ]
     },
     {

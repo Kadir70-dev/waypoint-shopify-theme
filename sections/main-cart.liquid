@@ -1,5 +1,5 @@
 {%- comment -%}
-  AERA — full cart page (Milestone 5). Same Section Rendering API pattern
+  Waypoint — full cart page (Milestone 5). Same Section Rendering API pattern
   as the PDP buy box and cart drawer: cart.js re-fetches this section
   (?section_id=main-cart) after an AJAX quantity/remove change and swaps
   #CartPageContent wholesale (one id, one innerHTML replace) — the same
@@ -63,6 +63,7 @@
             <span>&minus;{{ discount.total_allocated_amount | money }}</span>
           </div>
         {%- endfor -%}
+        {%- if cart.taxes_included -%}<p class="cart-page__shipping-note">{{ 'cart.tax_included' | t }}</p>{%- endif -%}
         <p class="cart-page__shipping-note">{{ 'cart.shipping_at_checkout' | t }}</p>
         <div class="cart-page__summary-row cart-page__summary-row--total">
           <span>{{ 'cart.total' | t }}</span>

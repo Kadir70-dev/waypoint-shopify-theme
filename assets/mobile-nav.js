@@ -1,5 +1,5 @@
 /**
- * AERA — mobile navigation drill-down.
+ * Waypoint — mobile navigation drill-down.
  * Two sibling panels swap via a data attribute (see Motion System
  * Implementation Plan) rather than routing. Open/close/focus-trap is
  * handled entirely by overlay.js; this file only owns which panel shows.
@@ -39,7 +39,7 @@
 
   // Always re-open on the top-level panel, never mid-drill-down.
   document.addEventListener('DOMContentLoaded', function () {
-    var overlay = window.AeraOverlays && window.AeraOverlays.MobileNav;
+    var overlay = window.WaypointOverlays && window.WaypointOverlays.MobileNav;
     if (!overlay) return;
     var open = overlay.open.bind(overlay);
     overlay.open = function (trigger) {

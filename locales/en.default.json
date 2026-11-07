@@ -129,7 +129,7 @@
     "email_label": "Email address",
     "email_placeholder": "Your email address",
     "submit": "Subscribe",
-    "consent": "I agree to receive marketing emails from AERA.",
+    "consent": "I agree to receive marketing emails from {{ shop_name }}.",
     "success": "Thanks — you're on the list."
   },
   "localization": {
@@ -157,7 +157,10 @@
     "filters": "Filters",
     "sort_by_label": "Sort by",
     "show_results_one": "Show {{ count }} Result",
-    "show_results_other": "Show {{ count }} Results"
+    "show_results_other": "Show {{ count }} Results",
+    "view_label": "Collection view",
+    "grid_view": "Grid view",
+    "list_view": "List view"
   },
   "pagination": {
     "label": "Pagination",
@@ -195,7 +198,8 @@
     "status_updated": "Cart updated",
     "status_cleared": "Cart cleared",
     "status_count_one": "1 item in cart",
-    "status_count_other": "%d items in cart"
+    "status_count_other": "%d items in cart",
+    "tax_included": "Tax included"
   },
   "products": {
     "badge_bestseller": "Bestseller",
@@ -235,7 +239,8 @@
     "reviews_count_other": "{{ count }} reviews",
     "rating_label": "Rated {{ rating }} out of 5 stars",
     "breadcrumb_home": "Home",
-    "free_shipping_over": "Free shipping over {{ amount }}"
+    "free_shipping_over": "Free shipping over {{ amount }}",
+    "tax_included": "Tax included"
   },
   "sections": {
     "hero": {
@@ -268,6 +273,14 @@
       "title": "Page Not Found",
       "text": "The page you're looking for doesn't exist or has moved.",
       "link": "Back to Home"
+    },
+    "scheme_toggle": {
+      "to_dark": "Switch to dark mode",
+      "to_light": "Switch to light mode"
+    },
+    "video": {
+      "pause": "Pause video",
+      "play": "Play video"
     }
   },
   "contact": {
@@ -294,6 +307,19 @@
       "message_label": "Message (optional)",
       "send_on_label": "Send on (optional)",
       "send_on_info": "Leave blank to send immediately after purchase."
-    }
+    },
+    "apple_wallet": "Add to Apple Wallet",
+    "qr_alt": "QR code for this gift card"
+  },
+  "comments": {
+    "heading": "Comments",
+    "form_heading": "Leave a comment",
+    "name_label": "Name",
+    "email_label": "Email",
+    "body_label": "Comment",
+    "submit": "Post comment",
+    "success": "Your comment was posted.",
+    "success_moderated": "Your comment was submitted and is awaiting approval.",
+    "moderated_notice": "Comments are approved before they appear."
   }
 }

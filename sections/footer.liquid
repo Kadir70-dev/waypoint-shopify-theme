@@ -2,7 +2,7 @@
   <div class="page-width site-footer__grid">
     <div class="site-footer__cols">
       {%- for block in section.blocks -%}
-        {%- if block.type == 'link-column' -%}
+        {%- if block.type == 'link-column' and block.settings.menu.links.size > 0 -%}
           <div {{ block.shopify_attributes }}>
             <h3 class="eyebrow">{{ block.settings.heading }}</h3>
             <ul>
@@ -38,7 +38,7 @@
             </div>
             <label class="newsletter-block__consent">
               <input type="checkbox" name="contact[accepts_marketing]" value="1" required style="margin-top:2px">
-              {{ 'newsletter.consent' | t }}
+              {{ 'newsletter.consent' | t: shop_name: shop.name }}
             </label>
             {%- if form.errors -%}
               <p role="alert">{{ form.errors.messages['contact[email]'] }}</p>
@@ -51,7 +51,7 @@
 
   <div class="page-width site-footer__bottom">
     <div>
-      <span style="display:block;font-family:var(--font-display);font-size:13px;letter-spacing:.2em">A E R A</span>
+      <span style="display:block;font-family:var(--font-display);font-size:13px;letter-spacing:.2em;text-transform:uppercase">{{ shop.name | escape }}</span>
       <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'footer.rights' | t }}</span>
     </div>
 

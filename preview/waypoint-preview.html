@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>AERA Theme Preview</title>
+<title>Waypoint Theme Preview</title>
 <script>
   (function (html) {
     html.classList.add('js');
@@ -57,7 +57,7 @@
   --focus-ring-offset: 3px;
   color-scheme: dark;
 }
-:root[data-preset="fieldbook"] {
+:root[data-preset="daylight"] {
   --bg: #F4F1EA;
   --surface: #FFFFFF;
   --surface-2: #FBFAF6;
@@ -310,16 +310,16 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
 .preview-bar button { font-family: Inter, sans-serif; font-size: 11px; background: transparent; border: 1px solid rgba(255,255,255,.3); color: #d8d6c8; padding: 6px 12px; cursor: pointer; border-radius: 3px; }
 .preview-bar button[aria-pressed="true"] { background: #5C6B4A; border-color: #5C6B4A; color: #fff; }
 /* placeholder photography — CSS-graded gradients standing in for real
-   AERA campaign photography, per the Photography Resilience Strategy */
+   Waypoint campaign photography, per the Photography Resilience Strategy */
 .pcard__media.photo, .ccard-ph, .promo-ph, .hero-slider__slide.photo { background-size: cover; background-position: center; }
 .pcard:hover .pcard__media.photo { transform: scale(1.03); transition: transform var(--dur-base) var(--ease-out-slow); }
 </style>
 
 <div class="preview-bar">
-  <span><b>AERA Theme Preview</b> — Milestones 0–2, assembled from the committed CSS/JS. Sample content stands in for live Shopify data.</span>
+  <span><b>Waypoint Theme Preview</b> — Milestones 0–2, assembled from the committed CSS/JS. Sample content stands in for live Shopify data.</span>
   <span class="spacer"></span>
   <button type="button" id="PresetDark" aria-pressed="true">Dark</button>
-  <button type="button" id="PresetFieldbook" aria-pressed="false">Fieldbook</button>
+  <button type="button" id="PresetDaylight" aria-pressed="false">Daylight</button>
 </div>
 
 <a class="skip-link" href="#MainContent">Skip to content</a>
@@ -338,7 +338,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
     </nav>
 
     <a href="#" class="site-header__logo">
-      A E R A
+      Waypoint
       <small>Built for a wilder tomorrow</small>
     </a>
 
@@ -455,7 +455,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
     </div>
     <div class="hero-slider__slide photo brand" data-hero-slide style="background-image:url(../assets/hero-slide-3.png)">
       <div class="hero-slider__content">
-        <span class="eyebrow" style="color:#ddd">AERA Journal</span>
+        <span class="eyebrow" style="color:#ddd">Waypoint Journal</span>
         <h1 style="color:#fff;font-size:clamp(28px,5vw,44px)">A Life More Open</h1>
         <p style="color:#eee">Stories, guides and perspectives from those who choose a wilder path.</p>
         <a href="#" class="btn btn-primary" style="align-self:flex-start;margin-top:6px">Explore the Journal</a>
@@ -521,14 +521,14 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
 
   <div class="split-promo photo brand" data-reveal-group style="background-image:radial-gradient(circle at 70% 30%,#333828 0%,#101109 75%)">
     <div class="split-promo__content" data-reveal>
-      <span class="eyebrow" style="color:#ddd">AERA Journal</span>
+      <span class="eyebrow" style="color:#ddd">Waypoint Journal</span>
       <h2 style="font-size:26px;color:#fff">A Life More Open</h2>
       <div style="color:#ddd;font-size:14px;line-height:1.6">Stories, guides and perspectives from those who choose a wilder path.</div>
       <a href="#" class="btn btn-outline" style="align-self:flex-start;margin-top:6px">Explore the Journal &rarr;</a>
     </div>
     <blockquote class="split-promo__quote" data-reveal>
       <p class="editorial-quote">&ldquo;Not escape. Perspective.&rdquo;</p>
-      <footer>AERA Journal, Vol. 04</footer>
+      <footer>Waypoint Journal, Vol. 04</footer>
     </blockquote>
   </div>
 
@@ -542,7 +542,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
         <button type="button" class="carousel__nav-btn" data-carousel-prev aria-label="Previous" style="flex-shrink:0;width:36px;height:36px;border:1px solid var(--border-strong);background:transparent;color:var(--text);cursor:pointer;display:inline-flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:16px;height:16px"><path d="M15 5l-7 7 7 7"/></svg></button>
         <div class="carousel__track social-proof__track" data-carousel-track>
           <blockquote class="social-proof__blockquote" data-carousel-item>
-            <p class="editorial-quote">&ldquo;AERA gear has been with me through Icelandic storms, alpine crossings and everything in between. It simply works.&rdquo;</p>
+            <p class="editorial-quote">&ldquo;Waypoint gear has been with me through Icelandic storms, alpine crossings and everything in between. It simply works.&rdquo;</p>
             <footer>&mdash; M. Eriksson, Mountain Guide</footer>
           </blockquote>
         </div>
@@ -569,7 +569,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
           <input type="email" id="NLSectionEmail" placeholder="Your email address" required>
           <button type="submit">Subscribe</button>
         </div>
-        <label class="newsletter-block__consent"><input type="checkbox" required style="margin-top:2px">I agree to receive marketing emails from AERA.</label>
+        <label class="newsletter-block__consent"><input type="checkbox" required style="margin-top:2px">I agree to receive marketing emails from Waypoint.</label>
         <p data-ok hidden role="status" style="font-size:13px">Thanks — you're on the list.</p>
       </form>
     </div>
@@ -587,8 +587,8 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
   </div>
   <div class="page-width site-footer__bottom">
     <div>
-      <span style="display:block;font-family:var(--font-display);font-size:13px;letter-spacing:.2em">A E R A</span>
-      <span>&copy; 2026 AERA. All rights reserved.</span>
+      <span style="display:block;font-family:var(--font-display);font-size:13px;letter-spacing:.2em">Waypoint</span>
+      <span>&copy; 2026 Waypoint. All rights reserved.</span>
     </div>
     <form class="locale-form" onsubmit="event.preventDefault()">
       <select aria-label="Language"><option>English</option></select>
@@ -609,7 +609,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
 (function () {
   'use strict';
   var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-  function AeraOverlay(el, options) {
+  function WaypointOverlay(el, options) {
     options = options || {};
     this.el = el;
     this.trap = options.trap !== false;
@@ -617,8 +617,8 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
     this._onKeydown = this._onKeydown.bind(this);
     this._onBackdropClick = this._onBackdropClick.bind(this);
   }
-  AeraOverlay.prototype.isOpen = function () { return this.el.getAttribute('data-state') === 'open'; };
-  AeraOverlay.prototype.open = function (trigger) {
+  WaypointOverlay.prototype.isOpen = function () { return this.el.getAttribute('data-state') === 'open'; };
+  WaypointOverlay.prototype.open = function (trigger) {
     if (this.isOpen()) return;
     this.trigger = trigger || document.activeElement;
     this.el.hidden = false;
@@ -631,7 +631,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
     if (focusTarget) focusTarget.focus();
     this.el.dispatchEvent(new CustomEvent('overlay:open'));
   };
-  AeraOverlay.prototype.close = function () {
+  WaypointOverlay.prototype.close = function () {
     if (!this.isOpen()) return;
     this.el.setAttribute('data-state', 'closing');
     document.removeEventListener('keydown', this._onKeydown, true);
@@ -649,7 +649,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
     this.el.addEventListener('transitionend', onEnd);
     setTimeout(function () { if (!done) { done = true; finish(); } }, 400);
   };
-  AeraOverlay.prototype._onKeydown = function (e) {
+  WaypointOverlay.prototype._onKeydown = function (e) {
     if (e.key === 'Escape' || e.key === 'Esc') { e.preventDefault(); this.close(); return; }
     if (e.key !== 'Tab' || !this.trap) return;
     var focusable = Array.prototype.slice.call(this.el.querySelectorAll(FOCUSABLE)).filter(function (node) { return node.offsetParent !== null; });
@@ -658,18 +658,18 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   };
-  AeraOverlay.prototype._onBackdropClick = function (e) {
+  WaypointOverlay.prototype._onBackdropClick = function (e) {
     if (e.target.hasAttribute('data-overlay-backdrop') || e.target.closest('[data-overlay-close]')) { this.close(); }
   };
-  window.AeraOverlay = AeraOverlay;
+  window.WaypointOverlay = WaypointOverlay;
   document.addEventListener('DOMContentLoaded', function () {
-    window.AeraOverlays = window.AeraOverlays || {};
+    window.WaypointOverlays = window.WaypointOverlays || {};
     document.querySelectorAll('[data-overlay]').forEach(function (el) {
       var id = el.id;
       if (!id) return;
       var trap = el.getAttribute('data-overlay-trap') !== 'false';
-      var instance = new AeraOverlay(el, { trap: trap });
-      window.AeraOverlays[id] = instance;
+      var instance = new WaypointOverlay(el, { trap: trap });
+      window.WaypointOverlays[id] = instance;
       document.querySelectorAll('[data-overlay-trigger="' + id + '"]').forEach(function (trigger) {
         trigger.setAttribute('aria-expanded', 'false');
         trigger.addEventListener('click', function () { if (instance.isOpen()) { instance.close(); } else { instance.open(trigger); } });
@@ -699,7 +699,7 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
     if (e.target.closest('[data-nav-back]')) { showPanel('root'); }
   });
   document.addEventListener('DOMContentLoaded', function () {
-    var overlay = window.AeraOverlays && window.AeraOverlays.MobileNav;
+    var overlay = window.WaypointOverlays && window.WaypointOverlays.MobileNav;
     if (!overlay) return;
     var open = overlay.open.bind(overlay);
     overlay.open = function (trigger) { showPanel('root'); open(trigger); };
@@ -825,13 +825,13 @@ body[data-has-tabbar="true"] { padding-bottom: 62px; }
   });
 
   var darkBtn = document.getElementById('PresetDark');
-  var fieldbookBtn = document.getElementById('PresetFieldbook');
+  var daylightBtn = document.getElementById('PresetDaylight');
   function setPreset(name) {
     document.documentElement.setAttribute('data-preset', name);
     darkBtn.setAttribute('aria-pressed', String(name === 'dark'));
-    fieldbookBtn.setAttribute('aria-pressed', String(name === 'fieldbook'));
+    daylightBtn.setAttribute('aria-pressed', String(name === 'daylight'));
   }
   darkBtn.addEventListener('click', function () { setPreset('dark'); });
-  fieldbookBtn.addEventListener('click', function () { setPreset('fieldbook'); });
+  daylightBtn.addEventListener('click', function () { setPreset('daylight'); });
 })();
 </script>

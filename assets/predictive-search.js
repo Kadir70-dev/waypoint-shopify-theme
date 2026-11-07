@@ -1,5 +1,5 @@
 /**
- * AERA — predictive search (Milestone 3).
+ * Waypoint — predictive search (Milestone 3).
  * Fetches Shopify's native Predictive Search API via the Section Rendering
  * API (?section_id=predictive-search) so results are rendered by Liquid —
  * this file only fetches, swaps HTML, and manages state. It never renders
@@ -28,7 +28,6 @@
     function setResultsVisible(showResults) {
       if (prompt) prompt.hidden = showResults;
       target.hidden = !showResults;
-      input.setAttribute('aria-expanded', String(showResults));
     }
 
     function focusableResults() {

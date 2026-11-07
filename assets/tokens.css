@@ -1,30 +1,41 @@
 /*
-  AERA — design tokens
+  Waypoint — design tokens
   Two presets share one token contract: Dark (default, on :root) and
-  Fieldbook (light, on [data-preset="fieldbook"]). No component may declare
+  Daylight (light, on [data-preset="daylight"]). No component may declare
   a color literal outside this file — see Visual System Spec, Accessibility
   Visual Corrections.
 */
 
 :root {
   /* --- surfaces & text (Dark / default) --- */
-  --bg: #0E0F0D;
-  --surface: #171814;
-  --surface-2: #1D1F19;
-  --surface-3: #232519;
-  --border: rgba(255, 255, 255, .09);
-  --border-strong: rgba(255, 255, 255, .18);
-  --text: #F5F4EF;
-  --muted: #A8A79E; /* >=4.5:1 on --bg — see accessibility spec */
+  /* Premium outdoor editorial: deep forest-charcoal surfaces, warm stone
+     text, one restrained brass accent. Contrast (WCAG 2.1) on --bg:
+     text 14.97:1, muted 7.31:1, accent-light 8.03:1; lowest surface pair
+     (muted on --surface-3) is still 6.02:1. */
+  --bg: #0F1412;
+  --surface: #141A17;
+  --surface-2: #19201C;
+  --surface-3: #1F2722;
+  --border: rgba(236, 230, 218, .10);
+  --border-strong: rgba(236, 230, 218, .20);
+  --text: #ECE6DA;
+  --muted: #A8A293; /* >=4.5:1 on every surface — see accessibility spec */
 
-  /* --- accent --- */
-  --accent: #5C6B4A;
-  --accent-light: #8CA073; /* AA-safe accent for small text/links on --bg */
-  --accent-deep: #3F4A34;
+  /* --- accent (brass) --- */
+  --accent: #A88A5A;
+  --accent-light: #C8A56E; /* AA-safe brass for small text/links/focus on --bg */
+  --accent-deep: #6E5734;
+  --accent-ring: rgba(200, 165, 110, .28); /* soft focus halo on fields */
 
   /* --- call to action --- */
-  --cta-bg: #F5F4EF;
-  --cta-text: #0E0F0D;
+  --cta-bg: #ECE6DA;
+  --cta-text: #0F1412;
+  --cta-bg-hover: #F7F2E8;
+  /* CTAs placed on photography (hero slides) stay light in every preset,
+     so they read against dark imagery even when the page itself is light. */
+  --cta-on-image-bg: #ECE6DA;
+  --cta-on-image-text: #0F1412;
+  --cta-on-image-hover: #F7F2E8;
 
   /* --- status (no red/green; olive/outline only) --- */
   --status-processing-border: var(--border-strong);
@@ -64,7 +75,14 @@
      One restrained shadow for floating panels (search overlay, cart
      drawer, mega-menu) — refined depth, not a card-shadow aesthetic;
      never used on inline content or product cards. */
-  --shadow-elevated: 0 24px 30px rgba(0, 0, 0, .25);
+  --shadow-elevated: 0 24px 48px rgba(0, 0, 0, .32);
+  --shadow-card-hover: 0 18px 36px rgba(0, 0, 0, .22); /* product/category cards on hover only */
+  --selection-bg: rgba(200, 165, 110, .32);
+  /* iOS-style translucent chrome (sticky header, tab bar) */
+  --glass-bg: rgba(15, 20, 18, .72);
+  --glass-border: rgba(236, 230, 218, .08);
+  --radius-pill: 999px;
+  --radius-media: 0px; /* product/category imagery; rounded corner_style raises it */
 
   /* --- motion --- */
   --ease-out-slow: cubic-bezier(0.16, 1, 0.3, 1);
@@ -88,25 +106,36 @@
   color-scheme: dark;
 }
 
-/* Fieldbook (light) preset — same contract, different surface.
+/* Daylight (light) preset — same contract, different surface.
    Driven by data-preset on <html>, set from settings.color_preset
    in layout/theme.liquid. Never redefine a token anywhere else. */
-:root[data-preset="fieldbook"] {
-  --bg: #F4F1EA;
-  --surface: #FFFFFF;
-  --surface-2: #FBFAF6;
-  --surface-3: #EFEBE0;
-  --border: #DDD8CB;
-  --border-strong: #C9C3B2;
-  --text: #171712;
-  --muted: #6B6A5E;
+:root[data-preset="daylight"] {
+  /* Warm stone surfaces, forest-charcoal text, darker brass for AA.
+     Contrast on --bg: text 14.38:1, muted 5.94:1, accent-light 5.34:1
+     (4.84:1 on --surface-3). */
+  --bg: #F2EEE6;
+  --surface: #FBF9F5;
+  --surface-2: #F7F4EE;
+  --surface-3: #E9E3D7;
+  --border: #DCD5C6;
+  --border-strong: #C7BEAB;
+  --text: #18201C;
+  --muted: #5E5A50;
 
-  --accent: #4A5A3C;
-  --accent-light: #4A5A3C; /* already AA on the light surface at this depth */
-  --accent-deep: #33402A;
+  --accent: #8A6A3A;
+  --accent-light: #7A5C2E; /* AA brass for text/links/focus on the light surfaces */
+  --accent-deep: #5C4422;
+  --accent-ring: rgba(122, 92, 46, .22);
 
-  --cta-bg: #171712;
-  --cta-text: #F5F4EF;
+  --cta-bg: #18201C;
+  --cta-text: #F2EEE6;
+  --cta-bg-hover: #2A3530;
+
+  --shadow-elevated: 0 24px 48px rgba(24, 32, 28, .14);
+  --shadow-card-hover: 0 18px 36px rgba(24, 32, 28, .10);
+  --selection-bg: rgba(122, 92, 46, .22);
+  --glass-bg: rgba(242, 238, 230, .76);
+  --glass-border: rgba(24, 32, 28, .08);
 
   color-scheme: light;
 }
@@ -116,8 +145,10 @@
    small control does at the same radius (Module 01: intentional radius
    per surface type, rather than one flat value applied everywhere). */
 :root[data-corners="rounded"] {
-  --radius: 6px;
-  --radius-surface: 12px;
+  /* iOS-like continuous curvature: controls 12, surfaces/sheets 20, imagery 16. */
+  --radius: 12px;
+  --radius-surface: 20px;
+  --radius-media: 16px;
 }
 
 /* Reduced motion: zero out travel/duration at the token level so every

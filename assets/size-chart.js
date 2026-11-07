@@ -1,5 +1,5 @@
 /**
- * AERA — size chart dialog (Module 12).
+ * Waypoint — size chart dialog (Module 12).
  * Delegated from [data-product-buybox], which variant-picker.js replaces
  * by innerHTML (never itself removed), so this survives every variant
  * re-fetch with no rebinding needed — same pattern as quick-add's own

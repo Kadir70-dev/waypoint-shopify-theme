@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>AERA — cart: local DOM/event-flow test</title>
+<title>Waypoint — cart: local DOM/event-flow test</title>
 <style>
   body { margin: 0; background: #0E0F0D; color: #F5F4EF; font-family: Arial, sans-serif; padding: 20px; }
   #log { background: #000; color: #8f8; font-family: monospace; font-size: 12px; padding: 14px; white-space: pre-wrap; max-height: 220px; overflow-y: auto; }
@@ -193,7 +193,7 @@
 
       log('--- initial state ---');
       assert('header count starts hidden (empty cart)', countEl.hidden === true);
-      assert('CartDrawer overlay instance exists (overlay.js wired it)', !!(window.AeraOverlays && window.AeraOverlays.CartDrawer));
+      assert('CartDrawer overlay instance exists (overlay.js wired it)', !!(window.WaypointOverlays && window.WaypointOverlays.CartDrawer));
 
       log('--- submitting the PDP add-to-cart form ---');
       pdpForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));

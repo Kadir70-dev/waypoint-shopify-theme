@@ -55,7 +55,7 @@
       padding: 14px;
     }
     .gift-card-panel__actions { display: flex; gap: 10px; justify-content: center; }
-    @media print { .gift-card-panel__actions, .site-header, .site-footer { display: none; } }
+    @media print { .gift-card-panel__wallet, .gift-card-panel__actions, .site-header, .site-footer { display: none; } }
   {%- endstyle -%}
 
   {{ content_for_header }}
@@ -63,7 +63,7 @@
 <body>
   <main id="MainContent" tabindex="-1">
     <div class="gift-card-panel">
-      <div class="eyebrow">{{ shop.name }}</div>
+      <h1 class="eyebrow" style="margin:0">{{ shop.name }}</h1>
 
       {%- if gift_card.enabled == false or gift_card.expired -%}
         <p role="status">{{ 'gift_card.disabled' | t }}</p>
@@ -85,10 +85,27 @@
 
       <p style="font-size:13px"><a href="{{ gift_card.url }}">{{ 'gift_card.redeem_link' | t }}</a></p>
 
+      <div class="gift-card-panel__qr" data-gift-card-qr data-identifier="{{ gift_card.qr_identifier }}" style="display:flex;justify-content:center"></div>
+
+      {%- if gift_card.pass_url -%}
+        <a href="{{ gift_card.pass_url }}" class="gift-card-panel__wallet no-print" style="display:inline-flex;justify-content:center">
+          <img src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="{{ 'gift_card.apple_wallet' | t }}" loading="lazy">
+        </a>
+      {%- endif -%}
+
       <div class="gift-card-panel__actions">
         <button type="button" class="btn btn-outline" onclick="window.print()">{{ 'gift_card.print' | t }}</button>
       </div>
     </div>
   </main>
+  <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var el = document.querySelector('[data-gift-card-qr]');
+      if (el && el.dataset.identifier && window.QRCode) {
+        new QRCode(el, { text: el.dataset.identifier, width: 120, height: 120, imageAltText: {{ 'gift_card.qr_alt' | t | json }} });
+      }
+    });
+  </script>
 </body>
 </html>

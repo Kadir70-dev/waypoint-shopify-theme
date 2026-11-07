@@ -19,8 +19,9 @@
           assign bg_position = focal_point.x | append: '% ' | append: focal_point.y | append: '%'
         endif
       elsif forloop.index == 1
-        assign mobile_url = 'hero-slide-1.jpg' | asset_url
-        assign desktop_url = mobile_url
+        assign bg_position = '88% 50%'
+        assign mobile_url = 'hero-slide-1-mobile.jpg' | asset_url
+        assign desktop_url = 'hero-slide-1.jpg' | asset_url
       elsif forloop.index == 2
         assign mobile_url = 'hero-slide-2.jpg' | asset_url
         assign desktop_url = mobile_url
@@ -61,7 +62,8 @@
           <span class="hero-slider__eyebrow eyebrow" style="color:#ddd">{{ block.settings.eyebrow }}</span>
         {%- endif -%}
         {%- if block.settings.heading != blank -%}
-          <h1 class="hero-slider__heading" style="color:#fff;font-size:clamp(28px, 5vw, 44px)">{{ block.settings.heading }}</h1>
+          {%- if forloop.first -%}{%- assign heading_tag = 'h1' -%}{%- else -%}{%- assign heading_tag = 'h2' -%}{%- endif -%}
+          <{{ heading_tag }} class="hero-slider__heading" style="color:#fff;font-size:clamp(28px, 5vw, 44px)">{{ block.settings.heading }}</{{ heading_tag }}>
         {%- endif -%}
         {%- if block.settings.subtext != blank -%}
           <p class="hero-slider__body" style="color:#eee">{{ block.settings.subtext }}</p>
@@ -131,7 +133,7 @@
       "blocks": [
         { "type": "slide", "settings": { "eyebrow": "Gear for Real Life", "heading": "Further by Nature", "subtext": "Technical gear for the unknown. Built to go further.", "cta_label": "Explore Gear" } },
         { "type": "slide", "settings": { "eyebrow": "Engineered for Extremes", "heading": "Details That Perform", "subtext": "Premium materials. Rigorously tested. No compromises.", "cta_label": "Our Approach" } },
-        { "type": "slide", "settings": { "eyebrow": "AERA Journal", "heading": "A Life More Open", "subtext": "Stories, guides and perspectives from those who choose a wilder path.", "cta_label": "Explore the Journal" } }
+        { "type": "slide", "settings": { "eyebrow": "Journal", "heading": "A Life More Open", "subtext": "Stories, guides and perspectives from those who choose a wilder path.", "cta_label": "Explore the Journal" } }
       ]
     }
   ]

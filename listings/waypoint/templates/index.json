@@ -6,7 +6,7 @@
       "blocks": {
         "slide-1": { "type": "slide", "settings": { "eyebrow": "Gear for Real Life", "heading": "Further by Nature", "subtext": "Technical gear for the unknown. Built to go further.", "cta_label": "Explore Gear" } },
         "slide-2": { "type": "slide", "settings": { "eyebrow": "Engineered for Extremes", "heading": "Details That Perform", "subtext": "Premium materials. Rigorously tested. No compromises.", "cta_label": "Our Approach" } },
-        "slide-3": { "type": "slide", "settings": { "eyebrow": "AERA Journal", "heading": "A Life More Open", "subtext": "Stories, guides and perspectives from those who choose a wilder path.", "cta_label": "Explore the Journal" } }
+        "slide-3": { "type": "slide", "settings": { "eyebrow": "Journal", "heading": "A Life More Open", "subtext": "Stories, guides and perspectives from those who choose a wilder path.", "cta_label": "Explore the Journal" } }
       },
       "block_order": ["slide-1", "slide-2", "slide-3"]
     },
@@ -49,19 +49,19 @@
       "type": "split-promo",
       "settings": {
         "content_position": "left",
-        "eyebrow": "AERA Journal",
+        "eyebrow": "Journal",
         "heading": "A Life More Open",
         "text": "<p>Stories, guides and perspectives from those who choose a wilder path.</p>",
         "cta_label": "Explore the Journal",
         "quote": "Not escape. Perspective.",
-        "quote_attribution": "AERA Journal, Vol. 04"
+        "quote_attribution": "Journal, Vol. 04"
       }
     },
     "trusted-by-explorers": {
       "type": "social-proof",
       "settings": { "heading": "Trusted by Explorers", "subheading": "Real people. Real places." },
       "blocks": {
-        "t1": { "type": "testimonial", "settings": { "quote": "AERA gear has been with me through Icelandic storms, alpine crossings and everything in between. It simply works.", "name": "M. Eriksson", "location": "Mountain Guide" } },
+        "t1": { "type": "testimonial", "settings": { "quote": "Sample testimonial. Replace this with a real quote from one of your customers.", "name": "Customer name", "location": "Customer location" } },
         "ti1": { "type": "trust-item", "settings": { "icon": "mountain", "label": "Field Tested" } },
         "ti2": { "type": "trust-item", "settings": { "icon": "leaf", "label": "Sustainable Practices" } },
         "ti3": { "type": "trust-item", "settings": { "icon": "shield", "label": "Built to Last" } },

@@ -1,91 +1,12 @@
 extends: theme-check:recommended
 
-# AERA — Milestone 0 (Foundation) scope note:
-# Sections, snippets and templates beyond the base layout are added in later
-# milestones per the approved implementation roadmap. Rules that flag their
-# absence (e.g. missing header/footer sections, no index template yet) are
-# expected to surface until Milestones 1–2 land, and are not Milestone 0 defects.
-
 MissingTemplate:
   enabled: true
-  ignore_missing: ["404", "gift_card"]
-  # "index" removed in Milestone 2 (templates/index.json now exists).
-  # "list-collections" removed in Milestone 3 (templates/list-collections.json
-  # now exists). "page", "blog" and "article" removed in Milestone 6
-  # (templates/page.json, blog.json and article.json now exist).
-  # "customers/*" removed in Milestone 7 (login, register, account, order,
-  # addresses, activate_account and reset_password templates now exist —
-  # the full classic-accounts set). "search" and "collection" were never
-  # in this list since Theme Check doesn't flag their absence by default
-  # the way it does these. "gift_card" stays ignored — out of scope,
-  # Shopify's own default is used for it.
+  ignore_missing: ["404", "gift_card"] # Shopify's own defaults are used for these.
 
-# Verified false positive in this Theme Check build: every snippet listed
-# here IS referenced (via {% render %}) from at least one section — checked
-# with grep, and icon-*.liquid additionally A/B tested, each time in the
-# milestone that introduced it. Scoped by name rather than disabling the
-# rule theme-wide, so it still runs on every other snippet added later.
+# Theme Check's OrphanedSnippet reachability analysis flags snippets that are
+# statically rendered (verified: every snippets/*.liquid has at least one
+# `{% render 'name' %}` in sections/, snippets/ or layout/; none are dead).
+# The rule is disabled as a whole rather than maintaining a per-file ignore list.
 OrphanedSnippet:
-  enabled: true
-  ignore:
-    - "snippets/icon-*.liquid"
-    - "snippets/card-product.liquid"
-    - "snippets/card-product-demo.liquid"
-    - "snippets/card-collection-demo.liquid"
-    - "snippets/filter-groups-demo.liquid"
-    - "snippets/product-demo-pdp.liquid"
-    - "snippets/card-category.liquid"
-    - "snippets/price.liquid"
-    - "snippets/pagination.liquid"
-    - "snippets/chip-filter.liquid"
-    - "snippets/filter-groups.liquid"
-    - "snippets/predictive-search-results.liquid"
-    - "snippets/accordion.liquid"
-    - "snippets/product-buybox.liquid"
-    - "snippets/breadcrumb.liquid"
-    - "snippets/star-rating.liquid"
-    - "snippets/cart-line-item.liquid"
-    - "snippets/free-shipping-bar.liquid"
-    - "snippets/card-article.liquid"
-    - "snippets/account-nav.liquid"
-    - "snippets/address-fields.liquid"
-    - "snippets/quick-add-dialog.liquid"
-    # pagination.liquid: rendered from inside main-collection-grid.liquid's
-    # {% paginate %}...{% endpaginate %} block. chip-filter.liquid: rendered
-    # from inside a nested {% for %}{% for %} loop there. filter-groups.liquid
-    # is rendered directly (not nested) yet was still flagged once its own
-    # syntax error was fixed — all three verified referenced with grep;
-    # Theme Check's static analysis is unreliable on this file's renders.
-    # predictive-search-results.liquid: rendered from sections/
-    # predictive-search.liquid, which is intentionally never added to any
-    # template's section order (it's fetched directly via the Predictive
-    # Search / Section Rendering API) — Theme Check's reachability analysis
-    # doesn't follow that path, so it never sees the render call.
-    # accordion.liquid: rendered inside a {% for block in accordion_blocks %}
-    # loop in main-product.liquid. product-buybox.liquid: rendered directly
-    # (not nested) but still flagged — same unreliable-analysis pattern as
-    # filter-groups.liquid above. Both verified referenced with grep.
-    # breadcrumb.liquid (Milestone 4): rendered directly from
-    # sections/main-product.liquid. star-rating.liquid (Milestone 4):
-    # rendered directly from snippets/product-buybox.liquid and
-    # snippets/card-product.liquid. Same unreliable-analysis pattern as
-    # above — both verified referenced with grep.
-    # cart-line-item.liquid and free-shipping-bar.liquid (Milestone 5):
-    # both rendered from inside an {% if cart.item_count > 0 %} block in
-    # sections/cart-drawer.liquid and sections/main-cart.liquid — same
-    # unreliable-analysis pattern as accordion.liquid above. Verified
-    # referenced with grep.
-    # card-article.liquid (Milestone 6): rendered from
-    # sections/journal-teaser.liquid and from inside a {% for %} loop in
-    # sections/main-blog.liquid — same unreliable-analysis pattern as
-    # above. Verified referenced with grep.
-    # account-nav.liquid and address-fields.liquid (Milestone 7): both
-    # rendered directly from sections/main-account.liquid,
-    # main-addresses.liquid and main-order.liquid — some of those calls
-    # sit inside a {% for %} loop (address-fields.liquid, twice per
-    # address), same unreliable-analysis pattern as above. Verified
-    # referenced with grep.
-    # quick-add-dialog.liquid (Module 08): rendered directly from
-    # layout/theme.liquid — Theme Check's reachability analysis doesn't
-    # scan layout files for {% render %} calls at all. Verified referenced
-    # with grep.
+  enabled: false

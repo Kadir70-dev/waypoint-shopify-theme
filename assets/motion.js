@@ -1,5 +1,5 @@
 /**
- * AERA — motion system (Milestone 2).
+ * Waypoint — motion system (Milestone 2).
  * Scroll reveals, the hero slider, and a small carousel prev/next helper.
  * Timing/easing come from tokens.css custom properties, never hardcoded
  * here, so .reduced-motion (set in layout/theme.liquid) corrects every
@@ -68,6 +68,7 @@
     var interval = parseInt(slider.getAttribute('data-interval'), 10) || 5000;
     var timer = null;
     var paused = false;
+    var activated = false;
 
     function loadSlideBackground(slide) {
       var mobileUrl = slide.getAttribute('data-bg-mobile');
@@ -84,7 +85,7 @@
     function resetProgress() {
       if (!dotsContainer) return;
       dotsContainer.classList.remove('is-running');
-      if (autoplay && !paused && !document.hidden) {
+      if (autoplay && activated && !paused && !document.hidden) {
         void dotsContainer.offsetWidth;
         dotsContainer.classList.add('is-running');
       }
@@ -99,7 +100,7 @@
     function schedule() {
       clearTimer();
       resetProgress();
-      if (!autoplay || paused || document.hidden) return;
+      if (!autoplay || !activated || paused || document.hidden) return;
       timer = window.setTimeout(function () {
         show(current + 1, false, 'next');
         schedule();
@@ -130,7 +131,15 @@
       window.setTimeout(function () {
         slides[previous].removeAttribute('data-leaving');
       }, parseInt(slider.getAttribute('data-transition'), 10) || 600);
-      if (manual) schedule();
+      if (manual) activate();
+    }
+
+    // Autoplay stays idle until the first genuine user interaction.
+    var activationEvents = ['pointerdown', 'touchstart', 'keydown', 'scroll', 'wheel'];
+    function activate() {
+      activationEvents.forEach(function (name) { window.removeEventListener(name, activate); });
+      activated = true;
+      schedule();
     }
 
     function pause() {
@@ -171,7 +180,68 @@
 
     slider.classList.add('is-ready');
     show(0, false);
-    schedule();
+    // No timer runs at load: slides 2+ stay deferred until the user interacts.
+    if (autoplay) {
+      activationEvents.forEach(function (name) {
+        window.addEventListener(name, activate, { passive: true });
+      });
+    }
+  });
+
+  // ---------- lazy CSS background images ----------
+  // Below-the-fold sections set their background-image custom properties via
+  // data-lazy-style so the image is only requested as the section nears the viewport.
+  var lazyStyleEls = document.querySelectorAll('[data-lazy-style]');
+  function applyLazyStyle(el) {
+    (el.getAttribute('data-lazy-style') || '').split(';').forEach(function (decl) {
+      var i = decl.indexOf(':');
+      if (i > 0) el.style.setProperty(decl.slice(0, i).trim(), decl.slice(i + 1).trim());
+    });
+    el.removeAttribute('data-lazy-style');
+  }
+  if (lazyStyleEls.length) {
+    if ('IntersectionObserver' in window) {
+      var lazyIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { applyLazyStyle(entry.target); lazyIo.unobserve(entry.target); }
+        });
+      }, { rootMargin: '600px 0px' });
+      lazyStyleEls.forEach(function (el) { lazyIo.observe(el); });
+    } else {
+      lazyStyleEls.forEach(applyLazyStyle);
+    }
+  }
+
+  // ---------- lazy background video ----------
+  // The source is only attached when the video nears the viewport; it plays
+  // while visible and pauses off-screen. Reduced motion: load the first frame only.
+  document.querySelectorAll('video[data-lazy-video]').forEach(function (video) {
+    var loaded = false;
+    function attach() {
+      if (loaded) return;
+      loaded = true;
+      video.querySelectorAll('source[data-src]').forEach(function (source) {
+        source.src = source.getAttribute('data-src');
+        source.removeAttribute('data-src');
+      });
+      video.preload = reducedMotion ? 'metadata' : 'auto';
+      video.load();
+    }
+    if (!('IntersectionObserver' in window)) {
+      attach();
+      if (!reducedMotion) video.play().catch(function () {});
+      return;
+    }
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          attach();
+          if (!reducedMotion && video.dataset.userPaused !== 'true') video.play().catch(function () {});
+        } else if (loaded) {
+          video.pause();
+        }
+      });
+    }, { rootMargin: '300px 0px' }).observe(video);
   });
 
   // ---------- carousel prev/next (testimonials, later: cross-sell rows) ----------
@@ -189,5 +259,66 @@
     var next = carousel.querySelector('[data-carousel-next]');
     if (prev) prev.addEventListener('click', function () { scrollByCard(-1); });
     if (next) next.addEventListener('click', function () { scrollByCard(1); });
+  });
+})();
+
+/* Light/dark toggle: flips data-preset on <html> (tokens.css already defines both
+   schemes), remembers the visitor's choice, and keeps the button's label in sync.
+   layout/theme.liquid applies the saved choice before first paint. */
+(function () {
+  'use strict';
+  var html = document.documentElement;
+  var toggles = Array.prototype.slice.call(document.querySelectorAll('[data-scheme-toggle]'));
+  if (!toggles.length) return;
+
+  function sync() {
+    var isLight = html.getAttribute('data-preset') === 'daylight';
+    toggles.forEach(function (btn) {
+      btn.setAttribute('aria-label', isLight ? btn.getAttribute('data-label-dark') : btn.getAttribute('data-label-light'));
+    });
+  }
+
+  toggles.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var next = html.getAttribute('data-preset') === 'daylight' ? 'dark' : 'daylight';
+      html.setAttribute('data-preset', next);
+      try { localStorage.setItem('waypoint-scheme', next); } catch (e) {}
+      sync();
+    });
+  });
+  sync();
+})();
+
+/* Video section pause/play control (WCAG 2.2.2): a visitor's pause sticks, so the
+   in-view observer above won't restart it; under reduced motion the clip starts
+   paused on its poster and this button is the only way to play it. */
+(function () {
+  'use strict';
+  var reducedMotion = document.documentElement.classList.contains('reduced-motion');
+  document.querySelectorAll('[data-video-toggle]').forEach(function (btn) {
+    var video = btn.parentElement.querySelector('video');
+    if (!video) return;
+    function setState(paused) {
+      btn.setAttribute('data-state', paused ? 'paused' : 'playing');
+      btn.setAttribute('aria-label', paused ? btn.getAttribute('data-label-play') : btn.getAttribute('data-label-pause'));
+    }
+    if (reducedMotion) { video.dataset.userPaused = 'true'; setState(true); }
+    // Keep the button honest when the in-view observer pauses/resumes the clip.
+    video.addEventListener('pause', function () { setState(true); });
+    video.addEventListener('play', function () { setState(false); });
+    btn.addEventListener('click', function () {
+      if (video.paused) {
+        video.dataset.userPaused = 'false';
+        var pending = video.querySelectorAll('source[data-src]');
+        pending.forEach(function (s) { s.src = s.getAttribute('data-src'); s.removeAttribute('data-src'); });
+        if (pending.length) video.load();
+        video.play().catch(function () {});
+        setState(false);
+      } else {
+        video.dataset.userPaused = 'true';
+        video.pause();
+        setState(true);
+      }
+    });
   });
 })();

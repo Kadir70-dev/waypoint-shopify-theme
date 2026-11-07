@@ -1,9 +1,10 @@
 {
   "sections": {
+    "banner": { "type": "main-collection-banner" },
     "product-grid": {
       "type": "main-collection-grid",
-      "settings": { "products_per_page": 24, "use_demo_products": true }
+      "settings": { "products_per_page": 24 }
     }
   },
-  "order": ["product-grid"]
+  "order": ["banner", "product-grid"]
 }

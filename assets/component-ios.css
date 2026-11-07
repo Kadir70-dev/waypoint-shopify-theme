@@ -1,0 +1,98 @@
+/* Waypoint — iOS-style finish layer.
+   Loaded last. Colour/space still come from tokens.css; shape rules are scoped
+   to [data-corners="rounded"] so a merchant who picks "sharp" corners keeps the
+   original square look. */
+
+html { -webkit-tap-highlight-color: transparent; }
+body { -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; }
+
+/* --- translucent chrome: frosted header once scrolled, frosted tab bar --- */
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .site-header[data-sticky="true"][data-scrolled="true"],
+  .site-header--transparent[data-scrolled="true"],
+  .mobile-tabbar {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  .site-header[data-sticky="true"][data-scrolled="true"],
+  .site-header--transparent[data-scrolled="true"] { border-bottom-color: var(--glass-border); box-shadow: none; }
+  .mobile-tabbar { border-top-color: var(--glass-border); }
+}
+
+/* --- iPhone safe areas (notch / rounded corners / home indicator) --- */
+@media (max-width: 749px) {
+  .page-width {
+    padding-inline-start: max(calc(var(--space-unit) * 2.5), env(safe-area-inset-left, 0px));
+    padding-inline-end: max(calc(var(--space-unit) * 2.5), env(safe-area-inset-right, 0px));
+  }
+  .mobile-tabbar__item { min-height: 44px; justify-content: center; } /* Apple HIG touch target */
+}
+
+/* --- rounded (iOS) shapes --- */
+:root[data-corners="rounded"] .btn,
+:root[data-corners="rounded"] .newsletter-block__row,
+:root[data-corners="rounded"] .quantity-stepper,
+:root[data-corners="rounded"] .option-selector__pill,
+:root[data-corners="rounded"] .badge,
+:root[data-corners="rounded"] .filter-chip,
+:root[data-corners="rounded"] .filter-chips__clear,
+:root[data-corners="rounded"] .collection-grid__filter-trigger,
+:root[data-corners="rounded"] .pagination__link { border-radius: var(--radius-pill); }
+
+:root[data-corners="rounded"] .field__input,
+:root[data-corners="rounded"] .collection-sort select,
+:root[data-corners="rounded"] .search-overlay__field,
+:root[data-corners="rounded"] .accordion { border-radius: var(--radius); }
+
+/* iOS grouped-list feel for PDP accordions */
+:root[data-corners="rounded"] .accordion { background: var(--surface); border: 1px solid var(--border); padding-inline: 18px; margin-bottom: 10px; }
+
+/* imagery: continuous-corner cards */
+:root[data-corners="rounded"] .pcard__media,
+:root[data-corners="rounded"] .product-gallery__main,
+:root[data-corners="rounded"] .cart-line-item__media,
+:root[data-corners="rounded"] .cart-line-item__media img { border-radius: var(--radius-media); overflow: hidden; }
+:root[data-corners="rounded"] .ccard { border-radius: var(--radius-surface); }
+:root[data-corners="rounded"] .product-gallery__thumb { border-radius: 10px; overflow: hidden; }
+
+/* fields: iOS filled style */
+:root[data-corners="rounded"] .field__input { background: var(--surface); border-color: var(--border); }
+:root[data-corners="rounded"] .field__input:focus { border-color: var(--accent-light); }
+
+/* --- language toggle as an iOS segmented control --- */
+.lang-toggle { padding: 2px; border-radius: var(--radius-pill); background: rgba(127, 127, 127, .18); }
+.lang-toggle__option { border-radius: var(--radius-pill); min-height: 28px; padding: 2px 10px; }
+.lang-toggle__option[aria-current="true"] { background: var(--surface); color: var(--text); text-decoration: none; box-shadow: 0 1px 3px rgba(0, 0, 0, .12); }
+@media (max-width: 749px) { .lang-toggle__option { padding: 2px 7px; } }
+
+/* --- touch press feedback (touch devices only; instant under reduced motion) --- */
+@media (hover: none) {
+  .btn, .icon-btn, .option-selector__pill, .pcard__media, .ccard, .mobile-tabbar__item {
+    transition: transform var(--dur-fast) var(--ease-out-slow);
+  }
+  .btn:active:not(:disabled), .icon-btn:active, .option-selector__pill:active,
+  .pcard:active .pcard__media, .ccard:active, .mobile-tabbar__item:active { transform: scale(.97); }
+}
+
+/* Shopify's dynamic checkout ("Buy it now") button matches the capsule CTAs. */
+:root[data-corners="rounded"] .shopify-payment-button__button,
+:root[data-corners="rounded"] .shopify-payment-button__button--unbranded { border-radius: var(--radius-pill) !important; overflow: hidden; }
+
+/* Phone header: the tab bar already carries Account, so drop it from the top bar
+   to keep search, language, scheme and cart all visible at 390px. */
+@media (max-width: 749px) {
+  .site-header__icons > .icon-btn:has(shopify-account),
+  .site-header__icons > a.icon-btn[href*="/account"] { display: none; }
+  .site-header__logo small { display: none; }
+}
+
+/* Compact phones (iPhone SE / mini width): tighten the top bar so cart never clips. */
+@media (max-width: 389px) {
+  .site-header__logo { font-size: 14px; letter-spacing: .16em; }
+  .site-header__icons { gap: 6px; }
+  .lang-toggle__option { padding: 2px 6px; }
+}
+:root[data-corners="rounded"] .product-gallery__zoom-trigger { border-radius: var(--radius); }
+/* 320px (first-gen SE): language stays reachable from the footer selector. */
+@media (max-width: 359px) { .site-header__icons .lang-toggle { display: none; } }

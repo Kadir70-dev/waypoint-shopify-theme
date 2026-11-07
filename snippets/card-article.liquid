@@ -8,7 +8,7 @@
 <a href="{{ article.url }}" class="acard" data-reveal>
   <div class="acard__media">
     {%- if article.image -%}
-      {{ article.image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '300, 400, 500', sizes: '(min-width: 750px) 25vw, 50vw' }}
+      {{ article.image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '300, 400, 500', sizes: '(min-width: 750px) 25vw, 50vw', alt: article.image.alt | default: article.title }}
     {%- else -%}
       {{ 'life-1' | placeholder_svg_tag: 'acard__placeholder' }}
     {%- endif -%}

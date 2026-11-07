@@ -1,5 +1,5 @@
 /**
- * AERA — product recommendations (Milestone 4).
+ * Waypoint — product recommendations (Milestone 4).
  * Fetches the section from Shopify's native recommendations endpoint
  * (data-url, already carrying product_id/section_id/limit/intent) and
  * swaps in the response — same fetch-and-replace pattern as the PDP
@@ -26,7 +26,11 @@
         .then(function (html) {
           var doc = new DOMParser().parseFromString(html, 'text/html');
           var fresh = doc.querySelector('product-recommendations');
-          if (fresh && fresh.innerHTML.trim()) self.innerHTML = fresh.innerHTML;
+          if (fresh && fresh.innerHTML.trim()) {
+            self.innerHTML = fresh.innerHTML;
+            // Injected after motion.js bound its reveal observer, so reveal directly.
+            self.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-revealed'); });
+          }
         })
         .catch(function () {
           // Leave the element empty — the section already renders nothing

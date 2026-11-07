@@ -1,9 +1,7 @@
 {%- comment -%}
-  AERA — single article page (Milestone 6). Comments are intentionally
-  not built here: the reference visuals never show a comment thread, and
-  there's no design for one — see Milestone 6 report, KNOWN DIFFERENCES.
-  (article.comments_enabled? / article.comments are real native Shopify
-  objects if a later milestone wants to add it; nothing here blocks that.)
+  Waypoint — single article page. Comments follow Shopify's native pattern:
+  paginated article.comments plus a new_comment form, shown only when the
+  blog has comments enabled.
 {%- endcomment -%}
 {%- comment -%}
   Article structured data (Milestone 8 SEO). Real Shopify article fields
@@ -42,7 +40,7 @@
 
   {%- if article.image -%}
     <div class="article-hero" data-reveal>
-      {{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '700, 1000, 1400', sizes: '100vw' }}
+      {{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '700, 1000, 1400', sizes: '100vw', alt: article.image.alt | default: article.title }}
     </div>
   {%- endif -%}
 
@@ -72,6 +70,58 @@
       </a>
     {%- endif -%}
   </nav>
+
+  {%- if blog.comments_enabled? -%}
+    <section class="article-comments" id="comments" aria-labelledby="ArticleCommentsHeading">
+      <h2 id="ArticleCommentsHeading" class="article-comments__heading">{{ 'comments.heading' | t }}</h2>
+
+      {%- paginate article.comments by 5 -%}
+        {%- if article.comments_count > 0 -%}
+          <ul class="article-comments__list" style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:20px">
+            {%- for comment in article.comments -%}
+              <li id="Comment-{{ comment.id }}">
+                <p class="eyebrow" style="margin:0 0 6px">{{ comment.author }} &middot; {{ comment.created_at | time_tag: format: 'date' }}</p>
+                <div class="rte">{{ comment.content }}</div>
+              </li>
+            {%- endfor -%}
+          </ul>
+          {%- render 'pagination', paginate: paginate -%}
+        {%- endif -%}
+      {%- endpaginate -%}
+
+      {%- form 'new_comment', article -%}
+        <h3 class="article-comments__form-heading">{{ 'comments.form_heading' | t }}</h3>
+        {%- if form.posted_successfully? -%}
+          <p class="form-message form-message--success" role="status">
+            {%- if blog.moderated? -%}{{ 'comments.success_moderated' | t }}{%- else -%}{{ 'comments.success' | t }}{%- endif -%}
+          </p>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <div class="form-message" role="alert">
+            {%- for field in form.errors -%}
+              <p>{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}</p>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        <div class="field">
+          <label for="CommentAuthor" class="eyebrow">{{ 'comments.name_label' | t }}</label>
+          <input type="text" id="CommentAuthor" name="comment[author]" class="field__input" value="{{ form.author }}" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="CommentEmail" class="eyebrow">{{ 'comments.email_label' | t }}</label>
+          <input type="email" id="CommentEmail" name="comment[email]" class="field__input" value="{{ form.email }}" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="CommentBody" class="eyebrow">{{ 'comments.body_label' | t }}</label>
+          <textarea id="CommentBody" name="comment[body]" class="field__input" rows="5" required>{{ form.body }}</textarea>
+        </div>
+        {%- if blog.moderated? -%}
+          <p class="muted" style="font-size:12px">{{ 'comments.moderated_notice' | t }}</p>
+        {%- endif -%}
+        <button type="submit" class="btn btn-primary">{{ 'comments.submit' | t }}</button>
+      {%- endform -%}
+    </section>
+  {%- endif -%}
 </div>
 
 {% schema %}

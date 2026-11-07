@@ -9,7 +9,7 @@
   endfor
 -%}
 
-<div class="section page-width">
+<div class="section page-width{% if search.performed %} collection-page{% endif %}">
   {%- unless search.performed -%}
     <div class="search-prompt">
       <h1 style="font-size:22px">{{ 'search.title' | t }}</h1>

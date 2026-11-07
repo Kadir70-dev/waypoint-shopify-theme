@@ -1,5 +1,5 @@
 /**
- * AERA — Quick Add popover (Module 08).
+ * Waypoint — Quick Add popover (Module 08).
  * Fetches templates/product.quick-add.json (layout: false) via the same
  * Section Rendering API pattern as the main PDP (assets/variant-picker.js):
  * JS only matches the selected options to a variant id client-side, then
@@ -19,8 +19,8 @@
 
   function bindNewForm() {
     var form = content.querySelector('[data-cart-add-form]');
-    if (form && window.AeraCart && window.AeraCart.bindAddForm) {
-      window.AeraCart.bindAddForm(form);
+    if (form && window.WaypointCart && window.WaypointCart.bindAddForm) {
+      window.WaypointCart.bindAddForm(form);
     }
   }
 

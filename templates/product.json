@@ -2,7 +2,6 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": { "use_demo_presentation": true },
       "blocks": {
         "specifications-1": { "type": "specifications" },
         "accordion-1": { "type": "accordion", "settings": { "title": "Features" } },

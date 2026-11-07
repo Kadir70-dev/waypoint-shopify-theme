@@ -1,3 +1,4 @@
+{%- if section.settings.collection != blank or request.design_mode -%}
 <div class="section page-width featured-releases" data-reveal-group>
   <div class="section-heading">
     <div>
@@ -19,15 +20,11 @@
         {%- render 'card-product', product: product -%}
       {%- endfor -%}
     {%- else -%}
-      {%- render 'card-product-demo', image: 'latest-ridge-shell.png', title: 'Ridge Shell Jacket', price: '€249,00', swatches: '#2b2b2b,#5C6B4A' -%}
-      {%- render 'card-product-demo', image: 'latest-terrain-boot.png', title: 'Terrain Mid Boot', price: '€179,00', swatches: '#6b4a2f,#2b2b2b' -%}
-      {%- render 'card-product-demo', image: 'latest-altitude-backpack.png', title: 'Altitude 35 Backpack', price: '€229,00', swatches: '#5C6B4A,#B99A6B' -%}
-      {%- render 'card-product-demo', image: 'latest-field-cook.png', title: 'Field Cook System', price: '€89,00', swatches: '#2b2b2b,#B99A6B' -%}
-      {%- render 'card-product-demo', image: 'latest-tactical-light.png', title: 'Nova Tactical Light', price: '€129,00', swatches: '#2b2b2b,#5C6B4A' -%}
-      {%- render 'card-product-demo', image: 'latest-ember-hoodie.png', title: 'Ember Insulated Hoodie', price: '€199,00', swatches: '#2b2b2b,#6b4a2f' -%}
+      {%- for i in (1..4) -%}<div class="card-product card-product--placeholder">{{ 'product-' | append: forloop.index | placeholder_svg_tag: 'card-product__placeholder' }}</div>{%- endfor -%}
     {%- endif -%}
   </div>
 </div>
+{%- endif -%}
 
 {% schema %}
 {

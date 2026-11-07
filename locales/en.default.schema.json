@@ -4,12 +4,40 @@
       "name": "Colors",
       "preset": {
         "label": "Preset",
-        "dark": "AERA — Dark (default)",
-        "fieldbook": "AERA — Fieldbook (light)"
+        "dark": "Waypoint — Dark (default)",
+        "daylight": "Waypoint — Daylight (light)"
       },
       "accent": {
         "label": "Accent color",
         "info": "Overrides the preset's accent color independently of light/dark."
+      },
+      "background": {
+        "label": "Background color",
+        "info": "Leave empty to use the preset. Pairs with Text color."
+      },
+      "text": {
+        "label": "Text color",
+        "info": "Leave empty to use the preset. Text on the background and surface colors."
+      },
+      "surface": {
+        "label": "Surface color",
+        "info": "Leave empty to use the preset. Cards, panels and drawers. Pairs with Text color."
+      },
+      "button": {
+        "label": "Button color",
+        "info": "Leave empty to use the preset. Primary button background. Pairs with Button text color."
+      },
+      "button_text": {
+        "label": "Button text color",
+        "info": "Leave empty to use the preset. Text on primary buttons."
+      },
+      "scheme_toggle": {
+        "label": "Show light/dark toggle in header",
+        "info": "Lets visitors switch between Dark and Daylight. Their choice is remembered in their browser; the preset above stays the default."
+      },
+      "language_toggle": {
+        "label": "Show language toggle in header",
+        "info": "Appears only when the store has more than one published language (Settings > Languages)."
       }
     },
     "typography": {
@@ -18,12 +46,16 @@
         "label": "Display font",
         "info": "Used for headlines and tracked-out labels."
       },
-      "font_body": { "label": "Body font" },
+      "font_body": {
+        "label": "Body font"
+      },
       "font_editorial": {
         "label": "Editorial font",
         "info": "Used for pull-quotes and editorial accents. An italic serif is recommended."
       },
-      "type_scale": { "label": "Type scale" }
+      "type_scale": {
+        "label": "Type scale"
+      }
     },
     "layout": {
       "name": "Layout",
@@ -32,8 +64,12 @@
         "sharp": "Sharp",
         "rounded": "Rounded"
       },
-      "page_width": { "label": "Page width" },
-      "spacing_scale": { "label": "Spacing scale" }
+      "page_width": {
+        "label": "Page width"
+      },
+      "spacing_scale": {
+        "label": "Spacing scale"
+      }
     },
     "cart": {
       "name": "Cart",
@@ -42,8 +78,12 @@
         "drawer": "Drawer",
         "page": "Full page"
       },
-      "show_free_shipping_bar": { "label": "Show free shipping progress bar" },
-      "free_shipping_threshold": { "label": "Free shipping threshold" }
+      "show_free_shipping_bar": {
+        "label": "Show free shipping progress bar"
+      },
+      "free_shipping_threshold": {
+        "label": "Free shipping threshold"
+      }
     },
     "grid": {
       "name": "Collection / Product Grid",
@@ -52,12 +92,18 @@
         "three": "3 columns",
         "four": "4 columns"
       },
-      "show_quick_add": { "label": "Show quick-add" },
-      "show_badges": { "label": "Show product badges" }
+      "show_quick_add": {
+        "label": "Show quick-add"
+      },
+      "show_badges": {
+        "label": "Show product badges"
+      }
     },
     "product": {
       "name": "Product Page",
-      "show_sticky_atc_mobile": { "label": "Show sticky add-to-cart bar on mobile" }
+      "show_sticky_atc_mobile": {
+        "label": "Show sticky add-to-cart bar on mobile"
+      }
     },
     "icons": {
       "name": "Icons",
@@ -77,6 +123,42 @@
       "favicon": {
         "label": "Favicon image",
         "info": "Displayed as the browser tab icon. Recommended: square image, at least 32 x 32px."
+      }
+    }
+  },
+  "sections": {
+    "journal_banner": {
+      "settings": {
+        "journal_label": {
+          "default": "JOURNAL"
+        }
+      }
+    },
+    "split_promo": {
+      "settings": {
+        "eyebrow": {
+          "default": "Journal"
+        },
+        "quote_attribution": {
+          "default": "Journal, Vol. 04"
+        }
+      }
+    },
+    "main_blog": {
+      "settings": {
+        "eyebrow": {
+          "default": "Journal"
+        },
+        "quote_attribution": {
+          "default": "Journal"
+        }
+      }
+    },
+    "testimonials_marquee": {
+      "settings": {
+        "supporting_text": {
+          "default": "Stories from the people who use our products."
+        }
       }
     }
   }

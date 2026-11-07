@@ -2,7 +2,6 @@
   assign collection = section.settings.collection
   assign show_products = section.settings.products_to_show
   assign swatch_option_name = settings.product_card_swatch_option | default: 'Color'
-  assign demo_names = 'RIDGE SHELL JACKET|TERRAIN MID BOOT|ALTITUDE 35 BACKPACK|FIELD COOK SYSTEM|NOVA TACTICAL LIGHT|EMBER INSULATED HOODIE|SUMMIT GRID FLEECE|TRAILMARK COMPASS' | split: '|'
 %}
 
 <section class="latest-releases latest-releases--{{ section.settings.spacing }}" id="LatestReleases-{{ section.id }}" data-latest-releases>
@@ -56,10 +55,10 @@
           </article>
         {% endfor %}
       {% else %}
-        {% for name in demo_names limit: show_products %}
+        {% for i in (1..show_products) %}
           <article class="latest-releases__item{% unless forloop.first %} latest-releases__item--separated{% endunless %}" role="listitem">
             <div class="latest-releases__media">{{ 'product-1' | placeholder_svg_tag: 'latest-releases__placeholder' }}</div>
-            <div class="latest-releases__details"><h3>{{ name }}</h3>{% if section.settings.show_price %}<p class="latest-releases__price">—</p>{% endif %}</div>
+            
           </article>
         {% endfor %}
       {% endif %}
@@ -77,10 +76,10 @@
   #LatestReleases-{{ section.id }} .latest-releases__title { margin: 0; font-family: var(--font-display, inherit); font-size: clamp(28px, 3vw, 46px); line-height: .98; letter-spacing: -.035em; }
   #LatestReleases-{{ section.id }} .latest-releases__intro { margin: 12px 0 0; color: var(--muted, #a9aaa4); font-size: 14px; }
   #LatestReleases-{{ section.id }} .latest-releases__view-all { color: inherit; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
-  #LatestReleases-{{ section.id }} .latest-releases__view-all span { margin-left: 8px; font-size: 16px; }
+  #LatestReleases-{{ section.id }} .latest-releases__view-all span { margin-inline-start: 8px; font-size: 16px; }
   #LatestReleases-{{ section.id }} .latest-releases__rail { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
   #LatestReleases-{{ section.id }} .latest-releases__item { min-width: 0; }
-  #LatestReleases-{{ section.id }} .latest-releases__item--separated { border-left: 1px solid color-mix(in srgb, currentColor 18%, transparent); padding-left: 18px; }
+  #LatestReleases-{{ section.id }} .latest-releases__item--separated { border-inline-start: 1px solid color-mix(in srgb, currentColor 18%, transparent); padding-inline-start: 18px; }
   #LatestReleases-{{ section.id }} .latest-releases__product-link { display: block; color: inherit; text-decoration: none; }
   #LatestReleases-{{ section.id }} .latest-releases__media { display: flex; align-items: center; justify-content: center; aspect-ratio: 1 / 1.16; padding: 8px 8px 18px; overflow: hidden; }
   #LatestReleases-{{ section.id }} .latest-releases__media img, #LatestReleases-{{ section.id }} .latest-releases__placeholder { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform .35s ease; }
@@ -98,10 +97,10 @@
     #LatestReleases-{{ section.id }} .latest-releases__inner { padding: 56px 20px 62px; }
     #LatestReleases-{{ section.id }} .latest-releases__header { align-items: start; margin-bottom: 24px; }
     #LatestReleases-{{ section.id }} .latest-releases__intro { max-width: 220px; }
-    #LatestReleases-{{ section.id }} .latest-releases__rail { display: flex; gap: 14px; margin-right: -20px; overflow-x: auto; padding: 2px 20px 12px 0; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    #LatestReleases-{{ section.id }} .latest-releases__rail { display: flex; gap: 14px; margin-inline-end: -20px; overflow-x: auto; padding-block: 2px 12px; padding-inline: 0 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
     #LatestReleases-{{ section.id }} .latest-releases__rail::-webkit-scrollbar { display: none; }
     #LatestReleases-{{ section.id }} .latest-releases__item { flex: 0 0 68vw; scroll-snap-align: start; }
-    #LatestReleases-{{ section.id }} .latest-releases__item--separated { border-left: 0; padding-left: 0; }
+    #LatestReleases-{{ section.id }} .latest-releases__item--separated { border-inline-start: 0; padding-inline-start: 0; }
   }
 </style>
 

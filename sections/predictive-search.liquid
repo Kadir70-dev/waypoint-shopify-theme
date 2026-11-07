@@ -11,13 +11,13 @@
 {%- endcomment -%}
 {%- liquid
   assign has_results = false
-  if predictive_search.resources.results.products.size > 0 or predictive_search.resources.results.collections.size > 0 or predictive_search.resources.results.articles.size > 0
+  if predictive_search.resources.products.size > 0 or predictive_search.resources.collections.size > 0 or predictive_search.resources.articles.size > 0
     assign has_results = true
   endif
 -%}
 <div id="predictive-search-results">
   {%- render 'predictive-search-results',
-    results: predictive_search.resources.results,
+    results: predictive_search.resources,
     terms: predictive_search.terms,
     has_results: has_results
   -%}

@@ -32,7 +32,7 @@
         "slide-3": {
           "type": "slide",
           "settings": {
-            "eyebrow": "AERA Journal",
+            "eyebrow": "Journal",
             "heading": "A Life More Open",
             "subtext": "Stories, guides and perspectives from those who choose a wilder path.",
             "cta_label": "Explore the Journal"
@@ -50,16 +50,16 @@
       "settings": {
         "heading": "Latest Releases",
         "subheading": "New gear for longer days.",
-        "products_to_show": 6,
-        "show_view_all": true
+        "products_to_show": 8,
+        "show_view_all": true,
+        "collection": "all"
       }
     },
     "shop-by-category": {
       "type": "category-grid",
       "settings": {
         "heading": "Shop by Category",
-        "path_cards": true,
-        "use_demo_links": true
+        "path_cards": true
       },
       "blocks": {
         "tile-1": {
@@ -67,7 +67,6 @@
           "settings": {
             "label": "Backpacks",
             "sublabel": "Carry further.",
-            "image_asset": "category-backpacks.png",
             "description": "Built for long trails, daily missions and everything in between.",
             "meta_label": "Includes",
             "meta_value": "Day Packs · Expedition · Travel · Hydration"
@@ -78,7 +77,6 @@
           "settings": {
             "label": "Camp & Shelter",
             "sublabel": "Stay ready.",
-            "image_asset": "category-camp-shelter.png",
             "description": "Reliable shelter and sleep systems engineered for nights beyond the familiar.",
             "meta_label": "Includes",
             "meta_value": "Tents · Shelters · Sleeping Gear · Camp Essentials"
@@ -89,7 +87,6 @@
           "settings": {
             "label": "Tools & Equipment",
             "sublabel": "Built for more.",
-            "image_asset": "category-tools-equipment.png",
             "description": "Dependable field equipment designed for demanding environments and unexpected moments.",
             "meta_label": "Includes",
             "meta_value": "Navigation · Lighting · Multi-Tools · Field Gear"
@@ -100,7 +97,6 @@
           "settings": {
             "label": "Apparel",
             "sublabel": "All conditions.",
-            "image_asset": "category-apparel.png",
             "description": "Technical layers designed for changing weather, hard movement and everyday exploration.",
             "meta_label": "Includes",
             "meta_value": "Base Layers · Outerwear · Performance · Essentials"
@@ -131,9 +127,9 @@
         "t1": {
           "type": "testimonial",
           "settings": {
-            "quote": "AERA gear has been with me through Icelandic storms, alpine crossings and everything in between. It simply works.",
-            "name": "M. Eriksson",
-            "location": "Mountain Guide"
+            "quote": "Sample testimonial. Replace this with a real quote from one of your customers.",
+            "name": "Customer name",
+            "location": "Customer location"
           }
         },
         "ti1": {
@@ -234,85 +230,19 @@
     "journal-banner": {
       "type": "journal-banner",
       "settings": {
-        "eyebrow": "AERA Journal",
+        "eyebrow": "Journal",
         "heading": "A Life More Open",
         "cta_label": "Explore the Journal",
         "quote": "Not escape. Perspective.",
-        "quote_attribution": "AERA Journal, Vol. 04",
+        "quote_attribution": "Journal, Vol. 04",
         "body": "<p>Stories, guides and perspectives from those who choose a wilder path.</p>"
       }
     },
     "testimonials-marquee": {
       "type": "testimonials-marquee",
       "settings": {},
-      "blocks": {
-        "testimonial-1": {
-          "type": "testimonial",
-          "settings": {
-            "name": "MAYA R.",
-            "location": "COLORADO"
-          }
-        },
-        "testimonial-2": {
-          "type": "testimonial",
-          "settings": {
-            "name": "ELIAS T.",
-            "location": "NORWAY"
-          }
-        },
-        "testimonial-3": {
-          "type": "testimonial",
-          "settings": {
-            "name": "JONAH K.",
-            "location": "SCOTLAND"
-          }
-        },
-        "testimonial-4": {
-          "type": "testimonial",
-          "settings": {
-            "name": "AMELIA S.",
-            "location": "CANADA"
-          }
-        },
-        "testimonial-5": {
-          "type": "testimonial",
-          "settings": {
-            "name": "NOAH B.",
-            "location": "SWITZERLAND"
-          }
-        },
-        "testimonial-6": {
-          "type": "testimonial",
-          "settings": {
-            "name": "LENA M.",
-            "location": "GERMANY"
-          }
-        },
-        "testimonial-7": {
-          "type": "testimonial",
-          "settings": {
-            "name": "ADAM C.",
-            "location": "ICELAND"
-          }
-        },
-        "testimonial-8": {
-          "type": "testimonial",
-          "settings": {
-            "name": "SOFIA N.",
-            "location": "ITALY"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial-1",
-        "testimonial-2",
-        "testimonial-3",
-        "testimonial-4",
-        "testimonial-5",
-        "testimonial-6",
-        "testimonial-7",
-        "testimonial-8"
-      ]
+      "blocks": {},
+      "block_order": []
     }
   },
   "order": [

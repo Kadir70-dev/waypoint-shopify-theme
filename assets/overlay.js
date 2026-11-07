@@ -1,5 +1,5 @@
 /**
- * AERA — shared overlay controller.
+ * Waypoint — shared overlay controller.
  * Powers the mobile nav panel and the search overlay shell in Milestone 1.
  * The cart drawer, mobile filter drawer, and quick-view (later milestones)
  * reuse this same class instead of each hand-rolling open/close/focus-trap
@@ -29,7 +29,7 @@
     });
   }
 
-  function AeraOverlay(el, options) {
+  function WaypointOverlay(el, options) {
     options = options || {};
     this.el = el;
     // trap = true: dialog-like (mobile nav, search, cart drawer).
@@ -41,11 +41,11 @@
     this._onBackdropClick = this._onBackdropClick.bind(this);
   }
 
-  AeraOverlay.prototype.isOpen = function () {
+  WaypointOverlay.prototype.isOpen = function () {
     return this.el.getAttribute('data-state') === 'open';
   };
 
-  AeraOverlay.prototype.open = function (trigger) {
+  WaypointOverlay.prototype.open = function (trigger) {
     if (this.isOpen()) return;
     this._generation++;
     this.trigger = trigger || document.activeElement;
@@ -65,7 +65,7 @@
     this.el.dispatchEvent(new CustomEvent('overlay:open'));
   };
 
-  AeraOverlay.prototype.close = function () {
+  WaypointOverlay.prototype.close = function () {
     if (!this.isOpen()) return;
     this._generation++;
     var generation = this._generation;
@@ -111,7 +111,7 @@
     }, 400);
   };
 
-  AeraOverlay.prototype._onKeydown = function (e) {
+  WaypointOverlay.prototype._onKeydown = function (e) {
     if (e.key === 'Escape' || e.key === 'Esc') {
       e.preventDefault();
       this.close();
@@ -137,30 +137,35 @@
     }
   };
 
-  AeraOverlay.prototype._onBackdropClick = function (e) {
+  WaypointOverlay.prototype._onBackdropClick = function (e) {
     if (e.target.hasAttribute('data-overlay-backdrop') || e.target.closest('[data-overlay-close]')) {
       this.close();
     }
   };
 
-  window.AeraOverlay = AeraOverlay;
+  window.WaypointOverlay = WaypointOverlay;
 
   // Generic wiring: any [data-overlay] element becomes a controlled overlay;
   // any [data-overlay-trigger="<that id>"] toggles it. One shared init path
   // for every call site (mobile nav, search now; cart/filter/quick-view later).
   document.addEventListener('DOMContentLoaded', function () {
-    window.AeraOverlays = window.AeraOverlays || {};
+    window.WaypointOverlays = window.WaypointOverlays || {};
 
     document.querySelectorAll('[data-overlay]').forEach(function (el) {
       var id = el.id;
       if (!id) return;
       var trap = el.getAttribute('data-overlay-trap') !== 'false';
-      var instance = new AeraOverlay(el, { trap: trap });
-      window.AeraOverlays[id] = instance;
+      var instance = new WaypointOverlay(el, { trap: trap });
+      window.WaypointOverlays[id] = instance;
 
       document.querySelectorAll('[data-overlay-trigger="' + id + '"]').forEach(function (trigger) {
         trigger.setAttribute('aria-expanded', 'false');
-        trigger.addEventListener('click', function () {
+        trigger.addEventListener('click', function (e) {
+          // A nav link that owns a popup (mega-menu) opens its panel instead of
+          // navigating; modified clicks still open the link normally.
+          if (trigger.tagName === 'A' && trigger.getAttribute('aria-haspopup') === 'true' && !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) {
+            e.preventDefault();
+          }
           if (instance.isOpen()) {
             instance.close();
           } else {

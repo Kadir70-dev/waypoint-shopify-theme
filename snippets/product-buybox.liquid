@@ -9,6 +9,7 @@
 <h1 class="product-buybox__title">{{ product.title }}</h1>
 {%- render 'star-rating', product: product -%}
 {%- render 'price', product: product, variant: current_variant -%}
+{%- if cart.taxes_included -%}<p class="product-buybox__tax-note">{{ 'products.tax_included' | t }}</p>{%- endif -%}
 
 {%- if current_variant.available == false -%}
   <span class="badge" style="margin-top:6px">{{ 'products.sold_out' | t }}</span>
@@ -55,7 +56,7 @@
 {%- form 'product', product, class: 'product-buybox__form', id: product_form_id, data-cart-add-form: true -%}
   <input type="hidden" name="id" value="{{ current_variant.id }}" data-product-form-variant-id>
 
-  {%- for option in product.options_with_values -%}
+  {%- unless product.has_only_default_variant -%}{%- for option in product.options_with_values -%}
     <fieldset class="option-selector">
       <legend class="eyebrow">
         {{ option.name }}: <span data-option-selected-value>{{ option.selected_value }}</span>
@@ -95,7 +96,7 @@
         {%- endfor -%}
       </div>
     </fieldset>
-  {%- endfor -%}
+  {%- endfor -%}{%- endunless -%}
 
   {%- comment -%}
     Selling plans / subscriptions (Milestone 10, Theme Store

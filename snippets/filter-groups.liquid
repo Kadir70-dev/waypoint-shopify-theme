@@ -7,7 +7,7 @@
 {%- for filter in filters -%}
   {%- if filter.values.size > 0 or filter.type == 'price_range' -%}
     <div class="filter-group">
-      <h3 class="eyebrow">{{ filter.label }}</h3>
+      <h2 class="eyebrow">{{ filter.label }}</h2>
       {%- case filter.type -%}
         {%- when 'price_range' -%}
           <form method="get" action="{{ collection.url }}" class="filter-group__price">
@@ -45,7 +45,7 @@
                   endif
                 -%}
                 <li>
-                  <a href="{{ option_url }}" class="{{ option_class }}" aria-pressed="{{ value.active }}">
+                  <a href="{{ option_url }}" class="{{ option_class }}"{% if value.active %} aria-current="true"{% endif %}>
                     <span class="filter-option__box" aria-hidden="true"></span>
                     {{ value.label }}
                     <span class="muted">({{ value.count }})</span>

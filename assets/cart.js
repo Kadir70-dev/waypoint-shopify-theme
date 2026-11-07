@@ -1,5 +1,5 @@
 /**
- * AERA — cart (Milestone 5).
+ * Waypoint — cart (Milestone 5).
  * Progressively enhances the real add-to-cart forms already shipped in
  * Milestone 4 (PDP buy box, card-product quick-add) — it never replaces
  * them, only intercepts submit — and drives the cart drawer / full cart
@@ -131,8 +131,16 @@
         // modal surfaces competing for the focus trap is a real conflict,
         // not a cosmetic one, so close any before opening the drawer.
         qsa('dialog[open]').forEach(function (openDialog) { openDialog.close(); });
-        if (window.AeraOverlays && window.AeraOverlays.CartDrawer) {
-          window.AeraOverlays.CartDrawer.open();
+        if (window.WaypointOverlays && window.WaypointOverlays.CartDrawer) {
+          var drawer = window.WaypointOverlays.CartDrawer;
+          drawer.open();
+          // The add button is disabled while adding, so focus has already fallen to
+          // <body> and the drawer would hand it back there. Return it to the button.
+          if (drawer.el && submitButton) {
+            drawer.el.addEventListener('overlay:close', function () {
+              if (submitButton.isConnected && submitButton.offsetParent !== null) submitButton.focus();
+            }, { once: true });
+          }
         }
         setTimeout(function () {
           setAddButtonState(submitButton, 'add');
@@ -156,8 +164,8 @@
   // Exposed so surfaces that inject a [data-cart-add-form] after this
   // script's initial pass (e.g. the quick-add popover's fetched markup)
   // can wire the same add-to-cart path instead of a second implementation.
-  window.AeraCart = window.AeraCart || {};
-  window.AeraCart.bindAddForm = bindAddForm;
+  window.WaypointCart = window.WaypointCart || {};
+  window.WaypointCart.bindAddForm = bindAddForm;
 
   // ---------- quantity / remove within a cart surface ----------
   function findLineKey(el) {
@@ -216,8 +224,13 @@
       });
   }
 
-  qsa('[data-cart-form]').forEach(function (form) {
-    form.addEventListener('click', function (e) {
+  // Delegated: the cart forms live inside containers that swapSurface()
+  // re-renders (and the drawer form does not exist while the cart is empty),
+  // so listeners bound directly on the forms would be lost after the first update.
+  document.addEventListener('click', function (e) {
+    var form = e.target.closest('[data-cart-form]');
+    if (!form) return;
+    {
       var removeBtn = e.target.closest('[data-cart-remove]');
       if (removeBtn) {
         e.preventDefault();
@@ -239,17 +252,21 @@
         var lineKey = findLineKey(stepperBtn);
         if (lineKey) changeLine(lineKey, value, form, function () { input.value = previous; });
       }
-    });
+    }
+  });
 
-    form.addEventListener('change', function (e) {
-      if (!e.target.matches('[data-cart-quantity-input]')) return;
+  document.addEventListener('change', function (e) {
+    if (!e.target.matches || !e.target.matches('[data-cart-quantity-input]')) return;
+    var form = e.target.closest('[data-cart-form]');
+    if (!form) return;
+    {
       var previousValue = e.target.defaultValue;
       var value = parseInt(e.target.value, 10);
       if (!value || value < 1) value = 1;
       e.target.value = value;
       var key = findLineKey(e.target);
       if (key) changeLine(key, value, form, function () { e.target.value = previousValue; });
-    });
+    }
   });
 
   // ---------- clear cart (AJAX enhancement; formaction="/cart/clear" on

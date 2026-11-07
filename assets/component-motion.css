@@ -1,4 +1,4 @@
-/* AERA — hero slider + carousel motion (Milestone 2). Token-driven timing;
+/* Waypoint — hero slider + carousel motion (Milestone 2). Token-driven timing;
    .reduced-motion zeroes --dur-* at the root (tokens.css), which is enough
    to flatten every transition below without a separate override here. */
 
@@ -57,13 +57,32 @@
   gap: 12px;
 }
 .hero-slider__slide { display: flex; align-items: flex-end; }
-.hero-slider__content > * { opacity: 0; transform: translate3d(0, 200%, 0); }
-.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__content > * { animation: hero-content-reveal 900ms var(--ease-out-slow) both; }
-.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__eyebrow { animation-delay: 850ms; }
-.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__heading { animation-delay: 900ms; }
-.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__body { animation-delay: 1150ms; }
-.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__cta { animation-delay: 1400ms; }
-@keyframes hero-content-reveal { from { opacity: 0; transform: translate3d(0, 200%, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__content > * { animation: hero-content-reveal 800ms var(--ease-out-slow) both; }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__eyebrow { animation-delay: 150ms; }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__heading { animation-delay: 220ms; }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__body { animation-delay: 340ms; }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__cta { animation-delay: 460ms; }
+/* Text is visible by default; it only animates in once motion.js marks the slider ready,
+   and the whole sequence finishes within ~1.3s so the CTA is never held back. */
+@keyframes hero-content-reveal { from { opacity: 0; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+
+/* Gentle hero image drift: the slide's own background is repeated on a layer
+   behind the gradient and eased from 106% to 100% while the slide is active. */
+.hero-slider__slide { overflow: hidden; }
+.hero-slider__slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: inherit;
+  background-size: cover;
+  background-position: var(--bg-position, center);
+  transform: scale(1.06);
+  transform-origin: 60% 40%;
+}
+.hero-slider__slide { isolation: isolate; }
+.hero-slider.is-ready .hero-slider__slide[data-active="true"]::after { animation: hero-drift 9s cubic-bezier(.25, .1, .25, 1) both; }
+@keyframes hero-drift { from { transform: scale(1.06); } to { transform: scale(1); } }
 
 .hero-slider__controls {
   position: absolute;
@@ -153,7 +172,10 @@
 .carousel__nav button svg { width: 16px; height: 16px; }
 
 .reduced-motion .hero-slider__slide { transform: none; transition: none; }
-.reduced-motion .hero-slider__slide[data-active="true"] .hero-slider__content > * { opacity: 1; transform: none; animation: none; }
+.reduced-motion .hero-slider__slide[data-active="true"] .hero-slider__content > *,
+.reduced-motion .hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__content > * { opacity: 1; transform: none; animation: none; }
+.reduced-motion .hero-slider__slide::after,
+.reduced-motion .hero-slider.is-ready .hero-slider__slide[data-active="true"]::after { transform: none; animation: none; }
 .reduced-motion .hero-slider__dot-progress { display: none; }
 
 @media (max-width: 749px) {
@@ -161,3 +183,8 @@
   .hero-slider__controls { inset-inline: 20px; bottom: 20px; gap: 12px; }
   .hero-slider__controls > button { width: 36px; height: 36px; }
 }
+
+/* Hero CTA sits on photography: use the on-image CTA tokens, not the page CTA,
+   so it stays legible when the light (Daylight) preset darkens --cta-bg. */
+.hero-slider__cta.btn-primary { background: var(--cta-on-image-bg); color: var(--cta-on-image-text); border-color: var(--cta-on-image-bg); }
+.hero-slider__cta.btn-primary:hover { background: var(--cta-on-image-hover); border-color: var(--cta-on-image-hover); }

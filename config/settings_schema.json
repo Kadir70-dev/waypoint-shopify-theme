@@ -1,7 +1,7 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "AERA",
+    "theme_name": "Waypoint",
     "theme_version": "0.1.0-milestone0",
     "theme_author": "AERA",
     "theme_documentation_url": "https://github.com/aera/aera-theme",
@@ -16,16 +16,60 @@
         "label": "t:settings.colors.preset.label",
         "options": [
           { "value": "dark", "label": "t:settings.colors.preset.dark" },
-          { "value": "fieldbook", "label": "t:settings.colors.preset.fieldbook" }
+          { "value": "daylight", "label": "t:settings.colors.preset.daylight" }
         ],
         "default": "dark"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_scheme_toggle",
+        "label": "t:settings.colors.scheme_toggle.label",
+        "info": "t:settings.colors.scheme_toggle.info",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_language_toggle",
+        "label": "t:settings.colors.language_toggle.label",
+        "info": "t:settings.colors.language_toggle.info",
+        "default": true
       },
       {
         "type": "color",
         "id": "accent_color",
         "label": "t:settings.colors.accent.label",
-        "default": "#5C6B4A",
+        "default": "#A88A5A",
         "info": "t:settings.colors.accent.info"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "t:settings.colors.background.label",
+        "info": "t:settings.colors.background.info"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "t:settings.colors.text.label",
+        "info": "t:settings.colors.text.info"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "t:settings.colors.surface.label",
+        "info": "t:settings.colors.surface.info"
+      },
+      {
+        "type": "color",
+        "id": "color_button",
+        "label": "t:settings.colors.button.label",
+        "info": "t:settings.colors.button.info"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text",
+        "label": "t:settings.colors.button_text.label",
+        "info": "t:settings.colors.button_text.info"
       }
     ]
   },

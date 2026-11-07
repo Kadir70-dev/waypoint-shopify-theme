@@ -23,6 +23,12 @@
     (function (html) {
       html.classList.add('js');
       html.classList.add('motion-detected');
+      {%- if settings.show_scheme_toggle -%}
+      try {
+        var savedScheme = localStorage.getItem('waypoint-scheme');
+        if (savedScheme === 'dark' || savedScheme === 'daylight') html.setAttribute('data-preset', savedScheme);
+      } catch (e) {}
+      {%- endif -%}
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         html.classList.add('reduced-motion');
       }
@@ -43,12 +49,13 @@
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   {%- if settings.favicon -%}
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
   {%- endif -%}
 
   {%- comment -%}
     Open Graph + Twitter Card (Milestone 8 SEO). og:image / twitter:image
-    are omitted, never fabricated, when the current object has no image of
-    its own — the theme has no site-wide default share-image setting. See
+    fall back to Shopify's page_image (the merchant's Preferences → Social
+    sharing image) when the current object has no image of its own. See
     Milestone 8 report, KNOWN LIMITATIONS.
   {%- endcomment -%}
   {%- liquid
@@ -74,6 +81,9 @@
           assign og_description = collection.description | strip_html | truncatewords: 30
         endif
     endcase
+    if og_image == blank and page_image
+      assign og_image = page_image
+    endif
   -%}
   <meta property="og:site_name" content="{{ shop.name | escape }}">
   <meta property="og:type" content="{{ og_type }}">
@@ -165,11 +175,12 @@
     {{ 'component-account.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
   {{ 'component-motion.css' | asset_url | stylesheet_tag }}
+  {{ 'component-ios.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%}
     Typography / font-picker architecture. Self-hosted via Shopify's native
     font_picker (Foundation decision — no external Google Fonts request).
-    Closest premium matches to the approved AERA type system: a condensed
+    Closest premium matches to the approved Waypoint type system: a condensed
     bold display face, a clean body sans, and an italic editorial serif.
   {%- endcomment -%}
   {%- style -%}
@@ -189,21 +200,26 @@
         read anywhere — --space-unit stayed hardcoded at 8px in
         tokens.css regardless. Wiring it here is what makes base.css's
         --space-unit-driven section/page-width rhythm (and therefore the
-        Fieldbook preset's airier spacing) real instead of a no-op.
+        Daylight preset's airier spacing) real instead of a no-op.
       {%- endcomment -%}
       --space-unit: {{ settings.spacing_scale | default: 100 | times: 8 | divided_by: 100.0 }}px;
     }
 
     {%- comment -%}
       [data-preset] (not bare :root) is required here: tokens.css defines
-      Fieldbook's own --accent on the more-specific :root[data-preset=
-      "fieldbook"] selector, which would otherwise beat a plain :root
+      Daylight's own --accent on the more-specific :root[data-preset=
+      "daylight"] selector, which would otherwise beat a plain :root
       override here regardless of source order and silently no-op
       accent_color on that preset (Milestone 9 fix — previously only
       worked correctly on the Dark preset).
     {%- endcomment -%}
     :root[data-preset] {
       --accent: {{ settings.accent_color }};
+      {%- if settings.color_background != blank -%}--bg: {{ settings.color_background }};{%- endif -%}
+      {%- if settings.color_text != blank -%}--text: {{ settings.color_text }};{%- endif -%}
+      {%- if settings.color_surface != blank -%}--surface: {{ settings.color_surface }};--surface-2: {{ settings.color_surface }};{%- endif -%}
+      {%- if settings.color_button != blank -%}--cta-bg: {{ settings.color_button }};{%- endif -%}
+      {%- if settings.color_button_text != blank -%}--cta-text: {{ settings.color_button_text }};{%- endif -%}
     }
   {%- endstyle -%}
 
@@ -235,7 +251,9 @@
   <script src="{{ 'size-chart.js' | asset_url }}" defer></script>
   <script src="{{ 'product-recommendations.js' | asset_url }}" defer></script>
   <script src="{{ 'mobile-nav.js' | asset_url }}" defer></script>
-  <script src="{{ 'account.js' | asset_url }}" defer></script>
+  {%- if template contains 'customers' -%}
+    <script src="{{ 'account.js' | asset_url }}" defer></script>
+  {%- endif -%}
   <script src="{{ 'motion.js' | asset_url }}" defer></script>
 </body>
 </html>

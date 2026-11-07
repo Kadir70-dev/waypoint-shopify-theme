@@ -1,5 +1,5 @@
 /**
- * AERA — PDP media gallery (Milestone 11 / Module 06).
+ * Waypoint — PDP media gallery (Milestone 11 / Module 06).
  * Native scroll-snap swipe gallery + synced thumbnails + a dependency-free
  * zoom dialog. No Swiper, no PhotoSwipe — IntersectionObserver keeps the
  * thumbnail rail in sync while the visitor swipes/scrolls the main strip;
@@ -21,6 +21,9 @@
         entries.forEach(function (entry) {
           if (!entry.isIntersecting || entry.intersectionRatio < 0.6) return;
           var mediaId = entry.target.getAttribute('data-media-id');
+          items.forEach(function (item) {
+            item.classList.toggle('is-active', item === entry.target);
+          });
           gallery.querySelectorAll('[data-gallery-thumb]').forEach(function (thumb) {
             var active = String(thumb.getAttribute('data-media-id')) === String(mediaId);
             thumb.classList.toggle('is-active', active);

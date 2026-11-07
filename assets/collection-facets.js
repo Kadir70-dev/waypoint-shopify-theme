@@ -1,5 +1,5 @@
 /**
- * AERA — AJAX faceted filtering + sort (Module 07).
+ * Waypoint — AJAX faceted filtering + sort (Module 07).
  * Progressive enhancement over the plain <a href>/<form method="get">
  * filter markup already in main-collection-grid.liquid/filter-groups.liquid:
  * every filter link, the price-range form, the sort <select> and
@@ -32,7 +32,7 @@
   // loses that listener otherwise.
   function rebindFilterTrigger() {
     var trigger = document.querySelector('[data-overlay-trigger="MobileFilters"]');
-    var instance = window.AeraOverlays && window.AeraOverlays.MobileFilters;
+    var instance = window.WaypointOverlays && window.WaypointOverlays.MobileFilters;
     if (!trigger || !instance) return;
     trigger.setAttribute('aria-expanded', String(instance.isOpen()));
     trigger.addEventListener('click', function () {
@@ -47,7 +47,11 @@
     swapIds.forEach(function (id) {
       var next = doc.getElementById(id);
       var current = document.getElementById(id);
-      if (current && next) current.replaceWith(next);
+      if (current && next) {
+        current.replaceWith(next);
+        // Swapped in after motion.js bound its reveal observer, so reveal directly.
+        next.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-revealed'); });
+      }
       else if (current && !next) current.remove(); // e.g. filters removed entirely
     });
     rebindFilterTrigger();
@@ -113,34 +117,4 @@
   });
 
   window.history.replaceState({ collectionFacets: true }, '', window.location.href);
-
-  // Demo presentation filters intentionally stay separate from Shopify facets.
-  var demoFilters = document.querySelectorAll('[data-demo-filters]');
-  if (demoFilters.length) {
-    var demoStarted = false;
-    function applyDemoFilters() {
-      var selected = {};
-      document.querySelectorAll('[data-demo-filters] input[data-demo-filter]:checked').forEach(function (input) {
-        var group = input.getAttribute('data-demo-filter');
-        if (!selected[group]) selected[group] = [];
-        selected[group].push(input.value);
-      });
-      document.querySelectorAll('.collection-demo-card').forEach(function (card) {
-        var visible = !demoStarted || Object.keys(selected).every(function (group) {
-          var values = (card.getAttribute('data-' + (group === 'features' ? 'features' : group === 'activity' ? 'activities' : group + 's')) || card.getAttribute('data-' + group) || '').split('|');
-          return selected[group].some(function (value) { return values.indexOf(value) !== -1; });
-        });
-        card.setAttribute('data-demo-hidden', String(!visible));
-      });
-    }
-    demoFilters.forEach(function (group) { group.addEventListener('change', function () { demoStarted = true; applyDemoFilters(); }); });
-    document.querySelectorAll('[data-demo-filter-clear]').forEach(function (clear) {
-      clear.addEventListener('click', function () {
-        document.querySelectorAll('[data-demo-filters] input[data-demo-filter]').forEach(function (input) { input.checked = false; });
-        document.querySelectorAll('[data-demo-filters] input[data-demo-filter="category"][value="Backpacks"]').forEach(function (input) { input.checked = true; });
-        demoStarted = false;
-        applyDemoFilters();
-      });
-    });
-  }
 }());

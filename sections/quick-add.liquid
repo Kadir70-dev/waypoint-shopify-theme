@@ -31,7 +31,7 @@
     {%- form 'product', product, id: quick_add_form_id, data-cart-add-form: true -%}
       <input type="hidden" name="id" value="{{ current_variant.id }}">
 
-      {%- for option in product.options_with_values -%}
+      {%- unless product.has_only_default_variant -%}{%- for option in product.options_with_values -%}
         <fieldset class="option-selector">
           <legend class="eyebrow">{{ option.name }}: <span data-option-selected-value>{{ option.selected_value }}</span></legend>
           <div class="option-selector__values">
@@ -56,7 +56,7 @@
             {%- endfor -%}
           </div>
         </fieldset>
-      {%- endfor -%}
+      {%- endfor -%}{%- endunless -%}
 
       <div class="quick-add__row">
         <div class="quantity-stepper quantity-stepper--sm" data-quick-add-quantity>

@@ -1,4 +1,4 @@
-/* AERA — base reset, typography scale, and global accessibility primitives.
+/* Waypoint — base reset, typography scale, and global accessibility primitives.
    Component-specific styles live in their own component-*.css files added
    in later milestones; this file only holds what every page needs. */
 
@@ -44,10 +44,12 @@ h1, h2, h3, h4 {
 .eyebrow {
   font-family: var(--font-display);
   font-size: 11px;
-  letter-spacing: var(--tracking-label);
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--accent-light);
 }
+
+::selection { background: var(--selection-bg); color: var(--text); }
 
 .editorial-quote {
   font-family: var(--font-editorial);
@@ -74,9 +76,9 @@ p { margin: 0; }
   .page-width { padding-inline: calc(var(--space-unit) * 3.5); }
 }
 
-.section { padding-block: calc(var(--space-unit) * 4.5); }
+.section { padding-block: calc(var(--space-unit) * 6); }
 @media (min-width: 750px) {
-  .section { padding-block: calc(var(--space-unit) * 6); }
+  .section { padding-block: calc(var(--space-unit) * 9); }
 }
 
 /* --- section heading row (Module 04) ---
@@ -93,8 +95,8 @@ p { margin: 0; }
   flex-wrap: wrap;
   margin-bottom: calc(var(--space-unit) * 2.5);
 }
-.section-heading__title { font-size: clamp(20px, 2.2vw, 24px); }
-.section-heading__subheading { color: var(--muted); margin-top: 6px; }
+.section-heading__title { font-size: clamp(24px, 2.8vw, 34px); }
+.section-heading__subheading { color: var(--muted); margin-top: 10px; max-width: 52ch; line-height: var(--leading-normal); }
 .section-heading__view-all {
   font-size: 11px;
   letter-spacing: .08em;
@@ -169,17 +171,19 @@ html, body { overflow-x: hidden; }
   font-size: 12px;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  padding: 14px 22px;
+  min-height: 48px;
+  padding: 15px 28px;
   border: 1px solid var(--border-strong);
   background: transparent;
   color: var(--text);
   cursor: pointer;
   border-radius: var(--radius);
-  transition: background var(--dur-fast) var(--ease-out-slow), border-color var(--dur-fast) var(--ease-out-slow), opacity var(--dur-fast) var(--ease-out-slow);
+  transition: background var(--dur-fast) var(--ease-out-slow), border-color var(--dur-fast) var(--ease-out-slow), color var(--dur-fast) var(--ease-out-slow), opacity var(--dur-fast) var(--ease-out-slow), transform var(--dur-fast) var(--ease-out-slow);
 }
+.btn:active:not(:disabled) { transform: translateY(1px); }
 .btn-primary { background: var(--cta-bg); color: var(--cta-text); border-color: var(--cta-bg); }
-.btn-primary:hover { opacity: .85; }
-.btn-outline:hover { border-color: var(--text); background: rgba(127, 127, 127, .08); }
+.btn-primary:hover { background: var(--cta-bg-hover); border-color: var(--cta-bg-hover); }
+.btn-outline:hover { border-color: var(--accent-light); color: var(--accent-light); background: transparent; }
 .btn-block { width: 100%; justify-content: center; }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
 .btn:disabled:hover { background: transparent; border-color: var(--border-strong); }
@@ -295,14 +299,18 @@ html, body { overflow-x: hidden; }
 .field__label { font-family: var(--font-display); font-size: 11px; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--muted); }
 .field__input {
   width: 100%;
+  min-height: 48px;
   background: var(--surface-2);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius);
   color: var(--text);
-  padding: 12px 14px;
-  font: 14px/1.4 var(--font-body);
+  padding: 13px 16px;
+  font: 15px/1.4 var(--font-body);
+  transition: border-color var(--dur-fast) var(--ease-out-slow), box-shadow var(--dur-fast) var(--ease-out-slow);
 }
-.field__input:focus { border-color: var(--accent-light); }
+.field__input::placeholder { color: var(--muted); opacity: 1; }
+.field__input:hover { border-color: var(--muted); }
+.field__input:focus { border-color: var(--accent-light); box-shadow: 0 0 0 3px var(--accent-ring); }
 .field__input:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 .form-message { padding: 14px 16px; border: 1px solid var(--border-strong); font-size: 13px; line-height: 1.5; }
 .form-message--success { border-color: var(--accent-light); color: var(--accent-light); }

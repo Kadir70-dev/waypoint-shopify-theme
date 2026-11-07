@@ -1,14 +1,14 @@
 {
-  "current": "AERA",
+  "current": "Daylight",
   "presets": {
-    "AERA": {
+    "Waypoint": {
       "color_preset": "dark",
-      "accent_color": "#5C6B4A",
+      "accent_color": "#A88A5A",
       "font_display": "oswald_n7",
       "font_body": "inter_n4",
       "font_editorial": "playfair_display_n4",
       "type_scale": 100,
-      "corner_style": "sharp",
+      "corner_style": "rounded",
       "page_width": 1200,
       "spacing_scale": 100,
       "cart_type": "drawer",
@@ -19,15 +19,15 @@
       "show_badges": true,
       "show_sticky_atc_mobile": true,
       "empty_state_icon": "mountain",
-      "social_instagram_url": "https://www.instagram.com/",
-      "social_facebook_url": "https://www.facebook.com/",
-      "social_linkedin_url": "https://www.linkedin.com/",
-      "social_youtube_url": "https://www.youtube.com/",
+      "social_instagram_url": "",
+      "social_facebook_url": "",
+      "social_linkedin_url": "",
+      "social_youtube_url": "",
       "social_spotify_url": ""
     },
-    "AERA — Fieldbook": {
-      "color_preset": "fieldbook",
-      "accent_color": "#4A5A3C",
+    "Daylight": {
+      "color_preset": "daylight",
+      "accent_color": "#8A6A3A",
       "font_display": "oswald_n7",
       "font_body": "inter_n4",
       "font_editorial": "playfair_display_n4",
@@ -43,10 +43,10 @@
       "show_badges": true,
       "show_sticky_atc_mobile": true,
       "empty_state_icon": "mountain",
-      "social_instagram_url": "https://www.instagram.com/",
-      "social_facebook_url": "https://www.facebook.com/",
-      "social_linkedin_url": "https://www.linkedin.com/",
-      "social_youtube_url": "https://www.youtube.com/",
+      "social_instagram_url": "",
+      "social_facebook_url": "",
+      "social_linkedin_url": "",
+      "social_youtube_url": "",
       "social_spotify_url": ""
     }
   }

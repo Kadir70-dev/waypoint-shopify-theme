@@ -1,5 +1,5 @@
 /**
- * AERA — PDP variant picker (Milestone 4).
+ * Waypoint — PDP variant picker (Milestone 4).
  * Computes the matching variant client-side from the embedded variants
  * JSON, then re-fetches the buy box via the Section Rendering API
  * (?variant=<id>&section_id=main-product) so price/availability/SKU are
@@ -167,7 +167,9 @@
       if (activeFetchController) activeFetchController.abort();
       activeFetchController = ('AbortController' in window) ? new AbortController() : null;
 
-      var url = productData.url + '?variant=' + encodeURIComponent(variant.id) + '&section_id=main-product';
+      var sectionEl = buybox.closest('.shopify-section');
+      var sectionId = sectionEl ? sectionEl.id.replace(/^shopify-section-/, '') : 'main-product';
+      var url = productData.url + '?variant=' + encodeURIComponent(variant.id) + '&section_id=' + encodeURIComponent(sectionId);
       var buyboxId = buybox.id;
 
       buybox.setAttribute('aria-busy', 'true');
@@ -182,6 +184,11 @@
           var fresh = doc.getElementById(buyboxId);
           if (fresh) {
             buybox.innerHTML = fresh.innerHTML;
+            // The swapped-in add-to-cart form is new markup: re-wire it so it still
+            // opens the cart drawer instead of falling back to a full /cart page post.
+            if (window.WaypointCart && window.WaypointCart.bindAddForm) {
+              buybox.querySelectorAll('[data-cart-add-form]').forEach(window.WaypointCart.bindAddForm);
+            }
             markUnavailableCombinations();
             announceStatus(fresh);
             var pageUrl = new URL(window.location.href);

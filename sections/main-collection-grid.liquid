@@ -44,24 +44,24 @@
           <noscript><button type="submit" class="btn btn-sm btn-outline">{{ 'collection.apply' | t }}</button></noscript>
         </form>
       {%- endif -%}
-      {%- if section.settings.use_demo_products or collection.filters.size > 0 -%}
+      {%- if collection.filters.size > 0 -%}
         <button type="button" class="collection-grid__filter-trigger" data-overlay-trigger="MobileFilters" aria-controls="MobileFilters">
           {%- render 'icon-filter' -%} {{ 'collection.filters' | t }}
           {%- if has_active_filters -%}<span class="collection-grid__filter-count">{{ active_filter_count }}</span>{%- endif -%}
         </button>
       {%- endif -%}
-      <div class="collection-view-toggle" aria-label="Collection view">
-        <button type="button" data-collection-view="grid" aria-label="Grid view" aria-pressed="true">▦</button>
-        <button type="button" data-collection-view="list" aria-label="List view" aria-pressed="false">☰</button>
+      <div class="collection-view-toggle" aria-label="{{ 'collection.view_label' | t }}">
+        <button type="button" data-collection-view="grid" aria-label="{{ 'collection.grid_view' | t }}" aria-pressed="true">▦</button>
+        <button type="button" data-collection-view="list" aria-label="{{ 'collection.list_view' | t }}" aria-pressed="false">☰</button>
       </div>
     </div>
   </div>
 
   <div class="collection-layout">
-      {%- if section.settings.use_demo_products or collection.filters.size > 0 -%}
+      {%- if collection.filters.size > 0 -%}
         <aside class="collection-layout__sidebar" id="CollectionSidebar-{{ section.id }}">
-          <div class="collection-sidebar__head"><span class="eyebrow">{{ 'collection.filters' | t }}</span>{%- if section.settings.use_demo_products -%}<button type="button" class="filter-chips__clear" data-demo-filter-clear>Clear all</button>{%- else -%}<a href="{{ collection.url }}" class="filter-chips__clear">{{ 'collection.clear_all' | t }}</a>{%- endif -%}</div>
-          {%- if section.settings.use_demo_products -%}{%- render 'filter-groups-demo' -%}{%- else -%}{%- render 'filter-groups', filters: collection.filters -%}{%- endif -%}
+          <div class="collection-sidebar__head"><span class="eyebrow">{{ 'collection.filters' | t }}</span><a href="{{ collection.url }}" class="filter-chips__clear">{{ 'collection.clear_all' | t }}</a></div>
+          {%- render 'filter-groups', filters: collection.filters -%}
       </aside>
     {%- endif -%}
 
@@ -77,32 +77,7 @@
         </div>
       {%- endif -%}
 
-      {%- if section.settings.use_demo_products -%}
-        {%- assign demo_summit_colors = '#5C6B4A,#2B2B2B,#B99A6B' | split: ',' -%}
-        {%- assign demo_altitude_colors = '#20221D,#2B2B2B' | split: ',' -%}
-        {%- assign demo_ridgeline_colors = '#B99A6B,#6B4A2F,#2B2B2B' | split: ',' -%}
-        {%- assign demo_expedition_colors = '#596348,#2B2B2B,#7F6A45' | split: ',' -%}
-        {%- assign demo_traverse_colors = '#2B2B2B,#5C6B4A' | split: ',' -%}
-        {%- assign demo_range_colors = '#B99A6B,#5C6B4A,#2B2B2B' | split: ',' -%}
-        {%- assign demo_jaakari_colors = '#596348,#2B2B2B,#7F6A45' | split: ',' -%}
-        {%- assign demo_nomad_colors = '#2B2B2B,#5C6B4A,#B99A6B' | split: ',' -%}
-        <div class="product-grid" data-density="compact" data-context="collection">
-          {%- render 'card-collection-demo', title: 'SUMMIT 45', description: 'All-terrain backpack for multi-day missions.', price: '€249.00', badge: 'BESTSELLER', image: 'demo-summit-45.png', colors: demo_summit_colors, category: 'Expedition Packs', capacity: '35L–60L', product_colors: 'Olive|Black|Sand', features: 'Waterproof|Modular (MOLLE)|Compression Straps', activities: 'Hiking|Trekking|Tactical' -%}
-          {%- render 'card-collection-demo', title: 'ALTITUDE 35', description: 'Technical daypack built for movement.', price: '€229.00', image: 'demo-altitude-35.png', colors: demo_altitude_colors, category: 'Daypacks', capacity: '20L–35L', product_colors: 'Black|Olive|Sand', features: 'Lightweight|Compression Straps|Laptop Sleeve', activities: 'Hiking|Trekking|Everyday Carry' -%}
-          {%- render 'card-collection-demo', title: 'RIDGELINE 25', description: 'Versatile pack for day adventures.', price: '€179.00', image: 'demo-ridgeline-25.png', colors: demo_ridgeline_colors, category: 'Daypacks', capacity: '20L–35L', product_colors: 'Sand|Olive', features: 'Lightweight|Compression Straps', activities: 'Hiking|Trekking|Travel' -%}
-          {%- render 'card-collection-demo', title: 'EXPEDITION 60', description: 'Maximum capacity. No compromise.', price: '€299.00', badge: 'NEW', image: 'demo-expedition-60.png', colors: demo_expedition_colors, category: 'Expedition Packs', capacity: '60L+', product_colors: 'Camouflage|Olive|Black', features: 'Waterproof|Modular (MOLLE)|Compression Straps', activities: 'Trekking|Tactical' -%}
-          {%- render 'card-collection-demo', title: 'TRAVERSE 20', description: 'Lightweight pack for everyday exploration.', price: '€149.00', image: 'demo-traverse-20.png', colors: demo_traverse_colors, category: 'Backpacks', capacity: 'Under 20L', product_colors: 'Black|Olive', features: 'Lightweight|Laptop Sleeve', activities: 'Hiking|Travel|Everyday Carry' -%}
-          {%- render 'card-collection-demo', title: 'RANGE 32', description: 'Modular tactical backpack for extended field use.', price: '€209.00', image: 'demo-range-32.png', colors: demo_range_colors, category: 'Tactical Packs', capacity: '20L–35L', product_colors: 'Sand|Olive', features: 'Modular (MOLLE)|Compression Straps|Waterproof', activities: 'Tactical|Trekking' -%}
-          {%- render 'card-collection-demo', title: 'JÄÄKÄRI 30', description: 'Rugged rolltop pack for all conditions.', price: '€189.00', image: 'demo-jaakari-30.png', colors: demo_jaakari_colors, category: 'Tactical Packs', capacity: '20L–35L', product_colors: 'Camouflage|Olive|Sand', features: 'Waterproof|Modular (MOLLE)|Compression Straps', activities: 'Tactical|Hiking|Trekking' -%}
-          {%- render 'card-collection-demo', title: 'NOMAD 40', description: 'Travel-ready pack for modern explorers.', price: '€239.00', image: 'demo-nomad-40.png', colors: demo_nomad_colors, category: 'Backpacks', capacity: '35L–60L', product_colors: 'Black|Olive|Sand', features: 'Lightweight|Laptop Sleeve|Compression Straps', activities: 'Travel|Everyday Carry|Hiking' -%}
-          <div class="collection-editorial-banner" role="complementary" style="background-image:linear-gradient(90deg,rgba(14,15,13,.92),rgba(14,15,13,.38)),url({{ 'hero-slide-2.jpg' | asset_url }});"><div><p class="eyebrow">Gear for real life</p><h2>GEAR FOR<br>REAL LIFE</h2><p>Backpacks built to go further.<br>In all conditions. For what's next.</p><a href="{{ routes.blog_url }}">Explore our journal &rarr;</a></div><blockquote>“Not escape. Perspective.”<footer>AERA Journal</footer></blockquote></div>
-          {%- render 'card-collection-demo', title: 'RIDGE SHELL JACKET', description: 'Weather-ready shell for changing conditions.', price: '€219.00', image: 'latest-ridge-shell.png', colors: demo_altitude_colors, category: 'Accessories', capacity: 'Under 20L', product_colors: 'Black|Olive', features: 'Waterproof|Lightweight', activities: 'Hiking|Trekking|Travel' -%}
-          {%- render 'card-collection-demo', title: 'TERRAIN MID BOOT', description: 'Stable traction for rough ground.', price: '€189.00', image: 'latest-terrain-boot.png', colors: demo_ridgeline_colors, category: 'Accessories', capacity: 'Under 20L', product_colors: 'Black|Sand', features: 'Waterproof|Lightweight', activities: 'Hiking|Trekking' -%}
-          {%- render 'card-collection-demo', title: 'FIELD COOK SYSTEM', description: 'Compact cooking kit for remote camps.', price: '€129.00', image: 'latest-field-cook.png', colors: demo_ridgeline_colors, category: 'Accessories', capacity: 'Under 20L', product_colors: 'Black|Sand', features: 'Lightweight', activities: 'Trekking|Travel' -%}
-          {%- render 'card-collection-demo', title: 'NOVA TACTICAL LIGHT', description: 'Reliable illumination for every route.', price: '€79.00', image: 'latest-tactical-light.png', colors: demo_altitude_colors, category: 'Accessories', capacity: 'Under 20L', product_colors: 'Black|Olive', features: 'Waterproof|Lightweight', activities: 'Tactical|Everyday Carry' -%}
-          {%- render 'card-collection-demo', title: 'EMBER INSULATED HOODIE', description: 'Warmth without slowing you down.', price: '€159.00', image: 'latest-ember-hoodie.png', colors: demo_altitude_colors, category: 'Accessories', capacity: 'Under 20L', product_colors: 'Black|Olive|Sand', features: 'Lightweight', activities: 'Travel|Everyday Carry|Hiking' -%}
-        </div>
-      {%- elsif collection.products_count == 0 and has_active_filters -%}
+      {%- if collection.products_count == 0 and has_active_filters -%}
         <div class="collection-grid__empty">
           <svg class="empty-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.3">
             <rect x="14" y="14" width="36" height="36"/><path d="M14 14 L50 50 M50 14 L14 50"/>
@@ -128,11 +103,6 @@
           <div class="product-grid" data-density="{{ settings.grid_density }}" data-context="collection">
             {%- for product in collection.products -%}
               {%- render 'card-product', product: product, collection_context: true -%}
-              {%- if forloop.index == 8 -%}
-                <div class="collection-editorial-banner" role="complementary" style="background-image:linear-gradient(90deg,rgba(14,15,13,.92),rgba(14,15,13,.38)),url({{ 'hero-slide-2.jpg' | asset_url }});">
-                  <div><p class="eyebrow">Gear for real life</p><h2>GEAR FOR<br>REAL LIFE</h2><p>Backpacks built to go further.<br>In all conditions. For what's next.</p><a href="{{ routes.blog_url }}">Explore our journal &rarr;</a></div><blockquote>“Not escape. Perspective.”<footer>AERA Journal</footer></blockquote>
-                </div>
-              {%- endif -%}
             {%- endfor -%}
           </div>
           {%- render 'pagination', paginate: paginate -%}
@@ -142,16 +112,16 @@
   </div>
 </div>
 
-            {%- if section.settings.use_demo_products or collection.filters.size > 0 -%}
+            {%- if collection.filters.size > 0 -%}
   <div id="MobileFilters" class="mobile-filter-drawer" data-overlay data-overlay-backdrop hidden>
     <div class="mobile-filter-drawer__panel" id="MobileFiltersPanel-{{ section.id }}">
       <div class="mobile-filter-drawer__top">
         <span class="eyebrow" style="font-size:13px;color:var(--text)">{{ 'collection.filters' | t }}</span>
-        {%- if section.settings.use_demo_products -%}<button type="button" class="mobile-filter-drawer__clear" data-demo-filter-clear>Clear all</button>{%- elsif has_active_filters -%}<a href="{{ collection.url }}" class="mobile-filter-drawer__clear">{{ 'collection.clear_all' | t }}</a>{%- endif -%}
+        {%- if has_active_filters -%}<a href="{{ collection.url }}" class="mobile-filter-drawer__clear">{{ 'collection.clear_all' | t }}</a>{%- endif -%}
         <button type="button" class="icon-btn" data-overlay-close aria-label="{{ 'accessibility.close' | t }}">{%- render 'icon-close' -%}</button>
       </div>
       <div class="mobile-filter-drawer__body">
-        {%- if section.settings.use_demo_products -%}{%- render 'filter-groups-demo' -%}{%- else -%}{%- render 'filter-groups', filters: collection.filters -%}{%- endif -%}
+        {%- render 'filter-groups', filters: collection.filters -%}
       </div>
       <div class="mobile-filter-drawer__footer">
         <button type="button" class="btn btn-primary btn-block" data-overlay-close>
@@ -170,8 +140,7 @@
 {
   "name": "Collection grid",
   "settings": [
-    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
-    { "type": "checkbox", "id": "use_demo_products", "label": "Use AERA demo collection products", "default": true }
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
   ]
 }
 {% endschema %}

@@ -1,5 +1,5 @@
 /**
- * AERA — customer accounts (Milestone 7).
+ * Waypoint — customer accounts (Milestone 7).
  * Two small, independent progressive enhancements:
  *  1. Login/forgot-password panel toggle — both panels render un-hidden
  *     from Liquid (so the page is fully usable with zero JS: submitting

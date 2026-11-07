@@ -6,7 +6,7 @@
     {%- assign banner_bg_position = banner_focal_point.x | append: '% ' | append: banner_focal_point.y | append: '%' -%}
   {%- endif -%}
 {%- endif -%}
-<div class="collection-banner collection-page-banner photo brand" data-reveal {% if collection.image %}style="--bg-mobile:url({{ banner_mobile_url }});--bg-desktop:url({{ banner_desktop_url }}){% if banner_bg_position %};--bg-position:{{ banner_bg_position }}{% endif %}"{% endif %}>
+<div class="collection-banner collection-page-banner{% if collection.image %} photo brand{% endif %}" data-reveal {% if collection.image %}style="--bg-mobile:url({{ banner_mobile_url }});--bg-desktop:url({{ banner_desktop_url }}){% if banner_bg_position %};--bg-position:{{ banner_bg_position }}{% endif %}"{% endif %}>
   <div class="collection-banner__content">
     <h1>{{ collection.title }}</h1>
     {%- if collection.description != blank -%}
