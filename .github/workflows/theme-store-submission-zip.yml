@@ -1,0 +1,50 @@
+name: Theme Store Submission ZIP
+
+on:
+  pull_request:
+    paths:
+      - 'assets/**'
+      - 'blocks/**'
+      - 'config/**'
+      - 'layout/**'
+      - 'listings/**'
+      - 'locales/**'
+      - 'sections/**'
+      - 'snippets/**'
+      - 'templates/**'
+      - 'scripts/validate_theme_store_zip.py'
+      - '.github/workflows/theme-store-submission-zip.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  theme-store-package:
+    name: Theme Check + submission ZIP
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli@4.8.4
+      - name: Run official Shopify Theme Check
+        run: shopify theme check --path . --fail-level error
+      - name: Build actual Shopify Theme Store ZIP
+        run: shopify theme package --path . --no-input
+      - name: Validate ZIP layout and both presets
+        run: python scripts/validate_theme_store_zip.py
+      - name: Upload private short-lived review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: waypoint-theme-store-zip
+          path: '*.zip'
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
