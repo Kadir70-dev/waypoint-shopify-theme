@@ -15,7 +15,6 @@
           "settings": {
             "heading": "Catalog",
             "text": "<p>Explore collections and find your next destination.</p>",
-            "page": "catalog",
             "button_label": "Open catalog"
           }
         },
@@ -24,7 +23,6 @@
           "settings": {
             "heading": "Our story",
             "text": "<p>An editorial introduction to the brand.</p>",
-            "page": "about-us",
             "button_label": "Read our story"
           }
         },
@@ -33,7 +31,6 @@
           "settings": {
             "heading": "Lookbook",
             "text": "<p>Discover products through visual stories.</p>",
-            "page": "lookbook",
             "button_label": "Open lookbook"
           }
         },
@@ -42,7 +39,6 @@
           "settings": {
             "heading": "Upcoming collection",
             "text": "<p>See the campaign and product details.</p>",
-            "page": "pre-order",
             "button_label": "Explore upcoming"
           }
         },
@@ -51,7 +47,6 @@
           "settings": {
             "heading": "Frequently asked questions",
             "text": "<p>Find your way around the store.</p>",
-            "page": "faq",
             "button_label": "Read answers"
           }
         },
@@ -60,7 +55,6 @@
           "settings": {
             "heading": "Size guide",
             "text": "<p>Learn how to take your measurements.</p>",
-            "page": "size-guide",
             "button_label": "Find your fit"
           }
         },
@@ -69,7 +63,6 @@
           "settings": {
             "heading": "Delivery & returns",
             "text": "<p>Find the information you need before ordering.</p>",
-            "page": "shipping-returns",
             "button_label": "Read more"
           }
         },
@@ -78,7 +71,6 @@
           "settings": {
             "heading": "Contact",
             "text": "<p>Start a conversation with the store.</p>",
-            "page": "contact",
             "button_label": "Get in touch"
           }
         },
@@ -131,35 +123,30 @@
         "about-us": {
           "type": "page",
           "settings": {
-            "page": "about-us",
             "label": "Our story"
           }
         },
         "lookbook": {
           "type": "page",
           "settings": {
-            "page": "lookbook",
             "label": "Lookbook"
           }
         },
         "faq": {
           "type": "page",
           "settings": {
-            "page": "faq",
             "label": "FAQ"
           }
         },
         "contact": {
           "type": "page",
           "settings": {
-            "page": "contact",
             "label": "Contact"
           }
         },
         "shipping-returns": {
           "type": "page",
           "settings": {
-            "page": "shipping-returns",
             "label": "Shipping & returns"
           }
         }
