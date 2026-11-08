@@ -1,12 +1,18 @@
 # Shopify Lighthouse CI — the Theme Store performance/accessibility check.
 #
-# What it does to the store: shopify/lighthouse-ci-action uploads this repo
-# as a temporary *development* theme (`shopify theme push --development`),
-# audits the home, product and collection pages, then deletes that theme.
-# It never publishes or edits the live theme.
+# What it does to the store: the pinned shopify/lighthouse-ci-action uploads
+# this repo as a temporary *development* theme (`shopify theme push
+# --development`), audits the home, product and collection pages, then deletes
+# that theme (`shopify theme delete -d -f`). It never publishes or edits the
+# live theme.
+#
+# Reports stay on the runner: the action's built-in config uploads to
+# temporary-public-storage, so LHCI_UPLOAD__TARGET=filesystem overrides it and
+# nothing is uploaded anywhere (no public storage, no GitHub artifact). The log
+# shows only per-page category scores — no screenshots, HTML or store content.
 #
 # Runs only when started by hand (Actions tab → "Shopify Lighthouse CI" →
-# Run workflow), so nothing fails before the secrets below exist.
+# Run workflow).
 #
 # Repository secrets (Settings → Secrets and variables → Actions):
 #   SHOP_STORE          store domain, e.g. your-store.myshopify.com
@@ -35,7 +41,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Lighthouse
-        uses: shopify/lighthouse-ci-action@v1
+        # v1, pinned to the reviewed commit.
+        uses: shopify/lighthouse-ci-action@988f0eeb44ad5f298bd47150e5b9b01c27ead975
+        env:
+          # Keep reports on the runner instead of temporary-public-storage.
+          LHCI_UPLOAD__TARGET: filesystem
+          LHCI_UPLOAD__OUTPUT_DIR: .lhci-reports
         with:
           store: ${{ secrets.SHOP_STORE }}
           client_id: ${{ secrets.SHOP_CLIENT_ID }}
@@ -50,3 +61,22 @@ jobs:
           # Theme Store minimums.
           lhci_min_score_performance: 0.6
           lhci_min_score_accessibility: 0.9
+
+      - name: Score summary
+        if: always()
+        run: |
+          manifest=.lhci-reports/manifest.json
+          if [ ! -f "$manifest" ]; then
+            echo "::error::No local report manifest — results were not written to the runner."
+            exit 1
+          fi
+          # Page path + category scores only (host and query string stripped).
+          jq -r '
+            ["page", "run", "performance", "accessibility"],
+            (.[] | [
+              (.url | sub("^https?://[^/]+"; "") | sub("\\?.*$"; "") | if . == "" then "/" else . end),
+              (if .isRepresentativeRun then "median" else "-" end),
+              (.summary.performance * 100 | round),
+              (.summary.accessibility * 100 | round)
+            ])
+            | @tsv' "$manifest" | column -t
