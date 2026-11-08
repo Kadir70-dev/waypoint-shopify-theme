@@ -40,3 +40,14 @@ Primary references:
 
 ## Accurate release verdict
 **$420 price is allowed. Waypoint is NOT YET SUBMITTED or approved on the Shopify Theme Store.** Complete gates above before sending a review submission. Keep MAIN theme unchanged while preparing separate reviewable demo stores and clean submission artifacts.
+
+
+## 2026-11-09 distribution hardening (verified)
+- Sanitized **27** distribution JSON templates and preset listing templates to remove **181** product/page/collection handles specific to the example store. Shopify demo store Theme Editor settings were not modified.
+- Added portable-defaults validation to `scripts/validate_theme_json.py`.
+- GitHub Actions Theme Check + submission ZIP generation passed at commit `b2c2ff2`.
+- Verified current generated `Waypoint-1.0.0.zip` archive has **256 files**, valid ZIP CRC, **zero** resource handles in distributed section settings, and SHA-256 `4f03caf7175c5be6d9b2c198b6067c59f3b65d4764b732c887f575ff047861ff`.
+- GitHub Actions artifact from run `42528808151` is an automated build of that ZIP (artifact expires after 1 day); the validated ZIP has also been extracted as the conversation attachment.
+- **Do not confuse technical ZIP validation with Shopify Theme Store approval**. Partner Dashboard submission not performed; current Shopify connector does not expose it.
+- **Outstanding code risk:** `assets/branch-locations.js` loads MapLibre GL JS as a remote ES module from unpkg when a merchant supplies a MapTiler key. Shopify requires theme scripts to be on Shopify's CDN except approved third-party libraries, and app-like external API integrations are restricted. Resolve this with an eligible, Shopify-hosted implementation or remove the optional module from the distribution if reviewers require it.
+- **Outstanding review prerequisites:** separate client-transfer demo stores for Waypoint and Daylight with populated realistic catalogs and test checkout, actual mobile/desktop Lighthouse measurements, public developer documentation plus support contact form, rights/originality verification, and screenshot assets. No proof these are complete.
