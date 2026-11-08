@@ -182,7 +182,7 @@
   {%- if template contains 'customers' -%}
     {{ 'component-account.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
-  {{ 'component-motion.css' | asset_url | stylesheet_tag }}
+  {%- comment -%} component-motion.css is loaded by the sections that use it (hero-slider, testimonial-carousel, social-proof). {%- endcomment -%}
   {{ 'component-ios.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%}

@@ -4,7 +4,7 @@
    original square look. */
 
 html { -webkit-tap-highlight-color: transparent; }
-body { -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; }
+body { -webkit-text-size-adjust: 100%; }
 
 /* --- translucent chrome: frosted header once scrolled, frosted tab bar --- */
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
