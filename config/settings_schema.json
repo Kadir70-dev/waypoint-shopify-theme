@@ -1,11 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Waypoint",
+    "theme_name": "Cairnfield",
     "theme_version": "1.0.0",
     "theme_author": "K70 Network Solution",
-    "theme_documentation_url": "https://github.com/Kadir70-dev/waypoint-shopify-theme",
-    "theme_support_email": "kadirab1999@gmail.com"
+    "theme_documentation_url": "https://cairnfield-theme-support.vercel.app/docs.html",
+    "theme_support_url": "https://cairnfield-theme-support.vercel.app/"
   },
   {
     "name": "t:settings.colors.name",
@@ -15,8 +15,14 @@
         "id": "color_preset",
         "label": "t:settings.colors.preset.label",
         "options": [
-          { "value": "dark", "label": "t:settings.colors.preset.dark" },
-          { "value": "daylight", "label": "t:settings.colors.preset.daylight" }
+          {
+            "value": "dark",
+            "label": "t:settings.colors.preset.dark"
+          },
+          {
+            "value": "daylight",
+            "label": "t:settings.colors.preset.daylight"
+          }
         ],
         "default": "dark"
       },
@@ -116,8 +122,14 @@
         "id": "corner_style",
         "label": "t:settings.layout.corner_style.label",
         "options": [
-          { "value": "sharp", "label": "t:settings.layout.corner_style.sharp" },
-          { "value": "rounded", "label": "t:settings.layout.corner_style.rounded" }
+          {
+            "value": "sharp",
+            "label": "t:settings.layout.corner_style.sharp"
+          },
+          {
+            "value": "rounded",
+            "label": "t:settings.layout.corner_style.rounded"
+          }
         ],
         "default": "sharp"
       },
@@ -151,8 +163,14 @@
         "id": "cart_type",
         "label": "t:settings.cart.cart_type.label",
         "options": [
-          { "value": "drawer", "label": "t:settings.cart.cart_type.drawer" },
-          { "value": "page", "label": "t:settings.cart.cart_type.page" }
+          {
+            "value": "drawer",
+            "label": "t:settings.cart.cart_type.drawer"
+          },
+          {
+            "value": "page",
+            "label": "t:settings.cart.cart_type.page"
+          }
         ],
         "default": "drawer"
       },
@@ -204,8 +222,14 @@
         "id": "grid_density",
         "label": "t:settings.grid.grid_density.label",
         "options": [
-          { "value": "3", "label": "t:settings.grid.grid_density.three" },
-          { "value": "4", "label": "t:settings.grid.grid_density.four" }
+          {
+            "value": "3",
+            "label": "t:settings.grid.grid_density.three"
+          },
+          {
+            "value": "4",
+            "label": "t:settings.grid.grid_density.four"
+          }
         ],
         "default": "4"
       },
@@ -226,10 +250,22 @@
         "id": "product_card_ratio",
         "label": "Product card media ratio",
         "options": [
-          { "value": "square", "label": "Square" },
-          { "value": "portrait", "label": "Portrait" },
-          { "value": "landscape", "label": "Landscape" },
-          { "value": "natural", "label": "Natural" }
+          {
+            "value": "square",
+            "label": "Square"
+          },
+          {
+            "value": "portrait",
+            "label": "Portrait"
+          },
+          {
+            "value": "landscape",
+            "label": "Landscape"
+          },
+          {
+            "value": "natural",
+            "label": "Natural"
+          }
         ],
         "default": "square"
       },
@@ -274,10 +310,22 @@
         "id": "empty_state_icon",
         "label": "t:settings.icons.empty_state_icon.label",
         "options": [
-          { "value": "mountain", "label": "t:settings.icons.empty_state_icon.mountain" },
-          { "value": "compass", "label": "t:settings.icons.empty_state_icon.compass" },
-          { "value": "bag", "label": "t:settings.icons.empty_state_icon.bag" },
-          { "value": "search", "label": "t:settings.icons.empty_state_icon.search" }
+          {
+            "value": "mountain",
+            "label": "t:settings.icons.empty_state_icon.mountain"
+          },
+          {
+            "value": "compass",
+            "label": "t:settings.icons.empty_state_icon.compass"
+          },
+          {
+            "value": "bag",
+            "label": "t:settings.icons.empty_state_icon.bag"
+          },
+          {
+            "value": "search",
+            "label": "t:settings.icons.empty_state_icon.search"
+          }
         ],
         "default": "mountain"
       }
@@ -286,11 +334,31 @@
   {
     "name": "t:settings.social.name",
     "settings": [
-      { "type": "text", "id": "social_instagram_url", "label": "Instagram" },
-      { "type": "text", "id": "social_facebook_url", "label": "Facebook" },
-      { "type": "text", "id": "social_linkedin_url", "label": "LinkedIn" },
-      { "type": "text", "id": "social_youtube_url", "label": "YouTube" },
-      { "type": "text", "id": "social_spotify_url", "label": "Spotify" }
+      {
+        "type": "text",
+        "id": "social_instagram_url",
+        "label": "Instagram"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_url",
+        "label": "Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin_url",
+        "label": "LinkedIn"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_url",
+        "label": "YouTube"
+      },
+      {
+        "type": "text",
+        "id": "social_spotify_url",
+        "label": "Spotify"
+      }
     ]
   },
   {
@@ -304,5 +372,16 @@
       }
     ]
   },
-  {"name":"Premium finishing","settings":[{"type":"checkbox","id":"enable_premium_motion","label":"Enable premium micro-interactions","info":"Adds subtle card, button and below-fold page motion. Always respects reduced-motion preferences. Existing hero and drawer behavior is configured separately.","default":true}]}
+  {
+    "name": "Premium finishing",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_premium_motion",
+        "label": "Enable premium micro-interactions",
+        "info": "Adds subtle card, button and below-fold page motion. Always respects reduced-motion preferences. Existing hero and drawer behavior is configured separately.",
+        "default": true
+      }
+    ]
+  }
 ]

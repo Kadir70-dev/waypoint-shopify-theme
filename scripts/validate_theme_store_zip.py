@@ -72,7 +72,7 @@ with zipfile.ZipFile(package) as archive:
         if not info:
             errors.append("Theme Store ZIP has no theme_info schema block.")
         else:
-            for field in ("theme_name", "theme_version", "theme_author", "theme_documentation_url", "theme_support_email"):
+            for field in ("theme_name", "theme_version", "theme_author", "theme_documentation_url", "theme_support_url"):
                 if not info.get(field):
                     errors.append(f"Theme info missing {field}.")
             version = info.get("theme_version", "")
@@ -82,9 +82,9 @@ with zipfile.ZipFile(package) as archive:
         errors.append("config/settings_schema.json must contain an array.")
 
     presets = data.get("presets", {}) if isinstance(data, dict) else {}
-    if not isinstance(presets, dict) or set(presets) != {"Waypoint", "Daylight"}:
-        errors.append(f"Expected Waypoint and Daylight presets; found {list(presets)}.")
-    for preset in ("waypoint", "daylight"):
+    if not isinstance(presets, dict) or set(presets) != {"Cairnfield", "Daylight"}:
+        errors.append(f"Expected Cairnfield and Daylight presets; found {list(presets)}.")
+    for preset in ("cairnfield", "daylight"):
         member = f"listings/{preset}/templates/index.json"
         listing = read_json(member)
         if isinstance(listing, dict):
