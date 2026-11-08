@@ -6,7 +6,7 @@
 #
 # What it does to the store: pulls settings/JSON templates from the unpublished
 # preview theme (read only), pushes this repo as a temporary *development*
-# theme, audits home/product/collection, and deletes that development theme in
+# theme, audits home, locations, demo, and lookbook previews, and deletes that development theme in
 # an always-run step (also on failure or cancel). It never targets the live
 # theme: no --live, --allow-live or publish anywhere.
 #
@@ -36,9 +36,8 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  PULL_THEME_ID: '189756768318'   # unpublished preview theme — settings source only
-  PRODUCT_HANDLE: qa-filler-1
-  COLLECTION_HANDLE: all
+  PULL_THEME_ID: '189774528574'   # unpublished preview theme — settings source only
+  AUDIT_PATHS: '/;/pages/locations;/pages/demo;/pages/lookbook'
   MIN_PERFORMANCE: '0.6'          # Theme Store minimums
   MIN_ACCESSIBILITY: '0.9'
   SHOPIFY_CLI_VERSION: 4.8.4
@@ -110,12 +109,12 @@ jobs:
           # only when a page lands on /password. Config is written to the runner only.
           # puppeteerScript must be relative: LHCI joins it onto the working directory.
           jq -n --arg host "$host" --arg q "$query" \
-            --arg product "$PRODUCT_HANDLE" --arg collection "$COLLECTION_HANDLE" \
+            --arg paths "$AUDIT_PATHS" \
             --arg script ".github/lighthouse/storefront-login.js" \
             --argjson perf "$MIN_PERFORMANCE" --argjson a11y "$MIN_ACCESSIBILITY" '{
               ci: {
                 collect: {
-                  url: [($host + "/" + $q), ($host + "/products/" + $product + $q), ($host + "/collections/" + $collection + $q)],
+                  url: ($paths | split(";") | map($host + . + $q)),
                   numberOfRuns: 3,
                   puppeteerScript: $script,
                   puppeteerLaunchOptions: {
@@ -183,7 +182,7 @@ jobs:
             done
           } > "$RUNNER_TEMP/scores.tsv"   # no pipe: keeps the counters in this shell
           column -t -s $'\t' "$RUNNER_TEMP/scores.tsv"
-          # Theme Store rule: average of the home/product/collection median runs, per device.
+          # This is a preview multi-page average, not the Theme Store 3-page product benchmark.
           echo
           awk -F'\t' 'NR > 1 && $4 == "median" { p[$1] += $5; a[$1] += $6; n[$1]++ }
             END { for (d in n) printf "%s average (median runs): performance %.0f, accessibility %.0f\n", d, p[d] / n[d], a[d] / n[d] }' \
