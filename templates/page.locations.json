@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "intro": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "branch-network": {
+      "type": "branch-locations",
+      "settings": {
+        "eyebrow": "FIND US",
+        "heading": "Our Locations",
+        "description": "<p>Explore our locations on a real satellite map. Select a branch to see where it is and how to get there.</p>",
+        "directory_heading": "Our network",
+        "initial_view": "satellite",
+        "enable_terrain": true,
+        "map_height": 650
+      },
+      "blocks": {},
+      "block_order": []
+    }
+  },
+  "order": [
+    "intro",
+    "branch-network"
+  ]
+}
