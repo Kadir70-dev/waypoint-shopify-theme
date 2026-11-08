@@ -1,0 +1,41 @@
+{
+  "sections": {
+    "campaign": {
+      "type": "preorder-campaign",
+      "settings": {
+        "primary_heading": true,
+        "heading": "Something new is on the horizon"
+      }
+    },
+    "questions": {
+      "type": "faq-content",
+      "settings": {
+        "heading": "Before you reserve"
+      },
+      "blocks": {
+        "timing": {
+          "type": "faq",
+          "settings": {
+            "question": "When will my order ship?",
+            "answer": "<p>Review the dispatch estimate shown for the selected product before ordering. Contact the store if you need more information.</p>"
+          }
+        },
+        "payment": {
+          "type": "faq",
+          "settings": {
+            "question": "When will I be charged?",
+            "answer": "<p>Review the payment schedule supplied with the product purchase option and at checkout before confirming your order.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "timing",
+        "payment"
+      ]
+    }
+  },
+  "order": [
+    "campaign",
+    "questions"
+  ]
+}

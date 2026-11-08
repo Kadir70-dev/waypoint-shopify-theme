@@ -97,3 +97,8 @@ Photography and video on the demo store are from [Pexels](https://www.pexels.com
 ## Support
 Email kadirab1999@gmail.com with your store URL, theme version and steps to reproduce. Support covers the theme's own features and settings; third-party apps and custom code changes are out of scope.
 - *Quick Add shows an error*: the product needs at least one available variant; otherwise it links to the product page.
+
+## Demo pages and pre-order campaigns
+
+See [Demo storefront setup](docs/DEMO-STOREFRONT.md) for page assignments, navigation, catalog layouts, and pre-order app configuration. The repository supplies templates; Shopify store records and purchase-option apps must be configured separately.
+

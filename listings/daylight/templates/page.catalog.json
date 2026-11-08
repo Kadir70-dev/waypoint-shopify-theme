@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "showcase": {
+      "type": "page-showcase",
+      "settings": {
+        "primary_heading": true,
+        "eyebrow": "Explore by category",
+        "heading": "Choose your next direction",
+        "text": "<p>Browse collections for the trail, the campsite and the everyday.</p>",
+        "layout": "grid"
+      },
+      "blocks": {
+        "card-1": {
+          "type": "card",
+          "settings": {
+            "heading": "Backpacks",
+            "text": "<p>Discover packs for your next outing.</p>",
+            "collection": "backpacks",
+            "button_label": "Shop backpacks"
+          }
+        },
+        "card-2": {
+          "type": "card",
+          "settings": {
+            "heading": "Camp & Shelter",
+            "text": "<p>Explore the collection for time at camp.</p>",
+            "collection": "camp-shelter",
+            "button_label": "Shop camp"
+          }
+        },
+        "card-3": {
+          "type": "card",
+          "settings": {
+            "heading": "Tools & Equipment",
+            "text": "<p>Browse the details that complete your kit.</p>",
+            "collection": "tools-equipment",
+            "button_label": "Shop equipment"
+          }
+        },
+        "card-4": {
+          "type": "card",
+          "settings": {
+            "heading": "Apparel",
+            "text": "<p>Find a fit for your own way outside.</p>",
+            "collection": "apparel",
+            "button_label": "Shop apparel"
+          }
+        },
+        "card-5": {
+          "type": "card",
+          "settings": {
+            "heading": "All products",
+            "text": "<p>See the complete collection in one place.</p>",
+            "link": "/collections/all",
+            "button_label": "Shop all"
+          }
+        }
+      },
+      "block_order": [
+        "card-1",
+        "card-2",
+        "card-3",
+        "card-4",
+        "card-5"
+      ]
+    }
+  },
+  "order": [
+    "showcase"
+  ]
+}

@@ -1,58 +1,49 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero-slider",
+    "showcase": {
+      "type": "page-showcase",
       "settings": {
-        "autoplay": true,
-        "autoplay_interval": 6,
-        "tagline_word_1": "Discover",
-        "tagline_word_2": "Refine",
-        "tagline_word_3": "Belong"
+        "primary_heading": true,
+        "eyebrow": "Our story",
+        "heading": "A little closer to the outdoors",
+        "text": "<p>A place for the journeys we plan and the moments we find along the way.</p>",
+        "layout": "story"
       },
       "blocks": {
-        "slide-1": {
-          "type": "slide",
+        "card-1": {
+          "type": "card",
           "settings": {
-            "eyebrow": "A considered collection",
-            "heading": "Made for the everyday extraordinary",
-            "subtext": "Thoughtful design, enduring materials and a point of view that lasts.",
-            "cta_label": "Explore"
+            "heading": "The journey matters",
+            "text": "<p>From familiar trails to somewhere entirely new, our story begins with making room for time outside.</p>"
+          }
+        },
+        "card-2": {
+          "type": "card",
+          "settings": {
+            "heading": "Start with curiosity",
+            "text": "<p>Explore our journal for stories, ideas and fresh perspectives.</p>",
+            "link": "/blogs/journal",
+            "button_label": "Read the journal"
+          }
+        },
+        "card-3": {
+          "type": "card",
+          "settings": {
+            "heading": "Find your own way",
+            "text": "<p>Browse the collection and choose what suits your next day out.</p>",
+            "link": "/collections/all",
+            "button_label": "Explore the collection"
           }
         }
       },
       "block_order": [
-        "slide-1"
+        "card-1",
+        "card-2",
+        "card-3"
       ]
-    },
-    "story": {
-      "type": "feature-spotlight",
-      "settings": {
-        "eyebrow": "Designed with intention",
-        "heading": "The details matter",
-        "text": "<p>Explore the materials, craft and ideas behind a more considered way to live.</p>",
-        "cta_label": "Discover more"
-      }
-    },
-    "proof": {
-      "type": "social-proof",
-      "disabled": true,
-      "settings": {
-        "heading": "Made to be lived with",
-        "subheading": "Considered by design."
-      }
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "heading": "Stay in the know",
-        "text": "Join for new releases, stories and thoughtful updates."
-      }
     }
   },
   "order": [
-    "hero",
-    "story",
-    "proof",
-    "newsletter"
+    "showcase"
   ]
 }

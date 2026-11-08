@@ -1,47 +1,61 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero-slider",
+    "showcase": {
+      "type": "page-showcase",
       "settings": {
-        "autoplay": true,
-        "autoplay_interval": 6,
-        "tagline_word_1": "Discover",
-        "tagline_word_2": "Refine",
-        "tagline_word_3": "Belong"
+        "primary_heading": true,
+        "eyebrow": "The field journal",
+        "heading": "Scenes from the next adventure",
+        "text": "<p>Explore the collection through places, textures and the way you spend your time outside.</p>",
+        "layout": "story"
       },
       "blocks": {
-        "slide-1": {
-          "type": "slide",
+        "card-1": {
+          "type": "card",
           "settings": {
-            "eyebrow": "A considered collection",
-            "heading": "Made for the everyday extraordinary",
-            "subtext": "Thoughtful design, enduring materials and a point of view that lasts.",
-            "cta_label": "Explore"
+            "heading": "Above the treeline",
+            "text": "<p>A new perspective, one step at a time.</p>",
+            "collection": "backpacks",
+            "button_label": "Explore backpacks"
+          }
+        },
+        "card-2": {
+          "type": "card",
+          "settings": {
+            "heading": "A place to pause",
+            "text": "<p>Make room for the moments between destinations.</p>",
+            "collection": "camp-shelter",
+            "button_label": "Explore camp"
+          }
+        },
+        "card-3": {
+          "type": "card",
+          "settings": {
+            "heading": "Everyday, outside",
+            "text": "<p>Find the pieces that fit your own rhythm.</p>",
+            "collection": "apparel",
+            "button_label": "Explore apparel"
+          }
+        },
+        "card-4": {
+          "type": "card",
+          "settings": {
+            "heading": "Details for the journey",
+            "text": "<p>Discover the small things you choose to bring along.</p>",
+            "collection": "tools-equipment",
+            "button_label": "Explore equipment"
           }
         }
       },
       "block_order": [
-        "slide-1"
+        "card-1",
+        "card-2",
+        "card-3",
+        "card-4"
       ]
-    },
-    "categories": {
-      "type": "category-grid"
-    },
-    "story": {
-      "type": "split-promo"
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "heading": "Stay in the know",
-        "text": "Join for new releases, stories and thoughtful updates."
-      }
     }
   },
   "order": [
-    "hero",
-    "categories",
-    "story",
-    "newsletter"
+    "showcase"
   ]
 }

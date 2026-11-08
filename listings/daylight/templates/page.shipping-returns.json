@@ -1,0 +1,61 @@
+{
+  "sections": {
+    "showcase": {
+      "type": "page-showcase",
+      "settings": {
+        "primary_heading": true,
+        "eyebrow": "Before you order",
+        "heading": "Delivery, returns and your order",
+        "text": "<p>Check the store policies and product details before placing your order.</p>",
+        "layout": "grid"
+      },
+      "blocks": {
+        "card-1": {
+          "type": "card",
+          "settings": {
+            "heading": "Delivery information",
+            "text": "<p>Available delivery options and charges are shown at checkout. Check the store shipping policy for destinations and estimated times.</p>",
+            "link": "/policies/shipping-policy",
+            "button_label": "Shipping policy"
+          }
+        },
+        "card-2": {
+          "type": "card",
+          "settings": {
+            "heading": "Returns and exchanges",
+            "text": "<p>Read the refund policy for eligibility, time limits and the steps to request a return.</p>",
+            "link": "/policies/refund-policy",
+            "button_label": "Refund policy"
+          }
+        },
+        "card-3": {
+          "type": "card",
+          "settings": {
+            "heading": "Upcoming products",
+            "text": "<p>For pre-order items, review the product dispatch estimate, payment terms and cancellation policy before ordering.</p>",
+            "page": "pre-order",
+            "button_label": "Upcoming collection"
+          }
+        },
+        "card-4": {
+          "type": "card",
+          "settings": {
+            "heading": "Need help with an order?",
+            "text": "<p>Contact the store with your order number and the details of your enquiry.</p>",
+            "page": "contact",
+            "button_label": "Contact the store"
+          }
+        }
+      },
+      "block_order": [
+        "card-1",
+        "card-2",
+        "card-3",
+        "card-4"
+      ]
+    }
+  },
+  "order": [
+    "showcase"
+  ]
+}

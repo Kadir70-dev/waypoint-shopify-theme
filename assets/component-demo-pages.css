@@ -1,0 +1,24 @@
+.waypoint-page{padding-block:clamp(48px,8vw,112px)}
+.waypoint-page__intro{max-width:780px;margin-block-end:48px}
+.waypoint-page__intro h1,.waypoint-page__intro h2{font-size:clamp(36px,6vw,76px);line-height:1.08;margin-block:16px 24px;text-wrap:balance}
+.waypoint-page__intro .rte{max-width:640px;color:var(--muted);line-height:1.8}
+.waypoint-page__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.waypoint-page__card{min-width:0;background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius-surface);overflow:hidden}
+.waypoint-page__media{aspect-ratio:4/3;overflow:hidden;background:var(--surface-2)}
+.waypoint-page__media img,.waypoint-page__media svg{width:100%;height:100%;object-fit:cover;display:block}
+.waypoint-page__body{padding:clamp(20px,3vw,36px)}
+.waypoint-page__body h2,.waypoint-page__body h3{font-size:clamp(22px,3vw,32px);margin-block:12px 16px}
+.waypoint-page__body .rte{color:var(--muted);line-height:1.75}
+.waypoint-page__body .btn{margin-block-start:20px;white-space:normal}
+.waypoint-page__number{color:var(--accent-light);font-family:var(--font-display);font-size:14px}
+.waypoint-page__grid--story{grid-template-columns:repeat(2,minmax(0,1fr))}
+.waypoint-page__grid--story .waypoint-page__card:first-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;align-items:center}
+.waypoint-page__empty{padding:24px;border:1px dashed var(--border-strong)}
+.waypoint-preorder{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:center}
+.waypoint-preorder__media img,.waypoint-preorder__media svg{display:block;width:100%;height:auto;border-radius:var(--radius-media)}
+.waypoint-preorder__details{padding-block:24px}
+.waypoint-preorder__details h1,.waypoint-preorder__details h2{font-size:clamp(32px,5vw,64px);line-height:1.1;margin-block:16px 24px}
+.waypoint-preorder__terms{border-block:1px solid var(--border-strong);padding-block:20px;margin-block:24px;color:var(--muted);line-height:1.7}
+.waypoint-preorder__apps{margin-block-start:24px}
+@media(max-width:989px){.waypoint-page__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:749px){.waypoint-page__grid,.waypoint-page__grid--story,.waypoint-page__grid--story .waypoint-page__card:first-child,.waypoint-preorder{grid-template-columns:1fr}.waypoint-page__intro{margin-block-end:32px}}

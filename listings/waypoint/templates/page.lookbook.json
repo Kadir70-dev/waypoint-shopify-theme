@@ -1,0 +1,61 @@
+{
+  "sections": {
+    "showcase": {
+      "type": "page-showcase",
+      "settings": {
+        "primary_heading": true,
+        "eyebrow": "The field journal",
+        "heading": "Scenes from the next adventure",
+        "text": "<p>Explore the collection through places, textures and the way you spend your time outside.</p>",
+        "layout": "story"
+      },
+      "blocks": {
+        "card-1": {
+          "type": "card",
+          "settings": {
+            "heading": "Above the treeline",
+            "text": "<p>A new perspective, one step at a time.</p>",
+            "collection": "backpacks",
+            "button_label": "Explore backpacks"
+          }
+        },
+        "card-2": {
+          "type": "card",
+          "settings": {
+            "heading": "A place to pause",
+            "text": "<p>Make room for the moments between destinations.</p>",
+            "collection": "camp-shelter",
+            "button_label": "Explore camp"
+          }
+        },
+        "card-3": {
+          "type": "card",
+          "settings": {
+            "heading": "Everyday, outside",
+            "text": "<p>Find the pieces that fit your own rhythm.</p>",
+            "collection": "apparel",
+            "button_label": "Explore apparel"
+          }
+        },
+        "card-4": {
+          "type": "card",
+          "settings": {
+            "heading": "Details for the journey",
+            "text": "<p>Discover the small things you choose to bring along.</p>",
+            "collection": "tools-equipment",
+            "button_label": "Explore equipment"
+          }
+        }
+      },
+      "block_order": [
+        "card-1",
+        "card-2",
+        "card-3",
+        "card-4"
+      ]
+    }
+  },
+  "order": [
+    "showcase"
+  ]
+}
