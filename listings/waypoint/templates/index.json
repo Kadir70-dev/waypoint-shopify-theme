@@ -216,7 +216,8 @@
         "product": "portable-tent",
         "eyebrow": "Camp & Shelter",
         "cta_label": "Explore the tent"
-      }
+      },
+      "disabled": true
     },
     "demo-navigation": {
       "type": "demo-navigation",
@@ -264,7 +265,8 @@
         "faq",
         "contact",
         "shipping-returns"
-      ]
+      ],
+      "disabled": true
     }
   },
   "order": [
