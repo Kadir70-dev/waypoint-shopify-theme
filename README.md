@@ -1,6 +1,6 @@
 # Waypoint — Shopify theme
 
-An editorial, performance-minded Online Store 2.0 theme. No third-party JavaScript; native Shopify patterns (Section Rendering API for filters, server-rendered Quick Add, native `<dialog>`/inert drawers).
+An editorial, performance-minded Online Store 2.0 theme using native Shopify patterns (Section Rendering API for filters, server-rendered Quick Add, native `<dialog>`/inert drawers). Optional Branch Locations mapping currently loads MapLibre GL JS from a third-party CDN when configured; verify Shopify Theme Store policy and bundle locally before declaring the package review-ready.
 
 **Version 1.0.0** · by K70 Network Solution · Support: kadirab1999@gmail.com · Docs: https://github.com/Kadir70-dev/waypoint-shopify-theme
 
@@ -51,7 +51,7 @@ Storefront strings live in `locales/`. English (default) and Arabic (`ar.json`) 
 ## Accessibility & performance
 - Keyboard navigable drawers and dialogs (native `<dialog>`/`inert`), visible focus states and skip link.
 - Respects `prefers-reduced-motion`: hero motion, reveals and autoplay are switched off.
-- Lighthouse CI (home, product, collection; median runs) on the demo store: mobile performance 83 / accessibility 97, desktop performance 93 / accessibility 99.
+- Historical Lighthouse runs recorded scores of mobile performance 83 / accessibility 97 and desktop performance 93 / accessibility 99 in an earlier QA setup. These are **not current Theme Store submission benchmark results**. Re-run populated home, product, and collection pages on both presets and retain new reports before submitting.
 
 ## Credits & licenses
 Photography and video on the demo store are from [Pexels](https://www.pexels.com/) under the [Pexels License](https://www.pexels.com/license/) (free for commercial use, attribution not required). They are store content and are **not** bundled with the theme. Full source records (Pexels IDs, photographers, download URLs, checksums): [`docs/pexels/`](docs/pexels/).
