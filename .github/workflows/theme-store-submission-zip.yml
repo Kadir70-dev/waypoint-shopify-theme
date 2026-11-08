@@ -37,10 +37,10 @@ jobs:
       - name: Run official Shopify Theme Check
         run: shopify theme check --path . --fail-level error
       - name: Build actual Shopify Theme Store ZIP
-        run: shopify theme package --path . --no-input
+        run: shopify theme package --path .
       - name: Validate ZIP layout and both presets
         run: python scripts/validate_theme_store_zip.py
-      - name: Upload private short-lived review artifact
+      - name: Upload short-lived submission artifact
         uses: actions/upload-artifact@v4
         with:
           name: waypoint-theme-store-zip
