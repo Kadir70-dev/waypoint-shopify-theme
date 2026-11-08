@@ -7,6 +7,9 @@
 {%- endcomment -%}
 {%- assign testimonial_blocks = section.blocks | where: 'type', 'testimonial' -%}
 {%- assign trust_blocks = section.blocks | where: 'type', 'trust-item' -%}
+{%- comment -%} Only testimonials with a quote are shown; blank blocks render nothing. {%- endcomment -%}
+{%- assign quote_count = 0 -%}
+{%- for block in testimonial_blocks -%}{%- if block.settings.quote != blank -%}{%- assign quote_count = quote_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
 <div class="section page-width">
   <div class="social-proof" data-carousel>
     <div class="social-proof__heading">
@@ -16,22 +19,26 @@
       {%- endif -%}
     </div>
 
-    {%- if testimonial_blocks.size > 0 -%}
+    {%- if quote_count > 0 -%}
       <div class="social-proof__quote">
-        {%- if testimonial_blocks.size > 1 -%}
+        {%- if quote_count > 1 -%}
           <button type="button" class="carousel__nav-btn" data-carousel-prev aria-label="{{ 'sections.carousel.previous' | t }}">
             {%- render 'icon-chevron-left' -%}
           </button>
         {%- endif -%}
         <div class="carousel__track social-proof__track" data-carousel-track>
           {%- for block in testimonial_blocks -%}
-            <blockquote class="social-proof__blockquote" data-carousel-item {{ block.shopify_attributes }}>
-              <p class="editorial-quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
-              <footer>&mdash; {{ block.settings.name }}{% if block.settings.location != blank %}, {{ block.settings.location }}{% endif %}</footer>
-            </blockquote>
+            {%- if block.settings.quote != blank -%}
+              <blockquote class="social-proof__blockquote" data-carousel-item {{ block.shopify_attributes }}>
+                <p class="editorial-quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+                {%- if block.settings.name != blank -%}
+                  <footer>&mdash; {{ block.settings.name }}{% if block.settings.location != blank %}, {{ block.settings.location }}{% endif %}</footer>
+                {%- endif -%}
+              </blockquote>
+            {%- endif -%}
           {%- endfor -%}
         </div>
-        {%- if testimonial_blocks.size > 1 -%}
+        {%- if quote_count > 1 -%}
           <button type="button" class="carousel__nav-btn" data-carousel-next aria-label="{{ 'sections.carousel.next' | t }}">
             {%- render 'icon-chevron-right' -%}
           </button>
@@ -140,9 +147,9 @@
       "type": "testimonial",
       "name": "Testimonial",
       "settings": [
-        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Add a customer quote here to highlight what people love about your products." },
-        { "type": "text", "id": "name", "label": "Name", "default": "Customer name" },
-        { "type": "text", "id": "location", "label": "Location / role", "default": "Customer location" }
+        { "type": "textarea", "id": "quote", "label": "Quote" },
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "text", "id": "location", "label": "Location / role" }
       ]
     },
     {

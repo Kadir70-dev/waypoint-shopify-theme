@@ -65,6 +65,7 @@
     },
     "proof": {
       "type": "social-proof",
+      "disabled": true,
       "settings": {
         "heading": "Made to be lived with",
         "subheading": "Considered by design."

@@ -119,19 +119,12 @@
     },
     "trusted-by-explorers": {
       "type": "social-proof",
+      "disabled": true,
       "settings": {
         "heading": "Trusted by Explorers",
         "subheading": "Real people. Real places."
       },
       "blocks": {
-        "t1": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "Sample testimonial. Replace this with a real quote from one of your customers.",
-            "name": "Customer name",
-            "location": "Customer location"
-          }
-        },
         "ti1": {
           "type": "trust-item",
           "settings": {
@@ -162,7 +155,6 @@
         }
       },
       "block_order": [
-        "t1",
         "ti1",
         "ti2",
         "ti3",
@@ -240,6 +232,7 @@
     },
     "testimonials-marquee": {
       "type": "testimonials-marquee",
+      "disabled": true,
       "settings": {},
       "blocks": {},
       "block_order": []

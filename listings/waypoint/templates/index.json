@@ -59,15 +59,15 @@
     },
     "trusted-by-explorers": {
       "type": "social-proof",
+      "disabled": true,
       "settings": { "heading": "Trusted by Explorers", "subheading": "Real people. Real places." },
       "blocks": {
-        "t1": { "type": "testimonial", "settings": { "quote": "Sample testimonial. Replace this with a real quote from one of your customers.", "name": "Customer name", "location": "Customer location" } },
         "ti1": { "type": "trust-item", "settings": { "icon": "mountain", "label": "Field Tested" } },
         "ti2": { "type": "trust-item", "settings": { "icon": "leaf", "label": "Sustainable Practices" } },
         "ti3": { "type": "trust-item", "settings": { "icon": "shield", "label": "Built to Last" } },
         "ti4": { "type": "trust-item", "settings": { "icon": "globe", "label": "Global Community" } }
       },
-      "block_order": ["t1", "ti1", "ti2", "ti3", "ti4"]
+      "block_order": ["ti1", "ti2", "ti3", "ti4"]
     },
     "newsletter": {
       "type": "newsletter",

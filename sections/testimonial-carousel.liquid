@@ -7,7 +7,10 @@
         <p style="color:var(--muted);font-size:13px;margin-top:6px">{{ section.settings.subheading }}</p>
       {%- endif -%}
     </div>
-    {%- if section.blocks.size > 1 -%}
+    {%- comment -%} Only testimonials with a quote are shown; blank blocks render nothing. {%- endcomment -%}
+    {%- assign quote_count = 0 -%}
+    {%- for block in section.blocks -%}{%- if block.settings.quote != blank -%}{%- assign quote_count = quote_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+    {%- if quote_count > 1 -%}
       <div class="carousel__nav">
         <button type="button" data-carousel-prev aria-label="{{ 'sections.carousel.previous' | t }}">{%- render 'icon-chevron-left' -%}</button>
         <button type="button" data-carousel-next aria-label="{{ 'sections.carousel.next' | t }}">{%- render 'icon-chevron-right' -%}</button>
@@ -17,16 +20,20 @@
 
   <div class="carousel__track" data-carousel-track>
     {%- for block in section.blocks -%}
-      <blockquote
-        data-carousel-item
-        style="width:min(88vw, 520px);border:1px solid var(--border);padding:28px;margin:0"
-        {{ block.shopify_attributes }}
-      >
-        <p class="editorial-quote" style="font-size:18px">&ldquo;{{ block.settings.quote }}&rdquo;</p>
-        <footer style="margin-top:16px;font-size:12px;color:var(--muted)">
-          &mdash; {{ block.settings.name }}{% if block.settings.location != blank %}, {{ block.settings.location }}{% endif %}
-        </footer>
-      </blockquote>
+      {%- if block.settings.quote != blank -%}
+        <blockquote
+          data-carousel-item
+          style="width:min(88vw, 520px);border:1px solid var(--border);padding:28px;margin:0"
+          {{ block.shopify_attributes }}
+        >
+          <p class="editorial-quote" style="font-size:18px">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+          {%- if block.settings.name != blank -%}
+            <footer style="margin-top:16px;font-size:12px;color:var(--muted)">
+              &mdash; {{ block.settings.name }}{% if block.settings.location != blank %}, {{ block.settings.location }}{% endif %}
+            </footer>
+          {%- endif -%}
+        </blockquote>
+      {%- endif -%}
     {%- endfor -%}
   </div>
 </div>
@@ -43,9 +50,9 @@
       "type": "testimonial",
       "name": "Testimonial",
       "settings": [
-        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Add a customer quote here to highlight what people love about your products." },
-        { "type": "text", "id": "name", "label": "Name", "default": "Customer name" },
-        { "type": "text", "id": "location", "label": "Location / role", "default": "Customer location" }
+        { "type": "textarea", "id": "quote", "label": "Quote" },
+        { "type": "text", "id": "name", "label": "Name" },
+        { "type": "text", "id": "location", "label": "Location / role" }
       ]
     }
   ],
