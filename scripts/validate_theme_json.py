@@ -80,7 +80,7 @@ for folder in (ROOT / "templates", ROOT / "listings"):
     for path in sorted(folder.rglob("*.json")):
         try:
             content = path.read_text(encoding="utf-8-sig")
-            content = re.sub(r"^\\s*/\\*[\\s\\S]*?\\*/", "", content, count=1)
+            content = re.sub(r"^\s*/\*[\s\S]*?\*/", "", content, count=1)
             verify_portable_defaults(json.loads(content), path)
         except json.JSONDecodeError:
             # Malformed JSON is reported by read_json above.
