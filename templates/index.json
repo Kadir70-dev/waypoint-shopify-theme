@@ -51,8 +51,7 @@
         "heading": "Explore the collection",
         "subheading": "Find your next outdoor companion.",
         "products_to_show": 6,
-        "show_view_all": true,
-        "collection": "all"
+        "show_view_all": true
       }
     },
     "shop-by-category": {
@@ -236,7 +235,6 @@
     "tent-showcase": {
       "type": "featured-product",
       "settings": {
-        "product": "portable-tent",
         "eyebrow": "Camp & Shelter",
         "cta_label": "Explore the tent"
       }
@@ -248,35 +246,30 @@
         "about-us": {
           "type": "page",
           "settings": {
-            "page": "about-us",
             "label": "Our story"
           }
         },
         "lookbook": {
           "type": "page",
           "settings": {
-            "page": "lookbook",
             "label": "Lookbook"
           }
         },
         "faq": {
           "type": "page",
           "settings": {
-            "page": "faq",
             "label": "FAQ"
           }
         },
         "contact": {
           "type": "page",
           "settings": {
-            "page": "contact",
             "label": "Contact"
           }
         },
         "shipping-returns": {
           "type": "page",
           "settings": {
-            "page": "shipping-returns",
             "label": "Shipping & returns"
           }
         }

@@ -33,7 +33,6 @@
           "settings": {
             "heading": "Upcoming products",
             "text": "<p>For pre-order items, review the product dispatch estimate, payment terms and cancellation policy before ordering.</p>",
-            "page": "pre-order",
             "button_label": "Upcoming collection"
           }
         },
@@ -42,7 +41,6 @@
           "settings": {
             "heading": "Need help with an order?",
             "text": "<p>Contact the store with your order number and the details of your enquiry.</p>",
-            "page": "contact",
             "button_label": "Contact the store"
           }
         }
@@ -61,35 +59,30 @@
         "about-us": {
           "type": "page",
           "settings": {
-            "page": "about-us",
             "label": "Our story"
           }
         },
         "lookbook": {
           "type": "page",
           "settings": {
-            "page": "lookbook",
             "label": "Lookbook"
           }
         },
         "faq": {
           "type": "page",
           "settings": {
-            "page": "faq",
             "label": "FAQ"
           }
         },
         "contact": {
           "type": "page",
           "settings": {
-            "page": "contact",
             "label": "Contact"
           }
         },
         "shipping-returns": {
           "type": "page",
           "settings": {
-            "page": "shipping-returns",
             "label": "Shipping & returns"
           }
         }

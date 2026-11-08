@@ -15,7 +15,6 @@
           "settings": {
             "heading": "Backpacks",
             "text": "<p>Discover packs for your next outing.</p>",
-            "collection": "backpacks",
             "button_label": "Shop backpacks"
           }
         },
@@ -24,7 +23,6 @@
           "settings": {
             "heading": "Camp & Shelter",
             "text": "<p>Explore the collection for time at camp.</p>",
-            "collection": "camp-shelter",
             "button_label": "Shop camp"
           }
         },
@@ -33,7 +31,6 @@
           "settings": {
             "heading": "Tools & Equipment",
             "text": "<p>Browse the details that complete your kit.</p>",
-            "collection": "tools-equipment",
             "button_label": "Shop equipment"
           }
         },
@@ -42,7 +39,6 @@
           "settings": {
             "heading": "Apparel",
             "text": "<p>Find a fit for your own way outside.</p>",
-            "collection": "apparel",
             "button_label": "Shop apparel"
           }
         },
@@ -71,35 +67,30 @@
         "about-us": {
           "type": "page",
           "settings": {
-            "page": "about-us",
             "label": "Our story"
           }
         },
         "lookbook": {
           "type": "page",
           "settings": {
-            "page": "lookbook",
             "label": "Lookbook"
           }
         },
         "faq": {
           "type": "page",
           "settings": {
-            "page": "faq",
             "label": "FAQ"
           }
         },
         "contact": {
           "type": "page",
           "settings": {
-            "page": "contact",
             "label": "Contact"
           }
         },
         "shipping-returns": {
           "type": "page",
           "settings": {
-            "page": "shipping-returns",
             "label": "Shipping & returns"
           }
         }
