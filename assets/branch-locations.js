@@ -129,7 +129,7 @@ function init(root) {
     if (map) fitAll();
   }
   function styleUrl(next) {
-    const id = next === 'streets' ? 'streets-v4' : 'hybrid';
+    const id = next === 'streets' ? 'streets-v4' : 'hybrid-v4';
     return 'https://api.maptiler.com/maps/' + id + '/style.json?key=' + encodeURIComponent(key);
   }
   function apply3D() {
