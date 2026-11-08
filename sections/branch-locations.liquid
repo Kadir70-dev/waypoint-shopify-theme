@@ -1,6 +1,6 @@
 {{ 'component-branch-locations.css' | asset_url | stylesheet_tag }}
 {% if section.settings.maptiler_key != blank and section.blocks.size > 0 %}
-  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.17.0/dist/maplibre-gl.css">
+  {{ 'maplibre-gl.css' | asset_url | stylesheet_tag }}
 {% endif %}
 <script type="module" src="{{ 'branch-locations.js' | asset_url }}"></script>
 
