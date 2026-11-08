@@ -1,7 +1,7 @@
 <!doctype html>
 {%- assign rtl_locales = 'ar,he,fa,ur' | split: ',' -%}
 <html
-  data-premium-motion="{{ settings.enable_premium_motion }}"
+  data-premium-motion="{{ settings.enable_premium_motion | default: true, allow_false: true }}"
   lang="{{ request.locale.iso_code }}"
   dir="{% if rtl_locales contains request.locale.iso_code %}rtl{% else %}ltr{% endif %}"
   data-preset="{{ settings.color_preset | default: 'dark' }}"
