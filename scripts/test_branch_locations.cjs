@@ -28,7 +28,6 @@ const cases = [
 cases.forEach(([dataset, expected], i) => {
   assert.deepEqual(coord(dataset), expected, 'coordinate case ' + i);
 });
-assert(source.includes("data") === false || typeof source === 'string');
 assert(source.includes("'hybrid-v4'"), 'Satellite uses the supported hybrid style identifier');
 assert(source.includes("'streets-v4'"), 'Street map style is available');
 assert(source.includes('if (!root || instances.has(root)) return'), 'Shopify section re-init is idempotent');
