@@ -12,7 +12,7 @@
       this.preference = matchMedia('(prefers-reduced-motion: reduce)');
       this.stopped = this.dataset.autoplay !== 'true' || this.preference.matches || document.documentElement.dataset.premiumMotion === 'false' || !!window.Shopify?.designMode;
       const controls = this.querySelector('.waypoint-gallery__controls');
-      controls.hidden = this.slides.length < 2;
+      if (controls) controls.hidden = this.slides.length < 2;
       this.pause = this.querySelector('[data-pause]');
       this.pause.hidden = this.stopped || this.slides.length < 2;
       const stop = () => { this.stopped = true; clearInterval(this.timer); this.pause.setAttribute('aria-pressed', 'true'); };
