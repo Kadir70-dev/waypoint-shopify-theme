@@ -5,36 +5,36 @@
       "settings": {
         "autoplay": false,
         "autoplay_interval": 6,
-        "tagline_word_1": "Explore",
-        "tagline_word_2": "Adapt",
-        "tagline_word_3": "Endure"
+        "tagline_word_1": "Carry",
+        "tagline_word_2": "Move",
+        "tagline_word_3": "Discover"
       },
       "blocks": {
         "slide-1": {
           "type": "slide",
           "settings": {
-            "eyebrow": "Gear for Real Life",
-            "heading": "Further by Nature",
-            "subtext": "Technical gear for the unknown. Built to go further.",
-            "cta_label": "Explore Gear"
+            "eyebrow": "Everyday essentials",
+            "heading": "Carry the Everyday",
+            "subtext": "Bags and companions for workdays, weekends and everywhere between.",
+            "cta_label": "Explore the edit"
           }
         },
         "slide-2": {
           "type": "slide",
           "settings": {
-            "eyebrow": "Considered details",
-            "heading": "Details That Perform",
-            "subtext": "Explore the small details that shape your time outdoors.",
-            "cta_label": "Our Approach"
+            "eyebrow": "Made for movement",
+            "heading": "Room for What Matters",
+            "subtext": "Discover an edit of everyday carry styles for a changing routine.",
+            "cta_label": "Browse bags"
           }
         },
         "slide-3": {
           "type": "slide",
           "settings": {
-            "eyebrow": "Journal",
-            "heading": "A Life More Open",
-            "subtext": "Stories, guides and perspectives from those who choose a wilder path.",
-            "cta_label": "Explore the Journal"
+            "eyebrow": "The Journal",
+            "heading": "Always in Motion",
+            "subtext": "Ideas for packing lighter, finding rhythm and making each day your own.",
+            "cta_label": "Read the journal"
           }
         }
       },
@@ -47,44 +47,44 @@
     "latest-releases": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Explore the collection",
-        "subheading": "Find your next outdoor companion.",
-        "products_to_show": 6,
+        "heading": "The Everyday Edit",
+        "subheading": "Discover a considered mix of bags and daily accessories.",
+        "products_to_show": 8,
         "show_view_all": true
       }
     },
     "shop-by-category": {
       "type": "category-grid",
       "settings": {
-        "heading": "Shop by Category"
+        "heading": "Shop by the way you move"
       },
       "blocks": {
         "tile-1": {
           "type": "tile",
           "settings": {
-            "label": "Backpacks",
-            "sublabel": "Carry further."
+            "label": "Daypacks",
+            "sublabel": "For days in motion."
           }
         },
         "tile-2": {
           "type": "tile",
           "settings": {
-            "label": "Camp & Shelter",
-            "sublabel": "Stay ready."
+            "label": "Weekend Bags",
+            "sublabel": "Make space to roam."
           }
         },
         "tile-3": {
           "type": "tile",
           "settings": {
-            "label": "Tools & Equipment",
-            "sublabel": "Built for more."
+            "label": "Work Essentials",
+            "sublabel": "Bring more to the day."
           }
         },
         "tile-4": {
           "type": "tile",
           "settings": {
-            "label": "Apparel",
-            "sublabel": "All conditions."
+            "label": "Accessories",
+            "sublabel": "The little things matter."
           }
         }
       },
@@ -151,12 +151,12 @@
       "type": "split-promo",
       "settings": {
         "content_position": "left",
-        "eyebrow": "Journal",
-        "heading": "A Life More Open",
-        "text": "<p>Stories, guides and perspectives from those who choose a wilder path.</p>",
-        "cta_label": "Explore the Journal",
-        "quote": "Not escape. Perspective.",
-        "quote_attribution": "Journal, Vol. 04"
+        "eyebrow": "Everyday stories",
+        "heading": "Move Through Your Day",
+        "text": "<p>Commute, discover, recharge. A simpler approach to carrying what matters, however you get there.</p>",
+        "cta_label": "Explore the journal",
+        "quote": "Carry what matters.",
+        "quote_attribution": "Waypoint / Daylight"
       }
     },
     "trusted-by-explorers": {
@@ -206,8 +206,8 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "heading": "Stay in the Wild",
-        "text": "New collections, outdoor stories and field notes. Delivered occasionally."
+        "heading": "Notes for the Journey",
+        "text": "New edits and practical ideas, occasionally in your inbox."
       }
     },
     "tent-showcase": {
@@ -216,7 +216,8 @@
         "product": "portable-tent",
         "eyebrow": "Camp & Shelter",
         "cta_label": "Explore the tent"
-      }
+      },
+      "disabled": true
     },
     "demo-navigation": {
       "type": "demo-navigation",
@@ -264,17 +265,18 @@
         "faq",
         "contact",
         "shipping-returns"
-      ]
+      ],
+      "disabled": true
     }
   },
   "order": [
     "hero",
-    "demo-navigation",
-    "shop-by-category",
     "latest-releases",
-    "tent-showcase",
+    "shop-by-category",
     "life-more-open",
     "newsletter",
+    "demo-navigation",
+    "tent-showcase",
     "details-and-summit",
     "trusted-by-explorers"
   ]
