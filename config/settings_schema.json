@@ -303,5 +303,6 @@
         "info": "t:settings.seo.favicon.info"
       }
     ]
-  }
+  },
+  {"name":"Premium finishing","settings":[{"type":"checkbox","id":"enable_premium_motion","label":"Enable premium micro-interactions","info":"Adds subtle card, button and below-fold page motion. Always respects reduced-motion preferences. Existing hero and drawer behavior is configured separately.","default":true}]}
 ]

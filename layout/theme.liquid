@@ -1,6 +1,7 @@
 <!doctype html>
 {%- assign rtl_locales = 'ar,he,fa,ur' | split: ',' -%}
 <html
+  data-premium-motion="{{ settings.enable_premium_motion }}"
   lang="{{ request.locale.iso_code }}"
   dir="{% if rtl_locales contains request.locale.iso_code %}rtl{% else %}ltr{% endif %}"
   data-preset="{{ settings.color_preset | default: 'dark' }}"
@@ -184,6 +185,7 @@
   {%- endif -%}
   {%- comment -%} component-motion.css is loaded by the sections that use it (hero-slider, testimonial-carousel, social-proof). {%- endcomment -%}
   {{ 'component-ios.css' | asset_url | stylesheet_tag }}
+  {{ 'component-premium.css' | asset_url | stylesheet_tag }}
 
   {%- comment -%}
     Typography / font-picker architecture. Self-hosted via Shopify's native
@@ -267,5 +269,8 @@
     <script src="{{ 'account.js' | asset_url }}" defer></script>
   {%- endif -%}
   <script src="{{ 'motion.js' | asset_url }}" defer></script>
+  {%- if settings.enable_premium_motion != false -%}
+    <script src="{{ 'premium-motion.js' | asset_url }}" defer></script>
+  {%- endif -%}
 </body>
 </html>

@@ -90,3 +90,9 @@ one page-title H1 per page, keyboard links/focus, readable text, no side scrolli
 accurate images and working destinations. Use the product page size chart for
 real size data. Review the demo hub and both catalog layout links after assigning
 content. Publish only the reviewed store content and theme version.
+
+## Premium finishing and motion
+
+Theme settings → Premium finishing controls the added micro-interactions. Shared buttons and navigation receive subtle hover movement and animated underlines; demo cards gain lift and image zoom. Below-fold demo content and section headings move into place once, and FAQ answers have a short opening motion. Initial viewport content remains visible and static, including when JavaScript is unavailable.
+
+Hover movement is limited to devices with a fine pointer. The enhancements respect reduced-motion preferences and clean up when Theme Editor sections are removed. The switch controls the new enhancements; existing hero, product-card and drawer behavior remains separate. Verify both presets and mobile layouts in Shopify before publishing.

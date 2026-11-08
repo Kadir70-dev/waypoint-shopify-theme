@@ -1,0 +1,99 @@
+/* Waypoint finishing layer: shared tokens work in Dark and Daylight. */
+.waypoint-page__intro .eyebrow,
+.waypoint-preorder__details > .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--accent-light);
+}
+.waypoint-page__intro .eyebrow::before,
+.waypoint-preorder__details > .eyebrow::before {
+  content: "";
+  inline-size: 32px;
+  block-size: 1px;
+  background: currentColor;
+}
+.waypoint-page__intro h1,
+.waypoint-page__intro h2,
+.waypoint-preorder__details h1,
+.waypoint-preorder__details h2 {
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+:root .waypoint-page__card {
+  background: linear-gradient(145deg, var(--surface-2), var(--surface));
+  border-color: var(--border-strong);
+}
+.waypoint-page__number { letter-spacing: .14em; }
+.waypoint-preorder__terms {
+  border-inline-start: 2px solid var(--accent-light);
+  padding-inline-start: 20px;
+}
+.accordion {
+  border-color: var(--border-strong);
+}
+.accordion[open] > .accordion__trigger { color: var(--accent-light); }
+.site-header__nav a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+}
+[dir="rtl"] .site-header__nav a { background-position: right bottom; }
+.site-header__nav a:hover,
+.site-header__nav a:focus-visible,
+.site-header__nav [aria-expanded="true"],
+.site-header__nav [aria-current="page"] {
+  border-bottom-color: transparent;
+  background-size: 100% 1px;
+}
+.waypoint-page__card:focus-within { border-color: var(--accent-light); }
+:where(.btn, .icon-btn, .accordion__trigger, .site-header__nav a):focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Motion is opt-out in Theme settings and follows the OS preference. */
+@media (prefers-reduced-motion: no-preference) {
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .site-header__nav a {
+    transition: background-size 260ms var(--ease-out-slow), color 180ms ease;
+  }
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) :is(.btn, .icon-btn, .quantity-stepper__btn) {
+    transition: transform 220ms var(--ease-out-slow), background-color 220ms ease,
+      border-color 220ms ease, color 220ms ease, box-shadow 220ms ease;
+  }
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .waypoint-page__card {
+    transition: transform 420ms var(--ease-out-slow), border-color 280ms ease, box-shadow 420ms ease;
+  }
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .waypoint-page__media img {
+    transition: transform 700ms var(--ease-out-slow);
+  }
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .accordion__trigger {
+    transition: color 180ms ease, background-color 180ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    :root:not(.reduced-motion):not([data-premium-motion="false"]) .btn:hover:not(:disabled):not([aria-disabled="true"]) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--border);
+    }
+    :root:not(.reduced-motion):not([data-premium-motion="false"]) .icon-btn:hover {
+      transform: translateY(-2px);
+    }
+    :root:not(.reduced-motion):not([data-premium-motion="false"]) .waypoint-page__card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-light);
+      box-shadow: var(--shadow-card-hover);
+    }
+    :root:not(.reduced-motion):not([data-premium-motion="false"]) .waypoint-page__card:hover .waypoint-page__media img {
+      transform: scale(1.035);
+    }
+  }
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .btn:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+}
+@media (forced-colors: active) {
+  .waypoint-page__card { border: 1px solid CanvasText; }
+  .site-header__nav a:hover, .site-header__nav a:focus-visible { text-decoration: underline; }
+}
