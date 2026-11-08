@@ -46,6 +46,21 @@ function init(root) {
   const threeDBtn = root.querySelector('[data-map-3d]');
   const allPinsBtn = root.querySelector('[data-map-fit]');
   const valid = records.filter(record => record.coords !== null);
+  // Google directions must never use unchecked text coordinates.
+  // Without JavaScript, the merchant-verified address search link remains usable.
+  records.forEach(record => {
+    const directions = record.card.querySelector('[data-location-directions]');
+    if (!directions) return;
+    if (record.coords) {
+      const [lng, lat] = record.coords;
+      directions.href = 'https://www.google.com/maps/dir/?api=1&destination='
+        + encodeURIComponent(lat + ',' + lng);
+      directions.textContent = 'Directions ↗';
+      directions.hidden = false;
+    } else if (!directions.hasAttribute('href')) {
+      directions.hidden = true;
+    }
+  });
   let map = null;
   let maplibre = null;
   let active = null;
@@ -73,7 +88,15 @@ function init(root) {
     count.textContent = number + (number === 1 ? ' location' : ' locations');
   }
   function activate(record, fly = true) {
-    if (!record) return;
+    if (!record) {
+      active = null;
+      records.forEach(item => {
+        item.card.classList.remove('is-active');
+        item.button?.setAttribute('aria-pressed', 'false');
+        item.marker?.getElement().classList.remove('is-active');
+      });
+      return;
+    }
     active = record;
     records.forEach(item => {
       const selected = item === record;
@@ -89,8 +112,8 @@ function init(root) {
         animate: !reducedMotion(), duration: 900
       });
     }
-    if (!record.coords && !map) {
-      notify('Coordinates not yet supplied for ' + record.name + '. Check its verified address.');
+    if (!record.coords) {
+      notify('A verified map pin is not configured for ' + record.name + '. Use its address link, if available.');
     }
   }
   function fitAll() {
@@ -125,7 +148,9 @@ function init(root) {
       if (record.marker) record.marker.getElement().hidden = !show;
     });
     updateCount();
-    if (!active || active.card.hidden) activate(visibleRecords()[0] || null, false);
+    if (!active || active.card.hidden) {
+      activate(visibleRecords().find(record => record.coords) || visibleRecords()[0] || null, false);
+    }
     if (map) fitAll();
   }
   function styleUrl(next) {
