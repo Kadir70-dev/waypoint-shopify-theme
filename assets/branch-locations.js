@@ -134,6 +134,7 @@ function init(root) {
   }
   function apply3D() {
     if (!map || !map.isStyleLoaded()) return;
+    // Terrain may be unavailable for a particular region or API plan.
     try {
       if (show3D) {
         if (!map.getSource('waypoint-terrain')) {
@@ -147,15 +148,43 @@ function init(root) {
       } else if (map.getTerrain()) {
         map.setTerrain(null);
       }
-      map.easeTo({
-        pitch: show3D && !reducedMotion() ? 58 : 0,
-        bearing: show3D && !reducedMotion() ? -18 : 0,
-        duration: reducedMotion() ? 0 : 500
-      });
     } catch (error) {
-      // The 2D satellite map still works if the terrain tiles are unavailable.
-      console.warn('Waypoint: 3D terrain unavailable', error);
+      console.warn('Waypoint: terrain layer unavailable; keeping map usable.', error);
     }
+
+    // Where the selected vector style contains building footprints and heights,
+    // show schematic 3D buildings. This is NOT photorealistic city imagery.
+    try {
+      const id = 'waypoint-3d-buildings';
+      if (!show3D && map.getLayer(id)) map.removeLayer(id);
+      if (show3D && !map.getLayer(id)) {
+        const layers = map.getStyle()?.layers || [];
+        const building = layers.find(layer => layer['source-layer'] === 'building' && layer.source);
+        const firstLabel = layers.find(layer => layer.type === 'symbol' && layer.layout?.['text-field']);
+        if (building && map.getSource(building.source)) {
+          map.addLayer({
+            id,
+            type: 'fill-extrusion',
+            source: building.source,
+            'source-layer': 'building',
+            minzoom: 14,
+            paint: {
+              'fill-extrusion-color': '#c7b499',
+              'fill-extrusion-opacity': 0.75,
+              'fill-extrusion-height': ['coalesce', ['get', 'render_height'], ['get', 'height'], 0],
+              'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], ['get', 'min_height'], 0]
+            }
+          }, firstLabel?.id);
+        }
+      }
+    } catch (error) {
+      console.warn('Waypoint: 3D building overlays unavailable; keeping base map.', error);
+    }
+    map.easeTo({
+      pitch: show3D && !reducedMotion() ? 58 : 0,
+      bearing: show3D && !reducedMotion() ? -18 : 0,
+      duration: reducedMotion() ? 0 : 500
+    });
   }
   function updateButtons() {
     styleButtons.forEach(button => {
@@ -195,7 +224,7 @@ function init(root) {
   });
   listen(allPinsBtn, 'click', fitAll);
   setFilter('all');
-  if (records.length) activate(records[0], false);
+  if (records.length) activate(valid[0] || records[0], false);
   updateButtons();
 
   async function build() {
