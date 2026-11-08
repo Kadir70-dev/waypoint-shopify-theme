@@ -63,7 +63,10 @@ function card(id, type, lat, lng, address) {
   const name = fakeEl({textContent: id});
   const select = fakeEl();
   const directions = fakeEl();
-  if (address) directions.href = 'https://www.google.com/maps/search/?api=1&query=' + address;
+  if (address) {
+    directions.href = 'https://www.google.com/maps/search/?api=1&query=' + address;
+    directions.setAttribute('href', directions.href);
+  }
   const obj = fakeEl({
     dataset: {locationId:id,locationType:type,locationLat:lat,locationLng:lng},
     querySelector: selector => ({
@@ -101,6 +104,7 @@ const root = fakeEl({
 vm.runInContext('init',context)(root);
 assert(a.directions.href.includes('destination=25.2%2C55.27'), 'verified coordinates create directions link');
 assert(b.directions.href.includes('query=safe-address'), 'invalid coordinates retain safe address link');
+assert.equal(b.directions.hidden,false, 'address fallback stays visible');
 assert.equal(b.directions.textContent,'', 'invalid coordinates never create a directions link');
 assert.equal(count.textContent,'3 locations');
 branchFilter.fire('click');
