@@ -60,6 +60,32 @@ for path in sorted((ROOT / "listings").glob("*/templates/*.json")):
     read_json(path)
 
 
+# Store submission distributions should not encode resources from a demo admin.
+# Resource keys are omitted until a merchant selects a product/page/collection.
+def verify_portable_defaults(value, path: Path):
+    if isinstance(value, dict):
+        settings = value.get("settings")
+        if isinstance(settings, dict):
+            for key in ("product", "page", "collection"):
+                reference = settings.get(key)
+                if isinstance(reference, str) and reference.strip():
+                    errors.append(f"{path.relative_to(ROOT)}: nonportable {key} handle: {reference}")
+        for item in value.values():
+            verify_portable_defaults(item, path)
+    elif isinstance(value, list):
+        for item in value:
+            verify_portable_defaults(item, path)
+
+for folder in (ROOT / "templates", ROOT / "listings"):
+    for path in sorted(folder.rglob("*.json")):
+        try:
+            content = path.read_text(encoding="utf-8-sig")
+            content = re.sub(r"^\\s*/\\*[\\s\\S]*?\\*/", "", content, count=1)
+            verify_portable_defaults(json.loads(content), path)
+        except json.JSONDecodeError:
+            # Malformed JSON is reported by read_json above.
+            continue
+
 # Validate embedded Liquid section schemas, especially editor-facing modules.
 for path in sorted((ROOT / "sections").glob("*.liquid")):
     source = path.read_text(encoding="utf-8-sig")
