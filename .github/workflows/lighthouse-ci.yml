@@ -156,16 +156,30 @@ jobs:
             echo "::error::No local report manifest — results were not written to the runner."
             exit 1
           fi
-          # Page path + category scores only (host and query string stripped).
-          jq -r '
-            ["page", "run", "performance", "accessibility"],
-            (.[] | [
-              (.url | sub("^https?://[^/]+"; "") | sub("\\?.*$"; "") | if . == "" then "/" else . end),
-              (if .isRepresentativeRun then "median" else "-" end),
-              (.summary.performance * 100 | round),
-              (.summary.accessibility * 100 | round)
-            ])
-            | @tsv' "$manifest" | column -t
+          # Paths only: host and query string stripped.
+          path_of='sub("^https?://[^/]+"; "") | sub("\\?.*$"; "") | if . == "" then "/" else . end'
+          mismatched=0
+          {
+            printf 'page\tfinal page\trun\tperformance\taccessibility\n'
+            while IFS=$'\t' read -r page run perf a11y report; do
+              # Where the audited page actually ended up (e.g. /password if the
+              # storefront session was not honoured).
+              final="$(jq -r "(.finalDisplayedUrl // .finalUrl) | $path_of" "$report")"
+              [ "$final" = "$page" ] || mismatched=$((mismatched + 1))
+              printf '%s\t%s\t%s\t%s\t%s\n' "$page" "$final" "$run" "$perf" "$a11y"
+            done < <(jq -r ".[] | [
+                (.url | $path_of),
+                (if .isRepresentativeRun then \"median\" else \"-\" end),
+                (.summary.performance * 100 | round),
+                (.summary.accessibility * 100 | round),
+                .jsonPath
+              ] | @tsv" "$manifest")
+          } > "$RUNNER_TEMP/scores.tsv"   # no pipe: keeps $mismatched in this shell
+          column -t -s $'\t' "$RUNNER_TEMP/scores.tsv"
+          if [ "$mismatched" -gt 0 ]; then
+            echo "::error::$mismatched run(s) did not end on the requested page (e.g. redirected to /password) — these scores are not valid."
+            exit 1
+          fi
 
       - name: Delete temporary development theme
         if: always()
