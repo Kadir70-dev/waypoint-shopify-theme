@@ -123,50 +123,75 @@ jobs:
                     args: ["--no-sandbox", "--disable-dev-shm-usage"]
                   }
                 },
-                upload: {target: "filesystem", outputDir: ".lhci-reports"},
+                upload: {target: "filesystem"},
                 assert: {assertions: {
                   "categories:performance":   ["error", {minScore: $perf, aggregationMethod: "median-run"}],
                   "categories:accessibility": ["error", {minScore: $a11y, aggregationMethod: "median-run"}]
                 }}
               }
-            }' > "$RUNNER_TEMP/lighthouserc.json"
+            }' > "$RUNNER_TEMP/lighthouserc.base.json"
+          # Mobile = Lighthouse default emulation; desktop = Lighthouse's desktop preset.
+          jq '.ci.upload.outputDir = ".lhci-reports/mobile"' \
+            "$RUNNER_TEMP/lighthouserc.base.json" > "$RUNNER_TEMP/lighthouserc.mobile.json"
+          jq '.ci.upload.outputDir = ".lhci-reports/desktop" | .ci.collect.settings.preset = "desktop"' \
+            "$RUNNER_TEMP/lighthouserc.base.json" > "$RUNNER_TEMP/lighthouserc.desktop.json"
 
       - name: Lighthouse
         env:
           SHOP_PASSWORD: ${{ secrets.SHOP_PASSWORD }}   # read by storefront-login.js only
         run: |
-          lhci collect --config="$RUNNER_TEMP/lighthouserc.json" > /dev/null
-          lhci upload --config="$RUNNER_TEMP/lighthouserc.json" > /dev/null
-          lhci assert --config="$RUNNER_TEMP/lighthouserc.json"
+          failed=0
+          for device in mobile desktop; do
+            echo "== $device"
+            config="$RUNNER_TEMP/lighthouserc.$device.json"
+            rm -rf .lighthouseci   # fresh results per device
+            lhci collect --config="$config" > /dev/null
+            lhci upload --config="$config" > /dev/null
+            # Keep going so desktop still runs if mobile misses a threshold.
+            lhci assert --config="$config" || failed=1
+          done
+          exit "$failed"
 
       - name: Score summary
         if: always()
         run: |
-          manifest=.lhci-reports/manifest.json
-          if [ ! -f "$manifest" ]; then
-            echo "::error::No local report manifest — results were not written to the runner."
-            exit 1
-          fi
           # Paths only: host and query string stripped.
           path_of='sub("^https?://[^/]+"; "") | sub("\\?.*$"; "") | if . == "" then "/" else . end'
           mismatched=0
+          missing=0
           {
-            printf 'page\tfinal page\trun\tperformance\taccessibility\n'
-            while IFS=$'\t' read -r page run perf a11y report; do
-              # Where the audited page actually ended up (e.g. /password if the
-              # storefront session was not honoured).
-              final="$(jq -r "(.finalDisplayedUrl // .finalUrl) | $path_of" "$report")"
-              [ "$final" = "$page" ] || mismatched=$((mismatched + 1))
-              printf '%s\t%s\t%s\t%s\t%s\n' "$page" "$final" "$run" "$perf" "$a11y"
-            done < <(jq -r ".[] | [
-                (.url | $path_of),
-                (if .isRepresentativeRun then \"median\" else \"-\" end),
-                (.summary.performance * 100 | round),
-                (.summary.accessibility * 100 | round),
-                .jsonPath
-              ] | @tsv" "$manifest")
-          } > "$RUNNER_TEMP/scores.tsv"   # no pipe: keeps $mismatched in this shell
+            printf 'device\tpage\tfinal page\trun\tperformance\taccessibility\n'
+            for device in mobile desktop; do
+              manifest=".lhci-reports/$device/manifest.json"
+              if [ ! -f "$manifest" ]; then
+                missing=$((missing + 1))
+                continue
+              fi
+              while IFS=$'\t' read -r page run perf a11y report; do
+                # Where the audited page actually ended up (e.g. /password if the
+                # storefront session was not honoured).
+                final="$(jq -r "(.finalDisplayedUrl // .finalUrl) | $path_of" "$report")"
+                [ "$final" = "$page" ] || mismatched=$((mismatched + 1))
+                printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$device" "$page" "$final" "$run" "$perf" "$a11y"
+              done < <(jq -r ".[] | [
+                  (.url | $path_of),
+                  (if .isRepresentativeRun then \"median\" else \"-\" end),
+                  (.summary.performance * 100 | round),
+                  (.summary.accessibility * 100 | round),
+                  .jsonPath
+                ] | @tsv" "$manifest")
+            done
+          } > "$RUNNER_TEMP/scores.tsv"   # no pipe: keeps the counters in this shell
           column -t -s $'\t' "$RUNNER_TEMP/scores.tsv"
+          # Theme Store rule: average of the home/product/collection median runs, per device.
+          echo
+          awk -F'\t' 'NR > 1 && $4 == "median" { p[$1] += $5; a[$1] += $6; n[$1]++ }
+            END { for (d in n) printf "%s average (median runs): performance %.0f, accessibility %.0f\n", d, p[d] / n[d], a[d] / n[d] }' \
+            "$RUNNER_TEMP/scores.tsv" | sort
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing device(s) have no local report manifest — results were not written to the runner."
+            exit 1
+          fi
           if [ "$mismatched" -gt 0 ]; then
             echo "::error::$mismatched run(s) did not end on the requested page (e.g. redirected to /password) — these scores are not valid."
             exit 1
@@ -189,4 +214,4 @@ jobs:
             echo "::error::Theme #$DEV_THEME_ID has role '$role' — refusing to delete."
             exit 1
           fi
-          rm -f "$RUNNER_TEMP/lighthouserc.json"
+          rm -f "$RUNNER_TEMP"/lighthouserc.*.json
