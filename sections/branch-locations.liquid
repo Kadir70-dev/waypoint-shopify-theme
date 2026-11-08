@@ -83,10 +83,13 @@
                     {%- if block.settings.phone != blank -%}
                       <a href="tel:{{ block.settings.phone | remove: ' ' | escape }}">Call</a>
                     {%- endif -%}
-                    {%- if block.settings.latitude != blank and block.settings.longitude != blank -%}
-                      <a href="https://www.google.com/maps/dir/?api=1&destination={{ block.settings.latitude | url_encode }}%2C{{ block.settings.longitude | url_encode }}" target="_blank" rel="noopener noreferrer">Directions ↗</a>
-                    {%- elsif block.settings.address != blank -%}
-                      <a href="https://www.google.com/maps/search/?api=1&query={{ block.settings.address | url_encode }}" target="_blank" rel="noopener noreferrer">Find address ↗</a>
+                    {%- if block.settings.address != blank or block.settings.latitude != blank -%}
+                      <a
+                        data-location-directions
+                        {% if block.settings.address != blank %}href="https://www.google.com/maps/search/?api=1&query={{ block.settings.address | url_encode }}"{% else %}hidden{% endif %}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >Find address ↗</a>
                     {%- endif -%}
                   </span>
                 </div>
