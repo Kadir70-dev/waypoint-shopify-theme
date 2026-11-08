@@ -8,7 +8,12 @@ const instances = new WeakMap();
 let maplibrePromise;
 
 function library() {
-  if (!maplibrePromise) maplibrePromise = import(MAPLIBRE_MODULE);
+  if (!maplibrePromise) {
+    maplibrePromise = import(MAPLIBRE_MODULE).catch(error => {
+      maplibrePromise = null;
+      throw error;
+    });
+  }
   return maplibrePromise;
 }
 function coordinates(card) {
