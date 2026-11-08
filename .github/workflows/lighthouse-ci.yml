@@ -1,0 +1,52 @@
+# Shopify Lighthouse CI — the Theme Store performance/accessibility check.
+#
+# What it does to the store: shopify/lighthouse-ci-action uploads this repo
+# as a temporary *development* theme (`shopify theme push --development`),
+# audits the home, product and collection pages, then deletes that theme.
+# It never publishes or edits the live theme.
+#
+# Runs only when started by hand (Actions tab → "Shopify Lighthouse CI" →
+# Run workflow), so nothing fails before the secrets below exist.
+#
+# Repository secrets (Settings → Secrets and variables → Actions):
+#   SHOP_STORE          store domain, e.g. your-store.myshopify.com
+#   SHOP_CLIENT_ID      Dev Dashboard app client ID      (scopes: read_products, write_themes)
+#   SHOP_CLIENT_SECRET  Dev Dashboard app client secret
+#   SHOP_PASSWORD       storefront password (the store is password protected)
+
+name: Shopify Lighthouse CI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-ci
+  cancel-in-progress: false
+
+jobs:
+  lhci:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lighthouse
+        uses: shopify/lighthouse-ci-action@v1
+        with:
+          store: ${{ secrets.SHOP_STORE }}
+          client_id: ${{ secrets.SHOP_CLIENT_ID }}
+          client_secret: ${{ secrets.SHOP_CLIENT_SECRET }}
+          password: ${{ secrets.SHOP_PASSWORD }}
+          # Same pages as the manual hosted runs, so results are comparable.
+          product_handle: qa-filler-1
+          collection_handle: all
+          # Copy settings/templates from the unpublished preview theme
+          # (read only) so the audit uses the demo content, not empty sections.
+          pull_theme: '189756768318'
+          # Theme Store minimums.
+          lhci_min_score_performance: 0.6
+          lhci_min_score_accessibility: 0.9
