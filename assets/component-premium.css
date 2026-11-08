@@ -97,3 +97,14 @@
   .waypoint-page__card { border: 1px solid CanvasText; }
   .site-header__nav a:hover, .site-header__nav a:focus-visible { text-decoration: underline; }
 }
+
+/* Shared catalog and form finishing across all templates. */
+:root .pcard:focus-within,:root .ccard:focus-within{outline:var(--focus-ring);outline-offset:var(--focus-ring-offset)}
+:root .section-header h2{letter-spacing:-.025em;text-wrap:balance}
+:root :is(input,textarea,select):focus-visible{outline:var(--focus-ring);outline-offset:2px}
+@media(prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) :is(.pcard,.ccard){transition:translate 360ms var(--ease-out-slow),box-shadow 360ms ease}
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) :is(.pcard,.ccard):hover{translate:0 -3px;box-shadow:var(--shadow-card-hover)}
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .product-gallery__thumb{transition:border-color 220ms ease,box-shadow 220ms ease}
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .product-gallery__thumb:hover{box-shadow:0 0 0 1px var(--accent-light)}
+}

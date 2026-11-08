@@ -1,0 +1,9 @@
+waypoint-gallery{display:block;padding-block:clamp(40px,6vw,80px)}
+.waypoint-gallery__track{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-inline:contain;border-radius:var(--radius-media);scrollbar-width:thin}
+.waypoint-gallery__slide{flex:0 0 82%;min-width:0;margin:0;scroll-snap-align:center;background:var(--surface-2);border:1px solid var(--border-strong);border-radius:var(--radius-media);overflow:hidden}
+.waypoint-gallery__slide img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain}
+.waypoint-gallery__slide figcaption{padding:20px 24px;color:var(--muted)}
+.waypoint-gallery__controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;margin-block-start:24px}
+.waypoint-gallery__controls[hidden],.waypoint-gallery__controls [hidden]{display:none}
+.waypoint-gallery__track:focus-visible{outline:var(--focus-ring);outline-offset:var(--focus-ring-offset)}
+@media(max-width:749px){.waypoint-gallery__slide{flex-basis:92%}.waypoint-gallery__track{gap:12px}.waypoint-gallery__controls .btn{padding-inline:16px}}

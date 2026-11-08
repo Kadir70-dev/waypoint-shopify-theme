@@ -5,7 +5,7 @@
   if (root.dataset.premiumMotion === 'false' || !window.matchMedia ||
       !('IntersectionObserver' in window) || !Element.prototype.animate) return;
   var preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var candidates = '.waypoint-page__intro, .waypoint-page__card, .waypoint-preorder__media, .waypoint-preorder__details, .section-header, .faq-content .accordion';
+  var candidates = '.waypoint-page__intro, .waypoint-page__card, .waypoint-preorder__media, .waypoint-preorder__details, .section-header, .faq-content .accordion, .editorial-card, .trust-bar, .waypoint-gallery .section-header';
   var seen = new WeakSet();
   var active = new Set();
   var pending = new Set();

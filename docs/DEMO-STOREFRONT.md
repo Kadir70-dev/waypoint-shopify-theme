@@ -96,3 +96,13 @@ content. Publish only the reviewed store content and theme version.
 Theme settings → Premium finishing controls the added micro-interactions. Shared buttons and navigation receive subtle hover movement and animated underlines; demo cards gain lift and image zoom. Below-fold demo content and section headings move into place once, and FAQ answers have a short opening motion. Initial viewport content remains visible and static, including when JavaScript is unavailable.
 
 Hover movement is limited to devices with a fine pointer. The enhancements respect reduced-motion preferences and clean up when Theme Editor sections are removed. The switch controls the new enhancements; existing hero, product-card and drawer behavior remains separate. Verify both presets and mobile layouts in Shopify before publishing.
+
+## Rotating gallery and portable tent
+
+Add **Rotating image gallery** to any supported JSON template in Customize. It is already included in Lookbook and the new `product.portable-tent` template. Select a product to pull its image gallery, or add up to 12 image blocks with captions. With no blocks selected, a product page uses its current product's images. Unconfigured galleries stay hidden on the storefront. This is a slideshow, not fabricated 360-degree photography.
+
+Gallery controls support touch scrolling, keyboard arrows (including RTL), previous/next navigation and an image counter. Auto-rotation is optional and disabled by default. When enabled, it stops on interaction, focus or reduced-motion changes, and does not advance offscreen or in a background tab. Theme Editor auto-rotation is disabled. Existing product variant/gallery integration is unchanged.
+
+`docs/demo-products/portable-tent.csv` contains one **draft**, unpublished, zero-stock demo product. Import it via Products → Import; do not enable overwriting existing products. Its 199.00 price is a demonstration price in the store currency, not a verified selling price. The description identifies it as a demo and makes no capacity/weather/weight claims. Set actual details and price before publishing.
+
+After the theme branch is uploaded to a preview theme, assign the `portable-tent` product template. Add rights-cleared photographs of the SAME tent to the product media. No unrelated stock photos, logo edits or invented angles are included. The section automatically uses those product photos. For an existing matching tent photograph, verify its recorded source/license before reuse. This repository change does not create the Shopify product, upload media or publish the theme.

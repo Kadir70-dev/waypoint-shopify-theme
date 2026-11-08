@@ -1,0 +1,64 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "specifications-1": {
+          "type": "specifications"
+        },
+        "accordion-1": {
+          "type": "accordion",
+          "settings": {
+            "title": "Features"
+          }
+        },
+        "accordion-2": {
+          "type": "accordion",
+          "settings": {
+            "title": "Materials & Care"
+          }
+        },
+        "accordion-3": {
+          "type": "accordion",
+          "settings": {
+            "title": "Shipping & Returns"
+          }
+        }
+      },
+      "block_order": [
+        "specifications-1",
+        "accordion-1",
+        "accordion-2",
+        "accordion-3"
+      ]
+    },
+    "complementary": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "Complete the Look",
+        "intent": "complementary"
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You May Also Like",
+        "intent": "related"
+      }
+    },
+    "tent-gallery": {
+      "type": "rotating-gallery",
+      "settings": {
+        "heading": "Portable tent \u2014 a closer look",
+        "text": "<p>Explore the details from different angles.</p>",
+        "autoplay": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "tent-gallery",
+    "complementary",
+    "recommendations"
+  ]
+}

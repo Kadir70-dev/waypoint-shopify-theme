@@ -53,9 +53,17 @@
         "card-3",
         "card-4"
       ]
+    },
+    "gallery": {
+      "type": "rotating-gallery",
+      "settings": {
+        "heading": "Scenes from the outdoors",
+        "autoplay": false
+      }
     }
   },
   "order": [
-    "showcase"
+    "showcase",
+    "gallery"
   ]
 }
