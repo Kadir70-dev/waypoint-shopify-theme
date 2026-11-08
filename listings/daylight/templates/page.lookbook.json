@@ -15,7 +15,6 @@
           "settings": {
             "heading": "Above the treeline",
             "text": "<p>A new perspective, one step at a time.</p>",
-            "collection": "backpacks",
             "button_label": "Explore backpacks"
           }
         },
@@ -24,7 +23,6 @@
           "settings": {
             "heading": "A place to pause",
             "text": "<p>Make room for the moments between destinations.</p>",
-            "collection": "camp-shelter",
             "button_label": "Explore camp"
           }
         },
@@ -33,7 +31,6 @@
           "settings": {
             "heading": "Everyday, outside",
             "text": "<p>Find the pieces that fit your own rhythm.</p>",
-            "collection": "apparel",
             "button_label": "Explore apparel"
           }
         },
@@ -42,7 +39,6 @@
           "settings": {
             "heading": "Details for the journey",
             "text": "<p>Discover the small things you choose to bring along.</p>",
-            "collection": "tools-equipment",
             "button_label": "Explore equipment"
           }
         }
@@ -68,35 +64,30 @@
         "about-us": {
           "type": "page",
           "settings": {
-            "page": "about-us",
             "label": "Our story"
           }
         },
         "lookbook": {
           "type": "page",
           "settings": {
-            "page": "lookbook",
             "label": "Lookbook"
           }
         },
         "faq": {
           "type": "page",
           "settings": {
-            "page": "faq",
             "label": "FAQ"
           }
         },
         "contact": {
           "type": "page",
           "settings": {
-            "page": "contact",
             "label": "Contact"
           }
         },
         "shipping-returns": {
           "type": "page",
           "settings": {
-            "page": "shipping-returns",
             "label": "Shipping & returns"
           }
         }
