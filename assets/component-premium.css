@@ -74,7 +74,7 @@
   @media (hover: hover) and (pointer: fine) {
     :root:not(.reduced-motion):not([data-premium-motion="false"]) .btn:hover:not(:disabled):not([aria-disabled="true"]) {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px var(--border);
+      box-shadow: var(--shadow-card-hover);
     }
     :root:not(.reduced-motion):not([data-premium-motion="false"]) .icon-btn:hover {
       transform: translateY(-2px);
