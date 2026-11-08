@@ -3,7 +3,7 @@
     "hero": {
       "type": "hero-slider",
       "settings": {
-        "autoplay": true,
+        "autoplay": false,
         "autoplay_interval": 15,
         "transition_duration": 600,
         "tagline_word_1": "Explore",
@@ -23,9 +23,9 @@
         "slide-2": {
           "type": "slide",
           "settings": {
-            "eyebrow": "Engineered for Extremes",
+            "eyebrow": "Considered details",
             "heading": "Details That Perform",
-            "subtext": "Premium materials. Rigorously tested. No compromises.",
+            "subtext": "Explore the small details that shape your time outdoors.",
             "cta_label": "Our Approach"
           }
         },
@@ -48,9 +48,9 @@
     "latest-releases": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Latest Releases",
-        "subheading": "New gear for longer days.",
-        "products_to_show": 8,
+        "heading": "Explore the collection",
+        "subheading": "Find your next outdoor companion.",
+        "products_to_show": 6,
         "show_view_all": true,
         "collection": "all"
       }
@@ -112,10 +112,7 @@
     },
     "video-page-breaker": {
       "type": "video-page-breaker",
-      "settings": {
-        "desktop_height": 640,
-        "mobile_height": 500
-      }
+      "settings": {}
     },
     "trusted-by-explorers": {
       "type": "social-proof",
@@ -165,7 +162,7 @@
       "type": "newsletter",
       "settings": {
         "heading": "Stay in the Wild",
-        "text": "Join for exclusive releases, field notes and 10% off your first order."
+        "text": "New collections, outdoor stories and field notes. Delivered occasionally."
       }
     },
     "performance-feature": {
@@ -217,16 +214,15 @@
         "f3",
         "f4",
         "f5"
-      ]
+      ],
+      "disabled": true
     },
     "journal-banner": {
       "type": "journal-banner",
       "settings": {
-        "eyebrow": "Journal",
         "heading": "A Life More Open",
         "cta_label": "Explore the Journal",
         "quote": "Not escape. Perspective.",
-        "quote_attribution": "Journal, Vol. 04",
         "body": "<p>Stories, guides and perspectives from those who choose a wilder path.</p>"
       }
     },
@@ -236,17 +232,75 @@
       "settings": {},
       "blocks": {},
       "block_order": []
+    },
+    "tent-showcase": {
+      "type": "featured-product",
+      "settings": {
+        "product": "portable-tent",
+        "eyebrow": "Camp & Shelter",
+        "cta_label": "Explore the tent"
+      }
+    },
+    "demo-navigation": {
+      "type": "demo-navigation",
+      "settings": {},
+      "blocks": {
+        "about-us": {
+          "type": "page",
+          "settings": {
+            "page": "about-us",
+            "label": "Our story"
+          }
+        },
+        "lookbook": {
+          "type": "page",
+          "settings": {
+            "page": "lookbook",
+            "label": "Lookbook"
+          }
+        },
+        "faq": {
+          "type": "page",
+          "settings": {
+            "page": "faq",
+            "label": "FAQ"
+          }
+        },
+        "contact": {
+          "type": "page",
+          "settings": {
+            "page": "contact",
+            "label": "Contact"
+          }
+        },
+        "shipping-returns": {
+          "type": "page",
+          "settings": {
+            "page": "shipping-returns",
+            "label": "Shipping & returns"
+          }
+        }
+      },
+      "block_order": [
+        "about-us",
+        "lookbook",
+        "faq",
+        "contact",
+        "shipping-returns"
+      ]
     }
   },
   "order": [
     "hero",
-    "latest-releases",
+    "demo-navigation",
     "shop-by-category",
+    "latest-releases",
+    "tent-showcase",
     "video-page-breaker",
-    "performance-feature",
     "journal-banner",
+    "newsletter",
+    "performance-feature",
     "testimonials-marquee",
-    "trusted-by-explorers",
-    "newsletter"
+    "trusted-by-explorers"
   ]
 }

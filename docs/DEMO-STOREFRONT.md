@@ -106,3 +106,30 @@ Gallery controls support touch scrolling, keyboard arrows (including RTL), previ
 `docs/demo-products/portable-tent.csv` contains one **draft**, unpublished, zero-stock demo product. Import it via Products → Import; do not enable overwriting existing products. Its 199.00 price is a demonstration price in the store currency, not a verified selling price. The description identifies it as a demo and makes no capacity/weather/weight claims. Set actual details and price before publishing.
 
 After the theme branch is uploaded to a preview theme, assign the `portable-tent` product template. Add rights-cleared photographs of the SAME tent to the product media. No unrelated stock photos, logo edits or invented angles are included. The section automatically uses those product photos. For an existing matching tent photograph, verify its recorded source/license before reuse. This repository change does not create the Shopify product, upload media or publish the theme.
+
+## Curated demo release checklist
+
+The homepage now prioritizes hero → demo navigation → categories → collection → portable tent → existing video (where configured) → journal → newsletter. Existing media settings are preserved. Unverified performance panels remain disabled and the newsletter no longer promises an unconfigured discount. Hero auto-rotation is off by default. Both preset homepage structures have the same shopping hierarchy.
+
+Product field guide is included in `product.portable-tent`. Fill capacity, floor dimensions, peak height, packed dimensions/weight, materials, included items and weather rating with supplier-confirmed information. Connect product metafields for multiple products. Setup/care and delivery/returns are merchant-authored rich text; blanks stay hidden. The section never invents specifications.
+
+Demo navigation automatically links only to pages that exist and are published; Shop all always uses Shopify's localized route. Create the documented pages, assign templates, and configure the primary header/footer menus in Shopify admin. This does not overwrite existing navigation or store content.
+
+### Media needed before presentation
+
+- One actual portable tent with matching front, side, interior, packed and detail photos; record source/license for each.
+- Replace unrelated QA product photographs on the store. Do not use different products as alternate views or variants.
+- Review the legacy bundled hero/video licenses before shipping a theme ZIP.
+
+### Verification status for this branch
+
+Code/static checks are not storefront acceptance. Run these on an authenticated unpublished Shopify preview with the actual products:
+
+- Dark and Daylight at 390px, 768px and 1440px: no overflow; visible focus, readable forms and no clipped menus.
+- Catalog → product → variant change → add to cart → quantity change/remove → checkout link; verify product, variant, price and quantity throughout.
+- Search existing/nonexistent terms, filter/sort collections, empty collection and empty cart.
+- Gallery swipe/buttons/keyboard, reduced motion, and disabled autoplay; images belong to the selected product.
+- About, Lookbook, FAQ, Contact and Shipping/Returns resolve from navigation; submit forms only with an agreed test identity.
+- Safari/iPhone and Android touch behavior; verify sticky controls do not cover content.
+
+Store data/media replacement and this authenticated browser pass have not been executed by these repository changes. Do not mark them complete based on Theme Check alone.

@@ -22,3 +22,14 @@
 .waypoint-preorder__apps{margin-block-start:24px}
 @media(max-width:989px){.waypoint-page__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:749px){.waypoint-page__grid,.waypoint-page__grid--story,.waypoint-page__grid--story .waypoint-page__card:first-child,.waypoint-preorder{grid-template-columns:1fr}.waypoint-page__intro{margin-block-end:32px}}
+
+.field-guide{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px)}
+.field-guide__specs{margin:0}
+.field-guide__row{display:grid;grid-template-columns:minmax(100px,.8fr) minmax(0,1.2fr);gap:20px;padding-block:20px;border-block-end:1px solid var(--border-strong)}
+.field-guide__row dt{color:var(--muted)}
+.field-guide__row dd{margin:0;color:var(--text);overflow-wrap:anywhere}
+.demo-navigation{display:flex;flex-wrap:wrap;gap:8px 24px;padding-block:24px;border-block:1px solid var(--border-strong)}
+.demo-navigation__link{display:inline-flex;align-items:center;min-height:44px;color:var(--muted);text-decoration:none;text-underline-offset:6px}
+.demo-navigation__link:hover,.demo-navigation__link[aria-current="page"]{color:var(--accent-light);text-decoration:underline}
+.demo-navigation__link:focus-visible{outline:var(--focus-ring);outline-offset:var(--focus-ring-offset)}
+@media(max-width:749px){.field-guide{grid-template-columns:1fr}.field-guide__row{gap:12px}.demo-navigation{gap:4px 20px}}

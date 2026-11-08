@@ -1,10 +1,17 @@
 {%- liquid
   assign product = section.settings.product
+  assign featured_image = section.settings.image_override | default: product.featured_image
 -%}
 {%- if product != blank -%}
   <div class="section page-width" data-reveal-group>
     <div style="display:grid;gap:1px;background:var(--border)" class="featured-product">
-      <div class="photo brand featured-product__image" data-reveal {% if section.settings.image_override %}style="background-image:url({{ section.settings.image_override | image_url: width: 900 }})"{% elsif product.featured_image %}style="background-image:url({{ product.featured_image | image_url: width: 900 }})"{% endif %}></div>
+      <div class="featured-product__image" data-reveal>
+        {%- if featured_image != blank -%}
+          {{ featured_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '360, 600, 900, 1400', sizes: '(min-width: 750px) 50vw, 100vw' }}
+        {%- elsif request.design_mode -%}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
       <div style="background:var(--bg);padding:36px;display:flex;flex-direction:column;gap:12px;justify-content:center" data-reveal>
         <span class="eyebrow">{{ section.settings.eyebrow }}</span>
         <h2 style="font-size:24px">{{ product.title }}</h2>
@@ -25,7 +32,9 @@
   </div>
 
   <style>
-    #shopify-section-{{ section.id }} .featured-product__image { min-height: 260px; }
+    #shopify-section-{{ section.id }} .featured-product__image { min-height: 260px; background: var(--surface-2); display: grid; place-items: center; }
+    #shopify-section-{{ section.id }} .featured-product__image img,
+    #shopify-section-{{ section.id }} .featured-product__image svg { width: 100%; height: auto; max-height: 650px; object-fit: contain; display: block; }
     @media (min-width: 750px) {
       #shopify-section-{{ section.id }} .featured-product { grid-template-columns: 1fr 1.1fr; }
       #shopify-section-{{ section.id }} .featured-product__image { min-height: 100%; }

@@ -1,0 +1,15 @@
+{{ 'component-demo-pages.css' | asset_url | stylesheet_tag }}
+{%- capture links -%}
+  {%- for block in section.blocks -%}
+    {%- if block.settings.page != blank -%}
+      <a class="demo-navigation__link" href="{{ block.settings.page.url }}" {% if page.id == block.settings.page.id %}aria-current="page"{% endif %} {{ block.shopify_attributes }}>{{ block.settings.label | default: block.settings.page.title | escape }}</a>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+<nav class="page-width demo-navigation" aria-label="{{ section.settings.label | escape }}">
+  <a class="demo-navigation__link" href="{{ routes.all_products_collection_url }}">{{ section.settings.catalog_label | escape }}</a>
+  {{ links }}
+</nav>
+{% schema %}
+{"name":"Explore demo pages","settings":[{"type":"text","id":"label","label":"Accessible navigation label","default":"Explore the store"},{"type":"text","id":"catalog_label","label":"Catalog link label","default":"Shop all"}],"blocks":[{"type":"page","name":"Page link","settings":[{"type":"page","id":"page","label":"Page"},{"type":"text","id":"label","label":"Link label"}]}],"max_blocks":10,"presets":[{"name":"Explore demo pages"}]}
+{% endschema %}

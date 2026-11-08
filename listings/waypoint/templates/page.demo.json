@@ -123,9 +123,58 @@
         "compact-catalog",
         "editorial-catalog"
       ]
+    },
+    "demo-navigation": {
+      "type": "demo-navigation",
+      "settings": {},
+      "blocks": {
+        "about-us": {
+          "type": "page",
+          "settings": {
+            "page": "about-us",
+            "label": "Our story"
+          }
+        },
+        "lookbook": {
+          "type": "page",
+          "settings": {
+            "page": "lookbook",
+            "label": "Lookbook"
+          }
+        },
+        "faq": {
+          "type": "page",
+          "settings": {
+            "page": "faq",
+            "label": "FAQ"
+          }
+        },
+        "contact": {
+          "type": "page",
+          "settings": {
+            "page": "contact",
+            "label": "Contact"
+          }
+        },
+        "shipping-returns": {
+          "type": "page",
+          "settings": {
+            "page": "shipping-returns",
+            "label": "Shipping & returns"
+          }
+        }
+      },
+      "block_order": [
+        "about-us",
+        "lookbook",
+        "faq",
+        "contact",
+        "shipping-returns"
+      ]
     }
   },
   "order": [
-    "showcase"
+    "showcase",
+    "demo-navigation"
   ]
 }
