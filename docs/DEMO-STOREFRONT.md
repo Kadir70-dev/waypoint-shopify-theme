@@ -133,3 +133,23 @@ Code/static checks are not storefront acceptance. Run these on an authenticated 
 - Safari/iPhone and Android touch behavior; verify sticky controls do not cover content.
 
 Store data/media replacement and this authenticated browser pass have not been executed by these repository changes. Do not mark them complete based on Theme Check alone.
+
+
+## Shopify staging implementation — 8 November 2026
+
+**Store:** Waypoint (`aera-dev-ysurfe4h.myshopify.com`). **Published theme:** `gid://shopify/OnlineStoreTheme/189745430590` (left unchanged). **Unpublished review theme:** `gid://shopify/OnlineStoreTheme/189774528574` (`Waypoint — Premium Demo Preview`).
+
+Work completed directly in the Shopify store (these are *store records*, not automatically provisioned by this repository):
+
+- All 13 tagged `AERA QA` fixture products archived, not deleted; archive confirmed 13/13. No currently ACTIVE product.
+- `Two-Person Trail Tent` created as DRAFT with zero inventory and four AI-generated concept images, all READY and marked accordingly. The `portable-tent` template is assigned; manufacturer data, photo licensing and $289 demo price remain unverified.
+- Collections created: `backpacks`, `camp-shelter`, `tools-equipment`, `apparel`; tent draft added to `camp-shelter`.
+- Store pages created: `demo`, `catalog`, `lookbook`, `faq`, `size-guide`, `pre-order`, and `our-story`, published as *informational previews*. `shipping-returns` remains unpublished pending approved policies. Existing `about` and `contact` retained.
+- `Waypoint Journal` created with one editorial introduction (concept disclosure, no inventory or testing claims).
+- Shopify native PAGE/BLOG resource navigation wired to a *separate* preview main menu and separate footer/mega-menu collections, avoiding raw cross-domain links and preserving the live menus.
+- The preview theme was duplicated from the **published** store theme to retain admin-edited JSON and assets. Premium CSS/JS, rotating gallery, new sections/templates, and updated preview homepage, header/footer, FAQ and catalog/lookbook copy were uploaded to **this unpublished theme only**. The existing MAIN theme was not overwritten.
+- Concept gallery images were verified in Shopify Files as READY. Auto-rotation disabled and unverified performance/product marketing claims suppressed in preview home configuration. Campaign explicitly says pre-orders are unavailable.
+
+**Important differences from the repository defaults:** the preview's homepage, header/footer, page templates and menu data were updated in Shopify to preserve live-editor customizations and reflect actual store records. Do **not** overwrite those specific preview JSON files by uploading the bare repository defaults. Diff and reconcile before releasing.
+
+**Outstanding launch gates:** browser acceptance on a real authenticated Shopify storefront across mobile/desktop and both visual presets; actual supplier photos, technical specifications, approved price/stock; shipping/returns and payment/cancellation terms; installing/configuring a compatible pre-order app; cart/checkout test transactions. External storefront access was blocked in this execution environment, and PR #1 currently has no GitHub CI check runs. Keep the preview unpublished until these are verified. No real purchase or pre-order can be accepted with only the current concept product.
