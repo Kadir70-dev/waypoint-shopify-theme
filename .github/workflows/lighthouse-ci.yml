@@ -1,15 +1,18 @@
 # Shopify Lighthouse CI — the Theme Store performance/accessibility check.
 #
-# What it does to the store: the pinned shopify/lighthouse-ci-action uploads
-# this repo as a temporary *development* theme (`shopify theme push
-# --development`), audits the home, product and collection pages, then deletes
-# that theme (`shopify theme delete -d -f`). It never publishes or edits the
-# live theme.
+# Custom steps (replaces shopify/lighthouse-ci-action, whose v1 re-runs the
+# password login before every Lighthouse run — it times out once the store is
+# already unlocked — and never deletes its development theme).
 #
-# Reports stay on the runner: the action's built-in config uploads to
-# temporary-public-storage, so LHCI_UPLOAD__TARGET=filesystem overrides it and
-# nothing is uploaded anywhere (no public storage, no GitHub artifact). The log
-# shows only per-page category scores — no screenshots, HTML or store content.
+# What it does to the store: pulls settings/JSON templates from the unpublished
+# preview theme (read only), pushes this repo as a temporary *development*
+# theme, audits home/product/collection, and deletes that development theme in
+# an always-run step (also on failure or cancel). It never targets the live
+# theme: no --live, --allow-live or publish anywhere.
+#
+# Reports stay on the runner (.lhci-reports/): nothing goes to
+# temporary-public-storage and no GitHub artifact is uploaded. The log shows
+# only per-page category scores — no screenshots, HTML or store content.
 #
 # Runs only when started by hand (Actions tab → "Shopify Lighthouse CI" →
 # Run workflow).
@@ -32,35 +35,118 @@ concurrency:
   group: lighthouse-ci
   cancel-in-progress: false
 
+env:
+  PULL_THEME_ID: '189756768318'   # unpublished preview theme — settings source only
+  PRODUCT_HANDLE: qa-filler-1
+  COLLECTION_HANDLE: all
+  MIN_PERFORMANCE: '0.6'          # Theme Store minimums
+  MIN_ACCESSIBILITY: '0.9'
+  SHOPIFY_CLI_VERSION: 4.8.4
+  LHCI_VERSION: 0.13.0
+
 jobs:
   lhci:
     name: Lighthouse
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      SHOP_STORE: ${{ secrets.SHOP_STORE }}
+      CI: '1'
+      SHOPIFY_CLI_TTY: '0'
     steps:
       - uses: actions/checkout@v4
 
-      - name: Lighthouse
-        # v1, pinned to the reviewed commit.
-        uses: shopify/lighthouse-ci-action@988f0eeb44ad5f298bd47150e5b9b01c27ead975
-        env:
-          # Keep reports on the runner instead of temporary-public-storage.
-          LHCI_UPLOAD__TARGET: filesystem
-          LHCI_UPLOAD__OUTPUT_DIR: .lhci-reports
+      - uses: actions/setup-node@v4
         with:
-          store: ${{ secrets.SHOP_STORE }}
-          client_id: ${{ secrets.SHOP_CLIENT_ID }}
-          client_secret: ${{ secrets.SHOP_CLIENT_SECRET }}
-          password: ${{ secrets.SHOP_PASSWORD }}
-          # Same pages as the manual hosted runs, so results are comparable.
-          product_handle: qa-filler-1
-          collection_handle: all
-          # Copy settings/templates from the unpublished preview theme
-          # (read only) so the audit uses the demo content, not empty sections.
-          pull_theme: '189756768318'
-          # Theme Store minimums.
-          lhci_min_score_performance: 0.6
-          lhci_min_score_accessibility: 0.9
+          node-version: 20
+
+      - name: Install Shopify CLI and Lighthouse CI
+        run: npm install -g "@shopify/cli@${SHOPIFY_CLI_VERSION}" "@lhci/cli@${LHCI_VERSION}"
+
+      - name: Authenticate Shopify CLI
+        env:
+          SHOP_CLIENT_ID: ${{ secrets.SHOP_CLIENT_ID }}
+          SHOP_CLIENT_SECRET: ${{ secrets.SHOP_CLIENT_SECRET }}
+        run: |
+          store="${SHOP_STORE#https://}"; store="${store#http://}"; store="${store%/}"
+          token="$(curl -sS -f -X POST "https://${store}/admin/oauth/access_token" \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            --data-urlencode grant_type=client_credentials \
+            --data-urlencode "client_id=${SHOP_CLIENT_ID}" \
+            --data-urlencode "client_secret=${SHOP_CLIENT_SECRET}" | jq -r '.access_token // empty')"
+          if [ -z "$token" ]; then
+            echo "::error::Could not get an access token (check the app is installed with read_products,write_themes)."
+            exit 1
+          fi
+          echo "::add-mask::$token"
+          {
+            echo "SHOPIFY_FLAG_STORE=$store"
+            echo "SHOPIFY_CLI_THEME_TOKEN=$token"
+          } >> "$GITHUB_ENV"
+
+      - name: Create temporary development theme
+        run: |
+          shopify theme pull --path . --theme "$PULL_THEME_ID" \
+            --only 'templates/*.json' --only config/settings_data.json > /dev/null
+          shopify theme push --development --json --path . > "$RUNNER_TEMP/push.json"
+          theme_id="$(jq -r '.theme.id' "$RUNNER_TEMP/push.json")"
+          theme_role="$(jq -r '.theme.role' "$RUNNER_TEMP/push.json")"
+          # Record the ID first so the cleanup step (which re-checks the role) always knows it.
+          echo "DEV_THEME_ID=$theme_id" >> "$GITHUB_ENV"
+          if [ "$theme_role" != "development" ]; then
+            echo "::error::Pushed theme is not a development theme (role: $theme_role)."
+            exit 1
+          fi
+          echo "Development theme #$theme_id created."
+
+      - name: Storefront login (once)
+        env:
+          SHOP_PASSWORD: ${{ secrets.SHOP_PASSWORD }}
+        run: |
+          host="https://${SHOPIFY_FLAG_STORE}"
+          jar="$RUNNER_TEMP/cookies.txt"
+          # Already unlocked (or no password page)? Then skip the login.
+          landed="$(curl -sS -L -c "$jar" -b "$jar" -o /dev/null -w '%{url_effective}' "$host/")"
+          if [[ "$landed" == */password* ]]; then
+            curl -sS -c "$jar" -b "$jar" -o /dev/null \
+              --data-urlencode "password=${SHOP_PASSWORD}" \
+              -d form_type=storefront_password "$host/password"
+            landed="$(curl -sS -L -c "$jar" -b "$jar" -o /dev/null -w '%{url_effective}' "$host/")"
+            if [[ "$landed" == */password* ]]; then
+              echo "::error::Storefront password was not accepted."
+              exit 1
+            fi
+            echo "Storefront unlocked."
+          else
+            echo "Storefront already unlocked — login skipped."
+          fi
+          cookie="$(sed 's/^#HttpOnly_//' "$jar" | awk '!/^#/ && NF>=7 {printf "%s=%s; ", $6, $7}')"
+          echo "::add-mask::$cookie"
+          # Lighthouse config with the session cookie — written to the runner only.
+          query="?preview_theme_id=${DEV_THEME_ID}&_fd=0&pb=0"
+          jq -n --arg cookie "$cookie" --arg host "$host" --arg q "$query" \
+            --arg product "$PRODUCT_HANDLE" --arg collection "$COLLECTION_HANDLE" \
+            --argjson perf "$MIN_PERFORMANCE" --argjson a11y "$MIN_ACCESSIBILITY" '{
+              ci: {
+                collect: {
+                  url: [($host + "/" + $q), ($host + "/products/" + $product + $q), ($host + "/collections/" + $collection + $q)],
+                  numberOfRuns: 3,
+                  settings: {extraHeaders: ({Cookie: $cookie} | tojson), chromeFlags: "--headless=new --no-sandbox"}
+                },
+                upload: {target: "filesystem", outputDir: ".lhci-reports"},
+                assert: {assertions: {
+                  "categories:performance":   ["error", {minScore: $perf, aggregationMethod: "median-run"}],
+                  "categories:accessibility": ["error", {minScore: $a11y, aggregationMethod: "median-run"}]
+                }}
+              }
+            }' > "$RUNNER_TEMP/lighthouserc.json"
+          chmod 600 "$RUNNER_TEMP/lighthouserc.json" "$jar"
+
+      - name: Lighthouse
+        run: |
+          lhci collect --config="$RUNNER_TEMP/lighthouserc.json" > /dev/null
+          lhci upload --config="$RUNNER_TEMP/lighthouserc.json" > /dev/null
+          lhci assert --config="$RUNNER_TEMP/lighthouserc.json"
 
       - name: Score summary
         if: always()
@@ -80,3 +166,22 @@ jobs:
               (.summary.accessibility * 100 | round)
             ])
             | @tsv' "$manifest" | column -t
+
+      - name: Delete temporary development theme
+        if: always()
+        run: |
+          if [ -z "${DEV_THEME_ID:-}" ]; then
+            echo "No development theme was created."
+            exit 0
+          fi
+          role="$(shopify theme list --json | jq -r --arg id "$DEV_THEME_ID" '.[] | select((.id|tostring) == $id) | .role')"
+          if [ -z "$role" ]; then
+            echo "Development theme #$DEV_THEME_ID is already gone."
+          elif [ "$role" = "development" ]; then
+            shopify theme delete --theme "$DEV_THEME_ID" --force > /dev/null
+            echo "Development theme #$DEV_THEME_ID deleted."
+          else
+            echo "::error::Theme #$DEV_THEME_ID has role '$role' — refusing to delete."
+            exit 1
+          fi
+          rm -f "$RUNNER_TEMP/lighthouserc.json" "$RUNNER_TEMP/cookies.txt"
