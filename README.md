@@ -54,7 +54,7 @@ Storefront strings live in `locales/`. English (default) and Arabic (`ar.json`) 
 - Lighthouse CI (home, product, collection; median runs) on the demo store: mobile performance 83 / accessibility 97, desktop performance 93 / accessibility 99.
 
 ## Credits & licenses
-Photography and video on the demo store are from [Pexels](https://www.pexels.com/) under the [Pexels License](https://www.pexels.com/license/) (free for commercial use, attribution not required). They are store content and are **not** bundled with the theme.
+Photography and video on the demo store are from [Pexels](https://www.pexels.com/) under the [Pexels License](https://www.pexels.com/license/) (free for commercial use, attribution not required). They are store content and are **not** bundled with the theme. Full source records (Pexels IDs, photographers, download URLs, checksums): [`docs/pexels/`](docs/pexels/).
 
 | Use | Pexels page | Creator |
 |---|---|---|
