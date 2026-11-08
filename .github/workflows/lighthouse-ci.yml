@@ -43,6 +43,7 @@ env:
   MIN_ACCESSIBILITY: '0.9'
   SHOPIFY_CLI_VERSION: 4.8.4
   LHCI_VERSION: 0.13.0
+  PUPPETEER_VERSION: 25.16.0
 
 jobs:
   lhci:
@@ -61,7 +62,9 @@ jobs:
           node-version: 22
 
       - name: Install Shopify CLI and Lighthouse CI
-        run: npm install -g "@shopify/cli@${SHOPIFY_CLI_VERSION}" "@lhci/cli@${LHCI_VERSION}"
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'true'   # use the runner's Google Chrome
+        run: npm install -g "@shopify/cli@${SHOPIFY_CLI_VERSION}" "@lhci/cli@${LHCI_VERSION}" "puppeteer@${PUPPETEER_VERSION}"
 
       - name: Authenticate Shopify CLI
         env:
@@ -99,39 +102,26 @@ jobs:
           fi
           echo "Development theme #$theme_id created."
 
-      - name: Storefront login (once)
-        env:
-          SHOP_PASSWORD: ${{ secrets.SHOP_PASSWORD }}
+      - name: Configure Lighthouse
         run: |
           host="https://${SHOPIFY_FLAG_STORE}"
-          jar="$RUNNER_TEMP/cookies.txt"
-          # Already unlocked (or no password page)? Then skip the login.
-          landed="$(curl -sS -L -c "$jar" -b "$jar" -o /dev/null -w '%{url_effective}' "$host/")"
-          if [[ "$landed" == */password* ]]; then
-            curl -sS -c "$jar" -b "$jar" -o /dev/null \
-              --data-urlencode "password=${SHOP_PASSWORD}" \
-              -d form_type=storefront_password "$host/password"
-            landed="$(curl -sS -L -c "$jar" -b "$jar" -o /dev/null -w '%{url_effective}' "$host/")"
-            if [[ "$landed" == */password* ]]; then
-              echo "::error::Storefront password was not accepted."
-              exit 1
-            fi
-            echo "Storefront unlocked."
-          else
-            echo "Storefront already unlocked — login skipped."
-          fi
-          cookie="$(sed 's/^#HttpOnly_//' "$jar" | awk '!/^#/ && NF>=7 {printf "%s=%s; ", $6, $7}')"
-          echo "::add-mask::$cookie"
-          # Lighthouse config with the session cookie — written to the runner only.
           query="?preview_theme_id=${DEV_THEME_ID}&_fd=0&pb=0"
-          jq -n --arg cookie "$cookie" --arg host "$host" --arg q "$query" \
+          # Login happens inside Lighthouse's browser (.github/lighthouse/storefront-login.js),
+          # only when a page lands on /password. Config is written to the runner only.
+          # puppeteerScript must be relative: LHCI joins it onto the working directory.
+          jq -n --arg host "$host" --arg q "$query" \
             --arg product "$PRODUCT_HANDLE" --arg collection "$COLLECTION_HANDLE" \
+            --arg script ".github/lighthouse/storefront-login.js" \
             --argjson perf "$MIN_PERFORMANCE" --argjson a11y "$MIN_ACCESSIBILITY" '{
               ci: {
                 collect: {
                   url: [($host + "/" + $q), ($host + "/products/" + $product + $q), ($host + "/collections/" + $collection + $q)],
                   numberOfRuns: 3,
-                  settings: {extraHeaders: ({Cookie: $cookie} | tojson), chromeFlags: "--headless=new --no-sandbox"}
+                  puppeteerScript: $script,
+                  puppeteerLaunchOptions: {
+                    executablePath: "/usr/bin/google-chrome",
+                    args: ["--no-sandbox", "--disable-dev-shm-usage"]
+                  }
                 },
                 upload: {target: "filesystem", outputDir: ".lhci-reports"},
                 assert: {assertions: {
@@ -140,9 +130,10 @@ jobs:
                 }}
               }
             }' > "$RUNNER_TEMP/lighthouserc.json"
-          chmod 600 "$RUNNER_TEMP/lighthouserc.json" "$jar"
 
       - name: Lighthouse
+        env:
+          SHOP_PASSWORD: ${{ secrets.SHOP_PASSWORD }}   # read by storefront-login.js only
         run: |
           lhci collect --config="$RUNNER_TEMP/lighthouserc.json" > /dev/null
           lhci upload --config="$RUNNER_TEMP/lighthouserc.json" > /dev/null
@@ -198,4 +189,4 @@ jobs:
             echo "::error::Theme #$DEV_THEME_ID has role '$role' — refusing to delete."
             exit 1
           fi
-          rm -f "$RUNNER_TEMP/lighthouserc.json" "$RUNNER_TEMP/cookies.txt"
+          rm -f "$RUNNER_TEMP/lighthouserc.json"
