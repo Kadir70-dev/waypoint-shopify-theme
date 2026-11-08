@@ -188,3 +188,12 @@
    so it stays legible when the light (Daylight) preset darkens --cta-bg. */
 .hero-slider__cta.btn-primary { background: var(--cta-on-image-bg); color: var(--cta-on-image-text); border-color: var(--cta-on-image-bg); }
 .hero-slider__cta.btn-primary:hover { background: var(--cta-on-image-hover); border-color: var(--cta-on-image-hover); }
+
+/* Mobile: skip the hero's load-time motion (9s background drift + content
+   slide-in). It costs paint/composite work on low-end phones while the page
+   is still loading; the slide and its text render in their final state. */
+@media (max-width: 749px) {
+  .hero-slider .hero-slider__slide::after,
+  .hero-slider.is-ready .hero-slider__slide[data-active="true"]::after { transform: none; animation: none; }
+  .hero-slider.is-ready .hero-slider__slide[data-active="true"] .hero-slider__content > * { animation: none; }
+}

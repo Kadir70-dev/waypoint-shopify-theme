@@ -12,7 +12,7 @@
     aria-hidden="true"
     tabindex="-1"
     data-lazy-video
-    {% if video and video.preview_image %}poster="{{ video.preview_image | image_url: width: 1920 }}"{% endif %}
+    {% if video and video.preview_image %}data-poster="{{ video.preview_image | image_url: width: 1920 }}" data-poster-mobile="{{ video.preview_image | image_url: width: 750 }}"{% endif %}
   >
     {%- if video -%}
       {%- comment -%} Largest MP4 rendition up to 1080p — never ship the 4K original to a background loop. {%- endcomment -%}

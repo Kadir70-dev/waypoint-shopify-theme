@@ -69,6 +69,7 @@
     var timer = null;
     var paused = false;
     var activated = false;
+    var offscreen = false;
 
     function loadSlideBackground(slide) {
       var mobileUrl = slide.getAttribute('data-bg-mobile');
@@ -100,7 +101,7 @@
     function schedule() {
       clearTimer();
       resetProgress();
-      if (!autoplay || !activated || paused || document.hidden) return;
+      if (!autoplay || !activated || paused || offscreen || document.hidden) return;
       timer = window.setTimeout(function () {
         show(current + 1, false, 'next');
         schedule();
@@ -180,6 +181,14 @@
 
     slider.classList.add('is-ready');
     show(0, false);
+    // Stop the autoplay timer while the hero is scrolled out of view (mobile
+    // users scroll past it quickly); resume when it comes back.
+    if (autoplay && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        offscreen = !entries[0].isIntersecting;
+        if (offscreen) clearTimer(); else schedule();
+      }).observe(slider);
+    }
     // No timer runs at load: slides 2+ stay deferred until the user interacts.
     if (autoplay) {
       activationEvents.forEach(function (name) {
@@ -224,6 +233,8 @@
         source.src = source.getAttribute('data-src');
         source.removeAttribute('data-src');
       });
+      var poster = (window.matchMedia('(max-width: 749px)').matches && video.getAttribute('data-poster-mobile')) || video.getAttribute('data-poster');
+      if (poster) video.poster = poster;
       video.preload = reducedMotion ? 'metadata' : 'auto';
       video.load();
     }
