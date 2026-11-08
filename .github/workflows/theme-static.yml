@@ -9,6 +9,7 @@ on:
       - 'listings/**'
       - 'scripts/validate_theme_json.py'
       - 'assets/branch-locations.js'
+      - 'scripts/test_branch_locations.cjs'
       - 'assets/component-branch-locations.css'
       - '.github/workflows/theme-static.yml'
   push:
@@ -20,6 +21,7 @@ on:
       - 'listings/**'
       - 'scripts/validate_theme_json.py'
       - 'assets/branch-locations.js'
+      - 'scripts/test_branch_locations.cjs'
       - 'assets/component-branch-locations.css'
       - '.github/workflows/theme-static.yml'
   workflow_dispatch:
@@ -43,4 +45,6 @@ jobs:
         with:
           node-version: '22'
       - name: Validate branch locations JavaScript syntax
-        run: node --check assets/branch-locations.js
+        run: |
+          node --check assets/branch-locations.js
+          node scripts/test_branch_locations.cjs
