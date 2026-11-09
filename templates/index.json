@@ -46,9 +46,9 @@
         "slide-3"
       ],
       "settings": {
-        "autoplay": false,
-        "autoplay_interval": 15,
-        "transition_duration": 600,
+        "autoplay": true,
+        "autoplay_interval": 3,
+        "transition_duration": 800,
         "tagline_word_1": "Explore",
         "tagline_word_2": "Adapt",
         "tagline_word_3": "Endure"
@@ -302,11 +302,64 @@
       "settings": {
         "heading": "Four views. One journey.",
         "text": "<p>Explore our visual storytelling gallery. Swipe or use the controls to browse an illustrative campsite sequence.</p>",
-        "product": "trailnest-two-person-tent",
+        "product": "",
         "autoplay": true,
         "interval": 7,
         "pause_label": "Pause rotation"
-      }
+      },
+      "blocks": {
+        "editorial-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-13792297.jpg"
+          }
+        },
+        "editorial-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-35393324.jpg"
+          }
+        },
+        "editorial-3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-21939709.jpg"
+          }
+        },
+        "editorial-4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-11424971.jpg"
+          }
+        },
+        "editorial-5": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-33775543.jpg"
+          }
+        },
+        "editorial-6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-16007988.jpg"
+          }
+        },
+        "editorial-7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-29307238.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "editorial-1",
+        "editorial-2",
+        "editorial-3",
+        "editorial-4",
+        "editorial-5",
+        "editorial-6",
+        "editorial-7"
+      ]
     },
     "locations-explorer": {
       "type": "branch-locations",

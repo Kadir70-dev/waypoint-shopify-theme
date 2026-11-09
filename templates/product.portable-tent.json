@@ -1,10 +1,20 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-product",
       "blocks": {
         "specifications-1": {
-          "type": "specifications"
+          "type": "specifications",
+          "settings": {}
         },
         "accordion-1": {
           "type": "accordion",
@@ -30,7 +40,8 @@
         "accordion-1",
         "accordion-2",
         "accordion-3"
-      ]
+      ],
+      "settings": {}
     },
     "complementary": {
       "type": "product-recommendations",
@@ -51,12 +62,11 @@
       "settings": {
         "heading": "Portable tent — a closer look",
         "text": "<p>Explore the details from different angles.</p>",
-        "autoplay": false
+        "autoplay": true
       }
     },
     "field-guide": {
       "type": "product-field-guide",
-      "settings": {},
       "blocks": {
         "spec-0": {
           "type": "specification",
@@ -116,7 +126,8 @@
         "spec-5",
         "spec-6",
         "spec-7"
-      ]
+      ],
+      "settings": {}
     }
   },
   "order": [

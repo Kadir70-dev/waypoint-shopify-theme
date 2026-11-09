@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "showcase": {
@@ -54,8 +63,61 @@
       "type": "rotating-gallery",
       "settings": {
         "heading": "Scenes from the outdoors",
-        "autoplay": false
-      }
+        "autoplay": true
+      },
+      "blocks": {
+        "editorial-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-13792297.jpg"
+          }
+        },
+        "editorial-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-35393324.jpg"
+          }
+        },
+        "editorial-3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-21939709.jpg"
+          }
+        },
+        "editorial-4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-11424971.jpg"
+          }
+        },
+        "editorial-5": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-33775543.jpg"
+          }
+        },
+        "editorial-6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-16007988.jpg"
+          }
+        },
+        "editorial-7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/pexels-photo-29307238.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "editorial-1",
+        "editorial-2",
+        "editorial-3",
+        "editorial-4",
+        "editorial-5",
+        "editorial-6",
+        "editorial-7"
+      ]
     },
     "demo-navigation": {
       "type": "demo-navigation",
