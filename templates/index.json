@@ -3,9 +3,9 @@
     "hero": {
       "type": "hero-slider",
       "settings": {
-        "autoplay": false,
-        "autoplay_interval": 15,
-        "transition_duration": 600,
+        "autoplay": true,
+        "autoplay_interval": 3,
+        "transition_duration": 800,
         "tagline_word_1": "Explore",
         "tagline_word_2": "Adapt",
         "tagline_word_3": "Endure"
