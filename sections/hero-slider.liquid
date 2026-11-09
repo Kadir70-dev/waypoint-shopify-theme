@@ -1,4 +1,18 @@
 {{ 'component-motion.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign promo_active = false
+  if settings.promo_enabled and settings.promo_text != blank
+    assign promo_active = true
+    if settings.promo_expiry != blank
+      assign promo_expiry_ts = settings.promo_expiry | date: '%s' | plus: 0
+      assign promo_now_ts = 'now' | date: '%s' | plus: 0
+      assign promo_end_ts = promo_expiry_ts | plus: 86399
+      if promo_expiry_ts == 0 or promo_end_ts < promo_now_ts
+        assign promo_active = false
+      endif
+    endif
+  endif
+-%}
 <div
   class="hero-slider"
   data-hero-slider
@@ -59,7 +73,7 @@
       {{ block.shopify_attributes }}
     >
       <div class="hero-slider__content">
-        {%- if forloop.first and settings.promo_enabled and settings.promo_text != blank -%}
+        {%- if forloop.first and promo_active -%}
           <span class="hero-promo-chip">{{ settings.promo_text | escape }}</span>
         {%- endif -%}
         {%- if block.settings.eyebrow != blank -%}
