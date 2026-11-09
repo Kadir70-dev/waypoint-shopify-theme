@@ -11,6 +11,10 @@ on:
       - 'assets/branch-locations.js'
       - 'scripts/test_branch_locations.cjs'
       - 'assets/component-branch-locations.css'
+      - 'assets/motion.js'
+      - 'assets/rotating-gallery.js'
+      - 'assets/component-rotating-gallery.css'
+      - 'scripts/test_hero_gallery.cjs'
       - '.github/workflows/theme-static.yml'
   push:
     branches: [main]
@@ -48,3 +52,9 @@ jobs:
         run: |
           node --check assets/branch-locations.js
           node scripts/test_branch_locations.cjs
+      - name: Validate hero and gallery behavior contracts
+        run: |
+          node --check assets/motion.js
+          node --check assets/rotating-gallery.js
+          node --check scripts/test_hero_gallery.cjs
+          node scripts/test_hero_gallery.cjs
