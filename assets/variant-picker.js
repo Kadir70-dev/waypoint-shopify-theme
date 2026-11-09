@@ -146,8 +146,10 @@
 
     function syncStickyBar(variant) {
       if (!stickyBtn) return;
-      stickyBtn.disabled = !variant.available;
-      stickyBtn.textContent = variant.available ? stickyBtn.getAttribute('data-label-add') : stickyBtn.getAttribute('data-label-sold-out');
+      var activeFormButton = buybox.querySelector('[data-product-form-submit]');
+      var canPurchase = !!variant.available && (!activeFormButton || !activeFormButton.disabled);
+      stickyBtn.disabled = !canPurchase;
+      stickyBtn.textContent = canPurchase ? stickyBtn.getAttribute('data-label-add') : stickyBtn.getAttribute('data-label-sold-out');
     }
 
     function announceStatus(fresh) {
