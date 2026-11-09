@@ -1,0 +1,276 @@
+/* Waypoint — Promotional strips and animated offer badges.
+   Reads design tokens from tokens.css; never declares color literals.
+   Motion respects .reduced-motion (set before first paint in theme.liquid). */
+
+/* ═══════════════════════════════════════════════════════════════
+   PROMO STRIP
+   Inline promotional message: label + main text + secondary + expiry.
+   Used in: announcement bar, hero, product buybox, cart drawer.
+═══════════════════════════════════════════════════════════════ */
+
+.promo-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 14px;
+  padding: 10px clamp(16px, 3vw, 32px);
+  background: linear-gradient(90deg, var(--accent-deep) 0%, var(--accent) 50%, var(--accent-deep) 100%);
+  background-size: 200% 100%;
+  color: var(--cta-on-image-text);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  text-align: center;
+  animation: promo-sweep 6s ease-in-out infinite;
+}
+@keyframes promo-sweep {
+  0%, 100% { background-position: 0% 0%; }
+  50%       { background-position: 100% 0%; }
+}
+
+.promo-strip__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--cta-on-image-text);
+  opacity: .85;
+}
+.promo-strip__label::after {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 10px;
+  background: currentColor;
+  opacity: .4;
+}
+.promo-strip__text {
+  font-weight: 500;
+  letter-spacing: .07em;
+}
+.promo-strip__sep { opacity: .4; }
+.promo-strip__secondary {
+  opacity: .8;
+  font-weight: 400;
+}
+.promo-strip__expiry {
+  font-size: 10px;
+  opacity: .65;
+  border: 1px solid rgba(255, 255, 255, .3);
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+/* Inline / compact variant (product page, cart) */
+.promo-strip--inline {
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface-2));
+  background-image: none;
+  animation: none;
+  color: var(--accent-light);
+  font-size: 11px;
+  gap: 6px 10px;
+  justify-content: flex-start;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.promo-strip--inline .promo-strip__label { color: var(--accent-light); opacity: 1; }
+.promo-strip--inline .promo-strip__text,
+.promo-strip--inline .promo-strip__secondary { color: var(--text); }
+.promo-strip--inline .promo-strip__expiry {
+  color: var(--muted);
+  border-color: var(--border);
+}
+
+/* Hero promo chip */
+.hero-promo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, .92);
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+.hero-promo-chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--accent-light);
+  animation: chip-pulse 2s ease-in-out infinite;
+}
+@keyframes chip-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .4; }
+}
+
+/* Reduced-motion: freeze the gradient animation and chip pulse */
+.reduced-motion .promo-strip { animation: none; }
+.reduced-motion .hero-promo-chip::before { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .promo-strip { animation: none; }
+  .hero-promo-chip::before { animation: none; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   OFFER BADGES
+   Source: product tags (offer-10-off, offer-new, etc.)
+   Placement: product cards, PDP buy box, featured product section.
+═══════════════════════════════════════════════════════════════ */
+
+.offer-badge {
+  --ob-bg:     var(--accent);
+  --ob-text:   var(--cta-on-image-text);
+  --ob-glow:   var(--accent);
+  --ob-shine:  rgba(255, 255, 255, .22);
+
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 4px 10px 4px 9px;
+  border-radius: 3px;
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ob-text);
+  background: var(--ob-bg);
+  isolation: isolate;
+  cursor: default;
+  user-select: none;
+  transform-style: preserve-3d;
+  /* Layered depth: top highlight + shadow on bottom */
+  box-shadow:
+    0 1px 0 var(--ob-shine) inset,
+    0 -1px 0 rgba(0, 0, 0, .22) inset,
+    0 4px 14px color-mix(in srgb, var(--ob-glow) 35%, transparent);
+  animation: badge-float 3.6s ease-in-out infinite;
+}
+
+/* Shimmer sweep */
+.offer-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, .3) 50%,
+    transparent 65%
+  );
+  transform: translateX(-100%);
+  animation: badge-shimmer 3.6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Left edge accent line */
+.offer-badge::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, .35);
+  border-radius: 2px 0 0 2px;
+  pointer-events: none;
+}
+
+.offer-badge__inner { position: relative; z-index: 2; }
+
+@keyframes badge-float {
+  0%, 100% { transform: translateY(0) rotate3d(1, 0, 0, 0deg); }
+  40%       { transform: translateY(-2.5px) rotate3d(1, 0, 0, 2deg); }
+  60%       { transform: translateY(-2.5px) rotate3d(1, 0, 0, 2deg); }
+}
+@keyframes badge-shimmer {
+  0%        { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(200%); }
+}
+
+/* Hover: tilt + lift */
+@media (hover: hover) and (pointer: fine) {
+  .offer-badge:hover {
+    animation: none;
+    transform: translateY(-3px) perspective(80px) rotateX(6deg) rotateY(-3deg);
+    box-shadow:
+      0 1px 0 var(--ob-shine) inset,
+      0 -1px 0 rgba(0, 0, 0, .25) inset,
+      0 8px 24px color-mix(in srgb, var(--ob-glow) 45%, transparent);
+    transition: transform 220ms var(--ease-out-slow), box-shadow 220ms ease;
+  }
+}
+
+/* ── Colour variants ── */
+/* Discount: brass/amber (default — already set above) */
+
+.offer-badge--limited {
+  --ob-bg:   #7A3728;
+  --ob-glow: #A84433;
+  --ob-text: #FFF3EF;
+}
+.offer-badge--new {
+  --ob-bg:   #1E4A3A;
+  --ob-glow: #2E7055;
+  --ob-text: #D4F0E5;
+}
+.offer-badge--bestseller {
+  --ob-bg:   color-mix(in srgb, var(--accent-deep) 70%, #333);
+  --ob-glow: var(--accent);
+  --ob-text: var(--cta-on-image-text);
+}
+.offer-badge--preorder {
+  --ob-bg:   #1A2E4A;
+  --ob-glow: #2E5080;
+  --ob-text: #CCE0FF;
+}
+.offer-badge--bundle {
+  --ob-bg:   #2E1E4A;
+  --ob-glow: #5A3A8A;
+  --ob-text: #E8D8FF;
+}
+
+/* Card placement: stacked below image, in body row */
+.pcard__offer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+/* PDP placement: inline near price */
+.buybox-offer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 8px 2px;
+}
+
+/* Reduced motion: freeze animation, keep the badge visible */
+.reduced-motion .offer-badge,
+.reduced-motion .offer-badge::before {
+  animation: none;
+}
+.reduced-motion .offer-badge:hover {
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .offer-badge,
+  .offer-badge::before { animation: none; }
+}

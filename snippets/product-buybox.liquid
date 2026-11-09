@@ -8,8 +8,13 @@
 <span class="eyebrow">{{ product.type | default: product.vendor }}</span>
 <h1 class="product-buybox__title">{{ product.title }}</h1>
 {%- render 'star-rating', product: product -%}
+{%- assign ob_check = product.tags | join: ',' -%}
+{%- if ob_check contains 'offer-' -%}
+  <div class="buybox-offer-row">{%- render 'offer-badge', product: product -%}</div>
+{%- endif -%}
 {%- render 'price', product: product, variant: current_variant -%}
 {%- if cart.taxes_included -%}<p class="product-buybox__tax-note">{{ 'products.tax_included' | t }}</p>{%- endif -%}
+{%- render 'promo-strip', inline: true -%}
 
 {%- if current_variant.available == false -%}
   <span class="badge" style="margin-top:6px">{{ 'products.sold_out' | t }}</span>

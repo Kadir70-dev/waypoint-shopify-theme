@@ -58,6 +58,7 @@
     </div>
 
     {%- if cart.item_count > 0 -%}
+      {%- render 'promo-strip', inline: true -%}
       {%- render 'free-shipping-bar' -%}
 
       {%- assign cross_sell_collection = settings.cart_cross_sell_collection -%}

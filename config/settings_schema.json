@@ -383,5 +383,15 @@
         "default": true
       }
     ]
+  },
+  {
+    "name": "Promotions",
+    "settings": [
+      { "type": "checkbox", "id": "promo_enabled", "label": "Show promotional message", "default": false, "info": "Enable only after confirming that all promotional claims and discount codes are valid in Shopify." },
+      { "type": "text", "id": "promo_label", "label": "Promo label", "default": "NEWS", "info": "Short badge label, e.g. NEWS, OFFER, DEAL." },
+      { "type": "text", "id": "promo_text", "label": "Promo text", "default": "Explore our latest collection", "info": "Do not advertise a code until its Shopify discount is configured and tested." },
+      { "type": "text", "id": "promo_secondary", "label": "Secondary promo text", "info": "Optional verified message, such as shipping thresholds matching store currency and shipping rules." },
+      { "type": "text", "id": "promo_expiry", "label": "Expiry date (YYYY-MM-DD)", "info": "Optional date in YYYY-MM-DD format. The promotion is hidden after the end of this date in store time; invalid dates also hide it." }
+    ]
   }
 ]
