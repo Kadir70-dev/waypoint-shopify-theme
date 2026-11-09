@@ -1,6 +1,6 @@
 {% assign journal_image = section.settings.image %}
 <section class="journal-banner" data-lazy-style="--journal-image:url({% if journal_image %}{{ journal_image | image_url: width: 1800 }}{% else %}{{ 'hero-slide-3.jpg' | asset_url }}{% endif %});{% if section.settings.mobile_image %}--journal-image-mobile:url({{ section.settings.mobile_image | image_url: width: 900 }});{% endif %}">
-  <div class="journal-banner__copy"><h2>{{ section.settings.heading }}</h2><div>{{ section.settings.body }}</div>{% if section.settings.cta_label != blank %}<a href="{{ section.settings.cta_url | default: routes.search_url }}">{{ section.settings.cta_label }} <span aria-hidden="true">&rarr;</span></a>{% endif %}</div>
+  <div class="journal-banner__copy"><h2>{{ section.settings.heading }}</h2><div>{{ section.settings.body }}</div>{% if section.settings.cta_label != blank %}<a href="{{ section.settings.cta_url | default: routes.search_url }}">{{ section.settings.cta_label }} <span aria-hidden="true">{{ 'general.arrow_forward' | t }}</span></a>{% endif %}</div>
   <blockquote><p>&ldquo;{{ section.settings.quote }}&rdquo;</p><footer><span></span>{{ section.settings.journal_label }}<small>{{ section.settings.volume_label }}</small></footer></blockquote>
 </section>
 <style>

@@ -59,14 +59,14 @@
   <nav class="article-nav" aria-label="{{ 'sections.journal.article_navigation' | t }}">
     {%- if article.previous_article -%}
       <a href="{{ article.previous_article.url }}" class="article-nav__prev">
-        &larr; {{ article.previous_article.title }}
+        {{ 'general.arrow_back' | t }} {{ article.previous_article.title }}
       </a>
     {%- else -%}
       <span></span>
     {%- endif -%}
     {%- if article.next_article -%}
       <a href="{{ article.next_article.url }}" class="article-nav__next">
-        {{ article.next_article.title }} &rarr;
+        {{ article.next_article.title }} {{ 'general.arrow_forward' | t }}
       </a>
     {%- endif -%}
   </nav>

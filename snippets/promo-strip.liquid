@@ -20,7 +20,7 @@
   endif
 -%}
 {%- if promo_active -%}
-  <div class="promo-strip{% if inline %} promo-strip--inline{% endif %}" role="note" aria-label="Promotional offer">
+  <div class="promo-strip{% if inline %} promo-strip--inline{% endif %}" role="note" aria-label="{{ 'general.promo_offer' | t }}">
     {%- if settings.promo_label != blank -%}
       <span class="promo-strip__label">{{ settings.promo_label | escape }}</span>
     {%- endif -%}
@@ -30,7 +30,7 @@
       <span class="promo-strip__secondary">{{ settings.promo_secondary | escape }}</span>
     {%- endif -%}
     {%- if settings.promo_expiry != blank -%}
-      <span class="promo-strip__expiry">Ends {{ settings.promo_expiry | date: '%b %d, %Y' }}</span>
+      <span class="promo-strip__expiry">{{ 'general.promo_ends' | t: date: settings.promo_expiry | date: '%b %d, %Y' }}</span>
     {%- endif -%}
   </div>
 {%- endif -%}

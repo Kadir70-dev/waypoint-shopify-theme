@@ -5,7 +5,7 @@
       <p class="eyebrow">{{ section.settings.eyebrow }}</p>
       <h2>{{ section.settings.heading }}</h2>
       <div class="performance-feature__body">{{ section.settings.body }}</div>
-      {% if section.settings.cta_label != blank %}<a class="performance-feature__link" href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}">{{ section.settings.cta_label }} <span aria-hidden="true">&rarr;</span></a>{% endif %}
+      {% if section.settings.cta_label != blank %}<a class="performance-feature__link" href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}">{{ section.settings.cta_label }} <span aria-hidden="true">{{ 'general.arrow_forward' | t }}</span></a>{% endif %}
     </div>
     <ul class="performance-feature__list">
       {% for block in section.blocks %}<li {{ block.shopify_attributes }}>{{ block.settings.label }}</li>{% endfor %}
@@ -18,10 +18,10 @@
         <h3>{{ featured_product.title }}</h3>
         <p>{{ section.settings.product_description }}</p>
         {% render 'price', product: featured_product %}
-        <a class="performance-feature__link" href="{{ featured_product.url }}">{{ section.settings.product_cta_label }} <span aria-hidden="true">&rarr;</span></a>
+        <a class="performance-feature__link" href="{{ featured_product.url }}">{{ section.settings.product_cta_label }} <span aria-hidden="true">{{ 'general.arrow_forward' | t }}</span></a>
       {% else %}
         <p>{{ section.settings.product_description }}</p>
-        <a class="performance-feature__link" href="{{ routes.all_products_collection_url }}">{{ section.settings.product_cta_label }} <span aria-hidden="true">&rarr;</span></a>
+        <a class="performance-feature__link" href="{{ routes.all_products_collection_url }}">{{ section.settings.product_cta_label }} <span aria-hidden="true">{{ 'general.arrow_forward' | t }}</span></a>
       {% endif %}
     </div>
     <div class="performance-feature__product-image">

@@ -40,7 +40,7 @@
           <h2>{{ item_title | escape }}</h2>
           {%- if block.settings.text != blank -%}<div class="rte">{{ block.settings.text }}</div>{%- endif -%}
           {%- if item_link != blank and block.settings.button_label != blank -%}
-            <a class="btn btn-outline" href="{{ item_link }}">{{ block.settings.button_label | escape }}<span class="visually-hidden">: {{ item_title | escape }}</span> &rarr;</a>
+            <a class="btn btn-outline" href="{{ item_link }}">{{ block.settings.button_label | escape }}<span class="visually-hidden">: {{ item_title | escape }}</span> {{ 'general.arrow_forward' | t }}</a>
           {%- endif -%}
         </div>
       </article>

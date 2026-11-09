@@ -30,7 +30,7 @@
       {%- endif -%}
       {%- if section.settings.cta_label != blank -%}
         <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="btn btn-outline" style="align-self:flex-start;margin-top:6px">
-          {{ section.settings.cta_label }} &rarr;
+          {{ section.settings.cta_label }} {{ 'general.arrow_forward' | t }}
         </a>
       {%- endif -%}
     </div>
@@ -55,7 +55,7 @@
         {%- endif -%}
         {%- render 'price', product: product -%}
         <a href="{{ product.url }}" class="btn btn-primary" style="align-self:flex-start;margin-top:4px">
-          {{ section.settings.product_cta_label }} &rarr;
+          {{ section.settings.product_cta_label }} {{ 'general.arrow_forward' | t }}
         </a>
       </div>
       <div class="feature-spotlight__product-media">

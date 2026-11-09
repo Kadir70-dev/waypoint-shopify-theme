@@ -37,8 +37,8 @@
       {%- else -%}
         <a href="{{ routes.root_url }}">{{ 'navigation.home' | t }}</a>
         <a href="{{ routes.all_products_collection_url }}">{{ 'navigation.shop' | t }}</a>
-        <a href="{{ routes.search_url }}">Search</a>
-        <a href="{{ routes.cart_url }}">Cart</a>
+        <a href="{{ routes.search_url }}">{{ 'general.search_link' | t }}</a>
+        <a href="{{ routes.cart_url }}">{{ 'general.cart_link' | t }}</a>
       {%- endif -%}
     </nav>
 
@@ -145,8 +145,8 @@
       {%- else -%}
         <li><a href="{{ routes.root_url }}">{{ 'navigation.home' | t }}</a></li>
         <li><a href="{{ routes.all_products_collection_url }}">{{ 'navigation.shop' | t }}</a></li>
-        <li><a href="{{ routes.search_url }}">Search</a></li>
-        <li><a href="{{ routes.cart_url }}">Cart</a></li>
+        <li><a href="{{ routes.search_url }}">{{ 'general.search_link' | t }}</a></li>
+        <li><a href="{{ routes.cart_url }}">{{ 'general.cart_link' | t }}</a></li>
       {%- endif -%}
     </ul>
   </div>

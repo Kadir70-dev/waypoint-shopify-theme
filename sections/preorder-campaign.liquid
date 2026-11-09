@@ -27,14 +27,14 @@
         <div class="waypoint-preorder__status" role="status">
           <span class="waypoint-preorder__status-dot" aria-hidden="true"></span>
           {%- if active_purchase_options -%}
-            Purchase options configured
+            {{ 'products.preorder.configured' | t }}
           {%- else -%}
             Preview only · Pre-orders not active
           {%- endif -%}
         </div>
         <h3>{{ campaign_product.title | escape }}</h3>
         {%- unless active_purchase_options -%}
-          <p class="waypoint-preorder__notice">Pre-order checkout becomes available only after the merchant configures a compatible Shopify pre-order app and a product selling plan. This campaign does not take reservations or payments.</p>
+          <p class="waypoint-preorder__notice">{{ 'products.preorder.notice' | t }}</p>
         {%- endunless -%}
       {%- endif -%}
       {%- if section.settings.dispatch_text != blank or section.settings.terms != blank -%}

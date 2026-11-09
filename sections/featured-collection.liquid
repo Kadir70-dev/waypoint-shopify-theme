@@ -9,7 +9,7 @@
     </div>
     {%- if section.settings.show_view_all -%}
       <a href="{{ section.settings.collection.url | default: routes.all_products_collection_url }}" class="section-heading__view-all">
-        {{ 'general.view_all' | t }} &rarr;
+        {{ 'general.view_all' | t }} {{ 'general.arrow_forward' | t }}
       </a>
     {%- endif -%}
   </div>

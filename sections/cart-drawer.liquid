@@ -110,7 +110,7 @@
           <p class="cart-drawer__shipping-note">{{ 'cart.shipping_at_checkout' | t }}</p>
           <a href="{{ routes.cart_url }}" class="btn btn-outline btn-block">{{ 'cart.view_cart' | t }}</a>
           <button type="submit" name="checkout" class="btn btn-primary btn-block" style="margin-top:10px">
-            {{ 'cart.checkout' | t }} &rarr;
+            {{ 'cart.checkout' | t }} {{ 'general.arrow_forward' | t }}
           </button>
           {{ form | payment_button }}
         </div>
