@@ -1,10 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "campaign": {
       "type": "preorder-campaign",
       "settings": {
         "primary_heading": true,
-        "heading": "Something new is on the horizon"
+        "heading": "An Adventure on the Horizon",
+        "eyebrow": "CAIRNFIELD / UPCOMING",
+        "product": "trailnest-two-person-tent",
+        "text": "<p>Explore an editorial preview of a camping-inspired product story. Pre-orders are not active on this demonstration store.</p>",
+        "button_label": "Explore product details"
       }
     },
     "questions": {
@@ -74,7 +87,8 @@
         "faq",
         "contact",
         "shipping-returns"
-      ]
+      ],
+      "disabled": true
     }
   },
   "order": [

@@ -1,15 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero-slider",
-      "settings": {
-        "autoplay": false,
-        "autoplay_interval": 15,
-        "transition_duration": 600,
-        "tagline_word_1": "Explore",
-        "tagline_word_2": "Adapt",
-        "tagline_word_3": "Endure"
-      },
       "blocks": {
         "slide-1": {
           "type": "slide",
@@ -43,62 +44,71 @@
         "slide-1",
         "slide-2",
         "slide-3"
-      ]
+      ],
+      "settings": {
+        "autoplay": false,
+        "autoplay_interval": 15,
+        "transition_duration": 600,
+        "tagline_word_1": "Explore",
+        "tagline_word_2": "Adapt",
+        "tagline_word_3": "Endure"
+      }
     },
     "latest-releases": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Explore the collection",
-        "subheading": "Find your next outdoor companion.",
-        "products_to_show": 6,
+        "heading": "The Field Edit",
+        "subheading": "A curated look at packs and essentials for days beyond the ordinary.",
+        "collection": "backpacks-bags",
+        "products_to_show": 4,
         "show_view_all": true
       }
     },
     "shop-by-category": {
       "type": "category-grid",
-      "settings": {
-        "heading": "Shop by Category",
-        "path_cards": true
-      },
       "blocks": {
         "tile-1": {
           "type": "tile",
           "settings": {
-            "label": "Backpacks",
-            "sublabel": "Carry further.",
-            "description": "Built for long trails, daily missions and everything in between.",
-            "meta_label": "Includes",
-            "meta_value": "Day Packs · Expedition · Travel · Hydration"
+            "label": "Backpacks & Bags",
+            "sublabel": "Carry with purpose.",
+            "description": "Discover travel packs, daypacks and versatile everyday carry.",
+            "meta_label": "Explore",
+            "meta_value": "Trail · Travel · Everyday",
+            "link": "/collections/backpacks-bags"
           }
         },
         "tile-2": {
           "type": "tile",
           "settings": {
             "label": "Camp & Shelter",
-            "sublabel": "Stay ready.",
-            "description": "Reliable shelter and sleep systems engineered for nights beyond the familiar.",
-            "meta_label": "Includes",
-            "meta_value": "Tents · Shelters · Sleeping Gear · Camp Essentials"
+            "sublabel": "Make room for the outdoors.",
+            "description": "Shelter-inspired products and campsite editorial.",
+            "meta_label": "Explore",
+            "meta_value": "Shelters · Camps · Essentials",
+            "link": "/collections/camp-shelter"
           }
         },
         "tile-3": {
           "type": "tile",
           "settings": {
-            "label": "Tools & Equipment",
-            "sublabel": "Built for more.",
-            "description": "Dependable field equipment designed for demanding environments and unexpected moments.",
-            "meta_label": "Includes",
-            "meta_value": "Navigation · Lighting · Multi-Tools · Field Gear"
+            "label": "Outdoor Essentials",
+            "sublabel": "Details for every journey.",
+            "description": "Thoughtful field and travel accessories, gathered in one place.",
+            "meta_label": "Explore",
+            "meta_value": "Travel · Utility · Field Notes",
+            "link": "/collections/accessories-essentials"
           }
         },
         "tile-4": {
           "type": "tile",
           "settings": {
-            "label": "Apparel",
-            "sublabel": "All conditions.",
-            "description": "Technical layers designed for changing weather, hard movement and everyday exploration.",
-            "meta_label": "Includes",
-            "meta_value": "Base Layers · Outerwear · Performance · Essentials"
+            "label": "Explore Everything",
+            "sublabel": "Discover the whole edit.",
+            "description": "Browse every example product in the Cairnfield demonstration store.",
+            "meta_label": "Catalog",
+            "meta_value": "Bags · Shelter · Accessories",
+            "link": "/collections/all"
           }
         }
       },
@@ -107,55 +117,59 @@
         "tile-2",
         "tile-3",
         "tile-4"
-      ]
+      ],
+      "settings": {
+        "heading": "Shop by Category",
+        "path_cards": true
+      }
     },
     "video-page-breaker": {
       "type": "video-page-breaker",
+      "disabled": true,
       "settings": {}
     },
     "trusted-by-explorers": {
       "type": "social-proof",
-      "disabled": true,
-      "settings": {
-        "heading": "Trusted by Explorers",
-        "subheading": "Real people. Real places."
-      },
       "blocks": {
-        "ti1": {
+        "trust1": {
           "type": "trust-item",
           "settings": {
             "icon": "mountain",
-            "label": "Field Tested"
+            "label": "Cinematic storefront"
           }
         },
-        "ti2": {
+        "trust2": {
           "type": "trust-item",
           "settings": {
             "icon": "leaf",
-            "label": "Sustainable Practices"
+            "label": "Reusable layouts"
           }
         },
-        "ti3": {
+        "trust3": {
           "type": "trust-item",
           "settings": {
             "icon": "shield",
-            "label": "Built to Last"
+            "label": "Mobile responsive"
           }
         },
-        "ti4": {
+        "trust4": {
           "type": "trust-item",
           "settings": {
             "icon": "globe",
-            "label": "Global Community"
+            "label": "Review app ready"
           }
         }
       },
       "block_order": [
-        "ti1",
-        "ti2",
-        "ti3",
-        "ti4"
-      ]
+        "trust1",
+        "trust2",
+        "trust3",
+        "trust4"
+      ],
+      "settings": {
+        "heading": "Designed for thoughtful shopping",
+        "subheading": "Flexible theme features — no fabricated customer reviews."
+      }
     },
     "newsletter": {
       "type": "newsletter",
@@ -166,15 +180,6 @@
     },
     "performance-feature": {
       "type": "performance-feature",
-      "settings": {
-        "eyebrow": "Engineered for Extremes",
-        "heading": "Details That Perform",
-        "cta_label": "Our Approach",
-        "product_eyebrow": "Featured Gear",
-        "product_cta_label": "View Product",
-        "body": "<p>From alpine ridges to dense forests, every element is designed with purpose. Premium materials. Rigorously tested. No compromises.</p>",
-        "product_description": "All-terrain backpack for multi-day missions."
-      },
       "blocks": {
         "f1": {
           "type": "feature",
@@ -214,34 +219,42 @@
         "f4",
         "f5"
       ],
-      "disabled": true
+      "disabled": true,
+      "settings": {
+        "eyebrow": "Engineered for Extremes",
+        "heading": "Details That Perform",
+        "body": "<p>From alpine ridges to dense forests, every element is designed with purpose. Premium materials. Rigorously tested. No compromises.</p>",
+        "cta_label": "Our Approach",
+        "product_eyebrow": "Featured Gear",
+        "product_description": "All-terrain backpack for multi-day missions.",
+        "product_cta_label": "View Product"
+      }
     },
     "journal-banner": {
       "type": "journal-banner",
       "settings": {
         "heading": "A Life More Open",
+        "body": "<p>Stories, guides and perspectives from those who choose a wilder path.</p>",
         "cta_label": "Explore the Journal",
-        "quote": "Not escape. Perspective.",
-        "body": "<p>Stories, guides and perspectives from those who choose a wilder path.</p>"
+        "quote": "Not escape. Perspective."
       }
     },
     "testimonials-marquee": {
       "type": "testimonials-marquee",
       "disabled": true,
-      "settings": {},
-      "blocks": {},
-      "block_order": []
+      "settings": {}
     },
     "tent-showcase": {
       "type": "featured-product",
       "settings": {
-        "eyebrow": "Camp & Shelter",
-        "cta_label": "Explore the tent"
+        "product": "trailnest-two-person-tent",
+        "eyebrow": "Closer to Nature",
+        "text": "An editorial preview of our campsite-inspired collection.",
+        "cta_label": "Explore the story"
       }
     },
     "demo-navigation": {
       "type": "demo-navigation",
-      "settings": {},
       "blocks": {
         "about-us": {
           "type": "page",
@@ -280,20 +293,58 @@
         "faq",
         "contact",
         "shipping-returns"
-      ]
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "rotating-gallery-demo": {
+      "type": "rotating-gallery",
+      "settings": {
+        "heading": "Four views. One journey.",
+        "text": "<p>Explore our visual storytelling gallery. Swipe or use the controls to browse an illustrative campsite sequence.</p>",
+        "product": "trailnest-two-person-tent",
+        "autoplay": true,
+        "interval": 7,
+        "pause_label": "Pause rotation"
+      }
+    },
+    "locations-explorer": {
+      "type": "branch-locations",
+      "settings": {
+        "eyebrow": "MERCHANT READY · LOCATIONS",
+        "heading": "Explore the location finder",
+        "description": "<p>A configurable location directory with satellite and 3D-map support. Merchants can add their verified physical locations and a MapTiler public key to activate interactive mapping.</p>",
+        "directory_heading": "Verified locations appear here",
+        "initial_view": "satellite",
+        "enable_terrain": true,
+        "map_height": 575
+      }
+    },
+    "upcoming-edit": {
+      "type": "preorder-campaign",
+      "settings": {
+        "eyebrow": "COMING NEXT / COLLECTION PREVIEW",
+        "heading": "Ahead of the Adventure",
+        "text": "<p>Explore an upcoming collection experience with a premium editorial layout. This is a preview only: pre-order checkout and reservations are not active.</p>",
+        "product": "trailnest-two-person-tent",
+        "button_label": "Explore the preview"
+      }
     }
   },
   "order": [
     "hero",
-    "demo-navigation",
     "shop-by-category",
     "latest-releases",
     "tent-showcase",
-    "video-page-breaker",
+    "rotating-gallery-demo",
+    "upcoming-edit",
     "journal-banner",
+    "trusted-by-explorers",
+    "locations-explorer",
     "newsletter",
+    "demo-navigation",
+    "video-page-breaker",
     "performance-feature",
-    "testimonials-marquee",
-    "trusted-by-explorers"
+    "testimonials-marquee"
   ]
 }
