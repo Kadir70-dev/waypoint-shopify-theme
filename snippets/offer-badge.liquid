@@ -16,25 +16,25 @@
   assign ob_text = blank
   assign ob_kind = 'discount'
   if product.tags contains 'offer-20-off'
-    assign ob_text = '20% OFF'
+    assign ob_text = 'products.offer_20_off' | t
   elsif product.tags contains 'offer-15-off'
-    assign ob_text = '15% OFF'
+    assign ob_text = 'products.offer_15_off' | t
   elsif product.tags contains 'offer-10-off'
-    assign ob_text = '10% OFF'
+    assign ob_text = 'products.offer_10_off' | t
   elsif product.tags contains 'offer-limited'
-    assign ob_text = 'Limited Offer'
+    assign ob_text = 'products.offer_limited' | t
     assign ob_kind = 'limited'
   elsif product.tags contains 'offer-new'
-    assign ob_text = 'New Arrival'
+    assign ob_text = 'products.offer_new' | t
     assign ob_kind = 'new'
   elsif product.tags contains 'offer-bestseller'
-    assign ob_text = 'Best Seller'
+    assign ob_text = 'products.offer_bestseller' | t
     assign ob_kind = 'bestseller'
   elsif product.tags contains 'offer-preorder'
-    assign ob_text = 'Pre-order'
+    assign ob_text = 'products.offer_preorder' | t
     assign ob_kind = 'preorder'
   elsif product.tags contains 'offer-bundle'
-    assign ob_text = 'Bundle Deal'
+    assign ob_text = 'products.offer_bundle' | t
     assign ob_kind = 'bundle'
   endif
 -%}
