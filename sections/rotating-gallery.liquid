@@ -1,32 +1,54 @@
 {{ 'component-rotating-gallery.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'rotating-gallery.js' | asset_url }}" defer></script>
-{%- assign gallery_product = section.settings.product | default: product -%}
-<waypoint-gallery class="waypoint-gallery page-width" data-autoplay="{{ section.settings.autoplay }}" data-interval="{{ section.settings.interval | times: 1000 }}" aria-labelledby="GalleryTitle-{{ section.id }}">
-  <div class="section-header"><h2 id="GalleryTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2><div class="rte">{{ section.settings.text }}</div></div>
-  <div class="waypoint-gallery__track" id="GalleryTrack-{{ section.id }}" tabindex="0" aria-label="{{ section.settings.heading | escape }}">
-    {%- if section.blocks.size > 0 -%}
-      {%- for block in section.blocks -%}
-        {%- if block.settings.image != blank -%}
-          <figure class="waypoint-gallery__slide" {{ block.shopify_attributes }}>
-            {{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '480, 800, 1200, 1600', sizes: '(min-width: 990px) 70vw, 90vw' }}
-            {%- if block.settings.caption != blank -%}<figcaption>{{ block.settings.caption | escape }}</figcaption>{%- endif -%}
-          </figure>
-        {%- endif -%}
-      {%- endfor -%}
-    {%- else -%}
-      {%- for gallery_image in gallery_product.images -%}
-        <figure class="waypoint-gallery__slide">{{ gallery_image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '480, 800, 1200, 1600', sizes: '(min-width: 990px) 70vw, 90vw' }}</figure>
-      {%- endfor -%}
+{%- liquid
+  assign gallery_product = section.settings.product | default: product
+  assign configured_images = 0
+  for block in section.blocks
+    if block.settings.image != blank
+      assign configured_images = configured_images | plus: 1
+    endif
+  endfor
+  assign gallery_image_count = configured_images
+  if configured_images == 0 and gallery_product != blank
+    assign gallery_image_count = gallery_product.images.size
+  endif
+-%}
+{%- if gallery_image_count > 0 -%}
+  <waypoint-gallery class="waypoint-gallery" data-marquee="true" data-autoplay="{{ section.settings.autoplay }}" data-image-count="{{ gallery_image_count }}" aria-label="Image gallery">
+    <div class="waypoint-gallery__viewport">
+      <div class="waypoint-gallery__track">
+        {%- comment -%}Two identical groups provide a seamless CSS loop. Empty preset blocks still allow product images to appear.{%- endcomment -%}
+        {%- for repeat in (1..2) -%}
+          <div class="waypoint-gallery__group"{% if repeat == 2 %} aria-hidden="true"{% endif %}>
+            {%- if configured_images > 0 -%}
+              {%- for block in section.blocks -%}
+                {%- if block.settings.image != blank -%}
+                  <figure class="waypoint-gallery__slide"{% if repeat == 1 %} {{ block.shopify_attributes }}{% endif %}>
+                    {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400, 800, 1200', sizes: '(min-width: 990px) 32vw, 72vw' }}
+                  </figure>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- elsif gallery_product != blank -%}
+              {%- for gallery_image in gallery_product.images -%}
+                <figure class="waypoint-gallery__slide">
+                  {{ gallery_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '400, 800, 1200', sizes: '(min-width: 990px) 32vw, 72vw' }}
+                </figure>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- if gallery_image_count > 1 -%}
+      <button class="waypoint-gallery__toggle" type="button" data-marquee-toggle aria-pressed="false" aria-label="Pause moving gallery">
+        <span data-marquee-icon aria-hidden="true">Ⅱ</span>
+      </button>
     {%- endif -%}
-  </div>
-  <div class="waypoint-gallery__controls" hidden>
-    <button type="button" class="btn" data-prev aria-controls="GalleryTrack-{{ section.id }}">{{ 'products.gallery_previous' | t }}</button>
-    <span data-count aria-live="off"></span>
-    <button type="button" class="btn" data-next aria-controls="GalleryTrack-{{ section.id }}">{{ 'products.gallery_next' | t }}</button>
-    <button type="button" class="btn" data-pause hidden>{{ section.settings.pause_label | escape }}</button>
-  </div>
-  {%- if request.design_mode -%}<p>Select a product to use its images, or add image blocks. Use photographs of the same item for product views. This is a rotating slideshow, not a 360° product model.</p>{%- endif -%}
-</waypoint-gallery>
+  </waypoint-gallery>
+{%- elsif request.design_mode -%}
+  <p class="waypoint-gallery__editor-note">Select a product or add image blocks to display the gallery.</p>
+{%- endif -%}
+
 {% schema %}
 {
  "name":"Rotating image gallery",
@@ -34,12 +56,12 @@
   {"type":"text","id":"heading","label":"Heading","default":"A closer look"},
   {"type":"richtext","id":"text","label":"Introduction"},
   {"type":"product","id":"product","label":"Product images","info":"Leave empty on a product page to use the current product. Image blocks take priority."},
-  {"type":"checkbox","id":"autoplay","label":"Rotate automatically","default":false},
+  {"type":"checkbox","id":"autoplay","label":"Continuous rotation","default":true},
   {"type":"range","id":"interval","label":"Seconds between images","min":5,"max":12,"step":1,"default":7},
   {"type":"text","id":"pause_label","label":"Stop rotation label","default":"Stop rotation"}
  ],
  "blocks":[{"type":"image","name":"Image","settings":[{"type":"image_picker","id":"image","label":"Image"},{"type":"text","id":"caption","label":"Caption"}]}],
  "max_blocks":12,
- "presets":[{"name":"Rotating image gallery"}]
+ "presets":[{"name":"Rotating image gallery","blocks":[{"type":"image"},{"type":"image"},{"type":"image"},{"type":"image"},{"type":"image"},{"type":"image"},{"type":"image"}]}]
 }
 {% endschema %}
