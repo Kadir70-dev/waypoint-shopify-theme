@@ -1,0 +1,76 @@
+{{ 'component-demo-pages.css' | asset_url | stylesheet_tag }}
+<section class="waypoint-page page-width" aria-labelledby="ShowcaseTitle-{{ section.id }}">
+  <div class="waypoint-page__intro">
+    {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>{%- endif -%}
+    {%- if section.settings.primary_heading -%}<h1 id="ShowcaseTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h1>{%- else -%}<h2 id="ShowcaseTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+    {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
+  </div>
+  <div class="waypoint-page__grid{% if section.settings.layout == 'story' %} waypoint-page__grid--story{% endif %}">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign item_image = block.settings.image
+        assign item_title = block.settings.heading
+        assign item_link = block.settings.link
+        if block.settings.page != blank
+          assign item_link = block.settings.page.url
+        elsif block.settings.collection != blank
+          assign item_link = block.settings.collection.url
+          if item_image == blank
+            assign item_image = block.settings.collection.image
+          endif
+          if item_title == blank
+            assign item_title = block.settings.collection.title
+          endif
+        elsif block.settings.product != blank
+          assign item_link = block.settings.product.url
+          if item_image == blank
+            assign item_image = block.settings.product.featured_image
+          endif
+          if item_title == blank
+            assign item_title = block.settings.product.title
+          endif
+        endif
+      -%}
+      <article class="waypoint-page__card" {{ block.shopify_attributes }}>
+        {%- if item_image != blank -%}
+          <div class="waypoint-page__media">{{ item_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360, 600, 900, 1200', sizes: '(min-width: 990px) 40vw, (min-width: 750px) 50vw, 100vw' }}</div>
+        {%- endif -%}
+        <div class="waypoint-page__body">
+          <span class="waypoint-page__number" aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+          <h2>{{ item_title | escape }}</h2>
+          {%- if block.settings.text != blank -%}<div class="rte">{{ block.settings.text }}</div>{%- endif -%}
+          {%- if item_link != blank and block.settings.button_label != blank -%}
+            <a class="btn btn-outline" href="{{ item_link }}">{{ block.settings.button_label | escape }}<span class="visually-hidden">: {{ item_title | escape }}</span> &rarr;</a>
+          {%- endif -%}
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+  {%- if section.blocks.size == 0 and request.design_mode -%}<p class="waypoint-page__empty">Add story, page, collection or product cards in the theme editor.</p>{%- endif -%}
+</section>
+{% schema %}
+{
+  "name": "Page showcase",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow"},
+    {"type":"text","id":"heading","label":"Heading","default":"Explore the collection"},
+    {"type":"richtext","id":"text","label":"Introduction"},
+    {"type":"checkbox","id":"primary_heading","label":"Use as the page title (H1)","default":false},
+    {"type":"select","id":"layout","label":"Layout","default":"grid","options":[{"value":"grid","label":"Card grid"},{"value":"story","label":"Editorial story"}]}
+  ],
+  "blocks": [
+    {"type":"card","name":"Story or destination","settings":[
+      {"type":"image_picker","id":"image","label":"Image"},
+      {"type":"text","id":"heading","label":"Heading"},
+      {"type":"richtext","id":"text","label":"Text"},
+      {"type":"text","id":"button_label","label":"Button label","default":"Explore"},
+      {"type":"page","id":"page","label":"Page"},
+      {"type":"collection","id":"collection","label":"Collection"},
+      {"type":"product","id":"product","label":"Product"},
+      {"type":"url","id":"link","label":"Custom link","info":"A selected page, collection or product takes priority."}
+    ]}
+  ],
+  "max_blocks": 16,
+  "presets": [{"name":"Page showcase"}]
+}
+{% endschema %}

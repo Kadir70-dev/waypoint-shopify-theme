@@ -99,28 +99,46 @@
   {%- endfor -%}{%- endunless -%}
 
   {%- comment -%}
-    Selling plans / subscriptions (Milestone 10, Theme Store
-    requirement). Real product.selling_plan_groups only — renders
-    nothing if the merchant has no selling plans on this product.
-    "One-time purchase" submits an empty selling_plan value, which
-    Shopify's cart API treats as a standard one-time purchase.
+    App-managed pre-orders and purchase plans. Shopify owns the selling plans,
+    delivery/billing policies, and the final checkout. Render exactly one
+    selling_plan radio group for the currently selected variant; selecting
+    an option submits its actual Shopify selling plan ID, including without JS.
+    The Section Rendering API refreshes this markup on variant changes.
   {%- endcomment -%}
-  {%- if product.selling_plan_groups.size > 0 -%}
-    {%- for group in product.selling_plan_groups -%}
-      {%- assign one_time_id = 'SellingPlanOneTime-' | append: section.id | append: '-' | append: forloop.index -%}
-      <fieldset class="option-selector">
-        <legend class="eyebrow">{{ group.name }}</legend>
-        <div class="option-selector__values">
-          <input type="radio" id="{{ one_time_id }}" name="selling_plan" value="" checked class="visually-hidden option-selector__input">
-          <label for="{{ one_time_id }}" class="option-selector__pill">{{ 'products.one_time_purchase' | t }}</label>
-          {%- for plan in group.selling_plans -%}
-            {%- assign plan_input_id = 'SellingPlan-' | append: section.id | append: '-' | append: forloop.index -%}
-            <input type="radio" id="{{ plan_input_id }}" name="selling_plan" value="{{ plan.id }}" class="visually-hidden option-selector__input">
-            <label for="{{ plan_input_id }}" class="option-selector__pill">{{ plan.name }}</label>
-          {%- endfor -%}
-        </div>
-      </fieldset>
-    {%- endfor -%}
+  {%- liquid
+    assign purchase_requires_plan = product.requires_selling_plan
+    if current_variant.requires_selling_plan
+      assign purchase_requires_plan = true
+    endif
+    assign purchase_allocations = current_variant.selling_plan_allocations
+    assign purchase_ready = current_variant.available
+    if purchase_requires_plan and purchase_allocations.size == 0
+      assign purchase_ready = false
+    endif
+  -%}
+  {%- if purchase_allocations.size > 0 -%}
+    <fieldset class="purchase-options" data-purchase-options>
+      <legend class="purchase-options__heading">Purchase options</legend>
+      <div class="purchase-options__choices">
+        {%- unless purchase_requires_plan -%}
+          <label class="purchase-options__choice">
+            <input type="radio" name="selling_plan" value="" checked>
+            <span class="purchase-options__name">One-time purchase</span>
+            <span class="purchase-options__price">{{ current_variant.price | money }}</span>
+          </label>
+        {%- endunless -%}
+        {%- for allocation in purchase_allocations -%}
+          <label class="purchase-options__choice">
+            <input type="radio" name="selling_plan" value="{{ allocation.selling_plan.id }}"{% if purchase_requires_plan and forloop.first %} checked{% endif %}>
+            <span class="purchase-options__name">{{ allocation.selling_plan.name | escape }}</span>
+            <span class="purchase-options__price">{{ allocation.price | money }}</span>
+          </label>
+        {%- endfor -%}
+      </div>
+      <p class="purchase-options__note">Delivery schedule, charges and cancellation terms are set by the merchant's purchase-option app and shown at checkout.</p>
+    </fieldset>
+  {%- elsif purchase_requires_plan -%}
+    <p class="purchase-options__unavailable" role="status">This product needs a configured purchase option before checkout is available.</p>
   {%- endif -%}
 
   <div class="product-buybox__quantity">
@@ -180,9 +198,9 @@
     data-label-sold-out="{{ 'products.sold_out' | t }}"
     data-label-adding="{{ 'products.adding' | t }}"
     data-label-added="{{ 'products.added' | t }}"
-    {% unless current_variant.available %}disabled{% endunless %}
+    {% unless purchase_ready %}disabled{% endunless %}
   >
-    {%- if current_variant.available -%}
+    {%- if purchase_ready -%}
       {{ 'products.add_to_cart' | t }} &rarr;
     {%- else -%}
       {{ 'products.sold_out' | t }}
@@ -194,8 +212,11 @@
     Store requirements). payment_button is skipped for gift cards per
     Shopify's own documented incompatibility with recipient validation.
   {%- endcomment -%}
+  {%- comment -%}Pre-order purchase plans do not support accelerated checkout buttons.{%- endcomment -%}
   {%- unless product.gift_card? -%}
-    {{ form | payment_button }}
+    {%- if product.selling_plan_groups.size == 0 -%}
+      {{ form | payment_button }}
+    {%- endif -%}
   {%- endunless -%}
   {{ form | payment_terms }}
 

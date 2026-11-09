@@ -1,21 +1,54 @@
 {
   "sections": {
-    "intro": {
-      "type": "main-page"
-    },
-    "guide": {
-      "type": "faq-content"
-    },
-    "contact": {
-      "type": "contact-form",
+    "showcase": {
+      "type": "page-showcase",
       "settings": {
-        "heading": "Need help choosing?"
-      }
+        "primary_heading": true,
+        "eyebrow": "Find your fit",
+        "heading": "Measure once. Choose thoughtfully.",
+        "text": "<p>Use a soft measuring tape and compare your measurements with the chart provided for the individual product.</p>",
+        "layout": "grid"
+      },
+      "blocks": {
+        "card-1": {
+          "type": "card",
+          "settings": {
+            "heading": "Chest",
+            "text": "<p>Keep the tape level around the fullest part of your chest. Measure over a light layer without pulling tight.</p>"
+          }
+        },
+        "card-2": {
+          "type": "card",
+          "settings": {
+            "heading": "Waist",
+            "text": "<p>Measure around your natural waist while standing comfortably. Keep the tape flat and allow room to breathe.</p>"
+          }
+        },
+        "card-3": {
+          "type": "card",
+          "settings": {
+            "heading": "Hips",
+            "text": "<p>Stand with your feet together and measure around the fullest part of your hips.</p>"
+          }
+        },
+        "card-4": {
+          "type": "card",
+          "settings": {
+            "heading": "Between sizes?",
+            "text": "<p>Check the product-specific fit notes and contact the store if you need help. Measurements and sizing can differ between products.</p>",
+            "button_label": "Ask for help"
+          }
+        }
+      },
+      "block_order": [
+        "card-1",
+        "card-2",
+        "card-3",
+        "card-4"
+      ]
     }
   },
   "order": [
-    "intro",
-    "guide",
-    "contact"
+    "showcase"
   ]
 }

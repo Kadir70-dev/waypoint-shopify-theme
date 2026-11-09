@@ -1,0 +1,92 @@
+/* Waypoint image-led gallery: two identical image groups, one seamless loop. */
+waypoint-gallery.waypoint-gallery {
+  position: relative;
+  display: block;
+  padding-block: clamp(32px, 5vw, 64px);
+  overflow: hidden;
+}
+.waypoint-gallery__viewport { width: 100%; overflow: hidden; }
+.waypoint-gallery__track {
+  display: flex;
+  width: max-content;
+  max-width: none;
+  animation: waypoint-marquee 32s linear infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+waypoint-gallery[data-playing="true"] .waypoint-gallery__track { animation-play-state: running; }
+/* The last gap is within each group, so -50% equals one complete group. */
+.waypoint-gallery__group {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 20px;
+  padding-inline-end: 20px;
+}
+.waypoint-gallery__slide {
+  flex: 0 0 auto;
+  width: clamp(210px, 31vw, 480px);
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-media);
+  background: var(--surface-2);
+}
+.waypoint-gallery__slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-out-slow, ease);
+}
+.waypoint-gallery__toggle {
+  position: absolute;
+  inset-inline-end: 20px;
+  inset-block-end: clamp(40px, 5vw, 72px);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  cursor: pointer;
+  background: var(--surface-2, #fff);
+  color: var(--text, #111);
+  border: 1px solid var(--border-strong, #999);
+  border-radius: 50%;
+  box-shadow: 0 5px 20px rgba(0,0,0,.12);
+}
+.waypoint-gallery__toggle[hidden] { display: none; }
+.waypoint-gallery__toggle:focus-visible {
+  outline: var(--focus-ring, 2px solid currentColor);
+  outline-offset: 3px;
+}
+.waypoint-gallery__editor-note { padding: 16px 24px; color: var(--muted); }
+@media (hover: hover) and (pointer: fine) {
+  waypoint-gallery:hover .waypoint-gallery__track { animation-play-state: paused; }
+  waypoint-gallery:hover .waypoint-gallery__slide img { transform: scale(1.025); }
+}
+@media (max-width: 749px) {
+  .waypoint-gallery__group { gap: 14px; padding-inline-end: 14px; }
+  .waypoint-gallery__slide { width: clamp(200px, 72vw, 340px); }
+}
+@keyframes waypoint-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+html.reduced-motion .waypoint-gallery__track,
+html[data-premium-motion="false"] .waypoint-gallery__track {
+  animation: none;
+  transform: none;
+}
+html.reduced-motion .waypoint-gallery__viewport,
+html[data-premium-motion="false"] .waypoint-gallery__viewport {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+@media (prefers-reduced-motion: reduce) {
+  .waypoint-gallery__track { animation: none; transform: none; }
+  .waypoint-gallery__viewport { overflow-x: auto; scrollbar-width: thin; }
+  .waypoint-gallery__slide img { transition: none; }
+}

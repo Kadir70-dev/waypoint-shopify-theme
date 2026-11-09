@@ -191,6 +191,12 @@
   {%- endif -%}
 </div>
 
+{%- liquid
+  assign sticky_purchase_ready = current_variant.available
+  if product.requires_selling_plan and current_variant.selling_plan_allocations.size == 0
+    assign sticky_purchase_ready = false
+  endif
+-%}
 {%- if settings.show_sticky_atc_mobile -%}
   <div class="sticky-atc" data-sticky-atc-bar>
     <div class="sticky-atc__info">
@@ -204,9 +210,9 @@
       data-sticky-atc
       data-label-add="{{ 'products.add_to_cart' | t }}"
       data-label-sold-out="{{ 'products.sold_out' | t }}"
-      {% unless current_variant.available %}disabled{% endunless %}
+      {% unless sticky_purchase_ready %}disabled{% endunless %}
     >
-      {%- if current_variant.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
+      {%- if sticky_purchase_ready -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
     </button>
   </div>
 {%- endif -%}

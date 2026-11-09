@@ -1,5 +1,5 @@
 <div class="section page-width faq-content">
-  {%- if section.settings.heading != blank -%}<h1 class="faq-content__heading">{{ section.settings.heading }}</h1>{%- endif -%}
+  {%- if section.settings.heading != blank -%}<h2 class="faq-content__heading">{{ section.settings.heading }}</h2>{%- endif -%}
   <div class="faq-content__list">
     {%- for block in section.blocks -%}
       {%- render 'accordion', title: block.settings.question, content: block.settings.answer, open: false -%}
@@ -26,3 +26,4 @@
   "presets": [{ "name": "FAQ content", "blocks": [{ "type": "faq" }, { "type": "faq" }, { "type": "faq" }] }]
 }
 {% endschema %}
+

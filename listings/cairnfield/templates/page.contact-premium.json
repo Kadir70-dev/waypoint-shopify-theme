@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "intro": {
+      "type": "main-page"
+    },
+    "contact": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "Start a conversation"
+      }
+    },
+    "trust": {
+      "type": "trust-bar",
+      "blocks": {
+        "trust-1": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "shield",
+            "label": "Designed to last"
+          }
+        },
+        "trust-2": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "leaf",
+            "label": "Considered materials"
+          }
+        },
+        "trust-3": {
+          "type": "trust-item",
+          "settings": {
+            "icon": "globe",
+            "label": "Made for everywhere"
+          }
+        }
+      },
+      "block_order": [
+        "trust-1",
+        "trust-2",
+        "trust-3"
+      ]
+    }
+  },
+  "order": [
+    "intro",
+    "contact",
+    "trust"
+  ]
+}

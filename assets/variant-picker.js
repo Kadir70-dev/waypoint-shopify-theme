@@ -91,7 +91,7 @@
     function getSelectedOptions() {
       var selected = [];
       buybox.querySelectorAll('.option-selector').forEach(function (fieldset) {
-        var checked = fieldset.querySelector('input:checked');
+        var checked = fieldset.querySelector('input[data-option-position]:checked');
         if (checked) selected[parseInt(checked.getAttribute('data-option-position'), 10) - 1] = checked.value;
       });
       return selected;
@@ -115,7 +115,7 @@
     // still communicate why via .is-unavailable / [data-unavailable-tag].
     function markUnavailableCombinations() {
       var selected = getSelectedOptions();
-      buybox.querySelectorAll('.option-selector__input').forEach(function (input) {
+      buybox.querySelectorAll('.option-selector__input[data-option-position]').forEach(function (input) {
         var position = parseInt(input.getAttribute('data-option-position'), 10);
         var candidate = selected.slice();
         candidate[position - 1] = input.value;
@@ -146,8 +146,10 @@
 
     function syncStickyBar(variant) {
       if (!stickyBtn) return;
-      stickyBtn.disabled = !variant.available;
-      stickyBtn.textContent = variant.available ? stickyBtn.getAttribute('data-label-add') : stickyBtn.getAttribute('data-label-sold-out');
+      var activeFormButton = buybox.querySelector('[data-product-form-submit]');
+      var canPurchase = !!variant.available && (!activeFormButton || !activeFormButton.disabled);
+      stickyBtn.disabled = !canPurchase;
+      stickyBtn.textContent = canPurchase ? stickyBtn.getAttribute('data-label-add') : stickyBtn.getAttribute('data-label-sold-out');
     }
 
     function announceStatus(fresh) {
@@ -206,7 +208,7 @@
     }
 
     buybox.addEventListener('change', function (e) {
-      if (e.target.matches('.option-selector__input')) {
+      if (e.target.matches('.option-selector__input[data-option-position]')) {
         markUnavailableCombinations();
         var variant = findMatchingVariant(getSelectedOptions());
         if (!variant) return; // no exact match for this combination — leave last-known state

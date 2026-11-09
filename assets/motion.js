@@ -189,12 +189,9 @@
         if (offscreen) clearTimer(); else schedule();
       }).observe(slider);
     }
-    // No timer runs at load: slides 2+ stay deferred until the user interacts.
-    if (autoplay) {
-      activationEvents.forEach(function (name) {
-        window.addEventListener(name, activate, { passive: true });
-      });
-    }
+    // Start autoplay on load; the observer and visibility handlers still
+    // pause whenever the hero is offscreen, hidden, or hovered.
+    if (autoplay) activate();
   });
 
   // ---------- lazy CSS background images ----------
