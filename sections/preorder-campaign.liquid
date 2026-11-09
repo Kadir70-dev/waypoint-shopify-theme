@@ -19,7 +19,24 @@
       {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>{%- endif -%}
       {%- if section.settings.primary_heading -%}<h1 id="PreorderTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h1>{%- else -%}<h2 id="PreorderTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h2>{%- endif -%}
       <div class="rte">{{ section.settings.text }}</div>
-      {%- if campaign_product != blank -%}<h3>{{ campaign_product.title | escape }}</h3>{%- endif -%}
+      {%- if campaign_product != blank -%}
+        {%- assign active_purchase_options = false -%}
+        {%- if campaign_product.selling_plan_groups.size > 0 -%}
+          {%- assign active_purchase_options = true -%}
+        {%- endif -%}
+        <div class="waypoint-preorder__status" role="status">
+          <span class="waypoint-preorder__status-dot" aria-hidden="true"></span>
+          {%- if active_purchase_options -%}
+            Purchase options configured
+          {%- else -%}
+            Preview only · Pre-orders not active
+          {%- endif -%}
+        </div>
+        <h3>{{ campaign_product.title | escape }}</h3>
+        {%- unless active_purchase_options -%}
+          <p class="waypoint-preorder__notice">Pre-order checkout becomes available only after the merchant configures a compatible Shopify pre-order app and a product selling plan. This campaign does not take reservations or payments.</p>
+        {%- endunless -%}
+      {%- endif -%}
       {%- if section.settings.dispatch_text != blank or section.settings.terms != blank -%}
         <div class="waypoint-preorder__terms">
           {%- if section.settings.dispatch_text != blank -%}<p>{{ section.settings.dispatch_text | escape }}</p>{%- endif -%}

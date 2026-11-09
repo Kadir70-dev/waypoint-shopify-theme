@@ -337,3 +337,135 @@
   :root .waypoint-page__card,:root .waypoint-gallery__slide{border:1px solid CanvasText}
   :root .demo-navigation__link[aria-current="page"]{outline:2px solid Highlight}
 }
+
+
+/* Cairnfield commerce refinement: shared Dark and Daylight styles.
+   All motion honors Shopify's toggle and OS reduced-motion preferences. */
+:root .purchase-options {
+  min-inline-size: 0; padding: clamp(16px,2vw,24px);
+  border: 1px solid var(--border-strong); border-radius: var(--radius-surface);
+  background: linear-gradient(145deg,var(--surface-2),var(--surface));
+  margin-block: clamp(18px,2.3vw,26px); box-shadow: 0 14px 44px rgba(0,0,0,.07);
+}
+:root .purchase-options__heading {
+  padding-inline: 8px; font-family: var(--font-display);
+  color: var(--accent-light); font-size: .82rem; letter-spacing: .11em;
+  text-transform: uppercase;
+}
+:root .purchase-options__choices { display: grid; gap: 9px; }
+:root .purchase-options__choice {
+  display: flex; align-items: center; gap: 12px; min-block-size: 54px;
+  padding: 11px 14px; border: 1px solid var(--border-strong);
+  border-radius: var(--radius-media); color: var(--text); cursor: pointer;
+  background: var(--surface);
+}
+:root .purchase-options__choice:has(input:checked) {
+  border-color: var(--accent-light);
+  background: var(--surface-3);
+  box-shadow: inset 0 0 0 1px var(--accent-light);
+}
+:root .purchase-options__choice:focus-within {
+  outline: var(--focus-ring); outline-offset: var(--focus-ring-offset);
+}
+:root .purchase-options__choice input {
+  inline-size: 18px; block-size: 18px; flex: 0 0 18px;
+  accent-color: var(--accent-light); margin: 0;
+}
+:root .purchase-options__name { flex: 1; min-inline-size: 0; font-size: .92rem; }
+:root .purchase-options__price {
+  color: var(--accent-light); font-size: .87rem;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+:root .purchase-options__note, :root .purchase-options__unavailable {
+  font-size: .78rem; color: var(--muted); line-height: 1.7;
+}
+:root .purchase-options__note { margin: 14px 0 0; }
+:root .purchase-options__unavailable {
+  border-inline-start: 3px solid var(--accent-light);
+  padding: 15px; background: var(--surface-2);
+}
+/* Pre-order storytelling: refined without implying a real pre-order exists. */
+:root .waypoint-preorder {
+  padding: clamp(16px,2.6vw,36px);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-surface);
+  background: linear-gradient(155deg,var(--surface),var(--surface-2));
+  box-shadow: var(--shadow-card-hover);
+  isolation: isolate;
+}
+:root .waypoint-preorder__media {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius-media); background: var(--surface-3);
+}
+:root .waypoint-preorder__media img,
+:root .waypoint-preorder__media svg {
+  width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block;
+  border-radius: inherit;
+}
+:root .waypoint-preorder__media::after {
+  content: ""; position: absolute; pointer-events: none; inset: 0;
+  border: 1px solid var(--border-strong); border-radius: inherit;
+}
+:root .waypoint-preorder__status {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 8px 11px; border: 1px solid var(--border-strong);
+  border-radius: 999px; color: var(--muted);
+  background: var(--surface-3); font-size: .7rem;
+  letter-spacing: .07em; text-transform: uppercase;
+}
+:root .waypoint-preorder__status-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent-light); box-shadow: 0 0 0 4px var(--accent-ring);
+}
+:root .waypoint-preorder__details h3 {
+  font-size: clamp(1.35rem,2.5vw,2.2rem);
+  margin-block: 18px 12px; letter-spacing: -.025em;
+}
+:root .waypoint-preorder__notice {
+  max-inline-size: 54ch; color: var(--muted);
+  font-size: .8rem; line-height: 1.7;
+}
+:root .waypoint-preorder__details .rte { max-inline-size: 56ch; line-height: 1.75; }
+:root .waypoint-preorder .btn {
+  min-block-size: 48px; padding-inline: clamp(22px,3vw,38px);
+}
+:root .waypoint-preorder__terms .rte { font-size: .88rem; }
+/* Wider styling follows existing accessible layout rather than replacing it. */
+:root .product-layout { align-items: start; }
+:root .product-buybox { min-inline-size: 0; }
+:root .product-gallery__main {
+  overflow: hidden; border-radius: var(--radius-media); background: var(--surface-2);
+}
+:root .product-gallery__thumb {
+  overflow: hidden; border-radius: var(--radius-media);
+}
+:root .featured-releases__grid :is(.card-product,.pcard) { min-inline-size: 0; }
+:root .waypoint-gallery__slide {
+  overflow: hidden; border-radius: var(--radius-media);
+  box-shadow: 0 8px 32px rgba(0,0,0,.09);
+}
+:root .waypoint-gallery__controls .btn { min-block-size: 44px; }
+:root .waypoint-locations__map-shell,
+:root .waypoint-locations__card { border-radius: var(--radius-media); }
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .waypoint-preorder__media img {
+    transition: transform 750ms var(--ease-out-slow);
+  }
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .waypoint-preorder:hover .waypoint-preorder__media img {
+    transform: scale(1.035);
+  }
+  :root:not(.reduced-motion):not([data-premium-motion="false"]) .purchase-options__choice {
+    transition: border-color 200ms ease, background-color 200ms ease;
+  }
+}
+@media (max-width: 749px) {
+  :root .waypoint-preorder { padding: 12px; }
+  :root .waypoint-preorder__details { padding: 18px 8px 22px; }
+  :root .waypoint-preorder__media img { aspect-ratio: 5/4; }
+  :root .purchase-options { padding: 14px; }
+  :root .purchase-options__choice { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root .waypoint-preorder__media img,
+  :root .purchase-options__choice { animation: none !important; transition: none !important; }
+}
