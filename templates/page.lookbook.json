@@ -53,8 +53,7 @@
     "gallery": {
       "type": "rotating-gallery",
       "settings": {
-        "heading": "Scenes from the outdoors",
-        "autoplay": false
+        "autoplay": true
       }
     },
     "demo-navigation": {
