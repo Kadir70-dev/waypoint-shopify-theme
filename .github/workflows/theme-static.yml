@@ -5,6 +5,10 @@ on:
     paths:
       - 'templates/**'
       - 'sections/**'
+      - 'snippets/**'
+      - 'locales/**'
+      - 'assets/component-nav.css'
+      - 'scripts/test_language_toggle.cjs'
       - 'config/**'
       - 'listings/**'
       - 'scripts/validate_theme_json.py'
@@ -21,6 +25,10 @@ on:
     paths:
       - 'templates/**'
       - 'sections/**'
+      - 'snippets/**'
+      - 'locales/**'
+      - 'assets/component-nav.css'
+      - 'scripts/test_language_toggle.cjs'
       - 'config/**'
       - 'listings/**'
       - 'scripts/validate_theme_json.py'
@@ -58,3 +66,5 @@ jobs:
           node --check assets/rotating-gallery.js
           node --check scripts/test_hero_gallery.cjs
           node scripts/test_hero_gallery.cjs
+      - name: Check language toggle and translations
+        run: node scripts/test_language_toggle.cjs
