@@ -207,6 +207,7 @@
 /* Hover: tilt + lift */
 @media (hover: hover) and (pointer: fine) {
   .offer-badge:hover {
+    animation: none;
     transform: translateY(-3px) perspective(80px) rotateX(6deg) rotateY(-3deg);
     box-shadow:
       0 1px 0 var(--ob-shine) inset,
