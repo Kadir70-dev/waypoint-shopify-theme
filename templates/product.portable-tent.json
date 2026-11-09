@@ -49,9 +49,7 @@
     "tent-gallery": {
       "type": "rotating-gallery",
       "settings": {
-        "heading": "Portable tent — a closer look",
-        "text": "<p>Explore the details from different angles.</p>",
-        "autoplay": false
+        "autoplay": true
       }
     },
     "field-guide": {
