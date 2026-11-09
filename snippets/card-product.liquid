@@ -89,6 +89,10 @@
     {%- if collection_context and product.description != blank -%}<p class="pcard__excerpt">{{ product.description | strip_html | truncatewords: 10 }}</p>{%- endif -%}
     {%- render 'price', product: product -%}
     {%- render 'star-rating', product: product -%}
+    {%- assign ob_check = product.tags | join: ',' -%}
+    {%- if ob_check contains 'offer-' -%}
+      <div class="pcard__offer-row">{%- render 'offer-badge', product: product -%}</div>
+    {%- endif -%}
     {%- if color_option -%}
       <div class="pcard__swatches">
         {%- for value in color_option.values -%}

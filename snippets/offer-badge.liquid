@@ -1,0 +1,45 @@
+{%- comment -%}
+  Usage: {% render 'offer-badge', product: product %}
+  Renders an animated premium offer badge based on product tags.
+
+  Supported tag → display label:
+    offer-10-off    → 10% OFF
+    offer-15-off    → 15% OFF
+    offer-20-off    → 20% OFF
+    offer-limited   → Limited Offer
+    offer-new       → New Arrival
+    offer-bestseller→ Best Seller
+    offer-preorder  → Pre-order
+    offer-bundle    → Bundle Deal
+{%- endcomment -%}
+{%- liquid
+  assign ob_text = blank
+  assign ob_kind = 'discount'
+  if product.tags contains 'offer-20-off'
+    assign ob_text = '20% OFF'
+  elsif product.tags contains 'offer-15-off'
+    assign ob_text = '15% OFF'
+  elsif product.tags contains 'offer-10-off'
+    assign ob_text = '10% OFF'
+  elsif product.tags contains 'offer-limited'
+    assign ob_text = 'Limited Offer'
+    assign ob_kind = 'limited'
+  elsif product.tags contains 'offer-new'
+    assign ob_text = 'New Arrival'
+    assign ob_kind = 'new'
+  elsif product.tags contains 'offer-bestseller'
+    assign ob_text = 'Best Seller'
+    assign ob_kind = 'bestseller'
+  elsif product.tags contains 'offer-preorder'
+    assign ob_text = 'Pre-order'
+    assign ob_kind = 'preorder'
+  elsif product.tags contains 'offer-bundle'
+    assign ob_text = 'Bundle Deal'
+    assign ob_kind = 'bundle'
+  endif
+-%}
+{%- if ob_text != blank -%}
+  <span class="offer-badge offer-badge--{{ ob_kind }}" aria-label="{{ ob_text }}">
+    <span class="offer-badge__inner">{{ ob_text }}</span>
+  </span>
+{%- endif -%}

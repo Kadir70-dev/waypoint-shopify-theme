@@ -59,8 +59,11 @@
       {{ block.shopify_attributes }}
     >
       <div class="hero-slider__content">
+        {%- if forloop.first and settings.promo_enabled and settings.promo_text != blank -%}
+          <span class="hero-promo-chip">{{ settings.promo_text | escape }}</span>
+        {%- endif -%}
         {%- if block.settings.eyebrow != blank -%}
-          <span class="hero-slider__eyebrow eyebrow" style="color:#ddd">{{ block.settings.eyebrow }}</span>
+          <span class="hero-slider__eyebrow eyebrow" style="color:rgba(255,255,255,.8)">{{ block.settings.eyebrow }}</span>
         {%- endif -%}
         {%- if block.settings.heading != blank -%}
           {%- if forloop.first -%}{%- assign heading_tag = 'h1' -%}{%- else -%}{%- assign heading_tag = 'h2' -%}{%- endif -%}

@@ -383,5 +383,15 @@
         "default": true
       }
     ]
+  },
+  {
+    "name": "Promotions",
+    "settings": [
+      { "type": "checkbox", "id": "promo_enabled", "label": "Show promotional message", "default": false, "info": "Displays promo text in the announcement bar, hero, product page and cart." },
+      { "type": "text", "id": "promo_label", "label": "Promo label", "default": "OFFER", "info": "Short badge label, e.g. OFFER, DEAL, SALE" },
+      { "type": "text", "id": "promo_text", "label": "Promo text", "default": "Use code WELCOME10 for 10% off", "info": "Main promotional message shown to customers." },
+      { "type": "text", "id": "promo_secondary", "label": "Secondary promo text", "default": "Free shipping over AED 100", "info": "Optional second line, e.g. free shipping threshold." },
+      { "type": "text", "id": "promo_expiry", "label": "Expiry note", "default": "Ends Sunday", "info": "Optional urgency text shown as a small pill, e.g. Ends Sunday." }
+    ]
   }
 ]
