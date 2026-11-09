@@ -1,0 +1,23 @@
+{%- comment -%}
+  Native, no-JavaScript Shopify language selector.
+  The localization endpoint expects "language_code" (NOT "locale_code").
+  Use separate form IDs for header and drawer so both controls remain accessible.
+{%- endcomment -%}
+{%- if settings.show_language_toggle and localization.available_languages.size > 1 -%}
+  {%- assign language_form_id = placement | default: 'header' | prepend: 'WaypointLanguageForm-' -%}
+  {%- form 'localization', id: language_form_id, class: 'lang-toggle' -%}
+    <span class="visually-hidden">{{ 'localization.language_label' | t }}</span>
+    {%- for language in localization.available_languages -%}
+      <button
+        type="submit"
+        name="language_code"
+        value="{{ language.iso_code }}"
+        class="lang-toggle__option"
+        lang="{{ language.iso_code }}"
+        {% if language.iso_code == 'ar' %}dir="rtl"{% endif %}
+        aria-label="{{ 'localization.language_label' | t | escape }}: {{ language.endonym_name | escape }}"
+        {% if language.iso_code == localization.language.iso_code %}aria-current="true"{% endif %}
+      >{%- if language.iso_code == 'ar' -%}عربي{%- else -%}{{ language.iso_code | upcase }}{%- endif -%}</button>
+    {%- endfor -%}
+  {%- endform -%}
+{%- endif -%}

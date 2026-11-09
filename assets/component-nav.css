@@ -544,7 +544,7 @@ shopify-account:focus-within { outline: var(--focus-ring); outline-offset: var(-
 :root[data-preset="daylight"] .scheme-toggle__icon--sun,
 :root:not([data-preset="daylight"]) .scheme-toggle__icon--moon { display: none; }
 
-/* --- language toggle (header) — Shopify localization form, one submit per language --- */
+/* --- language toggle (header + mobile drawer) — native Shopify form --- */
 .lang-toggle { display: inline-flex; align-items: center; gap: 2px; margin: 0; }
 .lang-toggle__option {
   min-height: 32px;
@@ -565,4 +565,44 @@ shopify-account:focus-within { outline: var(--focus-ring); outline-offset: var(-
 @media (max-width: 749px) {
   .site-header__icons { gap: 10px; }
   .lang-toggle__option { padding: 4px; }
+}
+
+/* Accessible, discoverable language switching inside the mobile drawer. */
+.lang-toggle__option:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.mobile-nav__locale {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  border-block: 1px solid var(--border);
+  color: var(--text);
+}
+.mobile-nav__locale-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--muted);
+}
+.mobile-nav__locale .lang-toggle {
+  gap: 8px;
+}
+.mobile-nav__locale .lang-toggle__option {
+  padding: 6px 10px;
+  min-height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.mobile-nav__locale .lang-toggle__option[aria-current="true"] {
+  opacity: 1;
+  text-decoration: none;
+  border-color: var(--accent-light);
+  background: var(--surface-2);
+}
+@media (max-width: 749px) {
+  /* Preserve room for the logo, cart and core actions on narrow phones. */
+  .site-header__icons .lang-toggle { display: none; }
 }

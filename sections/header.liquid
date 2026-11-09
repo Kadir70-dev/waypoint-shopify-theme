@@ -60,22 +60,7 @@
     </a>
 
     <div class="site-header__icons">
-      {%- if settings.show_language_toggle and localization.available_languages.size > 1 -%}
-        {%- form 'localization', class: 'lang-toggle' -%}
-          <input type="hidden" name="return_to" value="{{ request.path }}">
-          <span class="visually-hidden">{{ 'localization.language_label' | t }}</span>
-          {%- for language in localization.available_languages -%}
-            <button
-              type="submit"
-              name="locale_code"
-              value="{{ language.iso_code }}"
-              class="lang-toggle__option"
-              lang="{{ language.iso_code }}"
-              {% if language.iso_code == localization.language.iso_code %}aria-current="true"{% endif %}
-            >{%- if language.iso_code == 'ar' -%}عربي{%- else -%}{{ language.iso_code | upcase }}{%- endif -%}</button>
-          {%- endfor -%}
-        {%- endform -%}
-      {%- endif -%}
+      {%- render 'language-toggle', placement: 'header' -%}
       {%- if settings.show_scheme_toggle -%}
         <button
           class="icon-btn scheme-toggle"
@@ -137,6 +122,13 @@
       {%- render 'icon-close' -%}
     </button>
   </div>
+
+  {%- if settings.show_language_toggle and localization.available_languages.size > 1 -%}
+    <div class="mobile-nav__locale">
+      <span class="mobile-nav__locale-label">{{ 'localization.language_label' | t }}</span>
+      {%- render 'language-toggle', placement: 'drawer' -%}
+    </div>
+  {%- endif -%}
 
   <div class="mobile-nav__panel" data-nav-panel="root">
     <ul class="mobile-nav__links">
