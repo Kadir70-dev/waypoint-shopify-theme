@@ -4,7 +4,22 @@
   Renders promotional messaging from global theme settings.
   `inline: true` uses the compact surface-colored variant (product page, cart).
 {%- endcomment -%}
-{%- if settings.promo_enabled and settings.promo_text != blank -%}
+{%- liquid
+  assign promo_active = false
+  assign promo_expiry_ts = 0
+  if settings.promo_enabled and settings.promo_text != blank
+    assign promo_active = true
+    if settings.promo_expiry != blank
+      assign promo_expiry_ts = settings.promo_expiry | date: '%s' | plus: 0
+      assign promo_now_ts = 'now' | date: '%s' | plus: 0
+      assign promo_end_ts = promo_expiry_ts | plus: 86399
+      if promo_expiry_ts == 0 or promo_end_ts < promo_now_ts
+        assign promo_active = false
+      endif
+    endif
+  endif
+-%}
+{%- if promo_active -%}
   <div class="promo-strip{% if inline %} promo-strip--inline{% endif %}" role="note" aria-label="Promotional offer">
     {%- if settings.promo_label != blank -%}
       <span class="promo-strip__label">{{ settings.promo_label | escape }}</span>
@@ -15,7 +30,7 @@
       <span class="promo-strip__secondary">{{ settings.promo_secondary | escape }}</span>
     {%- endif -%}
     {%- if settings.promo_expiry != blank -%}
-      <span class="promo-strip__expiry">{{ settings.promo_expiry | escape }}</span>
+      <span class="promo-strip__expiry">Ends {{ settings.promo_expiry | date: '%b %d, %Y' }}</span>
     {%- endif -%}
   </div>
 {%- endif -%}
