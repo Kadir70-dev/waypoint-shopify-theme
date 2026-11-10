@@ -34,15 +34,14 @@
           assign bg_position = focal_point.x | append: '% ' | append: focal_point.y | append: '%'
         endif
       elsif forloop.index == 1
-        assign bg_position = '88% 50%'
         assign mobile_url = 'hero-slide-1-mobile.jpg' | asset_url
         assign desktop_url = 'hero-slide-1.jpg' | asset_url
       elsif forloop.index == 2
-        assign mobile_url = 'hero-slide-2.jpg' | asset_url
-        assign desktop_url = mobile_url
+        assign mobile_url = 'hero-slide-2-mobile.jpg' | asset_url
+        assign desktop_url = 'hero-slide-2.jpg' | asset_url
       elsif forloop.index == 3
-        assign mobile_url = 'hero-slide-3.jpg' | asset_url
-        assign desktop_url = mobile_url
+        assign mobile_url = 'hero-slide-3-mobile.jpg' | asset_url
+        assign desktop_url = 'hero-slide-3.jpg' | asset_url
       endif
     -%}
     <div

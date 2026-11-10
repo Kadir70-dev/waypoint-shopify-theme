@@ -83,7 +83,7 @@ Photography and video on the demo store are from [Pexels](https://www.pexels.com
 | Video: home page | [32562962](https://www.pexels.com/video/hiker-ascends-misty-mountain-in-france-32562962/) | Florian Delée |
 | Video: product page | [30240552](https://www.pexels.com/video/trekking-in-patagonia-s-misty-mountains-30240552/) | Florian Delée |
 
-**Bundled fallback media:** `assets/breakervideo.mp4` is Pexels video [32562962](https://www.pexels.com/video/hiker-ascends-misty-mountain-in-france-32562962/) by Florian Delée (Pexels License). `assets/hero-slide-*.jpg`: source and license not yet documented — to be confirmed or replaced before release.
+**Bundled fallback media:** `assets/breakervideo.mp4` is Pexels video [32562962](https://www.pexels.com/video/hiker-ascends-misty-mountain-in-france-32562962/) by Florian Delée (Pexels License). `assets/hero-slide-1|2|3.jpg` (+ `-mobile`) are Pexels photos [6465964](https://www.pexels.com/photo/unrecognizable-traveler-standing-on-mountain-top-and-admiring-landscape-6465964/) (Stan Swinnen), [35696066](https://www.pexels.com/photo/hiker-climbs-snowy-mountain-ridge-in-winter-storm-35696066/) (eberhard grossgasteiger) and [33775543](https://www.pexels.com/photo/scenic-camping-in-the-wind-river-range-wyoming-33775543/) (Alex Moliski), Pexels License; used only when a hero slide has no image.
 
 ## Changelog
 - **1.0.0** — First Theme Store release.
