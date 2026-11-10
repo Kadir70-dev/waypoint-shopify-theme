@@ -632,9 +632,20 @@ shopify-account:focus-within { outline: var(--focus-ring); outline-offset: var(-
   .site-header__row { grid-template-columns: auto minmax(0, 1fr) auto; gap: 24px; max-width: min(1440px, 100%); }
   .site-header__logo { letter-spacing: .2em; }
   .site-header__nav { gap: 20px; }
-  .site-header__logo { order: -1; justify-self: start; text-align: start; }
+  .site-header__logo { justify-self: start; text-align: start; }
   .site-header__nav { justify-content: center; }
 }
 
 /* RTL: drill-in chevron must point left (base.css rule is overridden by later component styles). */
 [dir="rtl"] .mobile-nav .mobile-nav__drill svg { transform: scaleX(-1); }
+
+/* UI/UX Pro Max review: 44px touch targets on touch layouts, legible small text,
+   readable inactive language option over imagery. */
+@media (max-width: 1359px) {
+  .site-header .icon-btn { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+  .site-header__icons { gap: 2px; }
+}
+.site-header__logo small { font-size: 10px; letter-spacing: .14em; }
+.icon-btn__count { font-size: 10px; }
+.lang-toggle__option { opacity: .85; }
+@media (max-width: 1359px) { .site-header__logo { padding-block: 5px; } }

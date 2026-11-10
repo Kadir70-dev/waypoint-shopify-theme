@@ -25,6 +25,23 @@
       {%- render 'icon-menu' -%}
     </button>
 
+    <a href="{{ routes.root_url }}" class="site-header__logo">
+      {%- if section.settings.logo -%}
+        {%- assign logo_height = section.settings.logo_width | times: section.settings.logo.height | divided_by: section.settings.logo.width -%}
+        <img
+          src="{{ section.settings.logo | image_url: width: 280 }}"
+          alt="{{ shop.name }}"
+          width="{{ section.settings.logo_width }}"
+          height="{{ logo_height }}"
+          style="width:{{ section.settings.logo_width }}px;height:auto;--logo-height:{{ logo_height }}px;"
+          loading="eager"
+        >
+      {%- else -%}
+        {{ shop.name | escape }}
+        <small>{{ section.settings.tagline }}</small>
+      {%- endif -%}
+    </a>
+
     <nav class="site-header__nav" aria-label="{{ 'accessibility.primary_navigation' | t }}">
       {%- if section.settings.main_menu != blank and section.settings.main_menu.links.size > 0 -%}
         {%- for link in section.settings.main_menu.links -%}
@@ -42,22 +59,6 @@
       {%- endif -%}
     </nav>
 
-    <a href="{{ routes.root_url }}" class="site-header__logo">
-      {%- if section.settings.logo -%}
-        {%- assign logo_height = section.settings.logo_width | times: section.settings.logo.height | divided_by: section.settings.logo.width -%}
-        <img
-          src="{{ section.settings.logo | image_url: width: 280 }}"
-          alt="{{ shop.name }}"
-          width="{{ section.settings.logo_width }}"
-          height="{{ logo_height }}"
-          style="width:{{ section.settings.logo_width }}px;height:auto;--logo-height:{{ logo_height }}px;"
-          loading="eager"
-        >
-      {%- else -%}
-        {{ shop.name | escape }}
-        <small>{{ section.settings.tagline }}</small>
-      {%- endif -%}
-    </a>
 
     <div class="site-header__icons">
       {%- render 'language-toggle', placement: 'header' -%}
