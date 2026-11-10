@@ -44,6 +44,11 @@
         assign desktop_url = 'hero-slide-3.jpg' | asset_url
       endif
     -%}
+    {%- if forloop.first -%}
+      {%- comment -%} The first slide's background is the LCP element: preload it so it is not discovered only after CSS. {%- endcomment -%}
+      <link rel="preload" as="image" href="{{ mobile_url }}" media="(max-width: 749px)" fetchpriority="high">
+      <link rel="preload" as="image" href="{{ desktop_url }}" media="(min-width: 750px)" fetchpriority="high">
+    {%- endif -%}
     <div
       class="hero-slider__slide photo brand"
       data-hero-slide
