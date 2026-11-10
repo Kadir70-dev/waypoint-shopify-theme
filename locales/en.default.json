@@ -370,6 +370,10 @@
     "map_label": "Interactive branch map",
     "tagline": "Every location, one beautiful view.",
     "feature_imagery": "Satellite imagery + 3D terrain when configured",
-    "feature_coordinates": "Coordinates controlled in Shopify"
+    "feature_coordinates": "Coordinates controlled in Shopify",
+    "map_loading": "Loading satellite imagery and exact branch locations…",
+    "map_no_pin": "A verified map pin is not configured for [name]. Use its address link, if available.",
+    "map_imagery_error": "Map imagery could not load. Check your MapTiler key, allowed domain and internet connection. Branch addresses remain available on the left.",
+    "map_unavailable": "Interactive map unavailable. Check the public MapTiler key, domain restrictions, and browser WebGL support."
   }
 }

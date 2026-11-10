@@ -8,6 +8,12 @@
   class="waypoint-locations section"
   id="WaypointLocations-{{ section.id }}"
   data-waypoint-locations
+  data-maplibre-src="{{ 'maplibre-gl.js' | asset_url }}"
+  data-i18n-directions="{{ 'locations.directions' | t | escape }} ↗"
+  data-i18n-loading="{{ 'locations.map_loading' | t | escape }}"
+  data-i18n-no-pin="{{ 'locations.map_no_pin' | t | escape }}"
+  data-i18n-imagery-error="{{ 'locations.map_imagery_error' | t | escape }}"
+  data-i18n-unavailable="{{ 'locations.map_unavailable' | t | escape }}"
   data-map-key="{{ section.settings.maptiler_key | escape }}"
   data-initial-view="{{ section.settings.initial_view | escape }}"
   data-3d-default="{{ section.settings.enable_terrain }}"
