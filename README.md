@@ -83,7 +83,7 @@ Photography and video on the demo store are from [Pexels](https://www.pexels.com
 | Video: home page | [32562962](https://www.pexels.com/video/hiker-ascends-misty-mountain-in-france-32562962/) | Florian Delée |
 | Video: product page | [30240552](https://www.pexels.com/video/trekking-in-patagonia-s-misty-mountains-30240552/) | Florian Delée |
 
-**Bundled fallback media** (`assets/hero-slide-*.jpg`, `assets/breakervideo.mp4`): source and license not yet documented — to be confirmed or replaced before release.
+**Bundled fallback media:** `assets/breakervideo.mp4` is Pexels video [32562962](https://www.pexels.com/video/hiker-ascends-misty-mountain-in-france-32562962/) by Florian Delée (Pexels License). `assets/hero-slide-*.jpg`: source and license not yet documented — to be confirmed or replaced before release.
 
 ## Changelog
 - **1.0.0** — First Theme Store release.
