@@ -314,3 +314,21 @@ html, body { overflow-x: hidden; }
 .field__input:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 .form-message { padding: 14px 16px; border: 1px solid var(--border-strong); font-size: 13px; line-height: 1.5; }
 .form-message--success { border-color: var(--accent-light); color: var(--accent-light); }
+
+/* --- UI/UX Pro Max audit (2026-11-10) ---
+   Readable labels: no UI text below 12px (tab bar 11px is the only exception, icon + label).
+   Touch targets: 44px minimum on touch layouts. Contrast: tab bar labels >= 4.5:1. */
+:root :is(.eyebrow, .hero-slider__eyebrow, .hero-slider__dot-label, .section-heading__view-all,
+.collection-grid__filter-trigger, .filter-chips__clear, .waypoint-preorder__status, .lang-toggle__option) { font-size: 12px; }
+:root .mobile-tabbar__item { font-size: 11px; color: var(--text); }
+:root .mobile-tabbar__item:not([aria-current="page"]) { opacity: .88; }
+:root :is(.filter-chips__clear, .section-heading__view-all) { min-height: 24px; display: inline-flex; align-items: center; }
+:root .skip-link { min-height: 44px; }
+@media (max-width: 749px) {
+  .quantity-stepper__btn { min-width: 44px; min-height: 44px; }
+  .pcard__quickadd, select[name="locale_code"], select[name="country_code"] { min-height: 44px; }
+  .section-heading__view-all, .filter-chips__clear, .cart-page__continue { min-height: 44px; display: inline-flex; align-items: center; }
+  .site-header__logo { min-height: 44px; display: flex; flex-direction: column; justify-content: center; }
+}
+:root .hero-slider__dots button { min-width: 24px; min-height: 32px; }
+:root .journal-banner__copy a, :root .breadcrumb a { display: inline-flex; align-items: center; min-height: 24px; }

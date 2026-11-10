@@ -32,7 +32,7 @@
             Preview only · Pre-orders not active
           {%- endif -%}
         </div>
-        <h3>{{ campaign_product.title | escape }}</h3>
+        <h2>{{ campaign_product.title | escape }}</h2>
         {%- unless active_purchase_options -%}
           <p class="waypoint-preorder__notice">{{ 'products.preorder.notice' | t }}</p>
         {%- endunless -%}
