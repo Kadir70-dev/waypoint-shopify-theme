@@ -417,7 +417,7 @@
   width: 7px; height: 7px; border-radius: 50%;
   background: var(--accent-light); box-shadow: 0 0 0 4px var(--accent-ring);
 }
-:root .waypoint-preorder__details h3 {
+:root .waypoint-preorder__details :is(h2, h3) {
   font-size: clamp(1.35rem,2.5vw,2.2rem);
   margin-block: 18px 12px; letter-spacing: -.025em;
 }
@@ -469,3 +469,6 @@
   :root .waypoint-preorder__media img,
   :root .purchase-options__choice { animation: none !important; transition: none !important; }
 }
+
+/* UI/UX Pro Max audit: no label text below 12px (overrides the rules above). */
+:root .waypoint-preorder__details > :is(.eyebrow, .waypoint-preorder__status) { font-size: 12px; }

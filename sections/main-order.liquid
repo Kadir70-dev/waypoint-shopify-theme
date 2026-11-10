@@ -16,7 +16,7 @@
             {{ 'customer.order.placed_on' | t: date: order_date }}
           </p>
         </div>
-        <a href="{{ routes.account_url }}" class="form-toggle-link">&larr; {{ 'customer.order.back_to_account' | t }}</a>
+        <a href="{{ routes.account_url }}" class="form-toggle-link">{{ 'general.arrow_back' | t }} {{ 'customer.order.back_to_account' | t }}</a>
       </div>
 
       <div style="display:flex;gap:10px;margin-bottom:20px">

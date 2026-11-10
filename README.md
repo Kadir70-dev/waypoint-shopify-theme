@@ -13,7 +13,7 @@ An editorial, performance-minded Online Store 2.0 theme using native Shopify pat
 Colors (dark / light "Daylight" preset, accent override), Typography (Shopify font picker), Layout, Cart, Product grid, Product page, Icons, Social links, SEO.
 
 ## Presets
-- **Waypoint** — dark, cinematic look for outdoor, travel and technical-gear brands with strong photography.
+- **Cairnfield** — dark, cinematic look for outdoor, travel and technical-gear brands with strong photography.
 - **Daylight** — light version of the same layout for catalogues that need a brighter, product-first page.
 
 Both presets share every section; switch at any time in Theme settings → Colors.
@@ -54,7 +54,7 @@ Storefront strings live in `locales/`. English (default) and Arabic (`ar.json`) 
 - Historical Lighthouse runs recorded scores of mobile performance 83 / accessibility 97 and desktop performance 93 / accessibility 99 in an earlier QA setup. These are **not current Theme Store submission benchmark results**. Re-run populated home, product, and collection pages on both presets and retain new reports before submitting.
 
 ## Credits & licenses
-Photography and video on the demo store are from [Pexels](https://www.pexels.com/) under the [Pexels License](https://www.pexels.com/license/) (free for commercial use, attribution not required). They are store content and are **not** bundled with the theme. Full source records (Pexels IDs, photographers, download URLs, checksums): [`docs/pexels/`](docs/pexels/).
+Photography and video on the demo store are sourced from [Pexels](https://www.pexels.com/) under the [Pexels License](https://www.pexels.com/license/). **Some Pexels images and a video are also bundled with this theme** as fallback demo assets in `assets/` when a merchant has not selected media; other photos and videos are Shopify Files belonging only to the demo store. Source records and recorded checksums: [`docs/pexels/`](docs/pexels/). Confirm third-party media redistribution and Theme Store acceptance before submission.
 
 | Use | Pexels page | Creator |
 |---|---|---|
@@ -83,7 +83,7 @@ Photography and video on the demo store are from [Pexels](https://www.pexels.com
 | Video: home page | [32562962](https://www.pexels.com/video/hiker-ascends-misty-mountain-in-france-32562962/) | Florian Delée |
 | Video: product page | [30240552](https://www.pexels.com/video/trekking-in-patagonia-s-misty-mountains-30240552/) | Florian Delée |
 
-**Bundled fallback media** (`assets/hero-slide-*.jpg`, `assets/breakervideo.mp4`): source and license not yet documented — to be confirmed or replaced before release.
+**Bundled fallback media:** `assets/breakervideo.mp4` is Pexels video [32562962](https://www.pexels.com/video/hiker-ascends-misty-mountain-in-france-32562962/) by Florian Delée (Pexels License). `assets/hero-slide-1|2|3.jpg` (+ `-mobile`) are Pexels photos [6465964](https://www.pexels.com/photo/unrecognizable-traveler-standing-on-mountain-top-and-admiring-landscape-6465964/) (Stan Swinnen), [35696066](https://www.pexels.com/photo/hiker-climbs-snowy-mountain-ridge-in-winter-storm-35696066/) (eberhard grossgasteiger) and [33775543](https://www.pexels.com/photo/scenic-camping-in-the-wind-river-range-wyoming-33775543/) (Alex Moliski), Pexels License; used only when a hero slide has no image.
 
 ## Changelog
 - **1.0.0** — First Theme Store release.

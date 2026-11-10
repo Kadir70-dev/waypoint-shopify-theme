@@ -26,7 +26,7 @@
         {%- endif -%}
       </div>
       <div class="waypoint-locations__heading-aside" aria-hidden="true">
-        <span class="waypoint-locations__index">NETWORK / {{ section.blocks.size }}</span>
+        <span class="waypoint-locations__index">{{ 'locations.network' | t }} / {{ section.blocks.size }}</span>
         <span class="waypoint-locations__globe">◎</span>
       </div>
     </header>
@@ -37,13 +37,13 @@
           <p class="waypoint-locations__directory-title">{{ section.settings.directory_heading | escape }}</p>
           <span class="waypoint-locations__count" data-locations-count>{{ section.blocks.size }} locations</span>
         </div>
-        <div class="waypoint-locations__filters" data-locations-filters aria-label="Filter locations">
-          <button type="button" class="waypoint-locations__filter is-active" data-location-filter="all" aria-pressed="true">All locations</button>
+        <div class="waypoint-locations__filters" data-locations-filters aria-label="{{ 'locations.filter_label' | t }}">
+          <button type="button" class="waypoint-locations__filter is-active" data-location-filter="all" aria-pressed="true">{{ 'locations.all' | t }}</button>
           <button type="button" class="waypoint-locations__filter" data-location-filter="headquarters" aria-pressed="false" hidden>HQ</button>
-          <button type="button" class="waypoint-locations__filter" data-location-filter="office" aria-pressed="false" hidden>Offices</button>
-          <button type="button" class="waypoint-locations__filter" data-location-filter="branch" aria-pressed="false" hidden>Branches</button>
-          <button type="button" class="waypoint-locations__filter" data-location-filter="showroom" aria-pressed="false" hidden>Showrooms</button>
-          <button type="button" class="waypoint-locations__filter" data-location-filter="warehouse" aria-pressed="false" hidden>Warehouses</button>
+          <button type="button" class="waypoint-locations__filter" data-location-filter="office" aria-pressed="false" hidden>{{ 'locations.offices' | t }}</button>
+          <button type="button" class="waypoint-locations__filter" data-location-filter="branch" aria-pressed="false" hidden>{{ 'locations.branches' | t }}</button>
+          <button type="button" class="waypoint-locations__filter" data-location-filter="showroom" aria-pressed="false" hidden>{{ 'locations.showrooms' | t }}</button>
+          <button type="button" class="waypoint-locations__filter" data-location-filter="warehouse" aria-pressed="false" hidden>{{ 'locations.warehouses' | t }}</button>
         </div>
         <div class="waypoint-locations__list" data-locations-list>
           {%- for block in section.blocks -%}
@@ -66,7 +66,7 @@
                     {%- endif -%}
                   </span>
                   <span class="waypoint-locations__card-text">
-                    <span class="waypoint-locations__type">{{ block.settings.location_type | replace: '_', ' ' | capitalize | escape }}{% if block.settings.is_main %} · Main office{% endif %}</span>
+                    <span class="waypoint-locations__type">{{ block.settings.location_type | replace: '_', ' ' | capitalize | escape }}{% if block.settings.is_main %} · {{ 'locations.main_office' | t }}{% endif %}</span>
                     <span class="waypoint-locations__name">{{ block.settings.name | default: 'New location' | escape }}</span>
                     {%- if block.settings.address != blank -%}
                       <span class="waypoint-locations__address">{{ block.settings.address | escape }}</span>
@@ -83,7 +83,7 @@
                   {%- endif -%}
                   <span class="waypoint-locations__card-links">
                     {%- if block.settings.phone != blank -%}
-                      <a href="tel:{{ block.settings.phone | remove: ' ' | escape }}">Call</a>
+                      <a href="tel:{{ block.settings.phone | remove: ' ' | escape }}">{{ 'locations.call' | t }}</a>
                     {%- endif -%}
                     {%- if block.settings.address != blank or block.settings.latitude != blank -%}
                       <a
@@ -91,7 +91,7 @@
                         {% if block.settings.address != blank %}href="https://www.google.com/maps/search/?api=1&query={{ block.settings.address | url_encode }}"{% else %}hidden{% endif %}
                         target="_blank"
                         rel="noopener noreferrer"
-                      >Directions ↗</a>
+                      >{{ 'locations.directions' | t }} ↗</a>
                     {%- endif -%}
                   </span>
                 </div>
@@ -112,20 +112,20 @@
         <div class="waypoint-locations__map-top">
           <div class="waypoint-locations__map-label">
             <span class="waypoint-locations__map-pulse" aria-hidden="true"></span>
-            <span>Location explorer</span>
+            <span>{{ 'locations.explorer' | t }}</span>
           </div>
           <div class="waypoint-locations__map-controls" data-locations-controls hidden>
-            <button type="button" class="waypoint-locations__control is-active" data-map-style="satellite" aria-pressed="true">Satellite</button>
-            <button type="button" class="waypoint-locations__control" data-map-style="streets" aria-pressed="false">Streets</button>
-            <button type="button" class="waypoint-locations__control" data-map-3d aria-pressed="false">3D view</button>
-            <button type="button" class="waypoint-locations__control" data-map-fit aria-label="Show all branch locations">All pins</button>
+            <button type="button" class="waypoint-locations__control is-active" data-map-style="satellite" aria-pressed="true">{{ 'locations.satellite' | t }}</button>
+            <button type="button" class="waypoint-locations__control" data-map-style="streets" aria-pressed="false">{{ 'locations.streets' | t }}</button>
+            <button type="button" class="waypoint-locations__control" data-map-3d aria-pressed="false">{{ 'locations.view_3d' | t }}</button>
+            <button type="button" class="waypoint-locations__control" data-map-fit aria-label="{{ 'locations.show_all' | t }}">{{ 'locations.all_pins' | t }}</button>
           </div>
         </div>
         <div class="waypoint-locations__map-shell">
-          <div class="waypoint-locations__map" data-location-map role="region" aria-label="Interactive branch map"></div>
+          <div class="waypoint-locations__map" data-location-map role="region" aria-label="{{ 'locations.map_label' | t }}"></div>
           <div class="waypoint-locations__map-empty" data-map-empty>
             <span class="waypoint-locations__map-orbit" aria-hidden="true"><span>◎</span></span>
-            <strong>Every location, one beautiful view.</strong>
+            <strong>{{ 'locations.tagline' | t }}</strong>
             <p data-location-status>
               {% if section.settings.maptiler_key == blank %}
                 Add a domain-restricted MapTiler key and confirmed branch coordinates to activate satellite and 3D terrain.
@@ -136,8 +136,8 @@
           </div>
         </div>
         <div class="waypoint-locations__map-footer">
-          <span>Satellite imagery + 3D terrain when configured</span>
-          <span>Coordinates controlled in Shopify</span>
+          <span>{{ 'locations.feature_imagery' | t }}</span>
+          <span>{{ 'locations.feature_coordinates' | t }}</span>
         </div>
       </div>
     </div>

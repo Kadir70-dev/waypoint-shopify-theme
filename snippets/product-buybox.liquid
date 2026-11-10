@@ -123,12 +123,12 @@
   -%}
   {%- if purchase_allocations.size > 0 -%}
     <fieldset class="purchase-options" data-purchase-options>
-      <legend class="purchase-options__heading">Purchase options</legend>
+      <legend class="purchase-options__heading">{{ 'products.purchase_options.heading' | t }}</legend>
       <div class="purchase-options__choices">
         {%- unless purchase_requires_plan -%}
           <label class="purchase-options__choice">
             <input type="radio" name="selling_plan" value="" checked>
-            <span class="purchase-options__name">One-time purchase</span>
+            <span class="purchase-options__name">{{ 'products.purchase_options.one_time' | t }}</span>
             <span class="purchase-options__price">{{ current_variant.price | money }}</span>
           </label>
         {%- endunless -%}
@@ -140,10 +140,10 @@
           </label>
         {%- endfor -%}
       </div>
-      <p class="purchase-options__note">Delivery schedule, charges and cancellation terms are set by the merchant's purchase-option app and shown at checkout.</p>
+      <p class="purchase-options__note">{{ 'products.purchase_options.note' | t }}</p>
     </fieldset>
   {%- elsif purchase_requires_plan -%}
-    <p class="purchase-options__unavailable" role="status">This product needs a configured purchase option before checkout is available.</p>
+    <p class="purchase-options__unavailable" role="status">{{ 'products.purchase_options.unavailable' | t }}</p>
   {%- endif -%}
 
   <div class="product-buybox__quantity">
@@ -206,7 +206,7 @@
     {% unless purchase_ready %}disabled{% endunless %}
   >
     {%- if purchase_ready -%}
-      {{ 'products.add_to_cart' | t }} &rarr;
+      {{ 'products.add_to_cart' | t }} {{ 'general.arrow_forward' | t }}
     {%- else -%}
       {{ 'products.sold_out' | t }}
     {%- endif -%}

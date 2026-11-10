@@ -11,6 +11,8 @@ Recovered on 2026-11-08 from the sourcing session of 2026-11-07, where each Pexe
 
 Missing records: Patagonia download URL; frame rate of the Patagonia original; the transcode settings used to make the 1080p store files. SHA-256 of the downloaded originals and the 1080p files are in `CHECKSUMS.sha256` (`videos/`).
 
-## Not covered here
+## Bundled with the theme
 
-`assets/breakervideo.mp4` (bundled with the theme since 2026-09-27) has **no recorded source or license**. It is not either of the videos above (different file). It must be documented or replaced before a Theme Store release.
+`assets/breakervideo.mp4` (the Video page breaker fallback when no video is selected) is the same file as `waypoint-hiker-france-1080.mp4` above — Pexels video 32562962 by Florian Delée, Pexels License (SHA-256 in `CHECKSUMS.sha256`, `videos/waypoint-hiker-france-1080.mp4`). It replaced an earlier bundled video whose source was not recorded.
+
+The bundled hero fallbacks `assets/hero-slide-{1,2,3}.jpg` and `-mobile.jpg` are the Pexels files `hero-1/2/3(.jpg|-mobile.jpg)` listed in `SOURCES.md` (same SHA-256 as `CHECKSUMS.sha256`, `images/`).

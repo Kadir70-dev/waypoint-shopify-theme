@@ -14,7 +14,7 @@
           </svg>
           <p>{{ 'customer.account.no_orders' | t }}</p>
           <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary" style="margin-top:8px">
-            {{ 'customer.account.start_shopping' | t }} &rarr;
+            {{ 'customer.account.start_shopping' | t }} {{ 'general.arrow_forward' | t }}
           </a>
         </div>
       {%- else -%}
@@ -31,7 +31,7 @@
                   <span class="badge">{{ order.fulfillment_status_label }}</span>
                 </div>
                 <span>{{ order.total_price | money }}</span>
-                <a href="{{ order.url }}" class="form-toggle-link">{{ 'customer.account.view_order' | t }} &rarr;</a>
+                <a href="{{ order.url }}" class="form-toggle-link">{{ 'customer.account.view_order' | t }} {{ 'general.arrow_forward' | t }}</a>
               </div>
             {%- endfor -%}
           </div>

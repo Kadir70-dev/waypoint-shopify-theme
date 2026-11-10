@@ -43,7 +43,7 @@
                   </p>
                 {% endif %}
                 {% if section.settings.show_swatches and color_option != blank %}
-                  <span class="latest-releases__swatches" aria-label="{{ color_option.name | escape }} options">
+                  <span class="latest-releases__swatches" aria-label="{{ 'general.color_options' | t: name: color_option.name | escape }}">
                     {% for value in color_option.values limit: 4 %}
                       {% if value.swatch.image %}<span class="latest-releases__swatch" style="background-image:url('{{ value.swatch.image | image_url: width: 40 }}')" title="{{ value | escape }}"></span>{% elsif value.swatch.color %}<span class="latest-releases__swatch" style="background-color:{{ value.swatch.color }}" title="{{ value | escape }}"></span>{% endif %}
                     {% endfor %}

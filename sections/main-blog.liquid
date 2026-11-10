@@ -46,7 +46,7 @@
               <p style="color:var(--muted);font-size:14px;line-height:1.6">{{ featured_article.excerpt | strip_html | truncate: 220 }}</p>
             {%- endif -%}
             <a href="{{ featured_article.url }}" class="btn btn-outline" style="margin-top:6px">
-              {{ 'sections.journal.read_story' | t }} &rarr;
+              {{ 'sections.journal.read_story' | t }} {{ 'general.arrow_forward' | t }}
             </a>
           </div>
         </div>

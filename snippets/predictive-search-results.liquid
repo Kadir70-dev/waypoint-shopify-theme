@@ -53,7 +53,7 @@
   </div>
 
   <a href="{{ routes.search_url }}?q={{ terms | url_encode }}&amp;type=product" class="predictive-search__view-all">
-    {{ 'search.view_all_results' | t: terms: terms }} &rarr;
+    {{ 'search.view_all_results' | t: terms: terms }} {{ 'general.arrow_forward' | t }}
   </a>
 {%- else -%}
   <div class="predictive-search__empty">

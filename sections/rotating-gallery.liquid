@@ -14,7 +14,7 @@
   endif
 -%}
 {%- if gallery_image_count > 0 -%}
-  <waypoint-gallery class="waypoint-gallery" data-marquee="true" data-autoplay="{{ section.settings.autoplay }}" data-image-count="{{ gallery_image_count }}" aria-label="Image gallery">
+  <waypoint-gallery class="waypoint-gallery" data-marquee="true" data-autoplay="{{ section.settings.autoplay }}" data-image-count="{{ gallery_image_count }}" aria-label="{{ 'general.image_gallery' | t }}">
     <div class="waypoint-gallery__viewport">
       <div class="waypoint-gallery__track">
         {%- comment -%}Two identical groups provide a seamless CSS loop. Empty preset blocks still allow product images to appear.{%- endcomment -%}
@@ -40,7 +40,7 @@
       </div>
     </div>
     {%- if gallery_image_count > 1 -%}
-      <button class="waypoint-gallery__toggle" type="button" data-marquee-toggle aria-pressed="false" aria-label="Pause moving gallery">
+      <button class="waypoint-gallery__toggle" type="button" data-marquee-toggle aria-pressed="false" aria-label="{{ 'general.pause_gallery' | t }}">
         <span data-marquee-icon aria-hidden="true">Ⅱ</span>
       </button>
     {%- endif -%}

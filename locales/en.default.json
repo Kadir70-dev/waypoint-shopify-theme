@@ -248,7 +248,17 @@
     "rating_label": "Rated {{ rating }} out of 5 stars",
     "breadcrumb_home": "Home",
     "free_shipping_over": "Free shipping over {{ amount }}",
-    "tax_included": "Tax included"
+    "tax_included": "Tax included",
+    "purchase_options": {
+      "heading": "Purchase options",
+      "one_time": "One-time purchase",
+      "note": "Delivery schedule, charges and cancellation terms are set by the merchant's purchase-option app and shown at checkout.",
+      "unavailable": "This product needs a configured purchase option before checkout is available."
+    },
+    "preorder": {
+      "configured": "Purchase options configured",
+      "notice": "Pre-order checkout becomes available only after the merchant configures a compatible Shopify pre-order app and a product selling plan. This campaign does not take reservations or payments."
+    }
   },
   "sections": {
     "hero": {
@@ -289,7 +299,17 @@
     "video": {
       "pause": "Pause video",
       "play": "Play video"
-    }
+    },
+    "arrow_forward": "→",
+    "arrow_back": "←",
+    "search_link": "Search",
+    "cart_link": "Cart",
+    "image_gallery": "Image gallery",
+    "pause_gallery": "Pause moving gallery",
+    "rating_out_of_5": "{{ rating }} out of 5 stars",
+    "color_options": "{{ name }} options",
+    "promo_offer": "Promotional offer",
+    "promo_ends": "Ends {{ date }}"
   },
   "contact": {
     "form": {
@@ -329,5 +349,27 @@
     "success": "Your comment was posted.",
     "success_moderated": "Your comment was submitted and is awaiting approval.",
     "moderated_notice": "Comments are approved before they appear."
+  },
+  "locations": {
+    "network": "NETWORK",
+    "filter_label": "Filter locations",
+    "all": "All locations",
+    "offices": "Offices",
+    "branches": "Branches",
+    "showrooms": "Showrooms",
+    "warehouses": "Warehouses",
+    "main_office": "Main office",
+    "call": "Call",
+    "directions": "Directions",
+    "explorer": "Location explorer",
+    "satellite": "Satellite",
+    "streets": "Streets",
+    "view_3d": "3D view",
+    "all_pins": "All pins",
+    "show_all": "Show all branch locations",
+    "map_label": "Interactive branch map",
+    "tagline": "Every location, one beautiful view.",
+    "feature_imagery": "Satellite imagery + 3D terrain when configured",
+    "feature_coordinates": "Coordinates controlled in Shopify"
   }
 }

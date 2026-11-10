@@ -29,7 +29,7 @@
         ({{ cart.item_count }})
       {%- endif -%}
     </h1>
-    <a href="{{ routes.all_products_collection_url }}" class="cart-page__continue">{{ 'cart.empty_cta' | t }} &rarr;</a>
+    <a href="{{ routes.all_products_collection_url }}" class="cart-page__continue">{{ 'cart.empty_cta' | t }} {{ 'general.arrow_forward' | t }}</a>
   </div>
 
   {%- if cart.item_count > 0 -%}
@@ -71,7 +71,7 @@
         </div>
 
         <button type="submit" name="checkout" class="btn btn-primary btn-block cart-page__checkout">
-          {{ 'cart.checkout' | t }} &rarr;
+          {{ 'cart.checkout' | t }} {{ 'general.arrow_forward' | t }}
         </button>
 
         {%- comment -%}

@@ -3,7 +3,7 @@
     <h2 class="section-heading__title">{{ section.settings.heading }}</h2>
     {%- if section.settings.view_all_link != blank -%}
       <a href="{{ section.settings.view_all_link }}" class="section-heading__view-all">
-        {{ 'general.view_all' | t }} &rarr;
+        {{ 'general.view_all' | t }} {{ 'general.arrow_forward' | t }}
       </a>
     {%- endif -%}
   </div>
