@@ -85,6 +85,9 @@ Photography and video on the demo store are sourced from [Pexels](https://www.pe
 
 **Bundled fallback media:** `assets/breakervideo.mp4` is Pexels video [32562962](https://www.pexels.com/video/hiker-ascends-misty-mountain-in-france-32562962/) by Florian Delée (Pexels License). `assets/hero-slide-1|2|3.jpg` (+ `-mobile`) are Pexels photos [6465964](https://www.pexels.com/photo/unrecognizable-traveler-standing-on-mountain-top-and-admiring-landscape-6465964/) (Stan Swinnen), [35696066](https://www.pexels.com/photo/hiker-climbs-snowy-mountain-ridge-in-winter-storm-35696066/) (eberhard grossgasteiger) and [33775543](https://www.pexels.com/photo/scenic-camping-in-the-wind-river-range-wyoming-33775543/) (Alex Moliski), Pexels License; used only when a hero slide has no image.
 
+### Third-party code
+MapLibre GL JS 6.17.0 (`assets/maplibre-gl.js`, `assets/maplibre-gl-worker.js`) is bundled unmodified apart from the worker filename, BSD-3-Clause — see `docs/third-party/MAPLIBRE-LICENSE.txt`. It loads only on pages with the Branch locations section and a MapTiler key.
+
 ## Changelog
 - **1.0.0** — First Theme Store release.
 

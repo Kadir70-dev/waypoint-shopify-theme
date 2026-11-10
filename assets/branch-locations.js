@@ -3,13 +3,13 @@
  * Merchant-supplied pins only; MapTiler hybrid satellite + MapLibre 3D terrain.
  * No geocoding guesses, no fictitious branches, no automatic "open now" claims.
  */
-const MAPLIBRE_MODULE = 'https://unpkg.com/maplibre-gl@6.17.0/dist/maplibre-gl.mjs';
+// MapLibre GL JS is bundled in assets/ (maplibre-gl.js); its URL comes from the section markup.
 const instances = new WeakMap();
 let maplibrePromise;
 
-function library() {
+function library(src) {
   if (!maplibrePromise) {
-    maplibrePromise = import(MAPLIBRE_MODULE).catch(error => {
+    maplibrePromise = import(src).catch(error => {
       maplibrePromise = null;
       throw error;
     });
@@ -60,7 +60,7 @@ function init(root) {
       const [lng, lat] = record.coords;
       directions.href = 'https://www.google.com/maps/dir/?api=1&destination='
         + encodeURIComponent(lat + ',' + lng);
-      directions.textContent = 'Directions ↗';
+      directions.textContent = root.dataset.i18nDirections || 'Directions ↗';
       directions.hidden = false;
     } else if (!directions.hasAttribute('href')) {
       directions.hidden = true;
@@ -118,7 +118,7 @@ function init(root) {
       });
     }
     if (!record.coords) {
-      notify('A verified map pin is not configured for ' + record.name + '. Use its address link, if available.');
+      notify((root.dataset.i18nNoPin || 'A verified map pin is not configured for [name]. Use its address link, if available.').replace('[name]', record.name));
     }
   }
   function fitAll() {
@@ -259,9 +259,9 @@ function init(root) {
 
   async function build() {
     if (disposed || !mapNode || !key || !valid.length || map) return;
-    notify('Loading satellite imagery and exact branch locations…');
+    notify(root.dataset.i18nLoading || 'Loading satellite imagery and exact branch locations…');
     try {
-      maplibre = await library();
+      maplibre = await library(root.dataset.maplibreSrc);
       if (disposed || !root.isConnected) return;
       if (!maplibre.supported()) throw new Error('This browser does not support WebGL maps.');
       map = new maplibre.Map({
@@ -303,12 +303,12 @@ function init(root) {
       });
       map.on('error', event => {
         if (!map.loaded() && !disposed) {
-          notify('Map imagery could not load. Check your MapTiler key, allowed domain and internet connection. Branch addresses remain available on the left.');
+          notify(root.dataset.i18nImageryError || 'Map imagery could not load. Check your MapTiler key, allowed domain and internet connection. Branch addresses remain available on the left.');
         }
         if (event?.error) console.warn('Waypoint map provider error', event.error);
       });
     } catch (error) {
-      notify('Interactive map unavailable. Check the public MapTiler key, domain restrictions, and browser WebGL support.');
+      notify(root.dataset.i18nUnavailable || 'Interactive map unavailable. Check the public MapTiler key, domain restrictions, and browser WebGL support.');
       console.warn('Waypoint map initialization failed', error);
     }
   }
