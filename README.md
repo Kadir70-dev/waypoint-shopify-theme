@@ -13,7 +13,7 @@ An editorial, performance-minded Online Store 2.0 theme using native Shopify pat
 Colors (dark / light "Daylight" preset, accent override), Typography (Shopify font picker), Layout, Cart, Product grid, Product page, Icons, Social links, SEO.
 
 ## Presets
-- **Waypoint** — dark, cinematic look for outdoor, travel and technical-gear brands with strong photography.
+- **Cairnfield** — dark, cinematic look for outdoor, travel and technical-gear brands with strong photography.
 - **Daylight** — light version of the same layout for catalogues that need a brighter, product-first page.
 
 Both presets share every section; switch at any time in Theme settings → Colors.
@@ -54,7 +54,7 @@ Storefront strings live in `locales/`. English (default) and Arabic (`ar.json`) 
 - Historical Lighthouse runs recorded scores of mobile performance 83 / accessibility 97 and desktop performance 93 / accessibility 99 in an earlier QA setup. These are **not current Theme Store submission benchmark results**. Re-run populated home, product, and collection pages on both presets and retain new reports before submitting.
 
 ## Credits & licenses
-Photography and video on the demo store are from [Pexels](https://www.pexels.com/) under the [Pexels License](https://www.pexels.com/license/) (free for commercial use, attribution not required). They are store content and are **not** bundled with the theme. Full source records (Pexels IDs, photographers, download URLs, checksums): [`docs/pexels/`](docs/pexels/).
+Photography and video on the demo store are sourced from [Pexels](https://www.pexels.com/) under the [Pexels License](https://www.pexels.com/license/). **Some Pexels images and a video are also bundled with this theme** as fallback demo assets in `assets/` when a merchant has not selected media; other photos and videos are Shopify Files belonging only to the demo store. Source records and recorded checksums: [`docs/pexels/`](docs/pexels/). Confirm third-party media redistribution and Theme Store acceptance before submission.
 
 | Use | Pexels page | Creator |
 |---|---|---|
