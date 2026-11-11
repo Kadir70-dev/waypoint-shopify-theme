@@ -10,13 +10,13 @@ const sectionSchema = path => {
 };
 const hero = sectionSchema('sections/hero-slider.liquid');
 const heroSetting = name => hero.settings.find(setting => setting.id === name);
-assert.equal(heroSetting('autoplay').default, true);
+assert.equal(heroSetting('autoplay').default, false, 'Hero autoplay off by default (LCP)');
 assert.equal(heroSetting('autoplay_interval').default, 3);
 assert.equal(heroSetting('transition_duration').default, 800);
 
 const home = JSON.parse(read('templates/index.json'));
 assert.equal(home.sections.hero.type, 'hero-slider');
-assert.equal(home.sections.hero.settings.autoplay, true);
+assert.equal(home.sections.hero.settings.autoplay, false);
 assert.equal(home.sections.hero.settings.autoplay_interval, 3);
 assert.equal(home.sections.hero.settings.transition_duration, 800);
 assert.equal(home.sections.hero.block_order?.length || Object.keys(home.sections.hero.blocks).length, 3);
@@ -46,7 +46,7 @@ assert.equal((css.match(/\{/g) || []).length, (css.match(/\}/g) || []).length);
 assert.ok(!/,\s*@media/.test(css), 'No invalid selector/media nesting');
 const motion = read('assets/motion.js');
 const marquee = read('assets/rotating-gallery.js');
-assert.ok(motion.includes('if (autoplay) activate();'), 'Hero autoplay starts without user interaction');
+assert.ok(motion.includes('if (autoplay) activate();'), 'Hero autoplay starts without user interaction when enabled');
 assert.ok(marquee.includes('visibilitychange'), 'Gallery tab visibility handling');
 assert.ok(marquee.includes('IntersectionObserver'), 'Gallery viewport handling');
 assert.ok(marquee.includes('aria-pressed'), 'Gallery user pause control');
