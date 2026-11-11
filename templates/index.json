@@ -3,7 +3,7 @@
     "hero": {
       "type": "hero-slider",
       "settings": {
-        "autoplay": true,
+        "autoplay": false,
         "autoplay_interval": 3,
         "transition_duration": 800,
         "tagline_word_1": "Explore",
